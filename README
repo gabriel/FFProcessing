@@ -1,0 +1,8 @@
+Add to Header Search Paths:
+../ffmpeg-iphone_sim/dist/include
+(recursive)
+
+Add libraries:
+- libz
+- libbz2
+- CoreGraphics

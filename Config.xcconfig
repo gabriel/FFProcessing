@@ -1,0 +1,4 @@
+ARCHS = armv7
+VALID_ARCHS = armv7
+HEADER_SEARCH_PATHS = ../ffmpeg-uarch/include/**
+LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../ffmpeg-uarch/lib"
