@@ -19,14 +19,40 @@
 
 @property (readonly, nonatomic, getter=isOpen) BOOL open;
 
+- (BOOL)openWithURL:(NSURL *)URL format:(NSString *)format error:(NSError **)error;
+
 - (int)videoWidth;
 - (int)videoHeight;
 - (enum PixelFormat)videoPixelFormat;
 
-- (BOOL)openWithURL:(NSURL *)URL format:(NSString *)format error:(NSError **)error;
+/*!
+ Read packet.
+ @param packet If read, packet is set
+ @param error Out error
+ @result YES if read
+ */
+- (BOOL)readFrame:(AVPacket *)packet error:(NSError **)error;
 
-- (BOOL)readFrame:(AVFrame *)frame error:(NSError **)error;
+/*!
+ Decode packet into frame.
+ @param frame If decoded, frame is set
+ @param packet Packet to decode
+ @param error Out error
+ @result YES if decoded
+ */
+- (BOOL)decodeFrame:(AVFrame *)frame packet:(AVPacket *)packet error:(NSError **)error;
 
+/*!
+ Read packet and decode into frame.
+ @param frame If decoded, frame is set
+ @param error Out error
+ @result YES if decoded
+ */
+- (BOOL)decodeFrame:(AVFrame *)frame error:(NSError **)error;
+
+/*!
+ Close decoder.
+ */
 - (void)close;
 
 @end

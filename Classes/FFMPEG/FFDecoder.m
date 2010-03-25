@@ -9,19 +9,11 @@
 #import "FFDecoder.h"
 #import "FFDefines.h"
 #import "FFNotifications.h"
-
-static AVPacket gFlushPacket;
+#import "FFCommon.h"
 
 @implementation FFDecoder
 
 @synthesize open=_open;
-
-+ (void)initialize {  
-  av_register_all();
-  
-  av_init_packet(&gFlushPacket);
-  gFlushPacket.data = (uint8_t*)"FLUSH";
-}
 
 - (void)dealloc {
   [self close];
@@ -130,12 +122,10 @@ static AVPacket gFlushPacket;
   return _videoStream->codec->pix_fmt;
 }
 
-- (BOOL)readFrame:(AVFrame *)frame error:(NSError **)error {
-  
-  AVPacket packet;
+- (BOOL)readFrame:(AVPacket *)packet error:(NSError **)error {
   
   // Read the packet
-  if (av_read_frame(_formatContext, &packet) < 0) { 
+  if (av_read_frame(_formatContext, packet) < 0) { 
     FFSetError(error, FFErrorCodeReadFrame, @"Failed to read frame");
     return NO;
   }
@@ -143,34 +133,40 @@ static AVPacket gFlushPacket;
   //FFDebug(@"Packet size: %d", packet->size);
   
   // Ignore packet if not part of our video stream
-  if (packet.stream_index != _videoStream->index) {
-    FFDebug(@"Packet not part of video stream");
+  if (packet->stream_index != _videoStream->index) {
+    //FFDebug(@"Packet not part of video stream");
     return NO;
   }
   
   // If flush packet, flush and continue
-  if (packet.data == gFlushPacket.data) {
+  if (FFIsFlushPacket(packet)) {
     FFDebug(@"avcodec_flush_buffers");
     avcodec_flush_buffers(_videoStream->codec);
     return NO;
   }
   
-  // Decode the frame (from the packet)
-  int gotFrame = 0;
-  int bytesDecoded = avcodec_decode_video2(_videoStream->codec, frame, &gotFrame, &packet);
-  //FFDebug(@"Decoded %d", bytesDecoded);
+  return YES;
+}
+
+- (BOOL)decodeFrame:(AVFrame *)frame error:(NSError **)error {
+  AVPacket packet;
   
+  if (![self readFrame:&packet error:error]) 
+    return NO;
+  
+  BOOL decoded = [self decodeFrame:frame packet:&packet error:error];
+
   av_free_packet(&packet);
   
-  if (bytesDecoded < 0) {
-    FFSetError(error, FFErrorCodeReadFrameDecode, @"Error while decoding frame");
-    return NO;
-  }
+  return decoded;
+}
+
+- (BOOL)decodeFrame:(AVFrame *)frame packet:(AVPacket *)packet error:(NSError **)error {  
+  int gotFrame = 0;
+  int bytesDecoded = avcodec_decode_video2(_videoStream->codec, frame, &gotFrame, packet);
   
-  if (!gotFrame) {
-    FFSetError(error, FFErrorCodeReadFrameIncomplete, @"Incomplete decoded frame");
-    return NO;
-  }  
+  if (bytesDecoded < 0) return NO;
+  if (!gotFrame) return NO;
 
   return YES;
 }

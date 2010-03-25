@@ -14,25 +14,39 @@
 - (void)decodeURL:(NSURL *)URL format:(NSString *)format {
   FFDecoder *decoder = [[FFDecoder alloc] init];
   
-  NSError *error = nil;
-  if (![decoder openWithURL:URL format:format error:&error]) {
+  if (![decoder openWithURL:URL format:format error:nil]) {
     return;
   }
   
   AVFrame *frame = avcodec_alloc_frame();
-  BOOL reading = YES;
-  while (reading) {
-    [decoder readFrame:frame error:&error];   
-    if (error) {
-      switch (error.code) {
-        case FFErrorCodeReadFrameIncomplete: break;
-        default: reading = NO; break;
-      }
+
+  while (YES) {
+    NSError *error = nil;
+    
+    AVPacket packet;
+    if (![decoder readFrame:&packet error:&error]) {
+      if (error) break;
       continue;
     }
-    FFDebug(@"key_frame=%d, pts=%d", frame->key_frame, frame->pts);    
-  }  
+    
+    [decoder decodeFrame:frame packet:&packet error:&error];   
+    
+    if (!error) {
+      if (frame->pict_type == FF_I_TYPE) {
+        FFDebug(@"Packet, pts=%lld, dts=%lld", packet.pts, packet.dts);
+
+        FFDebug(@"Frame, key_frame=%d, pts=%lld, coded_picture_number=%d, display_picture_number=%d, pict_type=%@, quality=%d, age=%d", 
+                frame->key_frame, frame->pts, frame->coded_picture_number, frame->display_picture_number,
+                NSStringFromAVFramePictType(frame->pict_type), frame->quality, frame->age);    
+      }
+    }
+    
+    av_free_packet(&packet);
+  }
+
   av_free(frame);
+  
+  [decoder release];
 }
       
 

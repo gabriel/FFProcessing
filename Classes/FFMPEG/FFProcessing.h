@@ -12,4 +12,6 @@
 
 }
 
+- (void)decodeURL:(NSURL *)URL format:(NSString *)format;
+
 @end

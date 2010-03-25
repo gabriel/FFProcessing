@@ -18,19 +18,31 @@ enum {
   FFErrorCodeStreamInfoNotFound = 20,
   FFErrorCodeVideoStreamNotFound = 30,
   FFErrorCodeVideoCodecNotFound = 40,
-  FFErrorCodeVideoCodecOpen = 41,
+  FFErrorCodeVideoCodecOpen = 41,  
   // Alloc
   FFErrorCodeAllocateFrame = 51,
   FFErrorCodeAllocateVideoBuffer = 60,
   // Reading
   FFErrorCodeReadFrame = 100,
-  FFErrorCodeReadFrameDecode = 110,
-  FFErrorCodeReadFrameIncomplete = 120,
   // Convert
   FFErrorCodeScaleContext = 200,
+  // Encode
+  FFErrorCodeWriteFrame = 300,
+  FFErrorCodeUnknownOutputFormat = 310,
+  FFErrorCodeAllocFormatContext = 320,
+  FFErrorCodeInvalidFormatParameters = 330,
+  FFErrorCodeAllocStream = 340,
 } FFErrorCode;
 
 //#define FFDebug(...) do {} while(0)
 
 #define FFDebug(...) NSLog(__VA_ARGS__)
 
+static inline NSString *NSStringFromAVFramePictType(int pictType) {
+  switch (pictType) {
+    case FF_I_TYPE: return @"I";
+    case FF_P_TYPE: return @"P";    
+    case FF_B_TYPE: return @"B";
+    default: return @"-";
+  }
+}

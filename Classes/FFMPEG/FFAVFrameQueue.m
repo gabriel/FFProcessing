@@ -62,18 +62,13 @@
     
     _decoder = decoder;
     
-    BOOL reading = YES;
-    while (reading && _running) {  
+    while (_running) {  
       NSError *error = nil;
       // TODO(gabe): How is this working if I am not locking around this call?
-      [_decoder readFrame:_frame error:&error];    
-      if (error) {
-        switch (error.code) {
-          case FFErrorCodeReadFrameIncomplete: break;
-          default: reading = NO; break;
-        }
-        continue;
-      }
+      [_decoder decodeFrame:_frame error:&error];    
+      if (error)
+        break;
+
       _readFrameIndex++;
     }
     

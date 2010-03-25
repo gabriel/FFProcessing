@@ -34,6 +34,9 @@
 		0012A19D1157187800D09836 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0012A1961157187700D09836 /* libswscale.a */; };
 		0012A19F115718FA00D09836 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0012A19E115718FA00D09836 /* Config.xcconfig */; };
 		0012A1B611572F0D00D09836 /* pegasus-1958-chiptune.avi in Resources */ = {isa = PBXBuildFile; fileRef = 0012A1B511572F0D00D09836 /* pegasus-1958-chiptune.avi */; };
+		00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7706A115B29A300CF9F22 /* FFEncoder.m */; };
+		00D77083115B331600CF9F22 /* FFCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFCommon.m */; };
+		00DDCBF81158984C00A6BD4F /* camping.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 00DDCBF71158984C00A6BD4F /* camping.m4v */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -87,6 +90,11 @@
 		0012A1961157187700D09836 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
 		0012A19E115718FA00D09836 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		0012A1B511572F0D00D09836 /* pegasus-1958-chiptune.avi */ = {isa = PBXFileReference; lastKnownFileType = video.avi; path = "pegasus-1958-chiptune.avi"; sourceTree = "<group>"; };
+		00D77069115B29A300CF9F22 /* FFEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEncoder.h; sourceTree = "<group>"; };
+		00D7706A115B29A300CF9F22 /* FFEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEncoder.m; sourceTree = "<group>"; };
+		00D77081115B331600CF9F22 /* FFCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFCommon.h; sourceTree = "<group>"; };
+		00D77082115B331600CF9F22 /* FFCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFCommon.m; sourceTree = "<group>"; };
+		00DDCBF71158984C00A6BD4F /* camping.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = camping.m4v; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* FFPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -144,6 +152,10 @@
 				0001B1D211573C1D00109D45 /* FFProcessing.m */,
 				0001B1D41157413D00109D45 /* FFConverter.h */,
 				0001B1D51157413D00109D45 /* FFConverter.m */,
+				00D77069115B29A300CF9F22 /* FFEncoder.h */,
+				00D7706A115B29A300CF9F22 /* FFEncoder.m */,
+				00D77081115B331600CF9F22 /* FFCommon.h */,
+				00D77082115B331600CF9F22 /* FFCommon.m */,
 			);
 			path = FFMPEG;
 			sourceTree = "<group>";
@@ -203,6 +215,7 @@
 		0012A1B411572EF500D09836 /* samples */ = {
 			isa = PBXGroup;
 			children = (
+				00DDCBF71158984C00A6BD4F /* camping.m4v */,
 				0012A1B511572F0D00D09836 /* pegasus-1958-chiptune.avi */,
 			);
 			name = samples;
@@ -318,6 +331,7 @@
 				0012A0561154AE3100D09836 /* test.png in Resources */,
 				0012A19F115718FA00D09836 /* Config.xcconfig in Resources */,
 				0012A1B611572F0D00D09836 /* pegasus-1958-chiptune.avi in Resources */,
+				00DDCBF81158984C00A6BD4F /* camping.m4v in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +356,8 @@
 				0012A0551154AE3100D09836 /* FFGLTestDrawable.m in Sources */,
 				0001B1D311573C1D00109D45 /* FFProcessing.m in Sources */,
 				0001B1D61157413D00109D45 /* FFConverter.m in Sources */,
+				00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */,
+				00D77083115B331600CF9F22 /* FFCommon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

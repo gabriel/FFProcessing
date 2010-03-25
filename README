@@ -1,5 +1,5 @@
 Add to Header Search Paths:
-../ffmpeg-iphone_sim/dist/include
+../ffmpeg-uarch/dist/include
 (recursive)
 
 Add libraries:
