@@ -32,6 +32,9 @@ enum {
   FFErrorCodeAllocFormatContext = 320,
   FFErrorCodeInvalidFormatParameters = 330,
   FFErrorCodeAllocStream = 340,
+  FFErrorCodeOpenAlready = 350,
+  FFErrorCodeWriteHeader = 360,
+  FFErrorCodeWriteTrailer = 370,
 } FFErrorCode;
 
 //#define FFDebug(...) do {} while(0)

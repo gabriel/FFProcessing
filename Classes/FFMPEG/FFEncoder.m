@@ -13,12 +13,30 @@
 @interface FFEncoder ()
 - (BOOL)_prepareVideo:(NSError **)error;
 - (AVStream *)_addVideoStream:(NSError **)error;
-- (BOOL)_writeVideoFrame:(NSError **)error;
 @end
 
 @implementation FFEncoder
 
+@synthesize currentVideoFrameIndex=_currentVideoFrameIndex;
+
+- (id)init {
+  if ((self = [super init])) {
+    _width = 320; 
+    _height = 480;
+    _pixelFormat = PIX_FMT_YUV420P;
+    _videoBitRate = 400000;
+  }
+  return self;
+}
+
 - (BOOL)open:(NSString *)path error:(NSError **)error {
+  if (_formatContext) {
+    FFSetError(error, FFErrorCodeOpenAlready, @"Encoder is already open");
+    return NO;
+  }
+  
+  FFInitialize();
+  
   const char *filename = [path UTF8String];  
   AVOutputFormat *outputFormat = av_guess_format(NULL, filename, NULL);
   if (!outputFormat) {
@@ -39,6 +57,7 @@
   if (outputFormat->video_codec != CODEC_ID_NONE) {
     _videoStream = [self _addVideoStream:error];
     if (!_videoStream) {
+      [self close];
       return NO;
     }
   }
@@ -52,17 +71,30 @@
   // Set the output parameters (must be done even if no parameters)
   if (av_set_parameters(_formatContext, NULL) < 0) {
     FFSetError(error, FFErrorCodeInvalidFormatParameters, @"Invalid output format parameters");
+    [self close];
     return NO;
   }
 
   dump_format(_formatContext, 0, filename, 1);
     
-  if (![self _prepareVideo:error]) return NO;
+  if (![self _prepareVideo:error]) {
+    [self close];
+    return NO;
+  }
   //if (![self _prepareAudio:error]) return NO;
+  
+  // Some formats want stream headers to be separate
+  if (_formatContext->oformat->flags & AVFMT_GLOBALHEADER) {
+    FFDebug(@"Flagging for global header");
+    _formatContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
+  }
+  
+  _formatContext->max_delay = (int)(0.7 * AV_TIME_BASE);  
 
   if (!(outputFormat->flags & AVFMT_NOFILE)) {
     if (url_fopen(&_formatContext->pb, filename, URL_WRONLY) < 0) {
       FFSetError(error, FFErrorCodeOpen, @"Couldn't open file");
+      [self close];
       return NO;
     }
   }
@@ -83,10 +115,10 @@
   codecContext->codec_id = _formatContext->oformat->video_codec;
   codecContext->codec_type = CODEC_TYPE_VIDEO;
   
-  codecContext->bit_rate = 400000;
+  codecContext->bit_rate = _videoBitRate;
   // Resolution must be a multiple of two
-  codecContext->width = 352;
-  codecContext->height = 288;
+  codecContext->width = _width;
+  codecContext->height = _height;
   
   /*
    time_base: this is the fundamental unit of time (in seconds) in terms
@@ -97,7 +129,7 @@
   codecContext->time_base.den = 25; // Frames per second
   codecContext->time_base.num = 1;
   codecContext->gop_size = 12; /* emit one intra frame every twelve frames at most */
-  codecContext->pix_fmt = PIX_FMT_YUV420P;
+  codecContext->pix_fmt = _pixelFormat;
   
   if (codecContext->codec_id == CODEC_ID_MPEG2VIDEO) {
     // For testing, we also add B frames
@@ -110,11 +142,7 @@
      the motion of the chroma plane does not match the luma plane. */
     codecContext->mb_decision = 2;
   }
-  
-  // Some formats want stream headers to be separate
-  if(_formatContext->oformat->flags & AVFMT_GLOBALHEADER)
-    _formatContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
-  
+    
   return stream;
 }
 
@@ -135,64 +163,65 @@
   _videoBufferSize = 200000;
   _videoBuffer = av_malloc(_videoBufferSize);
   _currentVideoFrameIndex = 0;    
-  
-  _pixelFormat = codecContext->pix_fmt;
-  _width = codecContext->width;
-  _height = codecContext->height;
-  _picture = FFCreatePicture(_pixelFormat, _width, _height);
-  
-  if (!_picture) {    
-    FFSetError(error, FFErrorCodeAllocateFrame, @"Couldn't create picture");
-    return NO;
-  }  
-  
+
+  NSAssert(_pixelFormat == codecContext->pix_fmt, @"Mismatched pixel format");  
+  NSAssert(_width == codecContext->width, @"Mismatched width");
+  NSAssert(_height == codecContext->height, @"Mismatched height");
+
   return YES;
 }
 
-- (void)writeFrames:(NSError **)error {
+- (BOOL)writeHeader:(NSError **)error {
+  FFDebug(@"Write header");
+  if (av_write_header(_formatContext) != 0) {
+    FFSetError(error, FFErrorCodeWriteHeader, @"Couldn't write header");
+    return NO;
+  }
+  return YES;
+}
 
-  av_write_header(_formatContext);
-  
-  while ([self _writeVideoFrame:error]) { }
-  
-  av_write_trailer(_formatContext);
-
+- (BOOL)writeTrailer:(NSError **)error {
+  FFDebug(@"Write trailer");
+  if (av_write_trailer(_formatContext) != 0) {
+    FFSetError(error, FFErrorCodeWriteTrailer, @"Couldn't write trailer");
+    return NO;
+  }
+  return YES;
 }  
 
 - (void)close {
   // Close video
   if (_videoStream != NULL) avcodec_close(_videoStream->codec);
 
-  if (_picture != NULL) {
-    av_free(_picture->data[0]);
-    av_free(_picture);
-  }
-  if (_videoBuffer != NULL) av_free(_videoBuffer);
-  
-  // Free the streams
-  for (int i = 0; i < _formatContext->nb_streams; i++) {
-    av_freep(&_formatContext->streams[i]->codec);
-    av_freep(&_formatContext->streams[i]);
+  if (_videoBuffer != NULL) {
+    av_free(_videoBuffer);
+    _videoBuffer = NULL;
   }
   
-  if (!(_formatContext->oformat->flags & AVFMT_NOFILE)) {
-    url_fclose(_formatContext->pb);
+  if (_formatContext != NULL) {
+    // Free the streams
+    for (int i = 0; i < _formatContext->nb_streams; i++) {
+      av_freep(&_formatContext->streams[i]->codec);
+      av_freep(&_formatContext->streams[i]);
+    }
+    
+    if (!(_formatContext->oformat->flags & AVFMT_NOFILE)) {
+      url_fclose(_formatContext->pb);
+    }
+  
+    av_free(_formatContext);
+    _formatContext = NULL;
   }
-
-  if (_formatContext != NULL) av_free(_formatContext);
 }
 
-- (BOOL)_writeVideoFrame:(NSError **)error {
+- (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error {
   
   AVCodecContext *codecContext = _videoStream->codec;
   
   // Stop at 200 frames
   if (_currentVideoFrameIndex > 200) return NO;
-  
-  // Fill in dummy picture data
-  FFFillYUVImage(_picture, _currentVideoFrameIndex, _width, _height);
-  
-  int bytesEncoded = avcodec_encode_video(codecContext, _videoBuffer, _videoBufferSize, _picture);
+    
+  int bytesEncoded = avcodec_encode_video(codecContext, _videoBuffer, _videoBufferSize, picture);
 
   // If bytesEncoded is zero, there was buffering
   if (bytesEncoded > 0) {

@@ -10,10 +10,13 @@
 #include "libavdevice/avdevice.h"
 
 void FFInitialize(void);
+BOOL FFIsInitialized(void);
 
 BOOL FFIsFlushPacket(AVPacket *packet);
 
 AVFrame *FFCreatePicture(enum PixelFormat pixelFormat, int width, int height);
+
+void FFReleasePicture(AVFrame *picture);
 
 // Fill dummy image
 void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int height);

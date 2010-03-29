@@ -18,8 +18,7 @@
   int _width;
   int _height;
   enum PixelFormat _pixelFormat;
-  
-  AVFrame *_picture;
+  int _videoBitRate;
   
   uint8_t *_videoBuffer;
   NSInteger _videoBufferSize;
@@ -28,9 +27,15 @@
   
 }
 
+@property (readonly, nonatomic) NSUInteger currentVideoFrameIndex;
+
 - (BOOL)open:(NSString *)path error:(NSError **)error;
 
-- (void)writeFrames:(NSError **)error;
+- (BOOL)writeHeader:(NSError **)error;
+
+- (BOOL)writeTrailer:(NSError **)error;
+
+- (BOOL)writeVideoFrame:(AVFrame *)pict error:(NSError **)error;
 
 - (void)close;
 

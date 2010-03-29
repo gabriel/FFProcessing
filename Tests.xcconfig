@@ -1,0 +1,9 @@
+
+#include "Shared.xcconfig"
+
+PRODUCT_NAME = Tests
+OTHER_LDFLAGS = -ObjC -all_load
+GCC_PREFIX_HEADER = $(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+INFOPLIST_FILE = Tests-Info.plist
+LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../ffmpeg-uarch/lib" "$(SRCROOT)/Libraries/libGHUnitIPhone3_0-0.4.19"

@@ -9,12 +9,19 @@
 #import "FFCommon.h"
 
 static AVPacket gFlushPacket;
+static BOOL gInitialized = NO;
 
 void FFInitialize(void) {
+  if (FFIsInitialized()) return;
+  gInitialized = YES;
   av_register_all();
   
   av_init_packet(&gFlushPacket);
-  gFlushPacket.data = (uint8_t*)"FLUSH";
+  gFlushPacket.data = (uint8_t *)"FLUSH";
+}
+
+BOOL FFIsInitialized(void) {
+  return gInitialized;
 }
 
 BOOL FFIsFlushPacket(AVPacket *packet) {
@@ -36,6 +43,11 @@ AVFrame *FFCreatePicture(enum PixelFormat pixelFormat, int width, int height) {
   
   avpicture_fill((AVPicture *)picture, pictureBuffer, pixelFormat, width, height);
   return picture;
+}
+
+void FFReleasePicture(AVFrame *picture) {
+  if (picture->data != NULL) av_free(picture->data[0]);
+  if (picture != NULL) av_free(picture);  
 }
 
 void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int height) {

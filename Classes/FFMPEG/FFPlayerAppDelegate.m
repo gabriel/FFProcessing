@@ -14,7 +14,6 @@
 
 @interface FFPlayerAppDelegate ()
 - (void)_loadPlayerView;
-- (void)_encodeTest;
 @end
 
 @implementation FFPlayerAppDelegate
@@ -32,8 +31,6 @@
   [_window makeKeyAndVisible];
   
   FFInitialize();
-  
-  [self _encodeTest];
 
   /*!
   //NSURL *URL = [NSURL URLWithString:@"bundle://camping.m4v"]; 
@@ -58,16 +55,6 @@
   
   [_window addSubview:_playerView];  
 }
-
-- (void)_encodeTest {
-  NSString *path = [[FFCommon documentsDirectory] stringByAppendingPathComponent:@"test.mpeg"];
-  FFEncoder *encoder = [[FFEncoder alloc] init];
-  NSError *error = nil;
-  if ([encoder open:path error:&error]) {
-    [encoder writeFrames:&error];
-    [encoder close];
-  }
-}  
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 
