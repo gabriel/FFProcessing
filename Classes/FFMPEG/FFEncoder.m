@@ -3,11 +3,11 @@
 //  FFPlayer
 //
 //  Created by Gabriel Handford on 3/24/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #import "FFEncoder.h"
-#import "FFCommon.h"
+#import "FFUtils.h"
 #import "FFDefines.h"
 
 @interface FFEncoder ()
@@ -29,7 +29,17 @@
   return self;
 }
 
-- (BOOL)open:(NSString *)path error:(NSError **)error {
+- (void)dealloc {
+  [self close];
+  [super dealloc];
+}
+
+- (AVCodecContext *)videoCodecContext {
+  if (_videoStream == NULL) return NULL;
+  return _videoStream->codec;
+}
+
+- (BOOL)open:(NSString *)path error:(NSError **)error {  
   if (_formatContext) {
     FFSetError(error, FFErrorCodeOpenAlready, @"Encoder is already open");
     return NO;
@@ -60,6 +70,10 @@
       [self close];
       return NO;
     }
+    
+    // Some formats want stream headers to be separate
+    if (outputFormat->flags & AVFMT_GLOBALHEADER)
+      _videoStream->codec->flags |= CODEC_FLAG_GLOBAL_HEADER;
   }
 
   /*!
@@ -82,13 +96,8 @@
     return NO;
   }
   //if (![self _prepareAudio:error]) return NO;
-  
-  // Some formats want stream headers to be separate
-  if (_formatContext->oformat->flags & AVFMT_GLOBALHEADER) {
-    FFDebug(@"Flagging for global header");
-    _formatContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
-  }
-  
+
+  // Setup any format context settings
   _formatContext->max_delay = (int)(0.7 * AV_TIME_BASE);  
 
   if (!(outputFormat->flags & AVFMT_NOFILE)) {
@@ -171,8 +180,7 @@
   return YES;
 }
 
-- (BOOL)writeHeader:(NSError **)error {
-  FFDebug(@"Write header");
+- (BOOL)writeHeader:(NSError **)error {  
   if (av_write_header(_formatContext) != 0) {
     FFSetError(error, FFErrorCodeWriteHeader, @"Couldn't write header");
     return NO;
@@ -181,7 +189,6 @@
 }
 
 - (BOOL)writeTrailer:(NSError **)error {
-  FFDebug(@"Write trailer");
   if (av_write_trailer(_formatContext) != 0) {
     FFSetError(error, FFErrorCodeWriteTrailer, @"Couldn't write trailer");
     return NO;
@@ -191,7 +198,10 @@
 
 - (void)close {
   // Close video
-  if (_videoStream != NULL) avcodec_close(_videoStream->codec);
+  if (_videoStream != NULL) {
+    avcodec_close(_videoStream->codec);
+    _videoStream = NULL;
+  }
 
   if (_videoBuffer != NULL) {
     av_free(_videoBuffer);
@@ -214,38 +224,52 @@
   }
 }
 
-- (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error {
-  
+- (int)encodeVideoFrame:(AVFrame *)picture error:(NSError **)error {    
+  AVCodecContext *codecContext = _videoStream->codec;
+
+  int bytesEncoded = avcodec_encode_video(codecContext, _videoBuffer, _videoBufferSize, picture);
+  if (bytesEncoded < 0) {
+    FFSetError(error, FFErrorCodeEncodeFrame, @"Error encoding frame");
+    return bytesEncoded; // Error number
+  }
+  return bytesEncoded;
+}
+
+- (BOOL)writeVideoBuffer:(NSError **)error {   
   AVCodecContext *codecContext = _videoStream->codec;
   
-  // Stop at 200 frames
-  if (_currentVideoFrameIndex > 200) return NO;
-    
-  int bytesEncoded = avcodec_encode_video(codecContext, _videoBuffer, _videoBufferSize, picture);
-
-  // If bytesEncoded is zero, there was buffering
-  if (bytesEncoded > 0) {
+  AVPacket packet;        
+  av_init_packet(&packet);
   
-    AVPacket packet;        
-    av_init_packet(&packet);
-    
-    if (codecContext->coded_frame->pts != AV_NOPTS_VALUE)
-      packet.pts = av_rescale_q(codecContext->coded_frame->pts, codecContext->time_base, _videoStream->time_base);
-    
-    if (codecContext->coded_frame->key_frame)
-      packet.flags |= PKT_FLAG_KEY;
-    
-    packet.stream_index = _videoStream->index;
-    packet.data = _videoBuffer;
-    packet.size = _videoBufferSize;
-      
-    if (av_interleaved_write_frame(_formatContext, &packet) != 0) {
-      FFSetError(error, FFErrorCodeWriteFrame, @"Error writing interleaved frame");
-      return NO;
-    }  
+  if (codecContext->coded_frame->pts != AV_NOPTS_VALUE)
+    packet.pts = av_rescale_q(codecContext->coded_frame->pts, codecContext->time_base, _videoStream->time_base);
+  
+  if (codecContext->coded_frame->key_frame)
+    packet.flags |= PKT_FLAG_KEY;
+  
+  packet.stream_index = _videoStream->index;
+  packet.data = _videoBuffer;
+  packet.size = _videoBufferSize;
+  
+  if (av_interleaved_write_frame(_formatContext, &packet) != 0) {
+    FFSetError(error, FFErrorCodeWriteFrame, @"Error writing interleaved frame");
+    return NO;
   }
   
   _currentVideoFrameIndex++;
+  return YES;
+}
+
+- (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error {   
+  int bytesEncoded = [self encodeVideoFrame:picture error:error];
+  if (bytesEncoded < 0) return NO;
+  
+  // If bytesEncoded is zero, there was buffering
+  if (bytesEncoded > 0) {
+    if (![self writeVideoBuffer:error]) {
+      return NO;
+    }      
+  }  
   return YES;
 }
 

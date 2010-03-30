@@ -1,12 +1,12 @@
 //
-//  FFCommon.m
+//  FFUtils.m
 //  FFPlayer
 //
 //  Created by Gabriel Handford on 3/24/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
-#import "FFCommon.h"
+#import "FFUtils.h"
 
 static AVPacket gFlushPacket;
 static BOOL gInitialized = NO;
@@ -68,7 +68,7 @@ void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int heigh
   }  
 }
 
-@implementation FFCommon
+@implementation FFUtils
 
 + (NSString *)documentsDirectory {	
 	static NSString *DocumentsDirectory = NULL;
@@ -77,6 +77,15 @@ void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int heigh
     DocumentsDirectory = [[paths objectAtIndex:0] copy];
 	}
 	return DocumentsDirectory;
+}
+
++ (NSString *)resolvePathForURL:(NSURL *)URL {  
+  if ([[URL scheme] isEqualToString:@"bundle"]) {
+    NSString *path = [URL host];
+    return [[NSBundle mainBundle] pathForResource:[path stringByDeletingPathExtension] ofType:[path pathExtension]];
+  }  
+  if ([URL isFileURL]) return [URL path];
+  return [URL absoluteString];
 }
 
 @end

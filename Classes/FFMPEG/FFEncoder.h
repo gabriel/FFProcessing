@@ -3,7 +3,7 @@
 //  FFPlayer
 //
 //  Created by Gabriel Handford on 3/24/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #include "libavformat/avformat.h"
@@ -29,13 +29,31 @@
 
 @property (readonly, nonatomic) NSUInteger currentVideoFrameIndex;
 
+- (AVCodecContext *)videoCodecContext;
+
 - (BOOL)open:(NSString *)path error:(NSError **)error;
 
 - (BOOL)writeHeader:(NSError **)error;
 
 - (BOOL)writeTrailer:(NSError **)error;
 
-- (BOOL)writeVideoFrame:(AVFrame *)pict error:(NSError **)error;
+/*!
+ Encode frame to video buffer.
+ */
+- (int)encodeVideoFrame:(AVFrame *)picture error:(NSError **)error;
+
+/*!
+ Write current video buffer.
+ */
+- (BOOL)writeVideoBuffer:(NSError **)error;
+
+/*!
+ Write video frame.
+ Encodes and writes the buffer.
+ 
+ This is the equivalent of calling both encodeVideoFrame:error: and writeVideoBuffer:.
+ */
+- (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error;
 
 - (void)close;
 

@@ -9,7 +9,7 @@
 #import "FFDecoder.h"
 #import "FFDefines.h"
 #import "FFNotifications.h"
-#import "FFCommon.h"
+#import "FFUtils.h"
 
 @implementation FFDecoder
 
@@ -20,20 +20,17 @@
   [super dealloc];
 }
 
-- (NSString *)resolvePathForURL:(NSURL *)URL {  
-  if ([[URL scheme] isEqualToString:@"bundle"]) {
-    NSString *path = [URL host];
-    return [[NSBundle mainBundle] pathForResource:[path stringByDeletingPathExtension] ofType:[path pathExtension]];
-  }  
-  if ([URL isFileURL]) return [URL path];
-  return [URL absoluteString];
-}
-
 - (BOOL)openWithURL:(NSURL *)URL format:(NSString *)format error:(NSError **)error {
   NSParameterAssert(URL);
   
-  NSString *path = [self resolvePathForURL:URL];
+  FFInitialize();
+  
+  NSString *path = [FFUtils resolvePathForURL:URL];
   FFDebug(@"Path: %@", path);
+  if (!path) {
+    FFSetError(error, FFErrorCodeOpen, @"Failed to open, invalid path");
+    return NO;
+  }
   
   AVInputFormat *avformat = NULL;
   if (format) {

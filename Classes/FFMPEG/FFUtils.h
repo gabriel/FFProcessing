@@ -1,9 +1,9 @@
 //
-//  FFCommon.h
+//  FFUtils.h
 //  FFPlayer
 //
 //  Created by Gabriel Handford on 3/24/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #include "libavformat/avformat.h"
@@ -22,8 +22,10 @@ void FFReleasePicture(AVFrame *picture);
 void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int height);
 
 
-@interface FFCommon : NSObject { }
+@interface FFUtils : NSObject { }
 
 + (NSString *)documentsDirectory;
+
++ (NSString *)resolvePathForURL:(NSURL *)URL;
 
 @end

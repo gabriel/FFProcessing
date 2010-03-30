@@ -8,13 +8,9 @@
 
 #import "FFPlayerAppDelegate.h"
 
-#import "FFCommon.h"
+#import "FFUtils.h"
 #import "FFProcessing.h"
 #import "FFEncoder.h"
-
-@interface FFPlayerAppDelegate ()
-- (void)_loadPlayerView;
-@end
 
 @implementation FFPlayerAppDelegate
 
@@ -32,18 +28,6 @@
   
   FFInitialize();
 
-  /*!
-  //NSURL *URL = [NSURL URLWithString:@"bundle://camping.m4v"]; 
-  NSURL *URL = [NSURL URLWithString:@"bundle://pegasus-1958-chiptune.avi"];
-  FFProcessing *processing = [[FFProcessing alloc] init];
-  [processing decodeURL:URL format:nil];
-  [processing release];
-   */
-
-  //[self _loadPlayerView];
-}  
-
-- (void)_loadPlayerView {
   _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
   
   _playerView.URLString = @"bundle://pegasus-1958-chiptune.avi";

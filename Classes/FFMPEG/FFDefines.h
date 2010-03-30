@@ -28,6 +28,7 @@ enum {
   FFErrorCodeScaleContext = 200,
   // Encode
   FFErrorCodeWriteFrame = 300,
+  FFErrorCodeEncodeFrame = 301,
   FFErrorCodeUnknownOutputFormat = 310,
   FFErrorCodeAllocFormatContext = 320,
   FFErrorCodeInvalidFormatParameters = 330,

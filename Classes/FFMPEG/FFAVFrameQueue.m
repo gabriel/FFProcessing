@@ -76,7 +76,7 @@
   }
   
   _running = NO;
-  _started = NO;
+  //_started = NO;
   FFDebug(@"Stopped");
   [pool release];  
 }

@@ -3,7 +3,7 @@
 //  FFPlayer
 //
 //  Created by Gabriel Handford on 3/21/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #import "FFConverter.h"
