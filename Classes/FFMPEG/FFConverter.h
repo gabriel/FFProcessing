@@ -32,8 +32,8 @@
                     error:(NSError **)error;
 
 // Buffer length in bytes for destination frame data
-- (int)destBufferLength;
+//- (int)destBufferLength;
 
-- (AVFrame *)scaleFrame:(AVFrame *)frame error:(NSError **)error;
+- (AVFrame *)scalePicture:(AVFrame *)picture error:(NSError **)error;
 
 @end

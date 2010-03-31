@@ -12,15 +12,15 @@
 
 @implementation FFGLDrawable
 
-- (id)initWithFrameQueue:(FFAVFrameQueue *)frameQueue {
+- (id)initWithReader:(FFReader *)reader {
   if ((self = [self init])) {
-    _frameQueue = [frameQueue retain];
+    _reader = [reader retain];
   }
   return self;
 }
 
 - (void)dealloc {
-  [_frameQueue release];
+  [_reader release];
   glDeleteTextures(1, &_videoTexture[0]);
   [super dealloc];
 }
@@ -104,7 +104,10 @@
     return NO;
   }
    */
-  uint8_t *nextData = [_frameQueue nextData];
+  AVFrame *avFrame = [_reader nextFrame:nil];
+  if (avFrame == NULL) return NO;
+
+  uint8_t *nextData = avFrame->data[0];
   if (nextData == NULL) return NO;
     
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
@@ -117,9 +120,9 @@
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   
   if (!_textureLoaded) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _frameQueue.converter.destWidth, _frameQueue.converter.destWidth, 0, GL_RGB, GL_UNSIGNED_BYTE, nextData);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _reader.converter.destWidth, _reader.converter.destWidth, 0, GL_RGB, GL_UNSIGNED_BYTE, nextData);
   } else {
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _frameQueue.converter.destWidth, _frameQueue.converter.destWidth,
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _reader.converter.destWidth, _reader.converter.destWidth,
                     GL_RGB, GL_UNSIGNED_BYTE, nextData);
   }
   

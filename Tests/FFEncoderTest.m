@@ -18,10 +18,10 @@
 
 - (void)testEncoding {
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test.mp4"];
-  FFEncoder *encoder = [[FFEncoder alloc] init];
+  FFEncoder *encoder = [[FFEncoder alloc] initWithWidth:320 height:480 pixelFormat:PIX_FMT_YUV420P videoBitRate:400000];
   NSError *error = nil;
   
-  AVFrame *picture = FFCreatePicture(PIX_FMT_YUV420P, 320, 480);
+  AVFrame *picture = FFPictureCreate(PIX_FMT_YUV420P, 320, 480);
   GHAssertNotNULL(picture, nil);
   
   GHAssertTrue([encoder open:path error:&error], nil);
@@ -38,7 +38,7 @@
   
   [encoder close];
   
-  FFReleasePicture(picture);
+  FFPictureRelease(picture);
   
   [encoder release];
 }  
@@ -48,7 +48,7 @@
   FFEncoder *encoder = [[FFEncoder alloc] init];
   NSError *error = nil;
   
-  AVFrame *picture = FFCreatePicture(PIX_FMT_YUV420P, 320, 480);
+  AVFrame *picture = FFPictureCreate(PIX_FMT_YUV420P, 320, 480);
   GHAssertNotNULL(picture, nil);
   
   GHAssertTrue([encoder open:path error:&error], nil);
@@ -83,7 +83,7 @@
   
   [encoder close];
   
-  FFReleasePicture(picture);
+  FFPictureRelease(picture);
   
   [encoder release];
 }  

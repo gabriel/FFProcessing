@@ -7,17 +7,17 @@
 //
 
 #import "GHGLView.h"
-#import "FFAVFrameQueue.h"
+#import "FFReader.h"
 
 @interface FFGLDrawable : NSObject <GHGLViewDrawable> {
   
-  FFAVFrameQueue *_frameQueue;
+  FFReader *_reader;
   
   GLuint _videoTexture[1];
   BOOL _textureLoaded;
 
 }
 
-- (id)initWithFrameQueue:(FFAVFrameQueue *)frameQueue;
+- (id)initWithReader:(FFReader *)reader;
 
 @end

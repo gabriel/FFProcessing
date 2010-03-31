@@ -14,9 +14,9 @@ BOOL FFIsInitialized(void);
 
 BOOL FFIsFlushPacket(AVPacket *packet);
 
-AVFrame *FFCreatePicture(enum PixelFormat pixelFormat, int width, int height);
+AVFrame *FFPictureCreate(enum PixelFormat pixelFormat, int width, int height);
 
-void FFReleasePicture(AVFrame *picture);
+void FFPictureRelease(AVFrame *picture);
 
 // Fill dummy image
 void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int height);

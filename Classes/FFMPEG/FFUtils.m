@@ -28,7 +28,7 @@ BOOL FFIsFlushPacket(AVPacket *packet) {
   return (packet->data == gFlushPacket.data);
 }
 
-AVFrame *FFCreatePicture(enum PixelFormat pixelFormat, int width, int height) {
+AVFrame *FFPictureCreate(enum PixelFormat pixelFormat, int width, int height) {
   
   AVFrame *picture = avcodec_alloc_frame();
   if (!picture) return NULL;
@@ -45,7 +45,7 @@ AVFrame *FFCreatePicture(enum PixelFormat pixelFormat, int width, int height) {
   return picture;
 }
 
-void FFReleasePicture(AVFrame *picture) {
+void FFPictureRelease(AVFrame *picture) {
   if (picture->data != NULL) av_free(picture->data[0]);
   if (picture != NULL) av_free(picture);  
 }

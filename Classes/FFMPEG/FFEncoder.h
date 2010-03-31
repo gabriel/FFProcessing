@@ -29,6 +29,8 @@
 
 @property (readonly, nonatomic) NSUInteger currentVideoFrameIndex;
 
+- (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat videoBitRate:(int)videoBitRate;
+
 - (AVCodecContext *)videoCodecContext;
 
 - (BOOL)open:(NSString *)path error:(NSError **)error;

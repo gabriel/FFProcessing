@@ -12,10 +12,11 @@
 		0007418E1161D26C00D8283B /* FFProcessingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007418D1161D26C00D8283B /* FFProcessingTest.m */; };
 		000741A71161DCC700D8283B /* pegasus-1958-chiptune.avi in Resources */ = {isa = PBXBuildFile; fileRef = 0012A1B511572F0D00D09836 /* pegasus-1958-chiptune.avi */; };
 		000741A81161DCC800D8283B /* camping.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 00DDCBF71158984C00A6BD4F /* camping.m4v */; };
-		00129F3611549B3500D09836 /* FFAVFrameQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F1B11549B3500D09836 /* FFAVFrameQueue.m */; };
+		000742751161ECC100D8283B /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 000742741161ECC100D8283B /* test.mp4 */; };
+		000742761161ECC100D8283B /* test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 000742741161ECC100D8283B /* test.mp4 */; };
+		00129F3611549B3500D09836 /* FFReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F1B11549B3500D09836 /* FFReader.m */; };
 		00129F3711549B3500D09836 /* FFGLDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */; };
 		00129F3911549B3500D09836 /* FFPlayerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2211549B3500D09836 /* FFPlayerAppDelegate.m */; };
-		00129F3A11549B3500D09836 /* FFNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2411549B3500D09836 /* FFNotifications.m */; };
 		00129F3B11549B3500D09836 /* FFDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2611549B3500D09836 /* FFDecoder.m */; };
 		00129F3C11549B3500D09836 /* FFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2811549B3500D09836 /* FFPlayerView.m */; };
 		00129F3D11549B3500D09836 /* GHGLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2D11549B3500D09836 /* GHGLTexture.m */; };
@@ -37,6 +38,8 @@
 		0012A19D1157187800D09836 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0012A1961157187700D09836 /* libswscale.a */; };
 		0012A19F115718FA00D09836 /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0012A19E115718FA00D09836 /* Shared.xcconfig */; };
 		0012A1B611572F0D00D09836 /* pegasus-1958-chiptune.avi in Resources */ = {isa = PBXBuildFile; fileRef = 0012A1B511572F0D00D09836 /* pegasus-1958-chiptune.avi */; };
+		00CA0FDA1163034900664274 /* FFReadThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA0FD91163034900664274 /* FFReadThread.m */; };
+		00CA0FDB1163034900664274 /* FFReadThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA0FD91163034900664274 /* FFReadThread.m */; };
 		00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7706A115B29A300CF9F22 /* FFEncoder.m */; };
 		00D77083115B331600CF9F22 /* FFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFUtils.m */; };
 		00DDCBF81158984C00A6BD4F /* camping.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 00DDCBF71158984C00A6BD4F /* camping.m4v */; };
@@ -54,14 +57,13 @@
 		00DDF50B115F3E0200310925 /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0012A0161154AC4700D09836 /* libbz2.dylib */; };
 		00DDF50C115F3E0200310925 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0012A00C1154AC0C00D09836 /* libz.dylib */; };
 		00DDF50D115F3E0300310925 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		00DDF526115F3F1100310925 /* FFAVFrameQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F1B11549B3500D09836 /* FFAVFrameQueue.m */; };
+		00DDF526115F3F1100310925 /* FFReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F1B11549B3500D09836 /* FFReader.m */; };
 		00DDF527115F3F1200310925 /* FFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFUtils.m */; };
 		00DDF528115F3F1300310925 /* FFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001B1D51157413D00109D45 /* FFConverter.m */; };
 		00DDF529115F3F1300310925 /* FFDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2611549B3500D09836 /* FFDecoder.m */; };
 		00DDF52A115F3F1500310925 /* FFEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7706A115B29A300CF9F22 /* FFEncoder.m */; };
 		00DDF52B115F3F1600310925 /* FFGLDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */; };
 		00DDF52C115F3F1700310925 /* FFGLTestDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 0012A0531154AE3100D09836 /* FFGLTestDrawable.m */; };
-		00DDF52D115F3F1800310925 /* FFNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2411549B3500D09836 /* FFNotifications.m */; };
 		00DDF52E115F3F1900310925 /* FFPlayerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2211549B3500D09836 /* FFPlayerAppDelegate.m */; };
 		00DDF52F115F3F1A00310925 /* FFPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2811549B3500D09836 /* FFPlayerView.m */; };
 		00DDF530115F3F1C00310925 /* FFProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001B1D211573C1D00109D45 /* FFProcessing.m */; };
@@ -87,15 +89,14 @@
 		0001B1D41157413D00109D45 /* FFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFConverter.h; sourceTree = "<group>"; };
 		0001B1D51157413D00109D45 /* FFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFConverter.m; sourceTree = "<group>"; };
 		0007418D1161D26C00D8283B /* FFProcessingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFProcessingTest.m; sourceTree = "<group>"; };
-		00129F1A11549B3500D09836 /* FFAVFrameQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFAVFrameQueue.h; sourceTree = "<group>"; };
-		00129F1B11549B3500D09836 /* FFAVFrameQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFAVFrameQueue.m; sourceTree = "<group>"; };
+		000742741161ECC100D8283B /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
+		00129F1A11549B3500D09836 /* FFReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFReader.h; sourceTree = "<group>"; };
+		00129F1B11549B3500D09836 /* FFReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFReader.m; sourceTree = "<group>"; };
 		00129F1C11549B3500D09836 /* FFDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDefines.h; sourceTree = "<group>"; };
 		00129F1D11549B3500D09836 /* FFGLDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLDrawable.h; sourceTree = "<group>"; };
 		00129F1E11549B3500D09836 /* FFGLDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFGLDrawable.m; sourceTree = "<group>"; };
 		00129F2111549B3500D09836 /* FFPlayerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFPlayerAppDelegate.h; sourceTree = "<group>"; };
 		00129F2211549B3500D09836 /* FFPlayerAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFPlayerAppDelegate.m; sourceTree = "<group>"; };
-		00129F2311549B3500D09836 /* FFNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFNotifications.h; sourceTree = "<group>"; };
-		00129F2411549B3500D09836 /* FFNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFNotifications.m; sourceTree = "<group>"; };
 		00129F2511549B3500D09836 /* FFDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDecoder.h; sourceTree = "<group>"; };
 		00129F2611549B3500D09836 /* FFDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDecoder.m; sourceTree = "<group>"; };
 		00129F2711549B3500D09836 /* FFPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFPlayerView.h; sourceTree = "<group>"; };
@@ -128,6 +129,8 @@
 		0012A1961157187700D09836 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
 		0012A19E115718FA00D09836 /* Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		0012A1B511572F0D00D09836 /* pegasus-1958-chiptune.avi */ = {isa = PBXFileReference; lastKnownFileType = video.avi; path = "pegasus-1958-chiptune.avi"; sourceTree = "<group>"; };
+		00CA0FD81163034900664274 /* FFReadThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFReadThread.h; sourceTree = "<group>"; };
+		00CA0FD91163034900664274 /* FFReadThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFReadThread.m; sourceTree = "<group>"; };
 		00D77069115B29A300CF9F22 /* FFEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEncoder.h; sourceTree = "<group>"; };
 		00D7706A115B29A300CF9F22 /* FFEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEncoder.m; sourceTree = "<group>"; };
 		00D77081115B331600CF9F22 /* FFUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFUtils.h; sourceTree = "<group>"; };
@@ -224,15 +227,11 @@
 			isa = PBXGroup;
 			children = (
 				0012A0511154AE3100D09836 /* Test */,
-				00129F1A11549B3500D09836 /* FFAVFrameQueue.h */,
-				00129F1B11549B3500D09836 /* FFAVFrameQueue.m */,
 				00129F1C11549B3500D09836 /* FFDefines.h */,
 				00129F1D11549B3500D09836 /* FFGLDrawable.h */,
 				00129F1E11549B3500D09836 /* FFGLDrawable.m */,
 				00129F2111549B3500D09836 /* FFPlayerAppDelegate.h */,
 				00129F2211549B3500D09836 /* FFPlayerAppDelegate.m */,
-				00129F2311549B3500D09836 /* FFNotifications.h */,
-				00129F2411549B3500D09836 /* FFNotifications.m */,
 				00129F2511549B3500D09836 /* FFDecoder.h */,
 				00129F2611549B3500D09836 /* FFDecoder.m */,
 				00129F2711549B3500D09836 /* FFPlayerView.h */,
@@ -246,6 +245,10 @@
 				00D7706A115B29A300CF9F22 /* FFEncoder.m */,
 				00D77081115B331600CF9F22 /* FFUtils.h */,
 				00D77082115B331600CF9F22 /* FFUtils.m */,
+				00129F1A11549B3500D09836 /* FFReader.h */,
+				00129F1B11549B3500D09836 /* FFReader.m */,
+				00CA0FD81163034900664274 /* FFReadThread.h */,
+				00CA0FD91163034900664274 /* FFReadThread.m */,
 			);
 			path = FFMPEG;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 		0012A1B411572EF500D09836 /* samples */ = {
 			isa = PBXGroup;
 			children = (
+				000742741161ECC100D8283B /* test.mp4 */,
 				00DDCBF71158984C00A6BD4F /* camping.m4v */,
 				0012A1B511572F0D00D09836 /* pegasus-1958-chiptune.avi */,
 			);
@@ -486,6 +490,7 @@
 				00DDF57C115F3FD500310925 /* Tests.xcconfig in Resources */,
 				000741A71161DCC700D8283B /* pegasus-1958-chiptune.avi in Resources */,
 				000741A81161DCC800D8283B /* camping.m4v in Resources */,
+				000742751161ECC100D8283B /* test.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +503,7 @@
 				0012A19F115718FA00D09836 /* Shared.xcconfig in Resources */,
 				0012A1B611572F0D00D09836 /* pegasus-1958-chiptune.avi in Resources */,
 				00DDCBF81158984C00A6BD4F /* camping.m4v in Resources */,
+				000742761161ECC100D8283B /* test.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,14 +516,13 @@
 			files = (
 				00DDF412115F3CC100310925 /* GHUnitIPhoneTestMain.m in Sources */,
 				00DDF423115F3CEF00310925 /* FFEncoderTest.m in Sources */,
-				00DDF526115F3F1100310925 /* FFAVFrameQueue.m in Sources */,
+				00DDF526115F3F1100310925 /* FFReader.m in Sources */,
 				00DDF527115F3F1200310925 /* FFUtils.m in Sources */,
 				00DDF528115F3F1300310925 /* FFConverter.m in Sources */,
 				00DDF529115F3F1300310925 /* FFDecoder.m in Sources */,
 				00DDF52A115F3F1500310925 /* FFEncoder.m in Sources */,
 				00DDF52B115F3F1600310925 /* FFGLDrawable.m in Sources */,
 				00DDF52C115F3F1700310925 /* FFGLTestDrawable.m in Sources */,
-				00DDF52D115F3F1800310925 /* FFNotifications.m in Sources */,
 				00DDF52E115F3F1900310925 /* FFPlayerAppDelegate.m in Sources */,
 				00DDF52F115F3F1A00310925 /* FFPlayerView.m in Sources */,
 				00DDF530115F3F1C00310925 /* FFProcessing.m in Sources */,
@@ -526,6 +531,7 @@
 				00DDF542115F3F6500310925 /* GHGLViewController.m in Sources */,
 				00DDF543115F3F6600310925 /* GHTextureManager.m in Sources */,
 				0007418E1161D26C00D8283B /* FFProcessingTest.m in Sources */,
+				00CA0FDA1163034900664274 /* FFReadThread.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,10 +540,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				00129F3611549B3500D09836 /* FFAVFrameQueue.m in Sources */,
+				00129F3611549B3500D09836 /* FFReader.m in Sources */,
 				00129F3711549B3500D09836 /* FFGLDrawable.m in Sources */,
 				00129F3911549B3500D09836 /* FFPlayerAppDelegate.m in Sources */,
-				00129F3A11549B3500D09836 /* FFNotifications.m in Sources */,
 				00129F3B11549B3500D09836 /* FFDecoder.m in Sources */,
 				00129F3C11549B3500D09836 /* FFPlayerView.m in Sources */,
 				00129F3D11549B3500D09836 /* GHGLTexture.m in Sources */,
@@ -549,6 +554,7 @@
 				0001B1D61157413D00109D45 /* FFConverter.m in Sources */,
 				00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */,
 				00D77083115B331600CF9F22 /* FFUtils.m in Sources */,
+				00CA0FDB1163034900664274 /* FFReadThread.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

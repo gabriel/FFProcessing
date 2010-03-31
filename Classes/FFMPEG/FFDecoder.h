@@ -21,9 +21,10 @@
 
 - (BOOL)openWithURL:(NSURL *)URL format:(NSString *)format error:(NSError **)error;
 
-- (int)videoWidth;
-- (int)videoHeight;
-- (enum PixelFormat)videoPixelFormat;
+- (int)width;
+- (int)height;
+- (enum PixelFormat)pixelFormat;
+- (int)videoBitRate;
 
 /*!
  Read packet.

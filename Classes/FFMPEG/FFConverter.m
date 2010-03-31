@@ -62,11 +62,13 @@
   return YES;
 }
 
+/*!
 - (int)destBufferLength {
   return avpicture_get_size(_destPixelFormat, _destWidth, _destHeight);
 }
+ */
 
-- (AVFrame *)scaleFrame:(AVFrame *)frame error:(NSError **)error {
+- (AVFrame *)scalePicture:(AVFrame *)picture error:(NSError **)error {
   struct SwsContext *scaleContext = NULL;
 
   scaleContext = sws_getCachedContext(scaleContext, 
@@ -79,7 +81,7 @@
     return NULL;
   }
   
-  sws_scale(scaleContext, frame->data, frame->linesize, 0,
+  sws_scale(scaleContext, picture->data, picture->linesize, 0,
             _sourceHeight, _destFrame->data, _destFrame->linesize);
   
   return _destFrame;

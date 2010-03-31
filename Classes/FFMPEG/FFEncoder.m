@@ -19,12 +19,12 @@
 
 @synthesize currentVideoFrameIndex=_currentVideoFrameIndex;
 
-- (id)init {
+- (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat videoBitRate:(int)videoBitRate {
   if ((self = [super init])) {
-    _width = 320; 
-    _height = 480;
-    _pixelFormat = PIX_FMT_YUV420P;
-    _videoBitRate = 400000;
+    _width = width; 
+    _height = height;
+    _pixelFormat = pixelFormat;
+    _videoBitRate = videoBitRate;
   }
   return self;
 }
@@ -185,6 +185,7 @@
     FFSetError(error, FFErrorCodeWriteHeader, @"Couldn't write header");
     return NO;
   }
+  FFDebug(@"Wrote header");
   return YES;
 }
 
@@ -193,13 +194,14 @@
     FFSetError(error, FFErrorCodeWriteTrailer, @"Couldn't write trailer");
     return NO;
   }
+  FFDebug(@"Wrote trailer");
   return YES;
 }  
 
 - (void)close {
   // Close video
   if (_videoStream != NULL) {
-    avcodec_close(_videoStream->codec);
+    if (_videoStream->codec != NULL) avcodec_close(_videoStream->codec);
     _videoStream = NULL;
   }
 

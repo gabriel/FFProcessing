@@ -8,7 +8,6 @@
 
 #import "FFDecoder.h"
 #import "FFDefines.h"
-#import "FFNotifications.h"
 #import "FFUtils.h"
 
 @implementation FFDecoder
@@ -39,11 +38,9 @@
     else FFDebug(@"Format: %s (flags=%x)", avformat->long_name, avformat->flags);
   }
 
-  FFDisplay(@"Opening: %@", path);
   int averror = av_open_input_file(&_formatContext, [path UTF8String], avformat, 0, NULL);
   if (averror != 0) {
     FFSetError(error, FFErrorCodeOpen, @"Failed to open: %d", averror);
-    FFDisplay(@"Failed to open: %d", averror);
     return NO;
   }
   
@@ -93,30 +90,29 @@
   }
   FFDebug(@"Codec opened");
 
-  [self performSelectorOnMainThread:@selector(_notifyOpened) withObject:nil waitUntilDone:NO];
-    
   _open = YES;
   FFDebug(@"Opened");
   return YES;
 }
 
-- (void)_notifyOpened {
-  [[NSNotificationCenter defaultCenter] postNotificationName:FFOpenNotification object:nil];
-}
-
-- (int)videoWidth {
+- (int)width {
   if (_videoStream == NULL) return -1;
   return _videoStream->codec->coded_width;
 }
 
-- (int)videoHeight {
+- (int)height {
   if (_videoStream == NULL) return -1;
   return _videoStream->codec->coded_height;
 }
 
-- (enum PixelFormat)videoPixelFormat {
+- (enum PixelFormat)pixelFormat {
   if (_videoStream == NULL) return PIX_FMT_NONE;
   return _videoStream->codec->pix_fmt;
+}
+
+- (int)videoBitRate {
+  if (_videoStream == NULL) return -1;
+  return _videoStream->codec->bit_rate;
 }
 
 - (BOOL)readFrame:(AVPacket *)packet error:(NSError **)error {

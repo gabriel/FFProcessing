@@ -30,7 +30,7 @@
 
   _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
   
-  _playerView.URLString = @"bundle://pegasus-1958-chiptune.avi";
+  _playerView.URLString = @"bundle://test.mp4"; //@"bundle://pegasus-1958-chiptune.avi";
   
   //_playerView.URLString = @"http://c-cam.uchicago.edu/mjpg/video.mjpg";
   //_playerView.format = @"mjpeg"; 
