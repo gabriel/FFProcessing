@@ -33,7 +33,7 @@
 
 - (AVCodecContext *)videoCodecContext;
 
-- (BOOL)open:(NSString *)path error:(NSError **)error;
+- (BOOL)open:(NSString *)path format:(NSString *)format error:(NSError **)error;
 
 - (BOOL)writeHeader:(NSError **)error;
 

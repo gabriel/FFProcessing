@@ -30,4 +30,17 @@
   [processing release];  
 }
 
+- (void)testCameraVideo {
+  NSURL *URL = [NSURL URLWithString:@"bundle://IMG_0306.MOV"];
+  NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test-mov.mp4"];
+  FFProcessing *processing = [[FFProcessing alloc] init];
+  GHAssertTrue([processing openSourceURL:URL path:path format:nil error:nil], nil);
+  
+  [processing process:nil];
+  
+  [processing close];
+  
+  [processing release];  
+}
+
 @end

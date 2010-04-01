@@ -17,7 +17,7 @@
   [super dealloc];
 }
 
-- (BOOL)openSourceURL:(NSURL *)URL path:(NSString *)path format:(NSString *)format error:(NSError **)error {
+- (BOOL)openURL:(NSURL *)URL format:(NSString *)format outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat error:(NSError **)error {
   _decoder = [[FFDecoder alloc] init];
   
   if (![_decoder openWithURL:URL format:format error:error]) {
@@ -37,7 +37,7 @@
                                   pixelFormat:[_decoder pixelFormat]
                                  videoBitRate:400000];
 
-  if (![_encoder open:path error:error])
+  if (![_encoder open:outputPath format:outputFormat error:error])
     return NO;
   
   return YES;
@@ -55,19 +55,11 @@
   if (![_encoder writeHeader:error]) 
     return NO;
   
+  NSInteger index = 0;
   while (YES) {
     *error = nil;
     
-    AVPacket packet;
-    if (![_decoder readFrame:&packet error:error]) {
-      if (*error) {
-        FFDebug(@"Read frame error");
-        break;
-      }
-      continue;
-    }
-    
-    if (![_decoder decodeFrame:_decoderFrame packet:&packet error:error]) {
+    if (![_decoder decodeFrame:_decoderFrame error:error]) {
       if (*error) {
         FFDebug(@"Decode error");
         break;
@@ -77,8 +69,6 @@
     
     if (!error) {
       if (_decoderFrame->pict_type == FF_I_TYPE) {
-        FFDebug(@"Packet, pts=%lld, dts=%lld", packet.pts, packet.dts);
-
         FFDebug(@"Frame, key_frame=%d, pict_type=%@", 
                 _decoderFrame->key_frame, NSStringFromAVFramePictType(_decoderFrame->pict_type));
       }
@@ -91,16 +81,17 @@
     if (bytesEncoded < 0) break;
     
     // Mosh!
-    if ([_encoder videoCodecContext]->coded_frame->key_frame) {      
-      continue;     
+    if ([_encoder videoCodecContext]->coded_frame->key_frame) {  
+      if (index++ != 0) {
+        //FFDebug(@"Skipping keyframe");
+        //continue;     
+      }
     }
     
     // If bytesEncoded is zero, there was buffering
     if (bytesEncoded > 0) {
       if (![_encoder writeVideoBuffer:error]) break;
     }
-    
-    av_free_packet(&packet);
   }
   
   if (![_encoder writeTrailer:error]) return NO;

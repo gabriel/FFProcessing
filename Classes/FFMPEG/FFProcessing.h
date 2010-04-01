@@ -16,7 +16,7 @@
   FFEncoder *_encoder;
 }
 
-- (BOOL)openSourceURL:(NSURL *)URL path:(NSString *)path format:(NSString *)format error:(NSError **)error;
+- (BOOL)openURL:(NSURL *)URL format:(NSString *)format outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat error:(NSError **)error;
 
 - (BOOL)process:(NSError **)error;
 

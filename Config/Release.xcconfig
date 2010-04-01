@@ -1,0 +1,5 @@
+#include "Shared.xcconfig"
+
+COPY_PHASE_STRIP = YES
+GCC_OPTIMIZATION_LEVEL = s
+VALIDATE_PRODUCT = YES

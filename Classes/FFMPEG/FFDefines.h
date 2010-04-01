@@ -6,6 +6,8 @@
 //  Copyright 2010. All rights reserved.
 //
 
+#include "libavcodec/avcodec.h"
+
 #define FFSetError(__ERROR__, __ERROR_CODE__, ...) do { NSLog(__VA_ARGS__); \
   if (__ERROR__) *__ERROR__ = [NSError errorWithDomain:@"FFMPEG" code:__ERROR_CODE__ \
 userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:__VA_ARGS__] forKey:NSLocalizedDescriptionKey]]; \

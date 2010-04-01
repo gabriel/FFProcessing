@@ -39,7 +39,7 @@
   return _videoStream->codec;
 }
 
-- (BOOL)open:(NSString *)path error:(NSError **)error {  
+- (BOOL)open:(NSString *)path format:(NSString *)format error:(NSError **)error {  
   if (_formatContext) {
     FFSetError(error, FFErrorCodeOpenAlready, @"Encoder is already open");
     return NO;
@@ -48,9 +48,9 @@
   FFInitialize();
   
   const char *filename = [path UTF8String];  
-  AVOutputFormat *outputFormat = av_guess_format(NULL, filename, NULL);
+  AVOutputFormat *outputFormat = av_guess_format([format UTF8String], filename, NULL);
   if (!outputFormat) {
-    FFSetError(error, FFErrorCodeUnknownOutputFormat, @"Couldn't deduce output format from file extension");
+    FFSetError(error, FFErrorCodeUnknownOutputFormat, @"Couldn't deduce output format");
     return NO;
   }
   

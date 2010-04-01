@@ -6,8 +6,6 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#import "GHGLViewController.h"
-
 #import "FFPlayerView.h"
 
 @interface FFPlayerAppDelegate : NSObject <UIApplicationDelegate> {
