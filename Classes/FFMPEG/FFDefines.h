@@ -19,8 +19,8 @@ enum {
   FFErrorCodeOpen = 10,
   FFErrorCodeStreamInfoNotFound = 20,
   FFErrorCodeVideoStreamNotFound = 30,
-  FFErrorCodeVideoCodecNotFound = 40,
-  FFErrorCodeVideoCodecOpen = 41,  
+  FFErrorCodeCodecNotFound = 40,
+  FFErrorCodeCodecOpen = 41,  
   // Alloc
   FFErrorCodeAllocateFrame = 51,
   FFErrorCodeAllocateVideoBuffer = 60,
@@ -41,8 +41,8 @@ enum {
 } FFErrorCode;
 
 //#define FFDebug(...) do {} while(0)
-
 #define FFDebug(...) NSLog(__VA_ARGS__)
+#define FFWarn(...) NSLog(__VA_ARGS__)
 
 static inline NSString *NSStringFromAVFramePictType(int pictType) {
   switch (pictType) {

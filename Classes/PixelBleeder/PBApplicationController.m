@@ -9,6 +9,7 @@
 #import "PBApplicationController.h"
 
 #import "FFUtils.h"
+#import "FFDefines.h"
 
 @implementation PBApplicationController
 
@@ -48,18 +49,24 @@
   if (!_processing)
     _processing = [[PBProcessing alloc] init];
   
+  if (!self.sourceURL) self.sourceURL = [FFUtils resolvedURLForURL:[NSURL URLWithString:@"bundle://IMG_0306.MOV"]];
+    
   if (self.sourceURL) {
     self.path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test.mov"];
-    [_processing processURL:self.sourceURL outputPath:self.path outputFormat:@"h264"];    
+    FFDebug(@"Process: %@ to %@", self.sourceURL, self.path);
+    [_processing processURL:self.sourceURL outputPath:self.path outputFormat:@"h264"];        
   }
 }  
 
 - (void)openMoviePlayerController {
-  //if (!self.path) self.path = [FFUtils resolvePathForURL:[NSURL URLWithString:@"bundle://test-mosh.mp4"]];
+  if (!self.path) self.path = [FFUtils resolvedPathForURL:[NSURL URLWithString:@"bundle://IMG_0306.MOV"]];
 
-  [_moviePlayerController release];
-  _moviePlayerController = [[PBMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:self.path]];
-  [_moviePlayerController play];
+  FFDebug(@"Playing: %@", self.path);
+  if (self.path) {
+    [_moviePlayerController release];
+    _moviePlayerController = [[PBMoviePlayerController alloc] initWithContentURL:[NSURL fileURLWithPath:self.path]];
+    [_moviePlayerController play];
+  }
 }  
 
 

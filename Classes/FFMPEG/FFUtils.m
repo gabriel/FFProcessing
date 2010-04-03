@@ -7,6 +7,7 @@
 //
 
 #import "FFUtils.h"
+#import "FFDefines.h"
 
 static AVPacket gFlushPacket;
 static BOOL gInitialized = NO;
@@ -79,13 +80,23 @@ void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int heigh
 	return DocumentsDirectory;
 }
 
-+ (NSString *)resolvePathForURL:(NSURL *)URL {  
-  if ([[URL scheme] isEqualToString:@"bundle"]) {
-    NSString *path = [URL host];
-    return [[NSBundle mainBundle] pathForResource:[path stringByDeletingPathExtension] ofType:[path pathExtension]];
-  }  
++ (NSString *)resolvedPathForURL:(NSURL *)URL {  
+  URL = [self resolvedURLForURL:URL];
   if ([URL isFileURL]) return [URL path];
   return [URL absoluteString];
+}
+
++ (NSURL *)resolvedURLForURL:(NSURL *)URL {
+  if ([[URL scheme] isEqualToString:@"bundle"]) {
+    NSString *path = [URL host];
+    NSString *pathInBundle = [[NSBundle mainBundle] pathForResource:[path stringByDeletingPathExtension] ofType:[path pathExtension]];
+    if (!pathInBundle) {
+      FFDebug(@"Path in bundle not found: %@", path);
+      return nil;
+    }
+    return [NSURL fileURLWithPath:pathInBundle];
+  }  
+  return URL;  
 }
 
 @end

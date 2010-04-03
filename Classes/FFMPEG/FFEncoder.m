@@ -13,6 +13,7 @@
 @interface FFEncoder ()
 - (BOOL)_prepareVideo:(NSError **)error;
 - (AVStream *)_addVideoStream:(NSError **)error;
+- (void)_applyPresets:(AVCodecContext *)codecContext;
 @end
 
 @implementation FFEncoder
@@ -48,7 +49,8 @@
   FFInitialize();
   
   const char *filename = [path UTF8String];  
-  AVOutputFormat *outputFormat = av_guess_format([format UTF8String], filename, NULL);
+  FFDebug(@"Encoder; path=%@, format=%@", path, format);
+  AVOutputFormat *outputFormat = av_guess_format([format UTF8String], NULL, NULL);
   if (!outputFormat) {
     FFSetError(error, FFErrorCodeUnknownOutputFormat, @"Couldn't deduce output format");
     return NO;
@@ -121,6 +123,9 @@
   }
   
   AVCodecContext *codecContext = stream->codec;
+  
+  avcodec_get_context_defaults2(codecContext, CODEC_TYPE_VIDEO);
+  
   codecContext->codec_id = _formatContext->oformat->video_codec;
   codecContext->codec_type = CODEC_TYPE_VIDEO;
   
@@ -140,19 +145,41 @@
   codecContext->gop_size = 12; /* emit one intra frame every twelve frames at most */
   codecContext->pix_fmt = _pixelFormat;
   
+  [self _applyPresets:codecContext];
+  
+  return stream;
+}
+
+- (void)_applyPresets:(AVCodecContext *)codecContext {
   if (codecContext->codec_id == CODEC_ID_MPEG2VIDEO) {
     // For testing, we also add B frames
     codecContext->max_b_frames = 2;
   }
   
-  if (codecContext->codec_id == CODEC_ID_MPEG1VIDEO){
+  if (codecContext->codec_id == CODEC_ID_MPEG1VIDEO) {
     /* Needed to avoid using macroblocks in which some coeffs overflow.
      This does not happen with normal video, it just happens here as
      the motion of the chroma plane does not match the luma plane. */
     codecContext->mb_decision = 2;
   }
-    
-  return stream;
+  
+  // Defaults?
+  codecContext->me_range = 16;
+  codecContext->max_qdiff = 4;
+  codecContext->qmin = 10;
+  codecContext->qmax = 51;
+  codecContext->qcompress = 0.6;
+  
+  codecContext->flags2 |= CODEC_FLAG2_WPRED;
+  //codecContext->flags2 |= CODEC_FLAG2_8X8DCT;
+  codecContext->flags2 |= CODEC_FLAG2_MBTREE;
+  
+  codecContext->coder_type = 0;
+  codecContext->max_b_frames = 0;
+  codecContext->level = 13;
+  codecContext->rc_max_rate = 768000;
+  codecContext->rc_buffer_size = 3000000;
+  codecContext->weighted_p_pred = 0;
 }
 
 - (BOOL)_prepareVideo:(NSError **)error {
@@ -160,12 +187,12 @@
 
   AVCodec *codec = avcodec_find_encoder(codecContext->codec_id);
   if (!codec) {
-    FFSetError(error, FFErrorCodeVideoCodecNotFound, @"Codec not found");
+    FFSetError(error, FFErrorCodeCodecNotFound, @"Codec not found");
     return NO;
   }
 
   if (avcodec_open(codecContext, codec) < 0) {
-    FFSetError(error, FFErrorCodeVideoCodecOpen, @"Couldn't open codec");
+    FFSetError(error, FFErrorCodeCodecOpen, @"Couldn't open codec");
     return NO;
   }
   
@@ -218,7 +245,7 @@
     }
     
     if (!(_formatContext->oformat->flags & AVFMT_NOFILE)) {
-      url_fclose(_formatContext->pb);
+      if (_formatContext->pb != NULL) url_fclose(_formatContext->pb);
     }
   
     av_free(_formatContext);

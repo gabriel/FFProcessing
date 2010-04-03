@@ -35,7 +35,7 @@
     
     //NSArray *mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMPEG];
     
-    _videoController.allowsEditing = YES;
+    _videoController.allowsImageEditing = YES;
     _videoController.mediaTypes = mediaTypes;
     _videoController.delegate = self;
   }

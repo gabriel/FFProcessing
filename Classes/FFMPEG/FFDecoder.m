@@ -24,7 +24,7 @@
   
   FFInitialize();
   
-  NSString *path = [FFUtils resolvePathForURL:URL];
+  NSString *path = [FFUtils resolvedPathForURL:URL];
   FFDebug(@"Path: %@", path);
   if (!path) {
     FFSetError(error, FFErrorCodeOpen, @"Failed to open, invalid path");
@@ -76,16 +76,16 @@
     return NO;
   }
   
-  FFDebug(@"Finding codec");
+  FFDebug(@"Finding codec (decoder)");
   AVCodec *codec = avcodec_find_decoder(_videoStream->codec->codec_id);
   if (!codec) {
-    FFSetError(error, FFErrorCodeVideoCodecNotFound, @"Codec not found for video stream");
+    FFSetError(error, FFErrorCodeCodecNotFound, @"Codec not found for video stream");
     return NO;
   }
-  FFDebug(@"Codec found: %s", codec->name);
+  FFDebug(@"Codec (decoder) found: %s", codec->name);
   
   if (avcodec_open(_videoStream->codec, codec) < 0) {
-    FFSetError(error, FFErrorCodeVideoCodecOpen, @"Codec open failed for video stream");
+    FFSetError(error, FFErrorCodeCodecOpen, @"Codec (decoder) open failed for video stream");
     return NO;
   }
   FFDebug(@"Codec opened");

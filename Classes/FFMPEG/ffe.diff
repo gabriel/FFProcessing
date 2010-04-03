@@ -1,0 +1,176 @@
+diff --git a/Classes/FFMPEG/FFEncoder.m b/Classes/FFMPEG/FFEncoder.m
+index 8f2b8ac..d727f6f 100644
+--- a/Classes/FFMPEG/FFEncoder.m
++++ b/Classes/FFMPEG/FFEncoder.m
+@@ -12,7 +12,8 @@
+ 
+ @interface FFEncoder ()
+ - (BOOL)_prepareVideo:(NSError **)error;
+-- (AVStream *)_addVideoStream:(NSError **)error;
++- (AVStream *)_addVideoStream:(AVFormatContext *)formatContext error:(NSError **)error;
++- (BOOL)_openCodec:(AVCodecContext *)codecContext error:(NSError **)error;
+ @end
+ 
+ @implementation FFEncoder
+@@ -65,15 +66,11 @@
+   
+   
+   if (outputFormat->video_codec != CODEC_ID_NONE) {
+-    _videoStream = [self _addVideoStream:error];
++    _videoStream = [self _addVideoStream:_formatContext error:error];
+     if (!_videoStream) {
+       [self close];
+       return NO;
+-    }
+-    
+-    // Some formats want stream headers to be separate
+-    if (outputFormat->flags & AVFMT_GLOBALHEADER)
+-      _videoStream->codec->flags |= CODEC_FLAG_GLOBAL_HEADER;
++    }    
+   }
+ 
+   /*!
+@@ -110,10 +107,9 @@
+   return YES;
+ }
+ 
+-/* add a video output stream */
+-- (AVStream *)_addVideoStream:(NSError **)error {
++- (AVStream *)_addVideoStream:(AVFormatContext *)formatContext error:(NSError **)error {
+   
+-  AVStream *stream = av_new_stream(_formatContext, 0);
++  AVStream *stream = av_new_stream(formatContext, 0);
+   
+   if (!stream) {
+     FFSetError(error, FFErrorCodeAllocStream, @"Couldn't allocate stream");
+@@ -121,51 +117,106 @@
+   }
+   
+   AVCodecContext *codecContext = stream->codec;
+-  codecContext->codec_id = _formatContext->oformat->video_codec;
++  AVOutputFormat *outputFormat = formatContext->oformat;
++  
++  //avcodec_get_context_defaults2(codecContext, CODEC_TYPE_VIDEO);
++  
++  codecContext->codec_id = outputFormat->video_codec;
++  
+   codecContext->codec_type = CODEC_TYPE_VIDEO;
+   
+   codecContext->bit_rate = _videoBitRate;
++  
+   // Resolution must be a multiple of two
+   codecContext->width = _width;
+   codecContext->height = _height;
+   
+-  /*
+-   time_base: this is the fundamental unit of time (in seconds) in terms
+-   of which frame timestamps are represented. for fixed-fps content,
+-   timebase should be 1/framerate and timestamp increments should be
+-   identically 1. 
+-   */
+-  codecContext->time_base.den = 25; // Frames per second
+-  codecContext->time_base.num = 1;
+-  codecContext->gop_size = 12; /* emit one intra frame every twelve frames at most */
+   codecContext->pix_fmt = _pixelFormat;
+   
++  codecContext->gop_size = 12; /* emit one intra frame every twelve frames at most */  
++  
++  /*!
+   if (codecContext->codec_id == CODEC_ID_MPEG2VIDEO) {
+     // For testing, we also add B frames
+     codecContext->max_b_frames = 2;
+   }
+   
+   if (codecContext->codec_id == CODEC_ID_MPEG1VIDEO){
+-    /* Needed to avoid using macroblocks in which some coeffs overflow.
+-     This does not happen with normal video, it just happens here as
+-     the motion of the chroma plane does not match the luma plane. */
++   // Needed to avoid using macroblocks in which some coeffs overflow.
++   //  This does not happen with normal video, it just happens here as
++   //  the motion of the chroma plane does not match the luma plane.
+     codecContext->mb_decision = 2;
+   }
++  */
++  
++  // To try
++  //codecContext->max_b_frames = 0;
++  
++  /*!
++   // QScale?
++  codecContext->flags |= CODEC_FLAG_QSCALE;
++  codecContext->global_quality = stream->quality = FF_QP2LAMBDA * video_qscale;
++   */
++  
++  //AVRational fps = (AVRational){25, 1};
++  /*
++   time_base: This is the fundamental unit of time (in seconds) in terms
++   of which frame timestamps are represented. for fixed-fps content,
++   timebase should be 1/framerate and timestamp increments should be
++   identically 1.
++   */  
++  //codecContext->time_base.num = fps.den; // fps is inverse of time_base
++  //codecContext->time_base.den = fps.num;
++  
++  codecContext->time_base.den = 25; // Frames per second
++  codecContext->time_base.num = 1;
++  
++  if (![self _openCodec:codecContext error:error]) {
++    return NULL;
++  }  
++  
++  AVCodec *codec = codecContext->codec;
++    
++  /*!
++  if (codec->supported_framerates) {
++    fps = codec->supported_framerates[av_find_nearest_q_idx(fps, codec->supported_framerates)];
++    codecContext->time_base.num = fps.den; // fps is inverse of time_base
++    codecContext->time_base.den = fps.num;
++  }
++   */
++  
++  // Some formats want stream headers to be separate
++  if (outputFormat->flags & AVFMT_GLOBALHEADER)
++    codecContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
+     
+   return stream;
+ }
+ 
++- (BOOL)_openCodec:(AVCodecContext *)codecContext error:(NSError **)error {
++  AVCodec *codec = avcodec_find_encoder(codecContext->codec_id);
++  if (!codec) {
++    FFSetError(error, FFErrorCodeCodecNotFound, @"Codec (encoder) not found");
++    return NO;
++  }
++  FFDebug(@"Codec (encoder) found");
++  if (avcodec_open(codecContext, codec) < 0) {
++    FFSetError(error, FFErrorCodeCodecOpen, @"Couldn't open codec (encoder)");
++    return NO;
++  }
++  return YES;
++}
++
+ - (BOOL)_prepareVideo:(NSError **)error {
+   AVCodecContext *codecContext = _videoStream->codec;
+ 
+   AVCodec *codec = avcodec_find_encoder(codecContext->codec_id);
+   if (!codec) {
+-    FFSetError(error, FFErrorCodeVideoCodecNotFound, @"Codec not found");
++    FFSetError(error, FFErrorCodeCodecNotFound, @"Codec not found");
+     return NO;
+   }
+ 
+   if (avcodec_open(codecContext, codec) < 0) {
+-    FFSetError(error, FFErrorCodeVideoCodecOpen, @"Couldn't open codec");
++    FFSetError(error, FFErrorCodeCodecOpen, @"Couldn't open codec");
+     return NO;
+   }
+   
+@@ -218,7 +269,7 @@
+     }
+     
+     if (!(_formatContext->oformat->flags & AVFMT_NOFILE)) {
+-      url_fclose(_formatContext->pb);
++      if (_formatContext->pb != NULL) url_fclose(_formatContext->pb);
+     }
+   
+     av_free(_formatContext);

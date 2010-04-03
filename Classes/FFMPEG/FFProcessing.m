@@ -78,7 +78,10 @@
     av_picture_copy((AVPicture *)picture, (AVPicture *)_decoderFrame, [_decoder pixelFormat], [_decoder width], [_decoder height]);
         
     int bytesEncoded = [_encoder encodeVideoFrame:picture error:error];
-    if (bytesEncoded < 0) break;
+    if (bytesEncoded < 0) {
+      FFDebug(@"Encode error");
+      break;
+    }
     
     // Mosh!
     if ([_encoder videoCodecContext]->coded_frame->key_frame) {  

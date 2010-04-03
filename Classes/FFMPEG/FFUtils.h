@@ -26,6 +26,8 @@ void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int heigh
 
 + (NSString *)documentsDirectory;
 
-+ (NSString *)resolvePathForURL:(NSURL *)URL;
++ (NSString *)resolvedPathForURL:(NSURL *)URL;
+
++ (NSURL *)resolvedURLForURL:(NSURL *)URL;
 
 @end

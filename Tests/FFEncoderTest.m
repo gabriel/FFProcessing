@@ -24,7 +24,7 @@
   AVFrame *picture = FFPictureCreate(PIX_FMT_YUV420P, 320, 480);
   GHAssertNotNULL(picture, nil);
   
-  GHAssertTrue([encoder open:path error:&error], nil);
+  GHAssertTrue([encoder open:path format:nil error:&error], nil);
   
   GHAssertTrue([encoder writeHeader:&error], nil);
 
@@ -51,7 +51,7 @@
   AVFrame *picture = FFPictureCreate(PIX_FMT_YUV420P, 320, 480);
   GHAssertNotNULL(picture, nil);
   
-  GHAssertTrue([encoder open:path error:&error], nil);
+  GHAssertTrue([encoder open:path format:nil error:&error], nil);
   
   GHAssertTrue([encoder writeHeader:&error], nil);
   

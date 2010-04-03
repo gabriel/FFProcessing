@@ -21,7 +21,7 @@
   int _videoBitRate;
   
   uint8_t *_videoBuffer;
-  NSInteger _videoBufferSize;
+  int _videoBufferSize;
   
   NSUInteger _currentVideoFrameIndex;
   
