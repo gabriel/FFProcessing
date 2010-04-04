@@ -68,6 +68,11 @@
 		00D16AB71167DFF400D025EF /* FFPresetsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16AB61167DFF400D025EF /* FFPresetsTest.m */; };
 		00D16AEB1167E21E00D025EF /* libx264-ipod320.ffpreset in Resources */ = {isa = PBXBuildFile; fileRef = 00D16AD11167E20100D025EF /* libx264-ipod320.ffpreset */; };
 		00D16AEC1167E22200D025EF /* libx264-ipod320.ffpreset in Resources */ = {isa = PBXBuildFile; fileRef = 00D16AD11167E20100D025EF /* libx264-ipod320.ffpreset */; };
+		00D16CCB11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
+		00D16CCC11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
+		00D16CCD11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
+		00D16D6B11692FE700D025EF /* output.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 00D16D6A11692FE700D025EF /* output.mp4 */; };
+		00D16E5D11694A8700D025EF /* test-x264.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 00D16E5C11694A8700D025EF /* test-x264.mp4 */; };
 		00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7706A115B29A300CF9F22 /* FFEncoder.m */; };
 		00D77083115B331600CF9F22 /* FFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFUtils.m */; };
 		00DB9ACC116460D4002A7F8F /* PBProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACB116460D4002A7F8F /* PBProcessing.m */; };
@@ -160,13 +165,9 @@
 		000DD3D11166C669007E8546 /* color16.avi */ = {isa = PBXFileReference; lastKnownFileType = video.avi; path = color16.avi; sourceTree = "<group>"; };
 		000DD3D21166C669007E8546 /* IMG_0306.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = IMG_0306.MOV; sourceTree = "<group>"; };
 		000DD3D31166C669007E8546 /* pegasus-1958-chiptune.avi */ = {isa = PBXFileReference; lastKnownFileType = video.avi; path = "pegasus-1958-chiptune.avi"; sourceTree = "<group>"; };
-		000DD3D41166C669007E8546 /* test-camera-processed.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-camera-processed.mp4"; sourceTree = "<group>"; };
-		000DD3D51166C669007E8546 /* test-mosh.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-mosh.mp4"; sourceTree = "<group>"; };
-		000DD3D61166C669007E8546 /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
 		000DD3E61167D78B007E8546 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libx264.a; sourceTree = "<group>"; };
 		00129F1A11549B3500D09836 /* FFReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFReader.h; sourceTree = "<group>"; };
 		00129F1B11549B3500D09836 /* FFReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFReader.m; sourceTree = "<group>"; };
-		00129F1C11549B3500D09836 /* FFDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDefines.h; sourceTree = "<group>"; };
 		00129F1D11549B3500D09836 /* FFGLDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLDrawable.h; sourceTree = "<group>"; };
 		00129F1E11549B3500D09836 /* FFGLDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFGLDrawable.m; sourceTree = "<group>"; };
 		00129F2111549B3500D09836 /* FFPlayerAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFPlayerAppDelegate.h; sourceTree = "<group>"; };
@@ -241,6 +242,10 @@
 		00D16AE81167E20100D025EF /* libx264-veryfast_firstpass.ffpreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libx264-veryfast_firstpass.ffpreset"; sourceTree = "<group>"; };
 		00D16AE91167E20100D025EF /* libx264-veryslow.ffpreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libx264-veryslow.ffpreset"; sourceTree = "<group>"; };
 		00D16AEA1167E20100D025EF /* libx264-veryslow_firstpass.ffpreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libx264-veryslow_firstpass.ffpreset"; sourceTree = "<group>"; };
+		00D16CC911688B9B00D025EF /* FFOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFOptions.h; sourceTree = "<group>"; };
+		00D16CCA11688B9B00D025EF /* FFOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFOptions.m; sourceTree = "<group>"; };
+		00D16D6A11692FE700D025EF /* output.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = output.mp4; sourceTree = "<group>"; };
+		00D16E5C11694A8700D025EF /* test-x264.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-x264.mp4"; sourceTree = "<group>"; };
 		00D77069115B29A300CF9F22 /* FFEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEncoder.h; sourceTree = "<group>"; };
 		00D7706A115B29A300CF9F22 /* FFEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEncoder.m; sourceTree = "<group>"; };
 		00D77081115B331600CF9F22 /* FFUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFUtils.h; sourceTree = "<group>"; };
@@ -402,13 +407,12 @@
 		000DD3CF1166C669007E8546 /* samples */ = {
 			isa = PBXGroup;
 			children = (
+				00D16E5C11694A8700D025EF /* test-x264.mp4 */,
+				00D16D6A11692FE700D025EF /* output.mp4 */,
 				000DD3D01166C669007E8546 /* camping.m4v */,
 				000DD3D11166C669007E8546 /* color16.avi */,
 				000DD3D21166C669007E8546 /* IMG_0306.MOV */,
 				000DD3D31166C669007E8546 /* pegasus-1958-chiptune.avi */,
-				000DD3D41166C669007E8546 /* test-camera-processed.mp4 */,
-				000DD3D51166C669007E8546 /* test-mosh.mp4 */,
-				000DD3D61166C669007E8546 /* test.mp4 */,
 			);
 			name = samples;
 			path = "../ffmpeg-build/samples";
@@ -427,7 +431,6 @@
 			isa = PBXGroup;
 			children = (
 				0012A0511154AE3100D09836 /* Test */,
-				00129F1C11549B3500D09836 /* FFDefines.h */,
 				00129F1D11549B3500D09836 /* FFGLDrawable.h */,
 				00129F1E11549B3500D09836 /* FFGLDrawable.m */,
 				00129F2111549B3500D09836 /* FFPlayerAppDelegate.h */,
@@ -453,6 +456,8 @@
 				00F824FC1165A9C400175A32 /* FFCodec.m */,
 				00D16AAE1167DD9C00D025EF /* FFPresets.h */,
 				00D16AAF1167DD9C00D025EF /* FFPresets.m */,
+				00D16CC911688B9B00D025EF /* FFOptions.h */,
+				00D16CCA11688B9B00D025EF /* FFOptions.m */,
 			);
 			path = FFMPEG;
 			sourceTree = "<group>";
@@ -748,6 +753,8 @@
 				00DB9CD611648145002A7F8F /* icon.png in Resources */,
 				000DD3F91167D881007E8546 /* IMG_0306.MOV in Resources */,
 				00D16AEB1167E21E00D025EF /* libx264-ipod320.ffpreset in Resources */,
+				00D16D6B11692FE700D025EF /* output.mp4 in Resources */,
+				00D16E5D11694A8700D025EF /* test-x264.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,6 +805,7 @@
 				00DB9C7711647A3E002A7F8F /* PBApplicationController.m in Sources */,
 				00F824FD1165A9C400175A32 /* FFCodec.m in Sources */,
 				00D16AB01167DD9C00D025EF /* FFPresets.m in Sources */,
+				00D16CCB11688B9B00D025EF /* FFOptions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,6 +840,7 @@
 				00F825011165AE3600175A32 /* FFCodecTest.m in Sources */,
 				00D16AB11167DD9C00D025EF /* FFPresets.m in Sources */,
 				00D16AB71167DFF400D025EF /* FFPresetsTest.m in Sources */,
+				00D16CCC11688B9B00D025EF /* FFOptions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,6 +871,7 @@
 				00DB9AD0116461CD002A7F8F /* PBApplicationController.m in Sources */,
 				00F824FE1165A9C400175A32 /* FFCodec.m in Sources */,
 				00D16AB21167DD9C00D025EF /* FFPresets.m in Sources */,
+				00D16CCD11688B9B00D025EF /* FFOptions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

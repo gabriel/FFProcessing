@@ -7,7 +7,7 @@
 //
 
 #import "FFProcessing.h"
-#import "FFDefines.h"
+
 #import "FFUtils.h"
 
 @implementation FFProcessing
@@ -17,7 +17,9 @@
   [super dealloc];
 }
 
-- (BOOL)openURL:(NSURL *)URL format:(NSString *)format outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat error:(NSError **)error {
+- (BOOL)openURL:(NSURL *)URL format:(NSString *)format outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
+outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
+  
   _decoder = [[FFDecoder alloc] init];
   
   if (![_decoder openWithURL:URL format:format error:error]) {
@@ -26,18 +28,21 @@
   
   _decoderFrame = avcodec_alloc_frame();
   if (_decoderFrame == NULL) {
-    FFSetError(error, FFErrorCodeAllocateFrame, @"Couldn't allocate frame");
+    FFSetError(error, FFErrorCodeAllocateFrame, -1, @"Couldn't allocate frame");
     return NO;
   }
   
-  //FFDebug(@"Video bit rate: %d", [_decoder videoBitRate]);
+  FFOptions *options = [_decoder options];
+  FFPresets *presets = [[FFPresets alloc] init]; // TODO(gabe): Presets hardcoded
+  options.presets = presets;
+  [presets release];
   
-  _encoder = [[FFEncoder alloc] initWithWidth:[_decoder width] 
-                                       height:[_decoder height]
-                                  pixelFormat:[_decoder pixelFormat]
-                                 videoBitRate:400000];
+  _encoder = [[FFEncoder alloc] initWithOptions:options
+                                           path:outputPath 
+                                         format:outputFormat
+                                      codecName:outputCodecName];
 
-  if (![_encoder open:outputPath format:outputFormat error:error])
+  if (![_encoder open:error])
     return NO;
   
   return YES;
@@ -51,11 +56,14 @@
     NSError *processError = nil;
     error = &processError;
   }
+  
+  AVFrame *picture = FFPictureCreate(_decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
 
   if (![_encoder writeHeader:error]) 
     return NO;
   
-  NSInteger index = 0;
+  int64_t index = 0;
+  int64_t keyFrameIndex = 0;
   while (YES) {
     *error = nil;
     
@@ -63,20 +71,19 @@
       if (*error) {
         FFDebug(@"Decode error");
         break;
-      }      
+      }
+      //FFDebug(@"Decode buffering, continuing...");
       continue;
     }
     
-    if (!error) {
-      if (_decoderFrame->pict_type == FF_I_TYPE) {
-        FFDebug(@"Frame, key_frame=%d, pict_type=%@", 
-                _decoderFrame->key_frame, NSStringFromAVFramePictType(_decoderFrame->pict_type));
-      }
-    }
+    //if (_decoderFrame->pict_type == FF_I_TYPE) { }
+    //FFDebug(@"Decoded frame, pict_type=%@", NSStringFromAVFramePictType(_decoderFrame->pict_type));
     
-    AVFrame *picture = FFPictureCreate([_decoder pixelFormat], [_decoder width], [_decoder height]);
-    av_picture_copy((AVPicture *)picture, (AVPicture *)_decoderFrame, [_decoder pixelFormat], [_decoder width], [_decoder height]);
-        
+    av_picture_copy((AVPicture *)picture, (AVPicture *)_decoderFrame, _decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
+    
+    // Set pts for encoding
+    picture->pts = index++;
+            
     int bytesEncoded = [_encoder encodeVideoFrame:picture error:error];
     if (bytesEncoded < 0) {
       FFDebug(@"Encode error");
@@ -85,9 +92,9 @@
     
     // Mosh!
     if ([_encoder videoCodecContext]->coded_frame->key_frame) {  
-      if (index++ != 0) {
-        //FFDebug(@"Skipping keyframe");
-        //continue;     
+      if (keyFrameIndex++ != 0) {
+        FFDebug(@"Skipping keyframe");
+        continue;     
       }
     }
     
@@ -98,6 +105,8 @@
   }
   
   if (![_encoder writeTrailer:error]) return NO;
+  
+  FFPictureRelease(picture);
   
   return YES;
 }
@@ -113,5 +122,17 @@
   [_encoder release];
   _encoder = nil;
 }
+
+- (void)_converter {
+  // Setup converter
+  /*!
+   _converter = [[FFConverter alloc] initWithSourceWidth:[_options sourceWidth]
+   sourceHeight:[_options sourceHeight]
+   sourcePixelFormat:[_options sourcePixelFormat]
+   destWidth:[_options width]
+   destHeight:[_options height]
+   destPixelFormat:[_options pixelFormat]];
+   */
+}  
 
 @end

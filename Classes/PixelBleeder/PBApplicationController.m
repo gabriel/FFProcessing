@@ -9,7 +9,7 @@
 #import "PBApplicationController.h"
 
 #import "FFUtils.h"
-#import "FFDefines.h"
+
 
 @implementation PBApplicationController
 
@@ -17,7 +17,7 @@
 
 - (id)init {
   if ((self = [super init])) {
-    self.title = @"☈";
+    self.title = @"PixelBleeder";
   }
   return self;
 }
@@ -52,14 +52,15 @@
   if (!self.sourceURL) self.sourceURL = [FFUtils resolvedURLForURL:[NSURL URLWithString:@"bundle://IMG_0306.MOV"]];
     
   if (self.sourceURL) {
-    self.path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test.mov"];
+    NSString *outputFormat = @"mp4";
+    self.path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"test-x264.mp4", outputFormat]];
     FFDebug(@"Process: %@ to %@", self.sourceURL, self.path);
-    [_processing processURL:self.sourceURL outputPath:self.path outputFormat:@"h264"];        
+    [_processing processURL:self.sourceURL outputPath:self.path outputFormat:outputFormat outputCodecName:@"libx264"];
   }
 }  
 
 - (void)openMoviePlayerController {
-  if (!self.path) self.path = [FFUtils resolvedPathForURL:[NSURL URLWithString:@"bundle://IMG_0306.MOV"]];
+  if (!self.path) self.path = [FFUtils resolvedPathForURL:[NSURL URLWithString:@"bundle://output.mp4"]];
 
   FFDebug(@"Playing: %@", self.path);
   if (self.path) {

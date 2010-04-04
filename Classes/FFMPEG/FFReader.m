@@ -7,7 +7,7 @@
 //
 
 #import "FFReader.h"
-#import "FFDefines.h"
+
 #import "FFUtils.h"
 
 @implementation FFReader
@@ -43,14 +43,8 @@
   if (![_readThread readPicture:_picture]) return NULL;
   
   if (!_converter) {
-    _converter = [[FFConverter alloc] initWithSourceWidth:[_readThread.decoder width]
-                                             sourceHeight:[_readThread.decoder height]
-                                        sourcePixelFormat:[_readThread.decoder pixelFormat]
-                                                destWidth:256
-                                               destHeight:256
-                                          destPixelFormat:PIX_FMT_RGB24
-                                                    error:nil]; // TODO(gabe): Handle error
-
+    _converter = [[FFConverter alloc] initWithInputOptions:[_readThread.decoder options]
+                                             outputOptions:[FFOptions optionsWithWidth:256 height:256 pixelFormat:PIX_FMT_RGB24]];    
   }
 
   return [_converter scalePicture:_picture error:error];

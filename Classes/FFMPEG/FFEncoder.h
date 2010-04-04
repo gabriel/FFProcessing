@@ -9,19 +9,24 @@
 #include "libavformat/avformat.h"
 #include "libavdevice/avdevice.h"
 
+#import "FFOptions.h"
+#import "FFConverter.h"
+
 @interface FFEncoder : NSObject {
 
   AVFormatContext *_formatContext;
   AVStream *_videoStream;
   AVStream *_audioStream;
   
-  int _width;
-  int _height;
-  enum PixelFormat _pixelFormat;
-  int _videoBitRate;
+  FFOptions *_options;
+  FFConverter *_converter;
+  NSString *_path;
+  NSString *_format;
+  NSString *_codecName;
   
   uint8_t *_videoBuffer;
   int _videoBufferSize;
+  int _frameBytesEncoded;
   
   NSUInteger _currentVideoFrameIndex;
   
@@ -29,11 +34,11 @@
 
 @property (readonly, nonatomic) NSUInteger currentVideoFrameIndex;
 
-- (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat videoBitRate:(int)videoBitRate;
+- (id)initWithOptions:(FFOptions *)options path:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName;
 
 - (AVCodecContext *)videoCodecContext;
 
-- (BOOL)open:(NSString *)path format:(NSString *)format error:(NSError **)error;
+- (BOOL)open:(NSError **)error;
 
 - (BOOL)writeHeader:(NSError **)error;
 

@@ -10,14 +10,14 @@
 
 #import "FFUtils.h"
 #import "FFProcessing.h"
-#import "FFDefines.h"
+
 
 @implementation PBProcessing
 
-- (void)processURL:(NSURL *)URL outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat {  
+- (void)processURL:(NSURL *)URL outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat outputCodecName:(NSString *)outputCodecName {  
   NSError *error = nil;
   FFProcessing *processing = [[FFProcessing alloc] init];
-  if (![processing openURL:URL format:nil outputPath:outputPath outputFormat:outputFormat error:&error]) {
+  if (![processing openURL:URL format:nil outputPath:outputPath outputFormat:outputFormat outputCodecName:outputCodecName error:&error]) {
     FFDebug(@"Error opening: %@", error);
     return;
   }

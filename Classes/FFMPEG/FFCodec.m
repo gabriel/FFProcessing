@@ -10,7 +10,7 @@
 
 #import "libavcodec/avcodec.h"
 
-#import "FFDefines.h"
+
 #import "FFUtils.h"
 
 @implementation FFCodec

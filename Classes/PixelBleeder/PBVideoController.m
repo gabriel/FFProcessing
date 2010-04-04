@@ -7,7 +7,7 @@
 //
 
 #import "PBVideoController.h"
-#import "FFDefines.h"
+
 #import "FFUtils.h"
 #import "FFProcessing.h"
 

@@ -7,7 +7,7 @@
 //
 
 #import "FFPresets.h"
-#import "FFDefines.h"
+#import "FFUtils.h"
 
 @implementation FFPresets
 
@@ -45,6 +45,32 @@
     }
   }  
   return YES;
+}
+
+- (void)apply:(AVCodecContext *)codecContext {
+  // Defaults (x264)
+  codecContext->me_range = 16;
+  codecContext->max_qdiff = 4;
+  codecContext->qmin = 10;
+  codecContext->qmax = 51;
+  codecContext->qcompress = 0.6;
+  
+  // Presets ipod (x264)
+  codecContext->flags2 |= CODEC_FLAG2_WPRED;
+  codecContext->flags2 |= CODEC_FLAG2_8X8DCT;
+  codecContext->flags2 |= CODEC_FLAG2_MBTREE;  
+  codecContext->coder_type = 0;
+  codecContext->max_b_frames = 0;
+  codecContext->level = 13;
+  codecContext->rc_max_rate = 768*1000;
+  codecContext->rc_buffer_size = 3000000;
+  codecContext->weighted_p_pred = 0;
+  
+  // Options for ipod 320
+  codecContext->bit_rate = 200*1000;
+  codecContext->bit_rate_tolerance = 240*1000;
+  
+  codecContext->time_base = (AVRational){1001, 30000};
 }
 
 @end

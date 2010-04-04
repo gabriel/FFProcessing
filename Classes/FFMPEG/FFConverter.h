@@ -10,29 +10,20 @@
 #include "libavdevice/avdevice.h"
 #include "libswscale/swscale.h"
 
+#import "FFOptions.h"
+
 @interface FFConverter : NSObject {
-  AVFrame *_destFrame;
-  uint8_t *_videoBuffer;    
-  
-  enum PixelFormat _sourcePixelFormat;  
-  int _sourceWidth;
-  int _sourceHeight;  
-  
-  enum PixelFormat _destPixelFormat;  
-  int _destWidth;
-  int _destHeight;  
+  AVFrame *_picture;
+
+  FFOptions *_inputOptions;
+  FFOptions *_outputOptions;
 }
 
-@property (readonly, nonatomic) int destWidth;
-@property (readonly, nonatomic) int destHeight;  
+@property (readonly, nonatomic) FFOptions *inputOptions;
+@property (readonly, nonatomic) FFOptions *outputOptions;
 
+- (id)initWithInputOptions:(FFOptions *)inputOptions outputOptions:(FFOptions *)outputOptions;
 
-- (id)initWithSourceWidth:(int)width sourceHeight:(int)sourceHeight sourcePixelFormat:(enum PixelFormat)sourcePixelFormat
-                destWidth:(int)destWidth destHeight:(int)destHeight destPixelFormat:(enum PixelFormat)destPixelFormat
-                    error:(NSError **)error;
-
-// Buffer length in bytes for destination frame data
-//- (int)destBufferLength;
 
 - (AVFrame *)scalePicture:(AVFrame *)picture error:(NSError **)error;
 

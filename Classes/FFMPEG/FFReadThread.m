@@ -7,7 +7,7 @@
 //
 
 #import "FFReadThread.h"
-#import "FFDefines.h"
+
 #import "FFUtils.h"
 
 @implementation FFReadThread
@@ -56,7 +56,7 @@
 
 - (AVFrame *)createPicture {
   if (!_decoder) return NULL;
-  return FFPictureCreate([_decoder pixelFormat], [_decoder width], [_decoder height]);
+  return FFPictureCreate(_decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
 }
 
 - (BOOL)readPicture:(AVFrame *)picture {
@@ -65,7 +65,7 @@
   }
 
   [_lock lock];
-  av_picture_copy((AVPicture *)picture, (AVPicture *)_picture, [_decoder pixelFormat], [_decoder width], [_decoder height]);
+  av_picture_copy((AVPicture *)picture, (AVPicture *)_picture, _decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
   _readIndex = _readPictureIndex;
   [_lock unlock];
   return YES;
@@ -96,7 +96,7 @@
       
       if (_frame != NULL) {
         [_lock lock];
-        av_picture_copy((AVPicture *)_picture, (AVPicture *)_frame, [_decoder pixelFormat], [_decoder width], [_decoder height]);
+        av_picture_copy((AVPicture *)_picture, (AVPicture *)_frame, _decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
         _readPictureIndex++;
         [_lock unlock];
       }

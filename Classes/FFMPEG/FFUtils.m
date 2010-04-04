@@ -7,7 +7,8 @@
 //
 
 #import "FFUtils.h"
-#import "FFDefines.h"
+
+NSString *const FFSourceErrorCodeKey = @"FFSourceErrorCodeKey";
 
 static AVPacket gFlushPacket;
 static BOOL gInitialized = NO;
@@ -47,8 +48,10 @@ AVFrame *FFPictureCreate(enum PixelFormat pixelFormat, int width, int height) {
 }
 
 void FFPictureRelease(AVFrame *picture) {
-  if (picture->data != NULL) av_free(picture->data[0]);
-  if (picture != NULL) av_free(picture);  
+  if (picture != NULL)  {
+    if (picture->data != NULL) av_free(picture->data[0]);
+    av_free(picture);  
+  }
 }
 
 void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int height) {

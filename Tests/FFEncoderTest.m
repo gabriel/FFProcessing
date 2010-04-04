@@ -18,13 +18,14 @@
 
 - (void)testEncoding {
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test.mp4"];
-  FFEncoder *encoder = [[FFEncoder alloc] initWithWidth:320 height:480 pixelFormat:PIX_FMT_YUV420P videoBitRate:400000];
+  FFEncoder *encoder = [[FFEncoder alloc] initWithWidth:320 height:480 pixelFormat:PIX_FMT_YUV420P videoBitRate:400000
+                                                   path:path format:nil codecName:nil];
   NSError *error = nil;
   
   AVFrame *picture = FFPictureCreate(PIX_FMT_YUV420P, 320, 480);
   GHAssertNotNULL(picture, nil);
   
-  GHAssertTrue([encoder open:path format:nil error:&error], nil);
+  GHAssertTrue([encoder open:&error], nil);
   
   GHAssertTrue([encoder writeHeader:&error], nil);
 
@@ -45,13 +46,14 @@
 
 - (void)testMoshing {
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test-mosh.mp4"];
-  FFEncoder *encoder = [[FFEncoder alloc] init];
+  FFEncoder *encoder = [[FFEncoder alloc] initWithWidth:320 height:480 pixelFormat:PIX_FMT_YUV420P videoBitRate:400000 
+                                                   path:path format:nil codecName:nil];
   NSError *error = nil;
   
   AVFrame *picture = FFPictureCreate(PIX_FMT_YUV420P, 320, 480);
   GHAssertNotNULL(picture, nil);
   
-  GHAssertTrue([encoder open:path format:nil error:&error], nil);
+  GHAssertTrue([encoder open:&error], nil);
   
   GHAssertTrue([encoder writeHeader:&error], nil);
   

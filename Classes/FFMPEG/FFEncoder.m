@@ -8,30 +8,33 @@
 
 #import "FFEncoder.h"
 #import "FFUtils.h"
-#import "FFDefines.h"
+
 
 @interface FFEncoder ()
 - (BOOL)_prepareVideo:(NSError **)error;
 - (AVStream *)_addVideoStream:(NSError **)error;
-- (void)_applyPresets:(AVCodecContext *)codecContext;
 @end
 
 @implementation FFEncoder
 
 @synthesize currentVideoFrameIndex=_currentVideoFrameIndex;
 
-- (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat videoBitRate:(int)videoBitRate {
+- (id)initWithOptions:(FFOptions *)options path:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName {
   if ((self = [super init])) {
-    _width = width; 
-    _height = height;
-    _pixelFormat = pixelFormat;
-    _videoBitRate = videoBitRate;
+    _options = [options retain]; 
+    _path = [path retain];
+    _format = [format retain];
+    _codecName = [codecName retain];
   }
   return self;
 }
 
 - (void)dealloc {
   [self close];
+  [_options release];
+  [_path release];
+  [_format release];
+  [_codecName release];
   [super dealloc];
 }
 
@@ -40,32 +43,41 @@
   return _videoStream->codec;
 }
 
-- (BOOL)open:(NSString *)path format:(NSString *)format error:(NSError **)error {  
+- (BOOL)open:(NSError **)error {
   if (_formatContext) {
-    FFSetError(error, FFErrorCodeOpenAlready, @"Encoder is already open");
+    FFSetError(error, FFErrorCodeOpenAlready, -1, @"Encoder is already open");
     return NO;
   }
   
   FFInitialize();
   
-  const char *filename = [path UTF8String];  
-  FFDebug(@"Encoder; path=%@, format=%@", path, format);
-  AVOutputFormat *outputFormat = av_guess_format([format UTF8String], NULL, NULL);
+  const char *filename = [_path UTF8String];  
+  FFDebug(@"Encoder; path=%@, format=%@", _path, _format);
+  AVOutputFormat *outputFormat = av_guess_format([_format UTF8String], NULL, NULL);
   if (!outputFormat) {
-    FFSetError(error, FFErrorCodeUnknownOutputFormat, @"Couldn't deduce output format");
+    FFSetError(error, FFErrorCodeUnknownOutputFormat, -1, @"Couldn't deduce output format");
     return NO;
   }
+  
+  // If overriding output format codec
+  if (_codecName) {
+    AVCodec *codec = avcodec_find_encoder_by_name([_codecName UTF8String]);
+    if (codec == NULL) {
+      FFSetError(error, FFErrorCodeCodecNotFound, -1, @"Codec not found with name: %@", _codecName);
+      return NO;
+    }    
+    outputFormat->video_codec = codec->id;
+  }  
   
   /* allocate the output media context */
   _formatContext = avformat_alloc_context();
   if (!_formatContext) {
-    FFSetError(error, FFErrorCodeAllocFormatContext, @"Couldn't allocate format context");
+    FFSetError(error, FFErrorCodeAllocFormatContext, -1, @"Couldn't allocate format context");
     return NO;
   }
   _formatContext->oformat = outputFormat;
   snprintf(_formatContext->filename, sizeof(_formatContext->filename), "%s", filename);
-  
-  
+    
   if (outputFormat->video_codec != CODEC_ID_NONE) {
     _videoStream = [self _addVideoStream:error];
     if (!_videoStream) {
@@ -85,14 +97,15 @@
    */
   
   // Set the output parameters (must be done even if no parameters)
-  if (av_set_parameters(_formatContext, NULL) < 0) {
-    FFSetError(error, FFErrorCodeInvalidFormatParameters, @"Invalid output format parameters");
+  int averror = av_set_parameters(_formatContext, NULL);
+  if (averror < 0) {
+    FFSetError(error, FFErrorCodeInvalidFormatParameters, averror, @"Invalid output format parameters");
     [self close];
     return NO;
   }
 
   dump_format(_formatContext, 0, filename, 1);
-    
+  
   if (![self _prepareVideo:error]) {
     [self close];
     return NO;
@@ -101,10 +114,11 @@
 
   // Setup any format context settings
   _formatContext->max_delay = (int)(0.7 * AV_TIME_BASE);  
-
+  
   if (!(outputFormat->flags & AVFMT_NOFILE)) {
-    if (url_fopen(&_formatContext->pb, filename, URL_WRONLY) < 0) {
-      FFSetError(error, FFErrorCodeOpen, @"Couldn't open file");
+    int averror = url_fopen(&_formatContext->pb, filename, URL_WRONLY);
+    if (averror < 0) {
+      FFSetError(error, FFErrorCodeOpen, averror, @"Couldn't open file");
       [self close];
       return NO;
     }
@@ -118,7 +132,7 @@
   AVStream *stream = av_new_stream(_formatContext, 0);
   
   if (!stream) {
-    FFSetError(error, FFErrorCodeAllocStream, @"Couldn't allocate stream");
+    FFSetError(error, FFErrorCodeAllocStream, -1, @"Couldn't allocate stream");
     return NULL;
   }
   
@@ -128,71 +142,24 @@
   
   codecContext->codec_id = _formatContext->oformat->video_codec;
   codecContext->codec_type = CODEC_TYPE_VIDEO;
-  
-  codecContext->bit_rate = _videoBitRate;
-  // Resolution must be a multiple of two
-  codecContext->width = _width;
-  codecContext->height = _height;
-  
-  /*
-   time_base: this is the fundamental unit of time (in seconds) in terms
-   of which frame timestamps are represented. for fixed-fps content,
-   timebase should be 1/framerate and timestamp increments should be
-   identically 1. 
-   */
-  codecContext->time_base.den = 25; // Frames per second
-  codecContext->time_base.num = 1;
-  codecContext->gop_size = 12; /* emit one intra frame every twelve frames at most */
-  codecContext->pix_fmt = _pixelFormat;
-  
-  [self _applyPresets:codecContext];
+
+  [_options apply:codecContext];
   
   return stream;
 }
 
-- (void)_applyPresets:(AVCodecContext *)codecContext {
-  if (codecContext->codec_id == CODEC_ID_MPEG2VIDEO) {
-    // For testing, we also add B frames
-    codecContext->max_b_frames = 2;
-  }
-  
-  if (codecContext->codec_id == CODEC_ID_MPEG1VIDEO) {
-    /* Needed to avoid using macroblocks in which some coeffs overflow.
-     This does not happen with normal video, it just happens here as
-     the motion of the chroma plane does not match the luma plane. */
-    codecContext->mb_decision = 2;
-  }
-  
-  // Defaults?
-  codecContext->me_range = 16;
-  codecContext->max_qdiff = 4;
-  codecContext->qmin = 10;
-  codecContext->qmax = 51;
-  codecContext->qcompress = 0.6;
-  
-  codecContext->flags2 |= CODEC_FLAG2_WPRED;
-  //codecContext->flags2 |= CODEC_FLAG2_8X8DCT;
-  codecContext->flags2 |= CODEC_FLAG2_MBTREE;
-  
-  codecContext->coder_type = 0;
-  codecContext->max_b_frames = 0;
-  codecContext->level = 13;
-  codecContext->rc_max_rate = 768000;
-  codecContext->rc_buffer_size = 3000000;
-  codecContext->weighted_p_pred = 0;
-}
-
 - (BOOL)_prepareVideo:(NSError **)error {
   AVCodecContext *codecContext = _videoStream->codec;
-
+  
   AVCodec *codec = avcodec_find_encoder(codecContext->codec_id);
-  if (!codec) {
-    FFSetError(error, FFErrorCodeCodecNotFound, @"Codec not found");
+  if (codec == NULL) {
+    FFSetError(error, FFErrorCodeCodecNotFound, -1, @"Codec not found");
     return NO;
   }
 
-  if (avcodec_open(codecContext, codec) < 0) {
-    FFSetError(error, FFErrorCodeCodecOpen, @"Couldn't open codec");
+  int averror = avcodec_open(codecContext, codec);
+  if (averror < 0) {
+    FFSetError(error, FFErrorCodeCodecOpen, averror, @"Couldn't open codec");
     return NO;
   }
   
@@ -200,16 +167,13 @@
   _videoBuffer = av_malloc(_videoBufferSize);
   _currentVideoFrameIndex = 0;    
 
-  NSAssert(_pixelFormat == codecContext->pix_fmt, @"Mismatched pixel format");  
-  NSAssert(_width == codecContext->width, @"Mismatched width");
-  NSAssert(_height == codecContext->height, @"Mismatched height");
-
   return YES;
 }
 
 - (BOOL)writeHeader:(NSError **)error {  
-  if (av_write_header(_formatContext) != 0) {
-    FFSetError(error, FFErrorCodeWriteHeader, @"Couldn't write header");
+  int averror = av_write_header(_formatContext);
+  if (averror != 0) {
+    FFSetError(error, FFErrorCodeWriteHeader, averror, @"Couldn't write header");
     return NO;
   }
   FFDebug(@"Wrote header");
@@ -217,8 +181,9 @@
 }
 
 - (BOOL)writeTrailer:(NSError **)error {
-  if (av_write_trailer(_formatContext) != 0) {
-    FFSetError(error, FFErrorCodeWriteTrailer, @"Couldn't write trailer");
+  int averror = av_write_trailer(_formatContext);
+  if (averror != 0) {
+    FFSetError(error, FFErrorCodeWriteTrailer, averror, @"Couldn't write trailer");
     return NO;
   }
   FFDebug(@"Wrote trailer");
@@ -228,7 +193,7 @@
 - (void)close {
   // Close video
   if (_videoStream != NULL) {
-    if (_videoStream->codec != NULL) avcodec_close(_videoStream->codec);
+    if (_videoStream->codec != NULL && _videoStream->codec->codec != NULL) avcodec_close(_videoStream->codec);
     _videoStream = NULL;
   }
 
@@ -250,17 +215,25 @@
   
     av_free(_formatContext);
     _formatContext = NULL;
-  }
+  }  
+  
+  [_converter release];
+  _converter = nil;
 }
 
 - (int)encodeVideoFrame:(AVFrame *)picture error:(NSError **)error {    
   AVCodecContext *codecContext = _videoStream->codec;
+  
+  //FFDebug(@"Encode frame, pts=%lld", picture->pts);
+  //AVFrame *picture = [_converter scalePicture:picture error:error];
 
   int bytesEncoded = avcodec_encode_video(codecContext, _videoBuffer, _videoBufferSize, picture);
   if (bytesEncoded < 0) {
-    FFSetError(error, FFErrorCodeEncodeFrame, @"Error encoding frame");
+    FFSetError(error, FFErrorCodeEncodeFrame, bytesEncoded, @"Error encoding frame");
     return bytesEncoded; // Error number
   }
+  //FFDebug(@"Encoded frame; pts=%lld, coded_frame->pts=%lld", picture->pts, codecContext->coded_frame->pts);    
+  _frameBytesEncoded = bytesEncoded;
   return bytesEncoded;
 }
 
@@ -273,15 +246,21 @@
   if (codecContext->coded_frame->pts != AV_NOPTS_VALUE)
     packet.pts = av_rescale_q(codecContext->coded_frame->pts, codecContext->time_base, _videoStream->time_base);
   
+  //FFDebug(@"Write packet; pts=%d", packet.pts);
+  
+//  if (codecContext->coded_frame->dts != AV_NOPTS_VALUE)
+//    packet.dts = av_rescale_q(codecContext->coded_frame->dts, codecContext->time_base, _videoStream->time_base);
+  
   if (codecContext->coded_frame->key_frame)
     packet.flags |= PKT_FLAG_KEY;
   
   packet.stream_index = _videoStream->index;
   packet.data = _videoBuffer;
-  packet.size = _videoBufferSize;
+  packet.size = _frameBytesEncoded;
   
-  if (av_interleaved_write_frame(_formatContext, &packet) != 0) {
-    FFSetError(error, FFErrorCodeWriteFrame, @"Error writing interleaved frame");
+  int averror = av_interleaved_write_frame(_formatContext, &packet);
+  if (averror != 0) {
+    FFSetError(error, FFErrorCodeWriteFrame, averror, @"Error writing interleaved frame");
     return NO;
   }
   

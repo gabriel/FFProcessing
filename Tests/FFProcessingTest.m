@@ -21,7 +21,7 @@
   NSURL *URL = [NSURL URLWithString:@"bundle://pegasus-1958-chiptune.avi"];
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test-processing.mp4"];
   FFProcessing *processing = [[FFProcessing alloc] init];
-  GHAssertTrue([processing openURL:URL format:nil outputPath:path outputFormat:nil error:nil], nil);
+  GHAssertTrue([processing openURL:URL format:nil outputPath:path outputFormat:nil outputCodecName:nil error:nil], nil);
   
   [processing process:nil];
   
@@ -34,7 +34,7 @@
   NSURL *URL = [NSURL URLWithString:@"bundle://IMG_0306.MOV"];
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test-mov.mp4"];
   FFProcessing *processing = [[FFProcessing alloc] init];
-  GHAssertTrue([processing openURL:URL format:nil outputPath:path outputFormat:nil error:nil], nil);
+  GHAssertTrue([processing openURL:URL format:nil outputPath:path outputFormat:nil outputCodecName:nil error:nil], nil);
   
   [processing process:nil];
   

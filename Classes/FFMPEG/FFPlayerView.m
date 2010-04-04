@@ -1,17 +1,17 @@
 //
 //  FFPlayerView.m
-//  Steer
 //
 //  Created by Gabriel Handford on 3/10/10.
 //  Copyright 2010. All rights reserved.
 //
 
 #import "FFPlayerView.h"
+#import "FFUtils.h"
 
 #import "FFReader.h"
 #import "FFGLDrawable.h"
 
-#import "FFDefines.h"
+
 #import "FFGLTestDrawable.h"
 
 @implementation FFPlayerView

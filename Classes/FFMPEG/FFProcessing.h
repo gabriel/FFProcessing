@@ -16,7 +16,8 @@
   FFEncoder *_encoder;
 }
 
-- (BOOL)openURL:(NSURL *)URL format:(NSString *)format outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat error:(NSError **)error;
+- (BOOL)openURL:(NSURL *)URL format:(NSString *)format outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
+outputCodecName:(NSString *)outputCodecName error:(NSError **)error;
 
 - (BOOL)process:(NSError **)error;
 

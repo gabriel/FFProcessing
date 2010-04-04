@@ -7,84 +7,56 @@
 //
 
 #import "FFConverter.h"
-#import "FFDefines.h"
-
-@interface FFConverter ()
-- (BOOL)_loadWithError:(NSError **)error;
-@end
+#import "FFUtils.h"
 
 @implementation FFConverter
 
-@synthesize destWidth=_destWidth, destHeight=_destHeight;
+@synthesize inputOptions=_inputOptions, outputOptions=_outputOptions;
 
-- (id)initWithSourceWidth:(int)sourceWidth sourceHeight:(int)sourceHeight sourcePixelFormat:(enum PixelFormat)sourcePixelFormat
-                destWidth:(int)destWidth destHeight:(int)destHeight destPixelFormat:(enum PixelFormat)destPixelFormat
-                    error:(NSError **)error {
+- (id)initWithInputOptions:(FFOptions *)inputOptions outputOptions:(FFOptions *)outputOptions {
   
-  if ((self = [super init])) {
-    _sourceWidth = sourceWidth;
-    _sourceHeight = sourceHeight;
-    _sourcePixelFormat = sourcePixelFormat;
-    _destWidth = destWidth;
-    _destHeight = destHeight;
-    _destPixelFormat = destPixelFormat;
-    [self _loadWithError:error];
+  if ((self = [self init])) {
+    _inputOptions = [inputOptions retain];
+    _outputOptions = [outputOptions retain];
+    _picture = NULL;
   }
   return self;
 }
 
 - (void)dealloc {
-  if (_destFrame != NULL) av_free(_destFrame);
-  _destFrame = NULL;
-  if (_videoBuffer != NULL) av_free(_videoBuffer);
-  _videoBuffer = NULL;  
+  FFPictureRelease(_picture);
+  [_inputOptions release];
+  [_outputOptions release];
   [super dealloc];
 }  
 
-- (BOOL)_loadWithError:(NSError **)error {
-  // Frame after scaling and converting pixel format
-  _destFrame = avcodec_alloc_frame();
-  if (_destFrame == NULL) {
-    FFSetError(error, FFErrorCodeAllocateFrame, @"Couldn't allocate destination frame");
-    return NO;
-  }  
-  
-  // Video buffer
-  int bytes = avpicture_get_size(_destPixelFormat, _destWidth, _destHeight);		
-  _videoBuffer = (uint8_t*)av_malloc(bytes * sizeof(uint8_t));
-  if (_videoBuffer == NULL) {
-    FFSetError(error, FFErrorCodeAllocateVideoBuffer, @"Couldn't allocate video buffer");
-    return NO;
-  }
-  
-  // Assign video buffer to dest frame
-  avpicture_fill((AVPicture *)_destFrame, _videoBuffer, _destPixelFormat, _destWidth, _destHeight);
-  return YES;
-}
-
-/*!
-- (int)destBufferLength {
-  return avpicture_get_size(_destPixelFormat, _destWidth, _destHeight);
-}
- */
-
 - (AVFrame *)scalePicture:(AVFrame *)picture error:(NSError **)error {
   struct SwsContext *scaleContext = NULL;
+  
+  if (_picture == NULL) {
+    _picture = FFPictureCreate(_outputOptions.pixelFormat, _outputOptions.width, _outputOptions.height);    
+    if (_picture == NULL) {
+      FFSetError(error, FFErrorCodeAllocateFrame, -1, @"Couldn't allocate frame");
+      return NULL;
+    }
+  }
 
   scaleContext = sws_getCachedContext(scaleContext, 
-                                       _sourceWidth, _sourceHeight, _sourcePixelFormat, 
-                                       _destWidth, _destHeight, _destPixelFormat, 
+                                       _inputOptions.width, _inputOptions.height, _inputOptions.pixelFormat,
+                                       _outputOptions.width, _outputOptions.height, _outputOptions.pixelFormat, 
                                        SWS_BICUBIC, NULL, NULL, NULL);
   
   if (scaleContext == NULL) {
-    FFSetError(error, FFErrorCodeScaleContext, @"No scale context");
+    FFSetError(error, FFErrorCodeScaleContext, -1, @"No scale context");
     return NULL;
   }
   
   sws_scale(scaleContext, picture->data, picture->linesize, 0,
-            _sourceHeight, _destFrame->data, _destFrame->linesize);
+            _inputOptions.height, _picture->data, _picture->linesize);
   
-  return _destFrame;
+  _picture->pts = picture->pts;
+  
+  return _picture;
 }
 
 
