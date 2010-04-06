@@ -95,7 +95,8 @@
     return NO;
   }
   FFDebug(@"Codec opened");
-  
+
+  /*!
   // Check FPS
   AVRational frameRate = _videoStream->r_frame_rate;
   AVRational codecTimeBase = _videoStream->codec->time_base;
@@ -105,13 +106,17 @@
            (float)codecTimeBase.den / codecTimeBase.num, codecTimeBase.den, codecTimeBase.num,
            (float)frameRate.num / frameRate.den, frameRate.num, frameRate.den);
   }
+  */
   
   // Set options
-  _options = [[FFOptions alloc] init];
-  _options.width = _videoStream->codec->coded_width;
-  _options.height = _videoStream->codec->coded_height;
-  _options.pixelFormat = (_videoStream == NULL ? PIX_FMT_NONE : _videoStream->codec->pix_fmt);
-  _options.videoFrameRate = (_videoStream == NULL ? (AVRational){0, 0} : _videoStream->r_frame_rate);  
+  _options = [[FFOptions alloc] initWithWidth:_videoStream->codec->coded_width 
+                                       height:_videoStream->codec->coded_height 
+                                  pixelFormat:_videoStream->codec->pix_fmt];
+  
+  _options.videoFrameRate = _videoStream->r_frame_rate;  
+  _options.videoTimeBase = _videoStream->time_base;
+  
+  FFDebug(@"Decoder options: %@", _options);
 
   _open = YES;
   FFDebug(@"Opened");
@@ -145,21 +150,22 @@
   return YES;
 }
 
-- (BOOL)decodeFrame:(AVFrame *)frame error:(NSError **)error {
+- (BOOL)decodeVideoFrame:(AVFrame *)picture error:(NSError **)error {
   AVPacket packet;
   
   if (![self readFrame:&packet error:error]) 
     return NO;
   
-  //FFDebug(@"Read frame; pts=%lld", packet.pts);
-  BOOL decoded = [self decodeFrame:frame packet:&packet error:error];
-
+  FFDebug(@"Read frame; pts=%lld", packet.pts);
+  BOOL decoded = [self decodeVideoFrame:picture packet:&packet error:error];
+  picture->pts = packet.pts;
+  
   av_free_packet(&packet);
   
   return decoded;
 }
 
-- (BOOL)decodeFrame:(AVFrame *)picture packet:(AVPacket *)packet error:(NSError **)error {  
+- (BOOL)decodeVideoFrame:(AVFrame *)picture packet:(AVPacket *)packet error:(NSError **)error {  
   int gotFrame = 0;
   int bytesDecoded = avcodec_decode_video2(_videoStream->codec, picture, &gotFrame, packet);
   

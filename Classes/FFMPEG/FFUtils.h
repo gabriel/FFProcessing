@@ -48,8 +48,11 @@ enum {
   FFErrorCodeWriteTrailer = 370,
 } FFErrorCode;
 
-//#define FFDebug(...) do {} while(0)
+#if DEBUG
 #define FFDebug(...) NSLog(__VA_ARGS__)
+#else
+#define FFDebug(...) do { } while(0)
+#endif
 #define FFWarn(...) NSLog(__VA_ARGS__)
 
 static inline NSString *NSStringFromAVFramePictType(int pictType) {

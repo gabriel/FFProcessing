@@ -6,8 +6,9 @@
 //  Copyright 2010. All rights reserved.
 //
 
+#import "FFProcessing.h"
 
-@interface PBProcessing : NSObject {
+@interface PBProcessing : FFProcessing {
 
 }
 

@@ -14,7 +14,18 @@
   AVFrame *_decoderFrame;
   
   FFEncoder *_encoder;
+  
+  int64_t _previousPTS;
+  
+  int _IFrameInterval;
+  int _smoothInterval;
+  int _smoothIterations;
 }
+
+@property (assign, nonatomic) int IFrameInterval;
+@property (assign, nonatomic) int smoothInterval;
+@property (assign, nonatomic) int smoothIterations;
+
 
 - (BOOL)openURL:(NSURL *)URL format:(NSString *)format outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
 outputCodecName:(NSString *)outputCodecName error:(NSError **)error;

@@ -12,6 +12,8 @@
 
 @implementation FFProcessing
 
+@synthesize IFrameInterval=_IFrameInterval, smoothInterval=_smoothInterval, smoothIterations=_smoothIterations;
+
 - (void)dealloc {
   [self close];
   [super dealloc];
@@ -34,14 +36,14 @@ outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
   
   FFOptions *options = [_decoder options];
   FFPresets *presets = [[FFPresets alloc] init]; // TODO(gabe): Presets hardcoded
-  options.presets = presets;
-  [presets release];
   
   _encoder = [[FFEncoder alloc] initWithOptions:options
+                                        presets:presets
                                            path:outputPath 
                                          format:outputFormat
                                       codecName:outputCodecName];
 
+  [presets release];
   if (![_encoder open:error])
     return NO;
   
@@ -61,13 +63,13 @@ outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
 
   if (![_encoder writeHeader:error]) 
     return NO;
-  
-  int64_t index = 0;
-  int64_t keyFrameIndex = 0;
+
+  int64_t IFrameIndex = 0;
+  int64_t PFrameIndex = 0;
   while (YES) {
     *error = nil;
     
-    if (![_decoder decodeFrame:_decoderFrame error:error]) {
+    if (![_decoder decodeVideoFrame:_decoderFrame error:error]) {
       if (*error) {
         FFDebug(@"Decode error");
         break;
@@ -78,29 +80,32 @@ outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
     
     //if (_decoderFrame->pict_type == FF_I_TYPE) { }
     //FFDebug(@"Decoded frame, pict_type=%@", NSStringFromAVFramePictType(_decoderFrame->pict_type));
+    int64_t duration = _decoderFrame->pts - _previousPTS;
+    _previousPTS = _decoderFrame->pts;
+    FFDebug(@"Duration: %lld", duration);
     
-    av_picture_copy((AVPicture *)picture, (AVPicture *)_decoderFrame, _decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
-    
-    // Set pts for encoding
-    picture->pts = index++;
-            
-    int bytesEncoded = [_encoder encodeVideoFrame:picture error:error];
+    int bytesEncoded = [_encoder encodeVideoFrame:_decoderFrame error:error];
     if (bytesEncoded < 0) {
       FFDebug(@"Encode error");
       break;
     }
     
-    // Mosh!
-    if ([_encoder videoCodecContext]->coded_frame->key_frame) {  
-      if (keyFrameIndex++ != 0) {
-        FFDebug(@"Skipping keyframe");
-        continue;     
-      }
-    }
-    
     // If bytesEncoded is zero, there was buffering
-    if (bytesEncoded > 0) {
-      if (![_encoder writeVideoBuffer:error]) break;
+    if (bytesEncoded > 0) {      
+      if (_decoderFrame->pict_type == FF_I_TYPE) {
+        if (IFrameIndex++ % _IFrameInterval != 0) {
+          FFDebug(@"Skipping keyframe");
+          continue;     
+        }
+        if (![_encoder writeVideoBuffer:error duration:duration]) break;
+      } else if (_decoderFrame->pict_type == FF_P_TYPE) {
+        if (_smoothIterations > 0 && (PFrameIndex++ % _smoothInterval != 0)) {
+          for (int i = 0; i < _smoothIterations; i++)
+            if (![_encoder writeVideoBuffer:error duration:((float)duration/(float)_smoothIterations)]) break;
+        } else {
+          if (![_encoder writeVideoBuffer:error duration:duration]) break;
+        }
+      }
     }
   }
   

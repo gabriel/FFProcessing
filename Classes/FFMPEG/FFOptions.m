@@ -11,11 +11,7 @@
 
 @implementation FFOptions
 
-@synthesize width=_width, height=_height, pixelFormat=_pixelFormat, videoFrameRate=_videoFrameRate, presets=_presets;
-
-- (id)init {
-  return [self initWithWidth:480 height:360 pixelFormat:PIX_FMT_YUV420P];
-}
+@synthesize width=_width, height=_height, pixelFormat=_pixelFormat, videoFrameRate=_videoFrameRate, videoTimeBase=_videoTimeBase;
 
 - (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat {
   if ((self = [super init])) {
@@ -23,32 +19,33 @@
     _height = height;
     _pixelFormat = pixelFormat;
     _videoFrameRate = (AVRational){0, 0};
+    _videoTimeBase = (AVRational){0, 0};
   }
   return self;
-}
-
-- (void)dealloc {
-  [_presets release];
-  [super dealloc];
 }
 
 + (FFOptions *)optionsWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat {
   return [[[self alloc] initWithWidth:width height:height pixelFormat:pixelFormat] autorelease];
 }
 
-// iPod options
+- (NSString *)description {
+  return [NSString stringWithFormat:@"width=%d, height=%d, pixelFormat=%d, videoFrameRate=%d/%d, videoTimeBase=%d/%d",
+          _width, _height, _pixelFormat, _videoFrameRate.num, _videoFrameRate.den, _videoTimeBase.num, _videoTimeBase.den];
+}
+
 - (void)apply:(AVCodecContext *)codecContext {
-  
-  [_presets apply:codecContext];
   
   codecContext->width = _width;
   codecContext->height = _height;
   codecContext->pix_fmt = _pixelFormat;
   
+  /*!
   if (_videoFrameRate.num != 0 && _videoFrameRate.den != 0) {
     codecContext->time_base.den = _videoFrameRate.num;
     codecContext->time_base.num = _videoFrameRate.den;
   }
+   */
+  codecContext->time_base = _videoTimeBase;
 }
 
 @end

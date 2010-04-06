@@ -30,7 +30,7 @@
       case CODEC_TYPE_SUBTITLE: typeString = @"S"; break;
     }
     
-    FFDebug(@"Codec, name: %s, description: %s, type: %@, encode: %d, decode: %d", codec->name, codec->long_name, typeString, encode, decode);
+    NSLog(@"Codec, name: %s, description: %s, type: %@, encode: %d, decode: %d", codec->name, codec->long_name, typeString, encode, decode);
   } 
   
   AVOutputFormat *outputFormat = NULL;

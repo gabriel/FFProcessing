@@ -53,8 +53,10 @@
 			CGContextDrawImage(context, CGRectMake(0, 0, width, height), image.CGImage);
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+#if DEBUG
 			GLuint GLError = glGetError();
       NSAssert(GLError == GL_NO_ERROR, @"Error loading texture");
+#endif
 			CGContextRelease(context);
 			
 			free(imageData);

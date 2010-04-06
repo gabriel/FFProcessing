@@ -17,14 +17,14 @@
 
 @implementation FFEncoder
 
-@synthesize currentVideoFrameIndex=_currentVideoFrameIndex;
-
-- (id)initWithOptions:(FFOptions *)options path:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName {
+- (id)initWithOptions:(FFOptions *)options presets:(FFPresets *)presets path:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName {
   if ((self = [super init])) {
     _options = [options retain]; 
+    _presets = [presets retain];
     _path = [path retain];
     _format = [format retain];
     _codecName = [codecName retain];
+    _currentPTS = 0;
   }
   return self;
 }
@@ -113,7 +113,7 @@
   //if (![self _prepareAudio:error]) return NO;
 
   // Setup any format context settings
-  _formatContext->max_delay = (int)(0.7 * AV_TIME_BASE);  
+  //_formatContext->max_delay = (int)(0.7 * AV_TIME_BASE);  
   
   if (!(outputFormat->flags & AVFMT_NOFILE)) {
     int averror = url_fopen(&_formatContext->pb, filename, URL_WRONLY);
@@ -143,6 +143,7 @@
   codecContext->codec_id = _formatContext->oformat->video_codec;
   codecContext->codec_type = CODEC_TYPE_VIDEO;
 
+  [_presets apply:codecContext];
   [_options apply:codecContext];
   
   return stream;
@@ -165,7 +166,6 @@
   
   _videoBufferSize = 200000;
   _videoBuffer = av_malloc(_videoBufferSize);
-  _currentVideoFrameIndex = 0;    
 
   return YES;
 }
@@ -237,7 +237,13 @@
   return bytesEncoded;
 }
 
-- (BOOL)writeVideoBuffer:(NSError **)error {   
+- (AVFrame *)codedFrame {
+  return _videoStream->codec->coded_frame;
+}
+
+- (BOOL)writeVideoBuffer:(NSError **)error duration:(int64_t)duration {   
+  if (_frameBytesEncoded == 0) return NO;
+  
   AVCodecContext *codecContext = _videoStream->codec;
   
   AVPacket packet;        
@@ -246,7 +252,9 @@
   if (codecContext->coded_frame->pts != AV_NOPTS_VALUE)
     packet.pts = av_rescale_q(codecContext->coded_frame->pts, codecContext->time_base, _videoStream->time_base);
   
-  //FFDebug(@"Write packet; pts=%d", packet.pts);
+  codecContext->coded_frame->pts += duration;
+
+  FFDebug(@"Write video buffer: %d, pts=%lld", _frameBytesEncoded, packet.pts);
   
 //  if (codecContext->coded_frame->dts != AV_NOPTS_VALUE)
 //    packet.dts = av_rescale_q(codecContext->coded_frame->dts, codecContext->time_base, _videoStream->time_base);
@@ -263,8 +271,7 @@
     FFSetError(error, FFErrorCodeWriteFrame, averror, @"Error writing interleaved frame");
     return NO;
   }
-  
-  _currentVideoFrameIndex++;
+
   return YES;
 }
 
@@ -274,7 +281,7 @@
   
   // If bytesEncoded is zero, there was buffering
   if (bytesEncoded > 0) {
-    if (![self writeVideoBuffer:error]) {
+    if (![self writeVideoBuffer:error duration:20]) { // XXX(gabe): FIXME
       return NO;
     }      
   }  

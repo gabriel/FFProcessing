@@ -14,17 +14,26 @@
 
 @implementation PBProcessing
 
+- (id)init {
+  if ((self = [super init])) {
+    self.IFrameInterval = 6;
+    self.smoothInterval = 3;
+    self.smoothIterations = 2;
+  }
+  return self;
+}
+
 - (void)processURL:(NSURL *)URL outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat outputCodecName:(NSString *)outputCodecName {  
   NSError *error = nil;
-  FFProcessing *processing = [[FFProcessing alloc] init];
-  if (![processing openURL:URL format:nil outputPath:outputPath outputFormat:outputFormat outputCodecName:outputCodecName error:&error]) {
+  
+  if (![self openURL:URL format:nil outputPath:outputPath outputFormat:outputFormat outputCodecName:outputCodecName error:&error]) {
     FFDebug(@"Error opening: %@", error);
     return;
   }
   
-  [processing process:&error];
+  [self process:&error];
   
-  [processing close];
+  [self close];
   
 }
 

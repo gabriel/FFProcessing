@@ -34,7 +34,6 @@
 		000DD3E71167D78B007E8546 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 000DD3E61167D78B007E8546 /* libx264.a */; };
 		000DD3E81167D78B007E8546 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 000DD3E61167D78B007E8546 /* libx264.a */; };
 		000DD3E91167D78B007E8546 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 000DD3E61167D78B007E8546 /* libx264.a */; };
-		000DD3F91167D881007E8546 /* IMG_0306.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 000DD3D21166C669007E8546 /* IMG_0306.MOV */; };
 		00129F3611549B3500D09836 /* FFReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F1B11549B3500D09836 /* FFReader.m */; };
 		00129F3711549B3500D09836 /* FFGLDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */; };
 		00129F3911549B3500D09836 /* FFPlayerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F2211549B3500D09836 /* FFPlayerAppDelegate.m */; };
@@ -52,6 +51,7 @@
 		0012A0561154AE3100D09836 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 0012A0541154AE3100D09836 /* test.png */; };
 		001736931165A00C00959279 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A313E61163E33A0065101E /* MediaPlayer.framework */; };
 		001736941165A00D00959279 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CA117111632AAB00664274 /* MobileCoreServices.framework */; };
+		002342C9116B16D200088651 /* star_trek.mov in Resources */ = {isa = PBXBuildFile; fileRef = 002342C8116B16D200088651 /* star_trek.mov */; };
 		00A313D41163E2B20065101E /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00A313D51163E2B20065101E /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00A313E71163E33A0065101E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A313E61163E33A0065101E /* MediaPlayer.framework */; };
@@ -71,8 +71,6 @@
 		00D16CCB11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
 		00D16CCC11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
 		00D16CCD11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
-		00D16D6B11692FE700D025EF /* output.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 00D16D6A11692FE700D025EF /* output.mp4 */; };
-		00D16E5D11694A8700D025EF /* test-x264.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 00D16E5C11694A8700D025EF /* test-x264.mp4 */; };
 		00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7706A115B29A300CF9F22 /* FFEncoder.m */; };
 		00D77083115B331600CF9F22 /* FFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFUtils.m */; };
 		00DB9ACC116460D4002A7F8F /* PBProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACB116460D4002A7F8F /* PBProcessing.m */; };
@@ -195,6 +193,7 @@
 		0012A0521154AE3100D09836 /* FFGLTestDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLTestDrawable.h; sourceTree = "<group>"; };
 		0012A0531154AE3100D09836 /* FFGLTestDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFGLTestDrawable.m; sourceTree = "<group>"; };
 		0012A0541154AE3100D09836 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
+		002342C8116B16D200088651 /* star_trek.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = star_trek.mov; sourceTree = "<group>"; };
 		00A313D21163E2B20065101E /* PBMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBMoviePlayerController.h; sourceTree = "<group>"; };
 		00A313D31163E2B20065101E /* PBMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBMoviePlayerController.m; sourceTree = "<group>"; };
 		00A313E61163E33A0065101E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -407,6 +406,7 @@
 		000DD3CF1166C669007E8546 /* samples */ = {
 			isa = PBXGroup;
 			children = (
+				002342C8116B16D200088651 /* star_trek.mov */,
 				00D16E5C11694A8700D025EF /* test-x264.mp4 */,
 				00D16D6A11692FE700D025EF /* output.mp4 */,
 				000DD3D01166C669007E8546 /* camping.m4v */,
@@ -751,10 +751,8 @@
 				00DB9C5C11647A3E002A7F8F /* README in Resources */,
 				00DB9C5D11647A3E002A7F8F /* test.png in Resources */,
 				00DB9CD611648145002A7F8F /* icon.png in Resources */,
-				000DD3F91167D881007E8546 /* IMG_0306.MOV in Resources */,
 				00D16AEB1167E21E00D025EF /* libx264-ipod320.ffpreset in Resources */,
-				00D16D6B11692FE700D025EF /* output.mp4 in Resources */,
-				00D16E5D11694A8700D025EF /* test-x264.mp4 in Resources */,
+				002342C9116B16D200088651 /* star_trek.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

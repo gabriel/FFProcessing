@@ -11,6 +11,7 @@
 
 #import "FFOptions.h"
 #import "FFConverter.h"
+#import "FFPresets.h"
 
 @interface FFEncoder : NSObject {
 
@@ -19,6 +20,7 @@
   AVStream *_audioStream;
   
   FFOptions *_options;
+  FFPresets *_presets;
   FFConverter *_converter;
   NSString *_path;
   NSString *_format;
@@ -28,15 +30,10 @@
   int _videoBufferSize;
   int _frameBytesEncoded;
   
-  NSUInteger _currentVideoFrameIndex;
-  
+  int64_t _currentPTS;
 }
 
-@property (readonly, nonatomic) NSUInteger currentVideoFrameIndex;
-
-- (id)initWithOptions:(FFOptions *)options path:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName;
-
-- (AVCodecContext *)videoCodecContext;
+- (id)initWithOptions:(FFOptions *)options presets:(FFPresets *)presets path:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName;
 
 - (BOOL)open:(NSError **)error;
 
@@ -49,10 +46,12 @@
  */
 - (int)encodeVideoFrame:(AVFrame *)picture error:(NSError **)error;
 
+- (AVFrame *)codedFrame;
+
 /*!
  Write current video buffer.
  */
-- (BOOL)writeVideoBuffer:(NSError **)error;
+- (BOOL)writeVideoBuffer:(NSError **)error duration:(int64_t)duration;
 
 /*!
  Write video frame.

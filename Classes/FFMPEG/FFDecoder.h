@@ -35,21 +35,21 @@
 - (BOOL)readFrame:(AVPacket *)packet error:(NSError **)error;
 
 /*!
- Decode packet into frame.
- @param frame If decoded, frame is set
+ Decode packet into picture.
+ @param picture If decoded, picture is set
  @param packet Packet to decode
  @param error Out error
  @result YES if decoded
  */
-- (BOOL)decodeFrame:(AVFrame *)frame packet:(AVPacket *)packet error:(NSError **)error;
+- (BOOL)decodeVideoFrame:(AVFrame *)picture packet:(AVPacket *)packet error:(NSError **)error;
 
 /*!
- Read packet and decode into frame.
- @param frame If decoded, frame is set
+ Read packet and decode into picture.
+ @param picture If decoded, picture is set
  @param error Out error
  @result YES if decoded
  */
-- (BOOL)decodeFrame:(AVFrame *)frame error:(NSError **)error;
+- (BOOL)decodeVideoFrame:(AVFrame *)picture error:(NSError **)error;
 
 /*!
  Close decoder.

@@ -90,7 +90,7 @@
     while (![self isCancelled]) {  
       NSError *error = nil;
       // Note: This may block on http streaming
-      [_decoder decodeFrame:_frame error:&error];    
+      [_decoder decodeVideoFrame:_frame error:&error];    
       if (error)
         break;
       

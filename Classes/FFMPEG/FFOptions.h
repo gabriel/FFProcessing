@@ -15,15 +15,14 @@
   int _height;
   enum PixelFormat _pixelFormat;  
   AVRational _videoFrameRate;
-  
-  FFPresets *_presets;
+  AVRational _videoTimeBase;
 }
 
 @property (assign, nonatomic) int width;
 @property (assign, nonatomic) int height;
 @property (assign, nonatomic) enum PixelFormat pixelFormat;
 @property (assign, nonatomic) AVRational videoFrameRate;
-@property (retain, nonatomic) FFPresets *presets;
+@property (assign, nonatomic) AVRational videoTimeBase;
 
 - (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat;
 

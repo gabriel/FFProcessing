@@ -38,30 +38,44 @@
 }  
 
 - (void)openVideoController {
-  if (!_videoController) {
-    _videoController = [[PBVideoController alloc] init];
-    _videoController.delegate = self;
-  }
+  _videoController = [[PBVideoController alloc] init];
+  _videoController.delegate = self;
   [self.navigationController pushViewController:_videoController animated:YES];
+  [_videoController release];
 }
 
-- (void)process {
+- (void)setProcessOptions:(NSInteger)mode {
   if (!_processing)
     _processing = [[PBProcessing alloc] init];
-  
-  if (!self.sourceURL) self.sourceURL = [FFUtils resolvedURLForURL:[NSURL URLWithString:@"bundle://IMG_0306.MOV"]];
+
+  switch (mode) {
+    case 1:
+      _processing.IFrameInterval = 6;
+      _processing.smoothInterval = 3;
+      _processing.smoothIterations = 2;
+      break;
+    case 2:
+      _processing.IFrameInterval = 999999;
+      _processing.smoothInterval = 3;
+      _processing.smoothIterations = 4;
+      break;
+  }
+}
+
+- (void)process:(NSURL *)sourceURL {
+  if (!_processing)
+    _processing = [[PBProcessing alloc] init];
     
-  if (self.sourceURL) {
+  if (sourceURL) {
     NSString *outputFormat = @"mp4";
-    self.path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"test-x264.mp4", outputFormat]];
-    FFDebug(@"Process: %@ to %@", self.sourceURL, self.path);
-    [_processing processURL:self.sourceURL outputPath:self.path outputFormat:outputFormat outputCodecName:@"libx264"];
+    NSString *outputCodecName = nil; //@"libx264";
+    self.path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"mosh.mp4", outputFormat]];
+    FFDebug(@"Process: %@ to %@", sourceURL, self.path);
+    [_processing processURL:sourceURL outputPath:self.path outputFormat:outputFormat outputCodecName:outputCodecName];
   }
 }  
 
 - (void)openMoviePlayerController {
-  if (!self.path) self.path = [FFUtils resolvedPathForURL:[NSURL URLWithString:@"bundle://output.mp4"]];
-
   FFDebug(@"Playing: %@", self.path);
   if (self.path) {
     [_moviePlayerController release];
@@ -84,6 +98,8 @@
   UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
 	if (!cell)
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"] autorelease];    
+  
+  cell.accessoryType = UITableViewCellAccessoryNone;
 
   switch (indexPath.row) {
     case 0: {
@@ -92,15 +108,26 @@
       break;
     }
     case 1: {
-      cell.textLabel.text = @"Process";
-      cell.accessoryType = UITableViewCellAccessoryNone;
+      cell.textLabel.text = @"Process (Camera)";
       break;
     }
     case 2: {
       cell.textLabel.text = @"Play";
-      cell.accessoryType = UITableViewCellAccessoryNone;
       break;
     }
+    case 3: {
+      cell.textLabel.text = @"Process Test (ST:TNG)";
+      break;
+    }     
+    case 4: {
+      cell.textLabel.text = @"Process Options #1";
+      break;
+    }
+    case 5: {
+      cell.textLabel.text = @"Process Options #2";
+      break;
+    }
+      
   }
   return cell;
 }
@@ -110,7 +137,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	
-  return 3;
+  return 6;
 }
 
 #pragma mark Delegate (UITableViewDelegate)
@@ -122,11 +149,23 @@
       break;
     }
     case 1: {
-      [self process];       
+      [self process:self.sourceURL];
       break;
     }
     case 2: {
       [self openMoviePlayerController]; 
+      break;
+    }      
+    case 3: {
+      [self process:[FFUtils resolvedURLForURL:[NSURL URLWithString:@"bundle://star_trek.mov"]]];
+      break;
+    }
+    case 4: {
+      [self setProcessOptions:1]; 
+      break;
+    }
+    case 5: {
+      [self setProcessOptions:2]; 
       break;
     }
   }
