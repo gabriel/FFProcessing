@@ -6,21 +6,23 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#import "PBVideoController.h"
+#import "PBUITableViewController.h"
+
+#import "PBMediaListViewController.h"
 #import "PBMoviePlayerController.h"
 #import "PBProcessing.h"
 
-@interface PBApplicationController : UITableViewController <PBVideoControllerDelegate> {
-  PBVideoController *_videoController;
+@interface PBApplicationController : PBUITableViewController {
+
+  PBMediaListViewController *_mediaListViewController;
   PBMoviePlayerController *_moviePlayerController;  
   PBProcessing *_processing;
   
   NSURL *_sourceURL;
-  NSString *_path;  
 }
 
 @property (retain, nonatomic) NSURL *sourceURL;
-@property (retain, nonatomic) NSString *path;  
+
 
 
 @end

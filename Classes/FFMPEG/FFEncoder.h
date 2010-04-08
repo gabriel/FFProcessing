@@ -51,15 +51,7 @@
 /*!
  Write current video buffer.
  */
-- (BOOL)writeVideoBuffer:(NSError **)error duration:(int64_t)duration;
-
-/*!
- Write video frame.
- Encodes and writes the buffer.
- 
- This is the equivalent of calling both encodeVideoFrame:error: and writeVideoBuffer:.
- */
-- (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error;
+- (BOOL)writeVideoBuffer:(NSError **)error;
 
 - (void)close;
 

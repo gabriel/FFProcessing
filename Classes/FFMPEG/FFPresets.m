@@ -73,7 +73,7 @@
   //codecContext->qmax = 51;
   //codecContext->qcompress = 0.6;  
   codecContext->rc_max_rate = 768*1000;
-  codecContext->rc_buffer_size = 3000*1000;
+  codecContext->rc_buffer_size = 4096*1000;
   //codecContext->weighted_p_pred = 0;
   
   // Options ipod

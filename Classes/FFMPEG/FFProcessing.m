@@ -10,18 +10,34 @@
 
 #import "FFUtils.h"
 
+@interface FFProcessing ()
+- (BOOL)_processAtIndex:(NSInteger)index count:(NSInteger)count error:(NSError **)error;
+@end
+
 @implementation FFProcessing
 
-@synthesize IFrameInterval=_IFrameInterval, smoothInterval=_smoothInterval, smoothIterations=_smoothIterations;
+@synthesize smoothInterval=_smoothInterval, smoothIterations=_smoothIterations, outputPath=_outputPath;
+
+- (id)initWithOutputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
+         outputCodecName:(NSString *)outputCodecName {
+  
+  if ((self = [super init])) {
+    _outputPath = [outputPath retain];
+    _outputFormat = [outputFormat retain];
+    _outputCodecName = [outputCodecName retain];
+  }
+  return self;
+}
 
 - (void)dealloc {
   [self close];
+  [_outputPath release];
+  [_outputFormat release];
+  [_outputCodecName release];
   [super dealloc];
 }
 
-- (BOOL)openURL:(NSURL *)URL format:(NSString *)format outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
-outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
-  
+- (BOOL)_openDecoder:(NSURL *)URL format:(NSString *)format error:(NSError **)error {
   _decoder = [[FFDecoder alloc] init];
   
   if (![_decoder openWithURL:URL format:format error:error]) {
@@ -34,15 +50,27 @@ outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
     return NO;
   }
   
-  FFOptions *options = [_decoder options];
+  return YES;
+}
+
+- (void)_closeDecoder {
+  if (_decoderFrame != NULL) {
+    av_free(_decoderFrame);
+    _decoderFrame = NULL;
+  }
+  [_decoder release];
+  _decoder = nil;  
+}
+
+- (BOOL)_openEncoder:(NSError **)error {
   FFPresets *presets = [[FFPresets alloc] init]; // TODO(gabe): Presets hardcoded
   
-  _encoder = [[FFEncoder alloc] initWithOptions:options
+  _encoder = [[FFEncoder alloc] initWithOptions:[_decoder options]
                                         presets:presets
-                                           path:outputPath 
-                                         format:outputFormat
-                                      codecName:outputCodecName];
-
+                                           path:_outputPath 
+                                         format:_outputFormat
+                                      codecName:_outputCodecName];
+  
   [presets release];
   if (![_encoder open:error])
     return NO;
@@ -50,22 +78,37 @@ outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
   return YES;
 }
 
-- (BOOL)process:(NSError **)error {
-  NSAssert(_decoder, @"No decoder, forgot to open?");
-  NSAssert(_encoder, @"No encoder, forgot to open?");
-
+- (BOOL)processURL:(NSURL *)URL format:(NSString *)format index:(NSInteger)index count:(NSInteger)count error:(NSError **)error {
   if (!error) {
     NSError *processError = nil;
     error = &processError;
   }
+  if (![self _openDecoder:URL format:format error:error])
+    return NO;
+    
+  BOOL processed = [self _processAtIndex:index count:count error:error];
+  [self _closeDecoder];
+  return processed;
+}
+
+- (BOOL)_processAtIndex:(NSInteger)index count:(NSInteger)count error:(NSError **)error {
+
+  _IFrameIndex = 0;
+  _PFrameIndex = 0;
+  
+  if (!_encoder) {
+    _previousEndPTS = 0;
+    if (![self _openEncoder:error]) 
+      return NO;
+  }
   
   AVFrame *picture = FFPictureCreate(_decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
 
-  if (![_encoder writeHeader:error]) 
-    return NO;
+  if (index == 0) {
+    if (![_encoder writeHeader:error]) 
+      return NO;
+  }
 
-  int64_t IFrameIndex = 0;
-  int64_t PFrameIndex = 0;
   while (YES) {
     *error = nil;
     
@@ -80,10 +123,9 @@ outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
     
     //if (_decoderFrame->pict_type == FF_I_TYPE) { }
     //FFDebug(@"Decoded frame, pict_type=%@", NSStringFromAVFramePictType(_decoderFrame->pict_type));
-    int64_t duration = _decoderFrame->pts - _previousPTS;
+    _decoderFrame->pts += _previousEndPTS;
     _previousPTS = _decoderFrame->pts;
-    FFDebug(@"Duration: %lld", duration);
-    
+
     int bytesEncoded = [_encoder encodeVideoFrame:_decoderFrame error:error];
     if (bytesEncoded < 0) {
       FFDebug(@"Encode error");
@@ -93,37 +135,38 @@ outputCodecName:(NSString *)outputCodecName error:(NSError **)error {
     // If bytesEncoded is zero, there was buffering
     if (bytesEncoded > 0) {      
       if (_decoderFrame->pict_type == FF_I_TYPE) {
-        if (IFrameIndex++ % _IFrameInterval != 0) {
+        _IFrameIndex++;
+        
+        if (!(index == 0 && _IFrameIndex == 1) && // Don't skip if first I-frame in first input
+            (index > 0 && _IFrameIndex == 1)) { // Skip if first I-frame in subsequent input
           FFDebug(@"Skipping keyframe");
           continue;     
         }
-        if (![_encoder writeVideoBuffer:error duration:duration]) break;
+        if (![_encoder writeVideoBuffer:error]) break;
       } else if (_decoderFrame->pict_type == FF_P_TYPE) {
-        if (_smoothIterations > 0 && (PFrameIndex++ % _smoothInterval != 0)) {
+        if (_smoothIterations > 0 && (_PFrameIndex++ % _smoothInterval != 0)) {
           for (int i = 0; i < _smoothIterations; i++)
-            if (![_encoder writeVideoBuffer:error duration:((float)duration/(float)_smoothIterations)]) break;
+            if (![_encoder writeVideoBuffer:error]) break; //  duration:((float)duration/(float)_smoothIterations)
         } else {
-          if (![_encoder writeVideoBuffer:error duration:duration]) break;
+          if (![_encoder writeVideoBuffer:error]) break;
         }
       }
     }
   }
   
-  if (![_encoder writeTrailer:error]) return NO;
+  _previousEndPTS = _previousPTS + 1; // TODO(gabe): Fix me
+  
+  if (index == (count - 1)) {
+    if (![_encoder writeTrailer:error]) 
+      return NO;
+  }
   
   FFPictureRelease(picture);
   
   return YES;
 }
      
-- (void)close {
-  if (_decoderFrame != NULL) {
-    av_free(_decoderFrame);
-    _decoderFrame = NULL;
-  }
-  [_decoder release];
-  _decoder = nil;
-  
+- (void)close {  
   [_encoder release];
   _encoder = nil;
 }

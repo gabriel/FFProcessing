@@ -14,27 +14,55 @@
 
 @implementation PBProcessing
 
+@synthesize outputPath=_outputPath;
+
 - (id)init {
-  if ((self = [super init])) {
-    self.IFrameInterval = 6;
-    self.smoothInterval = 3;
-    self.smoothIterations = 2;
+  if ((self = [super init])) {    
+    NSString *outputFormat = @"mp4";
+    NSString *outputCodecName = nil; //@"libx264";
+    NSString *outputPath = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"mosh.mp4", outputFormat]];
+    
+    _processing = [[FFProcessing alloc] initWithOutputPath:outputPath outputFormat:outputFormat 
+                                           outputCodecName:outputCodecName];
+    
+    //_processing.smoothInterval = 3;
+    //_processing.smoothIterations = 2;
+    _processing.smoothIterations = 0;
+    
+    /*!
+     self.IFrameInterval = 999999;
+     self.smoothInterval = 3;
+     self.smoothIterations = 4;
+     */     
+    
   }
   return self;
 }
 
-- (void)processURL:(NSURL *)URL outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat outputCodecName:(NSString *)outputCodecName {  
+- (void)dealloc {
+  [_outputPath release];
+  [_processing release];
+  [super dealloc];
+}
+
+- (void)processURLs:(NSArray *)URLs {
+  
+  FFDebug(@"Process: %@ to %@", URLs, self.outputPath);  
+  
   NSError *error = nil;
-  
-  if (![self openURL:URL format:nil outputPath:outputPath outputFormat:outputFormat outputCodecName:outputCodecName error:&error]) {
-    FFDebug(@"Error opening: %@", error);
-    return;
+  NSInteger index = 0;
+  for (NSURL *URL in URLs) {
+    if (![_processing processURL:URL format:nil index:index count:[URLs count] error:&error]) {
+      FFDebug(@"Error processing: %@", error);
+      break;
+    }
+    index++;
   }
+ 
+  self.outputPath = _processing.outputPath;
+  FFDebug(@"Output path: %@", self.outputPath);
   
-  [self process:&error];
-  
-  [self close];
-  
+  [_processing close];  
 }
 
 - (void)saveToPhotoLibrary:(NSString *)path {

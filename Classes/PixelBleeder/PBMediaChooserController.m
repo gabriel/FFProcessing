@@ -1,12 +1,12 @@
 //
-//  PBVideoController.m
+//  PBMediaChooserController.m
 //  FFPlayer
 //
 //  Created by Gabriel Handford on 3/30/10.
 //  Copyright 2010. All rights reserved.
 //
 
-#import "PBVideoController.h"
+#import "PBMediaChooserController.h"
 
 #import "FFUtils.h"
 #import "FFProcessing.h"
@@ -14,12 +14,21 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 
-@implementation PBVideoController
+@implementation PBMediaChooserController
 
-@synthesize delegate=_delegate;
+@synthesize delegate=_delegate, mediaTypes=_mediaTypes;
+
+- (id)initWithSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes {
+  if ((self = [super init])) {
+    _sourceType = sourceType;
+    _mediaTypes = [mediaTypes retain];
+  }
+  return self;
+}
 
 - (void)dealloc {
   [_videoController release];
+  [_mediaTypes release];
   [super dealloc];
 }
 
@@ -27,16 +36,9 @@
   if (!_videoController) {
     _videoController = [[UIImagePickerController alloc] init];
     _videoController.navigationBarHidden = YES;
-    _videoController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum; 
-    _videoController.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:_videoController.sourceType];
-    FFDebug(@"mediaTypes=%@", mediaTypes);
-    
-    //NSArray *mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeMPEG];
-    
+    _videoController.sourceType = _sourceType;    
     _videoController.allowsImageEditing = YES;
-    _videoController.mediaTypes = mediaTypes;
+    _videoController.mediaTypes = _mediaTypes;
     _videoController.delegate = self;
   }
   return _videoController;

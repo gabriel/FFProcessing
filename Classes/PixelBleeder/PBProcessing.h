@@ -8,10 +8,13 @@
 
 #import "FFProcessing.h"
 
-@interface PBProcessing : FFProcessing {
-
+@interface PBProcessing : NSObject {
+  FFProcessing *_processing;
+  NSString *_outputPath;
 }
 
-- (void)processURL:(NSURL *)URL outputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat outputCodecName:(NSString *)outputCodecName;
+@property (retain, nonatomic) NSString *outputPath;  
+
+- (void)processURLs:(NSArray *)URLs;
 
 @end

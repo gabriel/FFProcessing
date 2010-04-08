@@ -52,6 +52,16 @@
 		001736931165A00C00959279 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A313E61163E33A0065101E /* MediaPlayer.framework */; };
 		001736941165A00D00959279 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CA117111632AAB00664274 /* MobileCoreServices.framework */; };
 		002342C9116B16D200088651 /* star_trek.mov in Resources */ = {isa = PBXBuildFile; fileRef = 002342C8116B16D200088651 /* star_trek.mov */; };
+		00234B99116D915800088651 /* PBUITableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234B98116D915800088651 /* PBUITableViewController.m */; };
+		00234B9A116D915800088651 /* PBUITableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234B98116D915800088651 /* PBUITableViewController.m */; };
+		00234B9D116D95C800088651 /* PBMediaChooser.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234B9C116D95C800088651 /* PBMediaChooser.m */; };
+		00234B9E116D95C800088651 /* PBMediaChooser.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234B9C116D95C800088651 /* PBMediaChooser.m */; };
+		00234C3F116DA75600088651 /* PBMediaListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234C3E116DA75600088651 /* PBMediaListViewController.m */; };
+		00234C40116DA75600088651 /* PBMediaListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234C3E116DA75600088651 /* PBMediaListViewController.m */; };
+		00234C43116DA7FA00088651 /* PBUIItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234C42116DA7FA00088651 /* PBUIItem.m */; };
+		00234C44116DA7FA00088651 /* PBUIItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234C42116DA7FA00088651 /* PBUIItem.m */; };
+		00234C95116DB97800088651 /* short1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 00234C93116DB97800088651 /* short1.mov */; };
+		00234C96116DB97800088651 /* short2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 00234C94116DB97800088651 /* short2.mov */; };
 		00A313D41163E2B20065101E /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00A313D51163E2B20065101E /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00A313E71163E33A0065101E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A313E61163E33A0065101E /* MediaPlayer.framework */; };
@@ -59,8 +69,8 @@
 		00CA0FDB1163034900664274 /* FFReadThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA0FD91163034900664274 /* FFReadThread.m */; };
 		00CA1115116325B400664274 /* PBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1114116325B400664274 /* PBAppDelegate.m */; };
 		00CA1116116325B400664274 /* PBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1114116325B400664274 /* PBAppDelegate.m */; };
-		00CA114A116328BA00664274 /* PBVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1149116328BA00664274 /* PBVideoController.m */; };
-		00CA114B116328BA00664274 /* PBVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1149116328BA00664274 /* PBVideoController.m */; };
+		00CA114A116328BA00664274 /* PBMediaChooserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1149116328BA00664274 /* PBMediaChooserController.m */; };
+		00CA114B116328BA00664274 /* PBMediaChooserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1149116328BA00664274 /* PBMediaChooserController.m */; };
 		00CA117211632AAB00664274 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CA117111632AAB00664274 /* MobileCoreServices.framework */; };
 		00D16AB01167DD9C00D025EF /* FFPresets.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16AAF1167DD9C00D025EF /* FFPresets.m */; };
 		00D16AB11167DD9C00D025EF /* FFPresets.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16AAF1167DD9C00D025EF /* FFPresets.m */; };
@@ -96,7 +106,7 @@
 		00DB9C7111647A3E002A7F8F /* FFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFUtils.m */; };
 		00DB9C7211647A3E002A7F8F /* FFReadThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA0FD91163034900664274 /* FFReadThread.m */; };
 		00DB9C7311647A3E002A7F8F /* PBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1114116325B400664274 /* PBAppDelegate.m */; };
-		00DB9C7411647A3E002A7F8F /* PBVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1149116328BA00664274 /* PBVideoController.m */; };
+		00DB9C7411647A3E002A7F8F /* PBMediaChooserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA1149116328BA00664274 /* PBMediaChooserController.m */; };
 		00DB9C7511647A3E002A7F8F /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00DB9C7611647A3E002A7F8F /* PBProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACB116460D4002A7F8F /* PBProcessing.m */; };
 		00DB9C7711647A3E002A7F8F /* PBApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACF116461CD002A7F8F /* PBApplicationController.m */; };
@@ -194,6 +204,16 @@
 		0012A0531154AE3100D09836 /* FFGLTestDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFGLTestDrawable.m; sourceTree = "<group>"; };
 		0012A0541154AE3100D09836 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		002342C8116B16D200088651 /* star_trek.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = star_trek.mov; sourceTree = "<group>"; };
+		00234B97116D915800088651 /* PBUITableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUITableViewController.h; sourceTree = "<group>"; };
+		00234B98116D915800088651 /* PBUITableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBUITableViewController.m; sourceTree = "<group>"; };
+		00234B9B116D95C800088651 /* PBMediaChooser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBMediaChooser.h; sourceTree = "<group>"; };
+		00234B9C116D95C800088651 /* PBMediaChooser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBMediaChooser.m; sourceTree = "<group>"; };
+		00234C3D116DA75600088651 /* PBMediaListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBMediaListViewController.h; sourceTree = "<group>"; };
+		00234C3E116DA75600088651 /* PBMediaListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBMediaListViewController.m; sourceTree = "<group>"; };
+		00234C41116DA7FA00088651 /* PBUIItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUIItem.h; sourceTree = "<group>"; };
+		00234C42116DA7FA00088651 /* PBUIItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBUIItem.m; sourceTree = "<group>"; };
+		00234C93116DB97800088651 /* short1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short1.mov; sourceTree = "<group>"; };
+		00234C94116DB97800088651 /* short2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short2.mov; sourceTree = "<group>"; };
 		00A313D21163E2B20065101E /* PBMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBMoviePlayerController.h; sourceTree = "<group>"; };
 		00A313D31163E2B20065101E /* PBMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBMoviePlayerController.m; sourceTree = "<group>"; };
 		00A313E61163E33A0065101E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -201,8 +221,8 @@
 		00CA0FD91163034900664274 /* FFReadThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFReadThread.m; sourceTree = "<group>"; };
 		00CA1113116325B400664274 /* PBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBAppDelegate.h; sourceTree = "<group>"; };
 		00CA1114116325B400664274 /* PBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBAppDelegate.m; sourceTree = "<group>"; };
-		00CA1148116328BA00664274 /* PBVideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBVideoController.h; sourceTree = "<group>"; };
-		00CA1149116328BA00664274 /* PBVideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBVideoController.m; sourceTree = "<group>"; };
+		00CA1148116328BA00664274 /* PBMediaChooserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBMediaChooserController.h; sourceTree = "<group>"; };
+		00CA1149116328BA00664274 /* PBMediaChooserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBMediaChooserController.m; sourceTree = "<group>"; };
 		00CA117111632AAB00664274 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		00D16AAE1167DD9C00D025EF /* FFPresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFPresets.h; sourceTree = "<group>"; };
 		00D16AAF1167DD9C00D025EF /* FFPresets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFPresets.m; sourceTree = "<group>"; };
@@ -374,16 +394,21 @@
 		0007416B1161CDE600D8283B /* PixelBleeder */ = {
 			isa = PBXGroup;
 			children = (
+				00234B91116D900400088651 /* UI */,
 				00CA1113116325B400664274 /* PBAppDelegate.h */,
 				00CA1114116325B400664274 /* PBAppDelegate.m */,
-				00CA1148116328BA00664274 /* PBVideoController.h */,
-				00CA1149116328BA00664274 /* PBVideoController.m */,
+				00CA1148116328BA00664274 /* PBMediaChooserController.h */,
+				00CA1149116328BA00664274 /* PBMediaChooserController.m */,
 				00A313D21163E2B20065101E /* PBMoviePlayerController.h */,
 				00A313D31163E2B20065101E /* PBMoviePlayerController.m */,
 				00DB9ACA116460D4002A7F8F /* PBProcessing.h */,
 				00DB9ACB116460D4002A7F8F /* PBProcessing.m */,
 				00DB9ACE116461CD002A7F8F /* PBApplicationController.h */,
 				00DB9ACF116461CD002A7F8F /* PBApplicationController.m */,
+				00234B9B116D95C800088651 /* PBMediaChooser.h */,
+				00234B9C116D95C800088651 /* PBMediaChooser.m */,
+				00234C3D116DA75600088651 /* PBMediaListViewController.h */,
+				00234C3E116DA75600088651 /* PBMediaListViewController.m */,
 			);
 			path = PixelBleeder;
 			sourceTree = "<group>";
@@ -406,6 +431,8 @@
 		000DD3CF1166C669007E8546 /* samples */ = {
 			isa = PBXGroup;
 			children = (
+				00234C93116DB97800088651 /* short1.mov */,
+				00234C94116DB97800088651 /* short2.mov */,
 				002342C8116B16D200088651 /* star_trek.mov */,
 				00D16E5C11694A8700D025EF /* test-x264.mp4 */,
 				00D16D6A11692FE700D025EF /* output.mp4 */,
@@ -489,6 +516,17 @@
 				0012A0541154AE3100D09836 /* test.png */,
 			);
 			path = Test;
+			sourceTree = "<group>";
+		};
+		00234B91116D900400088651 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				00234C41116DA7FA00088651 /* PBUIItem.h */,
+				00234C42116DA7FA00088651 /* PBUIItem.m */,
+				00234B97116D915800088651 /* PBUITableViewController.h */,
+				00234B98116D915800088651 /* PBUITableViewController.m */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		00D16AC81167E20100D025EF /* ffmpeg-share */ = {
@@ -753,6 +791,8 @@
 				00DB9CD611648145002A7F8F /* icon.png in Resources */,
 				00D16AEB1167E21E00D025EF /* libx264-ipod320.ffpreset in Resources */,
 				002342C9116B16D200088651 /* star_trek.mov in Resources */,
+				00234C95116DB97800088651 /* short1.mov in Resources */,
+				00234C96116DB97800088651 /* short2.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,13 +837,17 @@
 				00DB9C7111647A3E002A7F8F /* FFUtils.m in Sources */,
 				00DB9C7211647A3E002A7F8F /* FFReadThread.m in Sources */,
 				00DB9C7311647A3E002A7F8F /* PBAppDelegate.m in Sources */,
-				00DB9C7411647A3E002A7F8F /* PBVideoController.m in Sources */,
+				00DB9C7411647A3E002A7F8F /* PBMediaChooserController.m in Sources */,
 				00DB9C7511647A3E002A7F8F /* PBMoviePlayerController.m in Sources */,
 				00DB9C7611647A3E002A7F8F /* PBProcessing.m in Sources */,
 				00DB9C7711647A3E002A7F8F /* PBApplicationController.m in Sources */,
 				00F824FD1165A9C400175A32 /* FFCodec.m in Sources */,
 				00D16AB01167DD9C00D025EF /* FFPresets.m in Sources */,
 				00D16CCB11688B9B00D025EF /* FFOptions.m in Sources */,
+				00234B99116D915800088651 /* PBUITableViewController.m in Sources */,
+				00234B9D116D95C800088651 /* PBMediaChooser.m in Sources */,
+				00234C3F116DA75600088651 /* PBMediaListViewController.m in Sources */,
+				00234C43116DA7FA00088651 /* PBUIItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -829,7 +873,7 @@
 				0007418E1161D26C00D8283B /* FFProcessingTest.m in Sources */,
 				00CA0FDA1163034900664274 /* FFReadThread.m in Sources */,
 				00CA1115116325B400664274 /* PBAppDelegate.m in Sources */,
-				00CA114A116328BA00664274 /* PBVideoController.m in Sources */,
+				00CA114A116328BA00664274 /* PBMediaChooserController.m in Sources */,
 				00A313D41163E2B20065101E /* PBMoviePlayerController.m in Sources */,
 				00DB9ACC116460D4002A7F8F /* PBProcessing.m in Sources */,
 				00DB9AD1116461CD002A7F8F /* PBApplicationController.m in Sources */,
@@ -839,6 +883,10 @@
 				00D16AB11167DD9C00D025EF /* FFPresets.m in Sources */,
 				00D16AB71167DFF400D025EF /* FFPresetsTest.m in Sources */,
 				00D16CCC11688B9B00D025EF /* FFOptions.m in Sources */,
+				00234B9A116D915800088651 /* PBUITableViewController.m in Sources */,
+				00234B9E116D95C800088651 /* PBMediaChooser.m in Sources */,
+				00234C40116DA75600088651 /* PBMediaListViewController.m in Sources */,
+				00234C44116DA7FA00088651 /* PBUIItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,7 +911,7 @@
 				00D77083115B331600CF9F22 /* FFUtils.m in Sources */,
 				00CA0FDB1163034900664274 /* FFReadThread.m in Sources */,
 				00CA1116116325B400664274 /* PBAppDelegate.m in Sources */,
-				00CA114B116328BA00664274 /* PBVideoController.m in Sources */,
+				00CA114B116328BA00664274 /* PBMediaChooserController.m in Sources */,
 				00A313D51163E2B20065101E /* PBMoviePlayerController.m in Sources */,
 				00DB9ACD116460D4002A7F8F /* PBProcessing.m in Sources */,
 				00DB9AD0116461CD002A7F8F /* PBApplicationController.m in Sources */,

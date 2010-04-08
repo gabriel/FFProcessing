@@ -224,15 +224,11 @@
 - (int)encodeVideoFrame:(AVFrame *)picture error:(NSError **)error {    
   AVCodecContext *codecContext = _videoStream->codec;
   
-  //FFDebug(@"Encode frame, pts=%lld", picture->pts);
-  //AVFrame *picture = [_converter scalePicture:picture error:error];
-
   int bytesEncoded = avcodec_encode_video(codecContext, _videoBuffer, _videoBufferSize, picture);
   if (bytesEncoded < 0) {
     FFSetError(error, FFErrorCodeEncodeFrame, bytesEncoded, @"Error encoding frame");
     return bytesEncoded; // Error number
   }
-  //FFDebug(@"Encoded frame; pts=%lld, coded_frame->pts=%lld", picture->pts, codecContext->coded_frame->pts);    
   _frameBytesEncoded = bytesEncoded;
   return bytesEncoded;
 }
@@ -241,7 +237,7 @@
   return _videoStream->codec->coded_frame;
 }
 
-- (BOOL)writeVideoBuffer:(NSError **)error duration:(int64_t)duration {   
+- (BOOL)writeVideoBuffer:(NSError **)error {   
   if (_frameBytesEncoded == 0) return NO;
   
   AVCodecContext *codecContext = _videoStream->codec;
@@ -249,12 +245,11 @@
   AVPacket packet;        
   av_init_packet(&packet);
   
-  if (codecContext->coded_frame->pts != AV_NOPTS_VALUE)
+  if (codecContext->coded_frame->pts != AV_NOPTS_VALUE) {
     packet.pts = av_rescale_q(codecContext->coded_frame->pts, codecContext->time_base, _videoStream->time_base);
-  
-  codecContext->coded_frame->pts += duration;
+  }
 
-  FFDebug(@"Write video buffer: %d, pts=%lld", _frameBytesEncoded, packet.pts);
+  FFDebug(@"Write video buffer; pts=%lld (%d bytes)", packet.pts, _frameBytesEncoded);
   
 //  if (codecContext->coded_frame->dts != AV_NOPTS_VALUE)
 //    packet.dts = av_rescale_q(codecContext->coded_frame->dts, codecContext->time_base, _videoStream->time_base);
@@ -274,19 +269,5 @@
 
   return YES;
 }
-
-- (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error {   
-  int bytesEncoded = [self encodeVideoFrame:picture error:error];
-  if (bytesEncoded < 0) return NO;
-  
-  // If bytesEncoded is zero, there was buffering
-  if (bytesEncoded > 0) {
-    if (![self writeVideoBuffer:error duration:20]) { // XXX(gabe): FIXME
-      return NO;
-    }      
-  }  
-  return YES;
-}
-
 
 @end
