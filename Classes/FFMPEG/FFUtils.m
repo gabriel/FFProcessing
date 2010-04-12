@@ -72,6 +72,33 @@ void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int heigh
   }  
 }
 
+AVRational FFFindRationalApproximation(float r, long maxden) {  
+
+  long m[2][2];
+  long ai;
+  float x = r;
+  
+  // initialize matrix
+  m[0][0] = m[1][1] = 1;
+  m[0][1] = m[1][0] = 0;
+  
+  // loop finding terms until denom gets too big
+  while (m[1][0] * (ai = (long)x ) + m[1][1] <= maxden) {
+    long t;
+    t = m[0][0] * ai + m[0][1];
+    m[0][1] = m[0][0];
+    m[0][0] = t;
+    t = m[1][0] * ai + m[1][1];
+    m[1][1] = m[1][0];
+    m[1][0] = t;
+    if (x == (double)ai) break;     // AF: division by zero
+    x = 1/(x - (double) ai);
+    if (x > (double)0x7FFFFFFF) break;  // AF: representation failure
+  } 
+  
+  return (AVRational){m[0][0], m[1][0]};
+}
+
 @implementation FFUtils
 
 + (NSString *)documentsDirectory {	

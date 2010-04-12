@@ -53,6 +53,8 @@
  */
 - (BOOL)writeVideoBuffer:(NSError **)error;
 
+- (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error;
+
 - (void)close;
 
 @end

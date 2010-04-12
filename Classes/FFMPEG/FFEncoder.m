@@ -146,6 +146,8 @@
   [_presets apply:codecContext];
   [_options apply:codecContext];
   
+  stream->sample_aspect_ratio = codecContext->sample_aspect_ratio;
+  
   return stream;
 }
 
@@ -249,7 +251,7 @@
     packet.pts = av_rescale_q(codecContext->coded_frame->pts, codecContext->time_base, _videoStream->time_base);
   }
 
-  FFDebug(@"Write video buffer; pts=%lld (%d bytes)", packet.pts, _frameBytesEncoded);
+  FFDebugFrame(@"Write video buffer; pts=%lld (%d bytes)", packet.pts, _frameBytesEncoded);
   
 //  if (codecContext->coded_frame->dts != AV_NOPTS_VALUE)
 //    packet.dts = av_rescale_q(codecContext->coded_frame->dts, codecContext->time_base, _videoStream->time_base);
@@ -268,6 +270,16 @@
   }
 
   return YES;
+}
+
+- (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error {
+  int bytesEncoded = [self encodeVideoFrame:picture error:error];
+  if (bytesEncoded < 0) {
+    FFSetError(error, FFErrorCodeEncodeFrame, bytesEncoded, @"Error encoding frame");
+    return NO;
+  }
+  
+  return [self writeVideoBuffer:error];
 }
 
 @end

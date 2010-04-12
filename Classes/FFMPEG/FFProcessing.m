@@ -16,7 +16,8 @@
 
 @implementation FFProcessing
 
-@synthesize smoothInterval=_smoothInterval, smoothIterations=_smoothIterations, outputPath=_outputPath;
+@synthesize outputPath=_outputPath;
+@synthesize skipEveryIFrameInterval=_skipEveryIFrameInterval, smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
 
 - (id)initWithOutputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
          outputCodecName:(NSString *)outputCodecName {
@@ -63,7 +64,7 @@
 }
 
 - (BOOL)_openEncoder:(NSError **)error {
-  FFPresets *presets = [[FFPresets alloc] init]; // TODO(gabe): Presets hardcoded
+  FFPresets *presets = [[FFPresets alloc] initWithCodeName:_outputCodecName];
   
   _encoder = [[FFEncoder alloc] initWithOptions:[_decoder options]
                                         presets:presets
@@ -93,8 +94,9 @@
 
 - (BOOL)_processAtIndex:(NSInteger)index count:(NSInteger)count error:(NSError **)error {
 
-  _IFrameIndex = 0;
+  _IFrameIndex = 0;  
   _PFrameIndex = 0;
+  _GOPIndex = 0;
   
   if (!_encoder) {
     _previousEndPTS = 0;
@@ -124,7 +126,7 @@
     //if (_decoderFrame->pict_type == FF_I_TYPE) { }
     //FFDebug(@"Decoded frame, pict_type=%@", NSStringFromAVFramePictType(_decoderFrame->pict_type));
     _decoderFrame->pts += _previousEndPTS;
-    _previousPTS = _decoderFrame->pts;
+    //_decoderFrame->pict_type = 0;
 
     int bytesEncoded = [_encoder encodeVideoFrame:_decoderFrame error:error];
     if (bytesEncoded < 0) {
@@ -132,26 +134,46 @@
       break;
     }
     
+    AVFrame *codedFrame = [_encoder codedFrame];
+    
     // If bytesEncoded is zero, there was buffering
     if (bytesEncoded > 0) {      
-      if (_decoderFrame->pict_type == FF_I_TYPE) {
+      if (codedFrame->pict_type == FF_I_TYPE) {        
+        FFDebug(@"I-frame %lld (%d, %d)", codedFrame->pts, _IFrameIndex, _GOPIndex);
         _IFrameIndex++;
+        _GOPIndex = 0;
         
-        if (!(index == 0 && _IFrameIndex == 1) && // Don't skip if first I-frame in first input
-            (index > 0 && _IFrameIndex == 1)) { // Skip if first I-frame in subsequent input
-          FFDebug(@"Skipping keyframe");
-          continue;     
-        }
-        if (![_encoder writeVideoBuffer:error]) break;
-      } else if (_decoderFrame->pict_type == FF_P_TYPE) {
-        if (_smoothIterations > 0 && (_PFrameIndex++ % _smoothInterval != 0)) {
-          for (int i = 0; i < _smoothIterations; i++)
-            if (![_encoder writeVideoBuffer:error]) break; //  duration:((float)duration/(float)_smoothIterations)
+        if ((_skipEveryIFrameInterval > 0) && // Skipping I-frames is on
+            !(index == 0 && _IFrameIndex == 1) && // Don't skip if first I-frame in first input, no matter what options later
+            ((index > 0 && _IFrameIndex == 1) || // Skip if first I-frame in subsequent inputs
+             (_IFrameIndex % _skipEveryIFrameInterval == 0))) // We are on skip interval
+        { 
+          FFDebug(@"Skipping I-frame");          
         } else {
+          if (![_encoder writeVideoBuffer:error]) break;
+        }
+        
+      } else if (codedFrame->pict_type == FF_P_TYPE) {
+        _GOPIndex++;
+        if (_smoothFrameInterval > 0 && (_PFrameIndex++ % _smoothFrameInterval == 0)) {
+          
+          NSInteger count = _smoothFrameRepeat + 1;
+          int64_t startPTS = codedFrame->pts;
+          int64_t duration = (int64_t)((codedFrame->pts - _previousPTS)/(double)count);
+          
+          for (int i = 0; i < count; i++) {
+            codedFrame->pts = startPTS + (duration * i);            
+            FFDebug(@"P-frame (duping), %lld (%d/%d)", codedFrame->pts, (i + 1), count);
+            if (![_encoder writeVideoBuffer:error]) break;
+          }
+        } else { 
+          FFDebug(@"P-frame %lld", codedFrame->pts);
           if (![_encoder writeVideoBuffer:error]) break;
         }
       }
     }
+    
+    _previousPTS = codedFrame->pts;    
   }
   
   _previousEndPTS = _previousPTS + 1; // TODO(gabe): Fix me

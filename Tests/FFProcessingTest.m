@@ -20,10 +20,8 @@
   //NSURL *URL = [NSURL URLWithString:@"bundle://test.mp4"]; 
   NSURL *URL = [NSURL URLWithString:@"bundle://pegasus-1958-chiptune.avi"];
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test-processing.mp4"];
-  FFProcessing *processing = [[FFProcessing alloc] init];
-  GHAssertTrue([processing openURL:URL format:nil outputPath:path outputFormat:nil outputCodecName:nil error:nil], nil);
-  
-  [processing process:nil];
+  FFProcessing *processing = [[FFProcessing alloc] initWithOutputPath:path outputFormat:nil outputCodecName:nil];
+  GHAssertTrue([processing processURL:URL format:nil index:0 count:1 error:nil], nil);
   
   [processing close];
   
@@ -33,10 +31,8 @@
 - (void)testCameraVideo {
   NSURL *URL = [NSURL URLWithString:@"bundle://IMG_0306.MOV"];
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test-mov.mp4"];
-  FFProcessing *processing = [[FFProcessing alloc] init];
-  GHAssertTrue([processing openURL:URL format:nil outputPath:path outputFormat:nil outputCodecName:nil error:nil], nil);
-  
-  [processing process:nil];
+  FFProcessing *processing = [[FFProcessing alloc] initWithOutputPath:path outputFormat:nil outputCodecName:nil];
+  GHAssertTrue([processing processURL:URL format:nil index:0 count:1 error:nil], nil);
   
   [processing close];
   

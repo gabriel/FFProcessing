@@ -115,6 +115,8 @@
   
   _options.videoFrameRate = _videoStream->r_frame_rate;  
   _options.videoTimeBase = _videoStream->time_base;
+  if (_videoStream->sample_aspect_ratio.num > 0)
+    _options.sampleAspectRatio = _videoStream->sample_aspect_ratio;
   
   FFDebug(@"Decoder options: %@", _options);
 
@@ -156,7 +158,7 @@
   if (![self readFrame:&packet error:error]) 
     return NO;
   
-  FFDebug(@"Read frame; pts=%lld", packet.pts);
+  FFDebugFrame(@"Read frame; pts=%lld", packet.pts);
   BOOL decoded = [self decodeVideoFrame:picture packet:&packet error:error];
   picture->pts = packet.pts;
   

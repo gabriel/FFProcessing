@@ -18,7 +18,8 @@
 
 - (void)testEncoding {
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test.mp4"];
-  FFEncoder *encoder = [[FFEncoder alloc] initWithWidth:320 height:480 pixelFormat:PIX_FMT_YUV420P videoBitRate:400000
+  FFOptions *options = [[FFOptions alloc] initWithWidth:320 height:480 pixelFormat:PIX_FMT_YUV420P];
+  FFEncoder *encoder = [[FFEncoder alloc] initWithOptions:options presets:[[[FFPresets alloc] init] autorelease]
                                                    path:path format:nil codecName:nil];
   NSError *error = nil;
   
@@ -43,52 +44,5 @@
   
   [encoder release];
 }  
-
-- (void)testMoshing {
-  NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test-mosh.mp4"];
-  FFEncoder *encoder = [[FFEncoder alloc] initWithWidth:320 height:480 pixelFormat:PIX_FMT_YUV420P videoBitRate:400000 
-                                                   path:path format:nil codecName:nil];
-  NSError *error = nil;
-  
-  AVFrame *picture = FFPictureCreate(PIX_FMT_YUV420P, 320, 480);
-  GHAssertNotNULL(picture, nil);
-  
-  GHAssertTrue([encoder open:&error], nil);
-  
-  GHAssertTrue([encoder writeHeader:&error], nil);
-  
-  AVCodecContext *videoCodecContext = [encoder videoCodecContext];
-  
-  NSInteger skipIFrameIndex = 0;
-  NSInteger skipIFrameMod = 10;
-
-  // Fill in dummy picture data
-  for (NSUInteger i = 0; i < 200; i++) {
-    FFFillYUVImage(picture, i, 320, 480);
-    
-    int bytesEncoded = [encoder encodeVideoFrame:picture error:&error];
-    GHAssertFalse(bytesEncoded < 0, nil);
-
-    // Mosh!
-    if (videoCodecContext->coded_frame->key_frame) {      
-      if (skipIFrameIndex++ % skipIFrameMod != 0)
-        continue;     
-    }
-    
-    // If bytesEncoded is zero, there was buffering
-    if (bytesEncoded > 0) {
-      GHAssertTrue([encoder writeVideoBuffer:&error], nil);
-    }
-  }
-  
-  GHAssertTrue([encoder writeTrailer:&error], nil);
-  
-  [encoder close];
-  
-  FFPictureRelease(picture);
-  
-  [encoder release];
-}  
-
 
 @end

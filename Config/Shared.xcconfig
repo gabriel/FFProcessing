@@ -1,7 +1,7 @@
 ARCHS = armv7
 VALID_ARCHS = armv7
 HEADER_SEARCH_PATHS = ../ffmpeg-build/ffmpeg-uarch/include/**
-LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../ffmpeg-build/ffmpeg-uarch/lib" "$(SRCROOT)/../ffmpeg-build/x264-uarch/lib"
+LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../ffmpeg-build/ffmpeg-uarch/lib" "$(SRCROOT)/../ffmpeg-build/x264-uarch/lib" "$(SRCROOT)/../ffmpeg-build/xvid-uarch/lib"
 GCC_PRECOMPILE_PREFIX_HEADER = YES
 GCC_PREFIX_HEADER = Prefix.pch
 INFOPLIST_FILE = Resources/$(PRODUCT_NAME)-Info.plist

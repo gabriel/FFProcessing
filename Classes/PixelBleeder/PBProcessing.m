@@ -19,22 +19,15 @@
 - (id)init {
   if ((self = [super init])) {    
     NSString *outputFormat = @"mp4";
-    NSString *outputCodecName = nil; //@"libx264";
+    NSString *outputCodecName = @"mpeg4";
     NSString *outputPath = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"mosh.mp4", outputFormat]];
     
     _processing = [[FFProcessing alloc] initWithOutputPath:outputPath outputFormat:outputFormat 
                                            outputCodecName:outputCodecName];
     
-    //_processing.smoothInterval = 3;
-    //_processing.smoothIterations = 2;
-    _processing.smoothIterations = 0;
-    
-    /*!
-     self.IFrameInterval = 999999;
-     self.smoothInterval = 3;
-     self.smoothIterations = 4;
-     */     
-    
+    _processing.skipEveryIFrameInterval = 1;
+    _processing.smoothFrameInterval = 2;
+    _processing.smoothFrameRepeat = 2;
   }
   return self;
 }

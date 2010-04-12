@@ -49,6 +49,8 @@ enum {
 } FFErrorCode;
 
 #if DEBUG
+#define FFDebugFrame(...) do { } while(0)
+//#define FFDebugFrame(...) NSLog(__VA_ARGS__)
 #define FFDebug(...) NSLog(__VA_ARGS__)
 #else
 #define FFDebug(...) do { } while(0)
@@ -76,6 +78,28 @@ void FFPictureRelease(AVFrame *picture);
 
 // Fill dummy image
 void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int height);
+
+/*!
+ Find rational approximation to given real number.
+ David Eppstein / UC Irvine / 8 Aug 1993
+ 
+ With corrections from Arno Formella, May 2008
+ 
+ @param r Real number to approx
+ @param maxden Maximum denominator allowed
+ 
+ Based on the theory of continued fractions
+ if x = a1 + 1/(a2 + 1/(a3 + 1/(a4 + ...)))
+ then best approximation is found by truncating this series
+ (with some adjustments in the last term).
+ 
+ Note the fraction can be recovered as the first column of the matrix
+ ( a1 1 ) ( a2 1 ) ( a3 1 ) ...
+ ( 1  0 ) ( 1  0 ) ( 1  0 )
+ Instead of keeping the sequence of continued fraction terms,
+ we just keep the last partial product of these matrices.
+ */
+AVRational FFFindRationalApproximation(float r, long maxden);
 
 
 @interface FFUtils : NSObject { }

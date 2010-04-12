@@ -62,6 +62,9 @@
 		00234C44116DA7FA00088651 /* PBUIItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234C42116DA7FA00088651 /* PBUIItem.m */; };
 		00234C95116DB97800088651 /* short1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 00234C93116DB97800088651 /* short1.mov */; };
 		00234C96116DB97800088651 /* short2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 00234C94116DB97800088651 /* short2.mov */; };
+		00235031116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
+		00235032116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
+		00235033116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
 		00A313D41163E2B20065101E /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00A313D51163E2B20065101E /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00A313E71163E33A0065101E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A313E61163E33A0065101E /* MediaPlayer.framework */; };
@@ -214,6 +217,7 @@
 		00234C42116DA7FA00088651 /* PBUIItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBUIItem.m; sourceTree = "<group>"; };
 		00234C93116DB97800088651 /* short1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short1.mov; sourceTree = "<group>"; };
 		00234C94116DB97800088651 /* short2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short2.mov; sourceTree = "<group>"; };
+		00235030116EDE5100088651 /* libxvidcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libxvidcore.a; sourceTree = "<group>"; };
 		00A313D21163E2B20065101E /* PBMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBMoviePlayerController.h; sourceTree = "<group>"; };
 		00A313D31163E2B20065101E /* PBMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBMoviePlayerController.m; sourceTree = "<group>"; };
 		00A313E61163E33A0065101E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -335,6 +339,7 @@
 				000DD3C61166C656007E8546 /* libpostproc.a in Frameworks */,
 				000DD3C71166C656007E8546 /* libswscale.a in Frameworks */,
 				000DD3E71167D78B007E8546 /* libx264.a in Frameworks */,
+				00235031116EDE5100088651 /* libxvidcore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +366,7 @@
 				000DD3BF1166C656007E8546 /* libpostproc.a in Frameworks */,
 				000DD3C01166C656007E8546 /* libswscale.a in Frameworks */,
 				000DD3E81167D78B007E8546 /* libx264.a in Frameworks */,
+				00235032116EDE5100088651 /* libxvidcore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +391,7 @@
 				000DD3CD1166C656007E8546 /* libpostproc.a in Frameworks */,
 				000DD3CE1166C656007E8546 /* libswscale.a in Frameworks */,
 				000DD3E91167D78B007E8546 /* libx264.a in Frameworks */,
+				00235033116EDE5100088651 /* libxvidcore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +536,15 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		0023502F116EDE5100088651 /* libxvid */ = {
+			isa = PBXGroup;
+			children = (
+				00235030116EDE5100088651 /* libxvidcore.a */,
+			);
+			name = libxvid;
+			path = "../ffmpeg-build/xvid-uarch/lib";
+			sourceTree = SOURCE_ROOT;
+		};
 		00D16AC81167E20100D025EF /* ffmpeg-share */ = {
 			isa = PBXGroup;
 			children = (
@@ -660,6 +676,7 @@
 				000DD3B21166C656007E8546 /* ffmpeg */,
 				00D16AC81167E20100D025EF /* ffmpeg-share */,
 				000DD3E51167D78B007E8546 /* libx264 */,
+				0023502F116EDE5100088651 /* libxvid */,
 				000DD3CF1166C669007E8546 /* samples */,
 				00DDF3FF115F3CC100310925 /* Libraries */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,

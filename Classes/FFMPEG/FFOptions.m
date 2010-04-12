@@ -7,11 +7,12 @@
 //
 
 #import "FFOptions.h"
-
+#import "FFUtils.h"
 
 @implementation FFOptions
 
-@synthesize width=_width, height=_height, pixelFormat=_pixelFormat, videoFrameRate=_videoFrameRate, videoTimeBase=_videoTimeBase;
+@synthesize width=_width, height=_height, pixelFormat=_pixelFormat, videoFrameRate=_videoFrameRate, videoTimeBase=_videoTimeBase,
+sampleAspectRatio=_sampleAspectRatio;
 
 - (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat {
   if ((self = [super init])) {
@@ -20,6 +21,7 @@
     _pixelFormat = pixelFormat;
     _videoFrameRate = (AVRational){0, 0};
     _videoTimeBase = (AVRational){0, 0};
+    _sampleAspectRatio = FFFindRationalApproximation((float)_width/(float)_height, 255);
   }
   return self;
 }
@@ -29,23 +31,17 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"width=%d, height=%d, pixelFormat=%d, videoFrameRate=%d/%d, videoTimeBase=%d/%d",
-          _width, _height, _pixelFormat, _videoFrameRate.num, _videoFrameRate.den, _videoTimeBase.num, _videoTimeBase.den];
+  return [NSString stringWithFormat:@"width=%d, height=%d, pixelFormat=%d, videoFrameRate=%d/%d, videoTimeBase=%d/%d, sampleAspectRatio=%d/%d",
+          _width, _height, _pixelFormat, _videoFrameRate.num, _videoFrameRate.den, _videoTimeBase.num, _videoTimeBase.den,
+          _sampleAspectRatio.num, _sampleAspectRatio.den];
 }
 
-- (void)apply:(AVCodecContext *)codecContext {
-  
+- (void)apply:(AVCodecContext *)codecContext {  
   codecContext->width = _width;
   codecContext->height = _height;
   codecContext->pix_fmt = _pixelFormat;
-  
-  /*!
-  if (_videoFrameRate.num != 0 && _videoFrameRate.den != 0) {
-    codecContext->time_base.den = _videoFrameRate.num;
-    codecContext->time_base.num = _videoFrameRate.den;
-  }
-   */
-  codecContext->time_base = _videoTimeBase;
+  codecContext->time_base = _videoTimeBase;    
+  codecContext->sample_aspect_ratio = _sampleAspectRatio;
 }
 
 @end

@@ -16,6 +16,7 @@
   enum PixelFormat _pixelFormat;  
   AVRational _videoFrameRate;
   AVRational _videoTimeBase;
+  AVRational _sampleAspectRatio;
 }
 
 @property (assign, nonatomic) int width;
@@ -23,6 +24,7 @@
 @property (assign, nonatomic) enum PixelFormat pixelFormat;
 @property (assign, nonatomic) AVRational videoFrameRate;
 @property (assign, nonatomic) AVRational videoTimeBase;
+@property (assign, nonatomic) AVRational sampleAspectRatio;
 
 - (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat;
 

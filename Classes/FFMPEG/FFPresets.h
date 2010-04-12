@@ -10,9 +10,12 @@
 
 @interface FFPresets : NSObject {
   NSMutableDictionary *_dict;
+  NSString *_codecName;
 }
 
 @property (readonly, nonatomic) NSDictionary *dict;
+
+- (id)initWithCodeName:(NSString *)codecName;
 
 - (BOOL)loadPresets:(NSString *)path error:(NSError **)error;
 
