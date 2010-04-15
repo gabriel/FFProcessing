@@ -9,6 +9,15 @@
 #import "FFDecoder.h"
 #import "FFEncoder.h"
 
+@class FFProcessing;
+
+@protocol FFProcessingDelegate <NSObject>
+- (void)processing:(FFProcessing *)processing didStartIndex:(NSInteger)index count:(NSInteger)count;
+- (void)processing:(FFProcessing *)processing didReadFramePTS:(int64_t)framePTS duration:(int64_t)duration 
+             index:(NSInteger)index count:(NSInteger)count;
+- (void)processing:(FFProcessing *)processing didFinishIndex:(NSInteger)index count:(NSInteger)count;
+@end
+
 @interface FFProcessing : NSObject {
   
   NSString *_outputPath;
@@ -20,6 +29,8 @@
   
   FFEncoder *_encoder;
   
+  id<FFProcessingDelegate> _delegate; // Weak
+  
   int64_t _previousPTS;
   int64_t _previousEndPTS;
 
@@ -27,6 +38,8 @@
   NSInteger _PFrameIndex;
   NSInteger _GOPIndex;
 
+  NSInteger _frameIndex;
+  NSInteger _frameCount;
   
   // Processing options
   NSInteger _skipEveryIFrameInterval;
@@ -39,6 +52,8 @@
 @property (assign, nonatomic) NSInteger smoothFrameRepeat; // When smoothing a frame, how many frames to repeat
 
 @property (readonly, nonatomic) NSString *outputPath;
+
+@property (assign, nonatomic) id<FFProcessingDelegate> delegate;
 
 - (id)initWithOutputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
          outputCodecName:(NSString *)outputCodecName;

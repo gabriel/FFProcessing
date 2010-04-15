@@ -17,6 +17,7 @@
   AVRational _videoFrameRate;
   AVRational _videoTimeBase;
   AVRational _sampleAspectRatio;
+  int64_t _duration;
 }
 
 @property (assign, nonatomic) int width;

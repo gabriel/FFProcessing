@@ -3,7 +3,7 @@
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 4/7/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #import "PBMediaListViewController.h"
@@ -13,11 +13,22 @@
 
 - (id)init {
   if ((self = [super init])) {
-    self.title = @"Media";
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                                            target:self action:@selector(_add)] autorelease];
+    self.title = @"Media";    
   }
   return self;
+}
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(_add)];  
+  UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+  [toolbar setTintColor:[UIColor blackColor]];
+  [toolbar setItems:[NSArray arrayWithObjects:addItem, nil] animated:NO];
+  [addItem release];    
+  [self.container setFooterView:toolbar];
+  [toolbar release];
+  
+  [self setEditing:NO animated:NO];
 }
 
 - (void)_add {
@@ -55,6 +66,26 @@
   [self addMediaItem:URL];
   [self reloadData];
   [self.navigationController popToViewController:self animated:YES];  
+}
+
+#pragma mark Data Source (UITableViewDataSource) 
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+  return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+  [self moveItemAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+  return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+  if (editingStyle == UITableViewCellEditingStyleDelete) {
+    [self removeItemAtIndex:indexPath.row];
+  }
 }
 
 @end

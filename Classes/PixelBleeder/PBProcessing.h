@@ -8,7 +8,7 @@
 
 #import "FFProcessing.h"
 
-@interface PBProcessing : NSObject {
+@interface PBProcessing : NSObject <FFProcessingDelegate> {
   FFProcessing *_processing;
   NSString *_outputPath;
 }

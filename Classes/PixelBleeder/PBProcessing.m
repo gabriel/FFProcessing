@@ -25,6 +25,8 @@
     _processing = [[FFProcessing alloc] initWithOutputPath:outputPath outputFormat:outputFormat 
                                            outputCodecName:outputCodecName];
     
+    _processing.delegate = self;
+    
     _processing.skipEveryIFrameInterval = 1;
     _processing.smoothFrameInterval = 2;
     _processing.smoothFrameRepeat = 2;
@@ -34,6 +36,7 @@
 
 - (void)dealloc {
   [_outputPath release];
+  _processing.delegate = nil;
   [_processing release];
   [super dealloc];
 }
@@ -58,23 +61,15 @@
   [_processing close];  
 }
 
-- (void)saveToPhotoLibrary:(NSString *)path {
-  /*!
-  if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
-    UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(videoPath:didFinishSavingWithError:contextInfo:), NULL);
-  } else {
-    FFDebug(@"Path is not compatible: %@", path);
-  }
-  */
-}  
-
-- (void)videoPath:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-  if (error) {
-    FFDebug(@"Error saving: %@", error);
-  } else {
-    FFDebug(@"Saved"); 
-  }
+- (void)processing:(FFProcessing *)processing didStartIndex:(NSInteger)index count:(NSInteger)count {
 }
 
+- (void)processing:(FFProcessing *)processing didReadFramePTS:(int64_t)framePTS duration:(int64_t)duration 
+             index:(NSInteger)index count:(NSInteger)count {
+  FFDebug(@" - (%lld/%lld) (%d/%d)", framePTS, duration, index, count);
+}
+
+- (void)processing:(FFProcessing *)processing didFinishIndex:(NSInteger)index count:(NSInteger)count {
+}
 
 @end

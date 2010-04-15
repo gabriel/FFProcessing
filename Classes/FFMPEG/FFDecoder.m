@@ -12,7 +12,7 @@
 
 @implementation FFDecoder
 
-@synthesize open=_open, options=_options;
+@synthesize open=_open, options=_options, readVideoPTS=_readVideoPTS;
 
 - (void)dealloc {
   [self close];
@@ -125,6 +125,11 @@
   return YES;
 }
 
+- (int64_t)videoDuration {
+  if (!_videoStream) return 0;
+  return _videoStream->duration;
+}
+
 - (BOOL)readFrame:(AVPacket *)packet error:(NSError **)error {
   
   // Read the packet
@@ -160,6 +165,7 @@
   
   FFDebugFrame(@"Read frame; pts=%lld", packet.pts);
   BOOL decoded = [self decodeVideoFrame:picture packet:&packet error:error];
+  _readVideoPTS = packet.pts;
   picture->pts = packet.pts;
   
   av_free_packet(&packet);

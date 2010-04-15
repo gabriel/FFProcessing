@@ -19,10 +19,13 @@
   FFOptions *_options;
   
   BOOL _open;
+  
+  int64_t _readVideoPTS;
 }
 
 @property (readonly, nonatomic, getter=isOpen) BOOL open;
 @property (readonly, nonatomic) FFOptions *options;
+@property (readonly, nonatomic) int64_t readVideoPTS;
 
 - (BOOL)openWithURL:(NSURL *)URL format:(NSString *)format error:(NSError **)error;
 
@@ -50,6 +53,9 @@
  @result YES if decoded
  */
 - (BOOL)decodeVideoFrame:(AVFrame *)picture error:(NSError **)error;
+
+//! Duration of video stream
+- (int64_t)videoDuration;
 
 /*!
  Close decoder.

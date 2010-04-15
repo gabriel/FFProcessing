@@ -70,5 +70,8 @@
   }
 }  
 
+#pragma mark Delegates (PBProcessingDelegate)
+
+//[self.container setStatusWithText:@"Processing..." progress:0.24];
 
 @end

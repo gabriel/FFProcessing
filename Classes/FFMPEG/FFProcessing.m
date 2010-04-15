@@ -16,8 +16,8 @@
 
 @implementation FFProcessing
 
-@synthesize outputPath=_outputPath;
-@synthesize skipEveryIFrameInterval=_skipEveryIFrameInterval, smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
+@synthesize outputPath=_outputPath, delegate=_delegate, skipEveryIFrameInterval=_skipEveryIFrameInterval, 
+smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
 
 - (id)initWithOutputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
          outputCodecName:(NSString *)outputCodecName {
@@ -94,6 +94,8 @@
 
 - (BOOL)_processAtIndex:(NSInteger)index count:(NSInteger)count error:(NSError **)error {
 
+  [_delegate processing:self didStartIndex:index count:count];
+  
   _IFrameIndex = 0;  
   _PFrameIndex = 0;
   _GOPIndex = 0;
@@ -127,6 +129,9 @@
     //FFDebug(@"Decoded frame, pict_type=%@", NSStringFromAVFramePictType(_decoderFrame->pict_type));
     _decoderFrame->pts += _previousEndPTS;
     //_decoderFrame->pict_type = 0;
+    
+    [_delegate processing:self didReadFramePTS:[_decoder readVideoPTS] duration:[_decoder videoDuration] 
+                    index:index count:count];
 
     int bytesEncoded = [_encoder encodeVideoFrame:_decoderFrame error:error];
     if (bytesEncoded < 0) {
@@ -184,6 +189,8 @@
   }
   
   FFPictureRelease(picture);
+  
+  [_delegate processing:self didFinishIndex:index count:count];
   
   return YES;
 }
