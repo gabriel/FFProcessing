@@ -11,13 +11,13 @@
 
 @implementation FFConverter
 
-@synthesize inputOptions=_inputOptions, outputOptions=_outputOptions;
+@synthesize decoderOptions=_decoderOptions, encoderOptions=_encoderOptions;
 
-- (id)initWithInputOptions:(FFOptions *)inputOptions outputOptions:(FFOptions *)outputOptions {
+- (id)initWithDecoderOptions:(FFDecoderOptions *)decoderOptions encoderOptions:(FFEncoderOptions *)encoderOptions {
   
   if ((self = [self init])) {
-    _inputOptions = [inputOptions retain];
-    _outputOptions = [outputOptions retain];
+    _decoderOptions = [decoderOptions retain];
+    _encoderOptions = [encoderOptions retain];
     _picture = NULL;
   }
   return self;
@@ -25,8 +25,8 @@
 
 - (void)dealloc {
   FFPictureRelease(_picture);
-  [_inputOptions release];
-  [_outputOptions release];
+  [_decoderOptions release];
+  [_encoderOptions release];
   [super dealloc];
 }  
 
@@ -34,7 +34,7 @@
   struct SwsContext *scaleContext = NULL;
   
   if (_picture == NULL) {
-    _picture = FFPictureCreate(_outputOptions.pixelFormat, _outputOptions.width, _outputOptions.height);    
+    _picture = FFPictureCreate(_encoderOptions.pixelFormat, _encoderOptions.width, _encoderOptions.height);    
     if (_picture == NULL) {
       FFSetError(error, FFErrorCodeAllocateFrame, -1, @"Couldn't allocate frame");
       return NULL;
@@ -42,8 +42,8 @@
   }
 
   scaleContext = sws_getCachedContext(scaleContext, 
-                                       _inputOptions.width, _inputOptions.height, _inputOptions.pixelFormat,
-                                       _outputOptions.width, _outputOptions.height, _outputOptions.pixelFormat, 
+                                       _decoderOptions.width, _decoderOptions.height, _decoderOptions.pixelFormat,
+                                       _encoderOptions.width, _encoderOptions.height, _encoderOptions.pixelFormat, 
                                        SWS_BICUBIC, NULL, NULL, NULL);
   
   if (scaleContext == NULL) {
@@ -52,7 +52,7 @@
   }
   
   sws_scale(scaleContext, picture->data, picture->linesize, 0,
-            _inputOptions.height, _picture->data, _picture->linesize);
+            _decoderOptions.height, _picture->data, _picture->linesize);
   
   _picture->pts = picture->pts;
   

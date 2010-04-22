@@ -16,6 +16,6 @@
 
 - (void)addMediaItem:(NSURL *)URL;
 
-- (NSArray *)mediaItems;
+- (NSArray *)items;
 
 @end

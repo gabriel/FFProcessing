@@ -16,11 +16,14 @@
   PBUIStatusView *_statusView;
 }
 
+@property (readonly, nonatomic) PBUIStatusView *statusView;
+
 - (void)setHeaderView:(UIView *)headerView;
 - (void)setFooterView:(UIView *)footerView;
 - (void)setContentView:(UIView *)contentView;
 
 - (void)setStatusWithText:(NSString *)text progress:(float)progress;
+- (void)setStatusProgress:(float)progress;
 - (void)clearStatus;
 
 @end

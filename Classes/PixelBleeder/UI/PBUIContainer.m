@@ -11,6 +11,23 @@
 
 @implementation PBUIContainer
 
+@synthesize statusView=_statusView;
+
+- (id)initWithFrame:(CGRect)frame {
+  if ((self = [super initWithFrame:frame])) {
+    _statusView = [[PBUIStatusView alloc] init];    
+  }
+  return self;
+}
+
+- (void)dealloc {
+  [_statusView release];
+  [_headerView release];
+  [_footerView release];
+  [_contentView release];
+  [super dealloc];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -59,16 +76,24 @@
   [self setNeedsDisplay];
 }
 
-- (void)setStatusWithText:(NSString *)text progress:(float)progress {
-  if (!_statusView) _statusView = [[PBUIStatusView alloc] init];
-  //[_statusView.activityIndicator startAnimating];
-  _statusView.label.text = text;
-  _statusView.progressView.progress = progress;
+- (void)_ensureStatusIsVisible {
   if (![_statusView superview]) {
     [self addSubview:_statusView];
     [self setNeedsLayout];
     [self setNeedsDisplay];
   }
+}
+
+- (void)setStatusWithText:(NSString *)text progress:(float)progress {
+  //[_statusView.activityIndicator startAnimating];
+  _statusView.label.text = text;
+  _statusView.progressView.progress = progress;
+  [self _ensureStatusIsVisible];
+}
+
+- (void)setStatusProgress:(float)progress {
+  _statusView.progressView.progress = progress;
+  [self _ensureStatusIsVisible];
 }
 
 - (void)clearStatus {

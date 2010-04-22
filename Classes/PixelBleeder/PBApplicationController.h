@@ -12,7 +12,7 @@
 #import "PBMoviePlayerController.h"
 #import "PBProcessing.h"
 
-@interface PBApplicationController : PBUITableViewController {
+@interface PBApplicationController : PBUITableViewController <PBProcessingDelegate> {
 
   PBMediaListViewController *_mediaListViewController;
   PBMoviePlayerController *_moviePlayerController;  

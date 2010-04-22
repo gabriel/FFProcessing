@@ -43,8 +43,13 @@
   if (![_readThread readPicture:_picture]) return NULL;
   
   if (!_converter) {
-    _converter = [[FFConverter alloc] initWithInputOptions:[_readThread.decoder options]
-                                             outputOptions:[FFOptions optionsWithWidth:256 height:256 pixelFormat:PIX_FMT_RGB24]];    
+    
+    FFEncoderOptions *encoderOptions = [[[FFEncoderOptions alloc] initWithPath:nil format:nil codecName:nil
+                                                                         width:256 height:256 pixelFormat:PIX_FMT_RGB24
+                                                                 videoTimeBase:(AVRational){0, 1}] autorelease];
+    
+    _converter = [[FFConverter alloc] initWithDecoderOptions:[_readThread.decoder options]
+                                              encoderOptions:encoderOptions];    
   }
 
   return [_converter scalePicture:_picture error:error];

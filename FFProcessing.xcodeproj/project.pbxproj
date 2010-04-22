@@ -76,6 +76,45 @@
 		0085325A1176F69A00F9310E /* FFProcessingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 008532591176F69A00F9310E /* FFProcessingQueue.m */; };
 		0085325B1176F69A00F9310E /* FFProcessingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 008532591176F69A00F9310E /* FFProcessingQueue.m */; };
 		0085325C1176F69A00F9310E /* FFProcessingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 008532591176F69A00F9310E /* FFProcessingQueue.m */; };
+		008C09A1117A82B1002689B8 /* FFEncoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C09A0117A82B1002689B8 /* FFEncoderOptions.m */; };
+		008C09A2117A82B1002689B8 /* FFEncoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C09A0117A82B1002689B8 /* FFEncoderOptions.m */; };
+		008C09A3117A82B1002689B8 /* FFEncoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C09A0117A82B1002689B8 /* FFEncoderOptions.m */; };
+		008C0A2B117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A26117A9460002689B8 /* GHNSInvocation+Utils.m */; };
+		008C0A2C117A9460002689B8 /* GHNSInvocationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A28117A9460002689B8 /* GHNSInvocationProxy.m */; };
+		008C0A2D117A9460002689B8 /* GHNSObject+Invocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A2A117A9460002689B8 /* GHNSObject+Invocation.m */; };
+		008C0A2E117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A26117A9460002689B8 /* GHNSInvocation+Utils.m */; };
+		008C0A2F117A9460002689B8 /* GHNSInvocationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A28117A9460002689B8 /* GHNSInvocationProxy.m */; };
+		008C0A30117A9460002689B8 /* GHNSObject+Invocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A2A117A9460002689B8 /* GHNSObject+Invocation.m */; };
+		008C0A31117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A26117A9460002689B8 /* GHNSInvocation+Utils.m */; };
+		008C0A32117A9460002689B8 /* GHNSInvocationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A28117A9460002689B8 /* GHNSInvocationProxy.m */; };
+		008C0A33117A9460002689B8 /* GHNSObject+Invocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A2A117A9460002689B8 /* GHNSObject+Invocation.m */; };
+		008C0A6F117AC261002689B8 /* FFProcessingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A6E117AC261002689B8 /* FFProcessingOptions.m */; };
+		008C0A70117AC261002689B8 /* FFProcessingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A6E117AC261002689B8 /* FFProcessingOptions.m */; };
+		008C0A71117AC261002689B8 /* FFProcessingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A6E117AC261002689B8 /* FFProcessingOptions.m */; };
+		0090ED4B11800FFF00453CA5 /* YPUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4711800FFF00453CA5 /* YPUIButton.m */; };
+		0090ED4C11800FFF00453CA5 /* YPCGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4911800FFF00453CA5 /* YPCGUtils.m */; };
+		0090ED4D11800FFF00453CA5 /* YPUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4711800FFF00453CA5 /* YPUIButton.m */; };
+		0090ED4E11800FFF00453CA5 /* YPCGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4911800FFF00453CA5 /* YPCGUtils.m */; };
+		0090ED4F11800FFF00453CA5 /* YPUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4711800FFF00453CA5 /* YPUIButton.m */; };
+		0090ED5011800FFF00453CA5 /* YPCGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4911800FFF00453CA5 /* YPCGUtils.m */; };
+		0090ED531180105500453CA5 /* YPUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED521180105500453CA5 /* YPUIControl.m */; };
+		0090ED541180105500453CA5 /* YPUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED521180105500453CA5 /* YPUIControl.m */; };
+		0090ED551180105500453CA5 /* YPUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED521180105500453CA5 /* YPUIControl.m */; };
+		0090ED5B1180116D00453CA5 /* YPUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED5A1180116D00453CA5 /* YPUIAlertView.m */; };
+		0090ED5C1180116D00453CA5 /* YPUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED5A1180116D00453CA5 /* YPUIAlertView.m */; };
+		0090ED5D1180116D00453CA5 /* YPUIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED5A1180116D00453CA5 /* YPUIAlertView.m */; };
+		0090EEC111801C6400453CA5 /* GTMLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEBD11801C6400453CA5 /* GTMLogger.m */; };
+		0090EEC211801C6400453CA5 /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEBF11801C6400453CA5 /* GTMStackTrace.m */; };
+		0090EEC311801C6400453CA5 /* GTMLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEBD11801C6400453CA5 /* GTMLogger.m */; };
+		0090EEC411801C6400453CA5 /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEBF11801C6400453CA5 /* GTMStackTrace.m */; };
+		0090EEC511801C6400453CA5 /* GTMLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEBD11801C6400453CA5 /* GTMLogger.m */; };
+		0090EEC611801C6400453CA5 /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEBF11801C6400453CA5 /* GTMStackTrace.m */; };
+		0090EECD11801C7A00453CA5 /* YPLocalized.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EECC11801C7A00453CA5 /* YPLocalized.m */; };
+		0090EECE11801C7A00453CA5 /* YPLocalized.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EECC11801C7A00453CA5 /* YPLocalized.m */; };
+		0090EECF11801C7A00453CA5 /* YPLocalized.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EECC11801C7A00453CA5 /* YPLocalized.m */; };
+		0090EEFA11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEF911801D7500453CA5 /* GTMObjC2Runtime.m */; };
+		0090EEFB11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEF911801D7500453CA5 /* GTMObjC2Runtime.m */; };
+		0090EEFC11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090EEF911801D7500453CA5 /* GTMObjC2Runtime.m */; };
 		00A313D41163E2B20065101E /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00A313D51163E2B20065101E /* PBMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A313D31163E2B20065101E /* PBMoviePlayerController.m */; };
 		00A313E71163E33A0065101E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A313E61163E33A0065101E /* MediaPlayer.framework */; };
@@ -92,9 +131,9 @@
 		00D16AB71167DFF400D025EF /* FFPresetsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16AB61167DFF400D025EF /* FFPresetsTest.m */; };
 		00D16AEB1167E21E00D025EF /* libx264-ipod320.ffpreset in Resources */ = {isa = PBXBuildFile; fileRef = 00D16AD11167E20100D025EF /* libx264-ipod320.ffpreset */; };
 		00D16AEC1167E22200D025EF /* libx264-ipod320.ffpreset in Resources */ = {isa = PBXBuildFile; fileRef = 00D16AD11167E20100D025EF /* libx264-ipod320.ffpreset */; };
-		00D16CCB11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
-		00D16CCC11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
-		00D16CCD11688B9B00D025EF /* FFOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFOptions.m */; };
+		00D16CCB11688B9B00D025EF /* FFDecoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */; };
+		00D16CCC11688B9B00D025EF /* FFDecoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */; };
+		00D16CCD11688B9B00D025EF /* FFDecoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */; };
 		00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7706A115B29A300CF9F22 /* FFEncoder.m */; };
 		00D77083115B331600CF9F22 /* FFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFUtils.m */; };
 		00DB9ACC116460D4002A7F8F /* PBProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACB116460D4002A7F8F /* PBProcessing.m */; };
@@ -238,6 +277,36 @@
 		008532581176F69A00F9310E /* FFProcessingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFProcessingQueue.h; sourceTree = "<group>"; };
 		008532591176F69A00F9310E /* FFProcessingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFProcessingQueue.m; sourceTree = "<group>"; };
 		0085328D1176FE1100F9310E /* NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NOTES.md; sourceTree = "<group>"; };
+		008C099F117A82B1002689B8 /* FFEncoderOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEncoderOptions.h; sourceTree = "<group>"; };
+		008C09A0117A82B1002689B8 /* FFEncoderOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEncoderOptions.m; sourceTree = "<group>"; };
+		008C0A25117A9460002689B8 /* GHNSInvocation+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GHNSInvocation+Utils.h"; sourceTree = "<group>"; };
+		008C0A26117A9460002689B8 /* GHNSInvocation+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GHNSInvocation+Utils.m"; sourceTree = "<group>"; };
+		008C0A27117A9460002689B8 /* GHNSInvocationProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHNSInvocationProxy.h; sourceTree = "<group>"; };
+		008C0A28117A9460002689B8 /* GHNSInvocationProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHNSInvocationProxy.m; sourceTree = "<group>"; };
+		008C0A29117A9460002689B8 /* GHNSObject+Invocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GHNSObject+Invocation.h"; sourceTree = "<group>"; };
+		008C0A2A117A9460002689B8 /* GHNSObject+Invocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GHNSObject+Invocation.m"; sourceTree = "<group>"; };
+		008C0A64117AB985002689B8 /* GHKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHKitDefines.h; sourceTree = "<group>"; };
+		008C0A6D117AC261002689B8 /* FFProcessingOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFProcessingOptions.h; sourceTree = "<group>"; };
+		008C0A6E117AC261002689B8 /* FFProcessingOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFProcessingOptions.m; sourceTree = "<group>"; };
+		0090ED4611800FFF00453CA5 /* YPUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPUIButton.h; sourceTree = "<group>"; };
+		0090ED4711800FFF00453CA5 /* YPUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPUIButton.m; sourceTree = "<group>"; };
+		0090ED4811800FFF00453CA5 /* YPCGUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPCGUtils.h; sourceTree = "<group>"; };
+		0090ED4911800FFF00453CA5 /* YPCGUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPCGUtils.m; sourceTree = "<group>"; };
+		0090ED4A11800FFF00453CA5 /* YPDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPDefines.h; sourceTree = "<group>"; };
+		0090ED511180105500453CA5 /* YPUIControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPUIControl.h; sourceTree = "<group>"; };
+		0090ED521180105500453CA5 /* YPUIControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPUIControl.m; sourceTree = "<group>"; };
+		0090ED591180116D00453CA5 /* YPUIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPUIAlertView.h; sourceTree = "<group>"; };
+		0090ED5A1180116D00453CA5 /* YPUIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPUIAlertView.m; sourceTree = "<group>"; };
+		0090EEBC11801C6400453CA5 /* GTMLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMLogger.h; sourceTree = "<group>"; };
+		0090EEBD11801C6400453CA5 /* GTMLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMLogger.m; sourceTree = "<group>"; };
+		0090EEBE11801C6400453CA5 /* GTMStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStackTrace.h; sourceTree = "<group>"; };
+		0090EEBF11801C6400453CA5 /* GTMStackTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStackTrace.m; sourceTree = "<group>"; };
+		0090EEC011801C6400453CA5 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		0090EECB11801C7A00453CA5 /* YPLocalized.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPLocalized.h; sourceTree = "<group>"; };
+		0090EECC11801C7A00453CA5 /* YPLocalized.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPLocalized.m; sourceTree = "<group>"; };
+		0090EEF711801D7500453CA5 /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMGarbageCollection.h; path = Foundation/GTMGarbageCollection.h; sourceTree = "<group>"; };
+		0090EEF811801D7500453CA5 /* GTMObjC2Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMObjC2Runtime.h; path = Foundation/GTMObjC2Runtime.h; sourceTree = "<group>"; };
+		0090EEF911801D7500453CA5 /* GTMObjC2Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMObjC2Runtime.m; path = Foundation/GTMObjC2Runtime.m; sourceTree = "<group>"; };
 		00A313D21163E2B20065101E /* PBMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBMoviePlayerController.h; sourceTree = "<group>"; };
 		00A313D31163E2B20065101E /* PBMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBMoviePlayerController.m; sourceTree = "<group>"; };
 		00A313E61163E33A0065101E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -285,8 +354,8 @@
 		00D16AE81167E20100D025EF /* libx264-veryfast_firstpass.ffpreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libx264-veryfast_firstpass.ffpreset"; sourceTree = "<group>"; };
 		00D16AE91167E20100D025EF /* libx264-veryslow.ffpreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libx264-veryslow.ffpreset"; sourceTree = "<group>"; };
 		00D16AEA1167E20100D025EF /* libx264-veryslow_firstpass.ffpreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libx264-veryslow_firstpass.ffpreset"; sourceTree = "<group>"; };
-		00D16CC911688B9B00D025EF /* FFOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFOptions.h; sourceTree = "<group>"; };
-		00D16CCA11688B9B00D025EF /* FFOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFOptions.m; sourceTree = "<group>"; };
+		00D16CC911688B9B00D025EF /* FFDecoderOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDecoderOptions.h; sourceTree = "<group>"; };
+		00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDecoderOptions.m; sourceTree = "<group>"; };
 		00D16D6A11692FE700D025EF /* output.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = output.mp4; sourceTree = "<group>"; };
 		00D16E5C11694A8700D025EF /* test-x264.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-x264.mp4"; sourceTree = "<group>"; };
 		00D77069115B29A300CF9F22 /* FFEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEncoder.h; sourceTree = "<group>"; };
@@ -485,6 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				0012A0511154AE3100D09836 /* Test */,
+				00129F2911549B3500D09836 /* OpenGL */,
 				00129F1D11549B3500D09836 /* FFGLDrawable.h */,
 				00129F1E11549B3500D09836 /* FFGLDrawable.m */,
 				00129F2111549B3500D09836 /* FFPlayerAppDelegate.h */,
@@ -493,9 +563,10 @@
 				00129F2611549B3500D09836 /* FFDecoder.m */,
 				00129F2711549B3500D09836 /* FFPlayerView.h */,
 				00129F2811549B3500D09836 /* FFPlayerView.m */,
-				00129F2911549B3500D09836 /* OpenGL */,
 				0001B1D111573C1D00109D45 /* FFProcessing.h */,
 				0001B1D211573C1D00109D45 /* FFProcessing.m */,
+				008C0A6D117AC261002689B8 /* FFProcessingOptions.h */,
+				008C0A6E117AC261002689B8 /* FFProcessingOptions.m */,
 				008532531176F5B300F9310E /* FFProcessingThread.h */,
 				008532541176F5B300F9310E /* FFProcessingThread.m */,
 				008532581176F69A00F9310E /* FFProcessingQueue.h */,
@@ -504,6 +575,10 @@
 				0001B1D51157413D00109D45 /* FFConverter.m */,
 				00D77069115B29A300CF9F22 /* FFEncoder.h */,
 				00D7706A115B29A300CF9F22 /* FFEncoder.m */,
+				008C099F117A82B1002689B8 /* FFEncoderOptions.h */,
+				008C09A0117A82B1002689B8 /* FFEncoderOptions.m */,
+				00D16CC911688B9B00D025EF /* FFDecoderOptions.h */,
+				00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */,
 				00D77081115B331600CF9F22 /* FFUtils.h */,
 				00D77082115B331600CF9F22 /* FFUtils.m */,
 				00129F1A11549B3500D09836 /* FFReader.h */,
@@ -514,8 +589,6 @@
 				00F824FC1165A9C400175A32 /* FFCodec.m */,
 				00D16AAE1167DD9C00D025EF /* FFPresets.h */,
 				00D16AAF1167DD9C00D025EF /* FFPresets.m */,
-				00D16CC911688B9B00D025EF /* FFOptions.h */,
-				00D16CCA11688B9B00D025EF /* FFOptions.m */,
 			);
 			path = FFMPEG;
 			sourceTree = "<group>";
@@ -572,6 +645,85 @@
 			name = libxvid;
 			path = "../ffmpeg-build/xvid-uarch/lib";
 			sourceTree = SOURCE_ROOT;
+		};
+		008C0A24117A9460002689B8 /* GHKit */ = {
+			isa = PBXGroup;
+			children = (
+				008C0A64117AB985002689B8 /* GHKitDefines.h */,
+				008C0A25117A9460002689B8 /* GHNSInvocation+Utils.h */,
+				008C0A26117A9460002689B8 /* GHNSInvocation+Utils.m */,
+				008C0A27117A9460002689B8 /* GHNSInvocationProxy.h */,
+				008C0A28117A9460002689B8 /* GHNSInvocationProxy.m */,
+				008C0A29117A9460002689B8 /* GHNSObject+Invocation.h */,
+				008C0A2A117A9460002689B8 /* GHNSObject+Invocation.m */,
+			);
+			path = GHKit;
+			sourceTree = "<group>";
+		};
+		0090ED4311800FFF00453CA5 /* YelpKit */ = {
+			isa = PBXGroup;
+			children = (
+				0090ED4411800FFF00453CA5 /* iPhone */,
+				0090EECB11801C7A00453CA5 /* YPLocalized.h */,
+				0090EECC11801C7A00453CA5 /* YPLocalized.m */,
+				0090ED4811800FFF00453CA5 /* YPCGUtils.h */,
+				0090ED4911800FFF00453CA5 /* YPCGUtils.m */,
+				0090ED4A11800FFF00453CA5 /* YPDefines.h */,
+			);
+			path = YelpKit;
+			sourceTree = "<group>";
+		};
+		0090ED4411800FFF00453CA5 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				0090ED581180116D00453CA5 /* UI */,
+				0090ED4511800FFF00453CA5 /* Buttons */,
+			);
+			path = iPhone;
+			sourceTree = "<group>";
+		};
+		0090ED4511800FFF00453CA5 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				0090ED511180105500453CA5 /* YPUIControl.h */,
+				0090ED521180105500453CA5 /* YPUIControl.m */,
+				0090ED4611800FFF00453CA5 /* YPUIButton.h */,
+				0090ED4711800FFF00453CA5 /* YPUIButton.m */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		0090ED581180116D00453CA5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				0090ED591180116D00453CA5 /* YPUIAlertView.h */,
+				0090ED5A1180116D00453CA5 /* YPUIAlertView.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		0090EEBA11801C6400453CA5 /* GTM */ = {
+			isa = PBXGroup;
+			children = (
+				0090EEF711801D7500453CA5 /* GTMGarbageCollection.h */,
+				0090EEF811801D7500453CA5 /* GTMObjC2Runtime.h */,
+				0090EEF911801D7500453CA5 /* GTMObjC2Runtime.m */,
+				0090EEBB11801C6400453CA5 /* Foundation */,
+				0090EEC011801C6400453CA5 /* GTMDefines.h */,
+			);
+			path = GTM;
+			sourceTree = "<group>";
+		};
+		0090EEBB11801C6400453CA5 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				0090EEBC11801C6400453CA5 /* GTMLogger.h */,
+				0090EEBD11801C6400453CA5 /* GTMLogger.m */,
+				0090EEBE11801C6400453CA5 /* GTMStackTrace.h */,
+				0090EEBF11801C6400453CA5 /* GTMStackTrace.m */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
 		};
 		00D16AC81167E20100D025EF /* ffmpeg-share */ = {
 			isa = PBXGroup;
@@ -648,6 +800,9 @@
 		00DDF3FF115F3CC100310925 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				0090EEBA11801C6400453CA5 /* GTM */,
+				0090ED4311800FFF00453CA5 /* YelpKit */,
+				008C0A24117A9460002689B8 /* GHKit */,
 				00F824B91165A43600175A32 /* libGHUnitIPhone3_0 */,
 			);
 			path = Libraries;
@@ -888,7 +1043,7 @@
 				00DB9C7711647A3E002A7F8F /* PBApplicationController.m in Sources */,
 				00F824FD1165A9C400175A32 /* FFCodec.m in Sources */,
 				00D16AB01167DD9C00D025EF /* FFPresets.m in Sources */,
-				00D16CCB11688B9B00D025EF /* FFOptions.m in Sources */,
+				00D16CCB11688B9B00D025EF /* FFDecoderOptions.m in Sources */,
 				00234B99116D915800088651 /* PBUITableViewController.m in Sources */,
 				00234B9D116D95C800088651 /* PBMediaChooser.m in Sources */,
 				00234C3F116DA75600088651 /* PBMediaListViewController.m in Sources */,
@@ -897,6 +1052,19 @@
 				008531B11176E79D00F9310E /* PBUIStatusView.m in Sources */,
 				008532551176F5B300F9310E /* FFProcessingThread.m in Sources */,
 				0085325A1176F69A00F9310E /* FFProcessingQueue.m in Sources */,
+				008C09A1117A82B1002689B8 /* FFEncoderOptions.m in Sources */,
+				008C0A2B117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */,
+				008C0A2C117A9460002689B8 /* GHNSInvocationProxy.m in Sources */,
+				008C0A2D117A9460002689B8 /* GHNSObject+Invocation.m in Sources */,
+				008C0A71117AC261002689B8 /* FFProcessingOptions.m in Sources */,
+				0090ED4F11800FFF00453CA5 /* YPUIButton.m in Sources */,
+				0090ED5011800FFF00453CA5 /* YPCGUtils.m in Sources */,
+				0090ED551180105500453CA5 /* YPUIControl.m in Sources */,
+				0090ED5D1180116D00453CA5 /* YPUIAlertView.m in Sources */,
+				0090EEC511801C6400453CA5 /* GTMLogger.m in Sources */,
+				0090EEC611801C6400453CA5 /* GTMStackTrace.m in Sources */,
+				0090EECF11801C7A00453CA5 /* YPLocalized.m in Sources */,
+				0090EEFC11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -931,7 +1099,7 @@
 				00F825011165AE3600175A32 /* FFCodecTest.m in Sources */,
 				00D16AB11167DD9C00D025EF /* FFPresets.m in Sources */,
 				00D16AB71167DFF400D025EF /* FFPresetsTest.m in Sources */,
-				00D16CCC11688B9B00D025EF /* FFOptions.m in Sources */,
+				00D16CCC11688B9B00D025EF /* FFDecoderOptions.m in Sources */,
 				00234B9A116D915800088651 /* PBUITableViewController.m in Sources */,
 				00234B9E116D95C800088651 /* PBMediaChooser.m in Sources */,
 				00234C40116DA75600088651 /* PBMediaListViewController.m in Sources */,
@@ -940,6 +1108,19 @@
 				008531B21176E79D00F9310E /* PBUIStatusView.m in Sources */,
 				008532561176F5B300F9310E /* FFProcessingThread.m in Sources */,
 				0085325B1176F69A00F9310E /* FFProcessingQueue.m in Sources */,
+				008C09A3117A82B1002689B8 /* FFEncoderOptions.m in Sources */,
+				008C0A31117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */,
+				008C0A32117A9460002689B8 /* GHNSInvocationProxy.m in Sources */,
+				008C0A33117A9460002689B8 /* GHNSObject+Invocation.m in Sources */,
+				008C0A70117AC261002689B8 /* FFProcessingOptions.m in Sources */,
+				0090ED4D11800FFF00453CA5 /* YPUIButton.m in Sources */,
+				0090ED4E11800FFF00453CA5 /* YPCGUtils.m in Sources */,
+				0090ED541180105500453CA5 /* YPUIControl.m in Sources */,
+				0090ED5C1180116D00453CA5 /* YPUIAlertView.m in Sources */,
+				0090EEC311801C6400453CA5 /* GTMLogger.m in Sources */,
+				0090EEC411801C6400453CA5 /* GTMStackTrace.m in Sources */,
+				0090EECE11801C7A00453CA5 /* YPLocalized.m in Sources */,
+				0090EEFB11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -970,11 +1151,24 @@
 				00DB9AD0116461CD002A7F8F /* PBApplicationController.m in Sources */,
 				00F824FE1165A9C400175A32 /* FFCodec.m in Sources */,
 				00D16AB21167DD9C00D025EF /* FFPresets.m in Sources */,
-				00D16CCD11688B9B00D025EF /* FFOptions.m in Sources */,
+				00D16CCD11688B9B00D025EF /* FFDecoderOptions.m in Sources */,
 				0085314D1176E0F700F9310E /* PBUIContainer.m in Sources */,
 				008531B31176E79D00F9310E /* PBUIStatusView.m in Sources */,
 				008532571176F5B300F9310E /* FFProcessingThread.m in Sources */,
 				0085325C1176F69A00F9310E /* FFProcessingQueue.m in Sources */,
+				008C09A2117A82B1002689B8 /* FFEncoderOptions.m in Sources */,
+				008C0A2E117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */,
+				008C0A2F117A9460002689B8 /* GHNSInvocationProxy.m in Sources */,
+				008C0A30117A9460002689B8 /* GHNSObject+Invocation.m in Sources */,
+				008C0A6F117AC261002689B8 /* FFProcessingOptions.m in Sources */,
+				0090ED4B11800FFF00453CA5 /* YPUIButton.m in Sources */,
+				0090ED4C11800FFF00453CA5 /* YPCGUtils.m in Sources */,
+				0090ED531180105500453CA5 /* YPUIControl.m in Sources */,
+				0090ED5B1180116D00453CA5 /* YPUIAlertView.m in Sources */,
+				0090EEC111801C6400453CA5 /* GTMLogger.m in Sources */,
+				0090EEC211801C6400453CA5 /* GTMStackTrace.m in Sources */,
+				0090EECD11801C7A00453CA5 /* YPLocalized.m in Sources */,
+				0090EEFA11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

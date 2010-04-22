@@ -11,6 +11,8 @@
 
 @implementation FFProcessingQueue
 
+@synthesize delegate=_delegate;
+
 - (id)init {
   if ((self = [super init])) {
     _items = [[NSMutableArray alloc] init];
@@ -18,15 +20,17 @@
   return self;
 }
 
-- (id)initWithProcessing:(FFProcessing *)processing {
+- (id)initWithOptions:(FFProcessingOptions *)options {
   if ((self = [self init])) {
-    _processing = [processing retain];    
+    _options = [options retain];    
   }
   return self;
 }
 
 - (void)dealloc {
+  [self close];
   [_items release];
+  [_options release];
   [_processing release];
   [super dealloc];
 }
@@ -35,15 +39,61 @@
   [_items addObject:item];
 }
 
-- (BOOL)hasNext {
-  return (_index < ([_items count] - 1));
+- (void)addItems:(NSArray */*of FFProcessingItem*/)items {
+  [_items addObjectsFromArray:items];
 }
 
-- (BOOL)processNext:(NSError **)error {
+- (BOOL)hasNext {
+  return (![_processing isCancelled] && _index < [_items count]);
+}
+
+- (void)close {
+  _index = 0;
+  [_processing release];
+  _processing = nil;
+}
+
+- (void)cancel {
+  [_processing cancel];
+}
+
+- (BOOL)processNext {  
+  if (![self hasNext]) {
+    return NO;
+  }
+  
+  if (!_processing) {
+    _processing = [(FFProcessing *)[FFProcessing alloc] initWithOptions:_options];
+    _processing.delegate = self;
+  }
+
   FFProcessingItem *item = [_items objectAtIndex:_index];
-  BOOL processed = [_processing processURL:item.URL format:item.format index:_index count:[_items count] error:error];
+  BOOL processed = [_processing processURL:item.URL format:item.format index:_index count:[_items count] error:nil];
   _index++;
   return processed;
+}
+
+#pragma mark FFProcessingDelegate
+
+- (void)processing:(FFProcessing *)processing didStartIndex:(NSInteger)index count:(NSInteger)count {
+  [_delegate processingQueue:self didStartIndex:index count:count];
+}
+
+- (void)processing:(FFProcessing *)processing didReadFramePTS:(int64_t)framePTS duration:(int64_t)duration 
+             index:(NSInteger)index count:(NSInteger)count {
+  [_delegate processingQueue:self didReadFramePTS:framePTS duration:duration index:index count:count];
+}
+
+- (void)processing:(FFProcessing *)processing didFinishIndex:(NSInteger)index count:(NSInteger)count {
+  [_delegate processingQueue:self didFinishIndex:index count:count];
+}
+
+- (void)processing:(FFProcessing *)processing didError:(NSError *)error index:(NSInteger)index count:(NSInteger)count {
+  [_delegate processingQueue:self didError:error index:index count:count];
+}
+
+- (void)processingDidCancel:(FFProcessing *)processing {
+  [_delegate processingQueueDidCancel:self];
 }
 
 @end

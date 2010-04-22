@@ -17,13 +17,9 @@
 
 @implementation FFEncoder
 
-- (id)initWithOptions:(FFOptions *)options presets:(FFPresets *)presets path:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName {
+- (id)initWithOptions:(FFEncoderOptions *)options  {
   if ((self = [super init])) {
     _options = [options retain]; 
-    _presets = [presets retain];
-    _path = [path retain];
-    _format = [format retain];
-    _codecName = [codecName retain];
     _currentPTS = 0;
   }
   return self;
@@ -32,9 +28,6 @@
 - (void)dealloc {
   [self close];
   [_options release];
-  [_path release];
-  [_format release];
-  [_codecName release];
   [super dealloc];
 }
 
@@ -51,19 +44,19 @@
   
   FFInitialize();
   
-  const char *filename = [_path UTF8String];  
-  FFDebug(@"Encoder; path=%@, format=%@", _path, _format);
-  AVOutputFormat *outputFormat = av_guess_format([_format UTF8String], NULL, NULL);
+  const char *filename = [_options.path UTF8String];  
+  FFDebug(@"Encoder; path=%@, format=%@", _options.path, _options.format);
+  AVOutputFormat *outputFormat = av_guess_format([_options.format UTF8String], NULL, NULL);
   if (!outputFormat) {
     FFSetError(error, FFErrorCodeUnknownOutputFormat, -1, @"Couldn't deduce output format");
     return NO;
   }
   
   // If overriding output format codec
-  if (_codecName) {
-    AVCodec *codec = avcodec_find_encoder_by_name([_codecName UTF8String]);
+  if (_options.codecName) {
+    AVCodec *codec = avcodec_find_encoder_by_name([_options.codecName UTF8String]);
     if (codec == NULL) {
-      FFSetError(error, FFErrorCodeCodecNotFound, -1, @"Codec not found with name: %@", _codecName);
+      FFSetError(error, FFErrorCodeCodecNotFound, -1, @"Codec not found with name: %@", _options.codecName);
       return NO;
     }    
     outputFormat->video_codec = codec->id;
@@ -143,7 +136,6 @@
   codecContext->codec_id = _formatContext->oformat->video_codec;
   codecContext->codec_type = CODEC_TYPE_VIDEO;
 
-  [_presets apply:codecContext];
   [_options apply:codecContext];
   
   stream->sample_aspect_ratio = codecContext->sample_aspect_ratio;
@@ -218,9 +210,6 @@
     av_free(_formatContext);
     _formatContext = NULL;
   }  
-  
-  [_converter release];
-  _converter = nil;
 }
 
 - (int)encodeVideoFrame:(AVFrame *)picture error:(NSError **)error {    

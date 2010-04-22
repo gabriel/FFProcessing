@@ -10,7 +10,7 @@
 
 #import "FFUtils.h"
 #import "PBUIItem.h"
-
+#import "YPUIAlertView.h"
 
 @implementation PBApplicationController
 
@@ -18,7 +18,9 @@
 
 - (id)init {
   if ((self = [super init])) {
-    self.title = @"MediaMosher";
+    self.title = @"VideoMosher";
+    _processing = [[PBProcessing alloc] init];
+    _processing.delegate = self;
   }
   return self;
 }
@@ -26,6 +28,7 @@
 - (void)dealloc {
   [_mediaListViewController release];
   [_moviePlayerController release];
+  _processing.delegate = nil;
   [_processing release];
   [_sourceURL release];
 	[super dealloc];
@@ -41,6 +44,8 @@
   
   [self setItems:items];
   
+  [_container.statusView setButtonTitle:@"Cancel" target:self action:@selector(_cancel)];
+  
   if (!_mediaListViewController) {
     _mediaListViewController = [[PBMediaListViewController alloc] init];
     [_mediaListViewController addMediaItem:[FFUtils resolvedURLForURL:[NSURL URLWithString:@"bundle://short2.mov"]]];
@@ -52,13 +57,20 @@
   [self.navigationController pushViewController:_mediaListViewController animated:YES];
 }
 
+- (void)_cancel {
+  [_processing cancel];
+}
+
 - (void)process {
-  NSArray *mediaItems = [_mediaListViewController mediaItems];
+  NSArray *URLs = [_mediaListViewController items];
+  NSMutableArray *items = [NSMutableArray arrayWithCapacity:[URLs count]];
+  for (NSURL *URL in URLs) {
+    FFProcessingItem *item = [[FFProcessingItem alloc] initWithURL:URL format:nil];
+    [items addObject:item];
+    [item release];
+  }
   
-  if (!_processing)
-    _processing = [[PBProcessing alloc] init];
-    
-  [_processing processURLs:mediaItems];
+  [_processing startWithItems:items];
 }  
 
 - (void)openMoviePlayerController {  
@@ -70,8 +82,31 @@
   }
 }  
 
-#pragma mark Delegates (PBProcessingDelegate)
+#pragma mark PBProcessingDelegate
 
-//[self.container setStatusWithText:@"Processing..." progress:0.24];
+- (void)processing:(PBProcessing *)processing didStartIndex:(NSInteger)index count:(NSInteger)count {
+  [self.container setStatusWithText:[NSString stringWithFormat:@"Processing (%d/%d)...", (index + 1), count] 
+                           progress:0];  
+}
+
+- (void)processing:(PBProcessing *)processing didProgress:(float)progress index:(NSInteger)index count:(NSInteger)count {
+  [self.container setStatusProgress:progress];  
+}
+
+- (void)processing:(PBProcessing *)processing didFinishIndex:(NSInteger)index count:(NSInteger)count {
+  if ((index + 1) == count) {
+    [self.container clearStatus];  
+  }
+}
+
+- (void)processing:(PBProcessing *)processing didError:(NSError *)error index:(NSInteger)index count:(NSInteger)count {
+  [self.container clearStatus];
+  [YPUIAlertView showOKAlertWithMessage:[NSString stringWithFormat:@"There was a problem (%@)", [error localizedDescription]] title:@"Oops"];
+}
+
+- (void)processingDidCancel:(PBProcessing *)processing {
+  [self.container clearStatus];
+}
+
 
 @end

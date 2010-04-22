@@ -120,9 +120,9 @@
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   
   if (!_textureLoaded) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _reader.converter.outputOptions.width, _reader.converter.outputOptions.height, 0, GL_RGB, GL_UNSIGNED_BYTE, nextData);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _reader.converter.encoderOptions.width, _reader.converter.encoderOptions.height, 0, GL_RGB, GL_UNSIGNED_BYTE, nextData);
   } else {
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _reader.converter.outputOptions.width, _reader.converter.outputOptions.height,
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _reader.converter.encoderOptions.width, _reader.converter.encoderOptions.height,
                     GL_RGB, GL_UNSIGNED_BYTE, nextData);
   }
   

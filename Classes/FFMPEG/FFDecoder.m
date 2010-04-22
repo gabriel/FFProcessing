@@ -109,14 +109,11 @@
   */
   
   // Set options
-  _options = [[FFOptions alloc] initWithWidth:_videoStream->codec->coded_width 
-                                       height:_videoStream->codec->coded_height 
-                                  pixelFormat:_videoStream->codec->pix_fmt];
-  
-  _options.videoFrameRate = _videoStream->r_frame_rate;  
-  _options.videoTimeBase = _videoStream->time_base;
-  if (_videoStream->sample_aspect_ratio.num > 0)
-    _options.sampleAspectRatio = _videoStream->sample_aspect_ratio;
+  _options = [[FFDecoderOptions alloc] initWithWidth:_videoStream->codec->coded_width 
+                                              height:_videoStream->codec->coded_height 
+                                         pixelFormat:_videoStream->codec->pix_fmt
+                                      videoFrameRate:_videoStream->r_frame_rate
+                                       videoTimeBase:_videoStream->time_base];
   
   FFDebug(@"Decoder options: %@", _options);
 

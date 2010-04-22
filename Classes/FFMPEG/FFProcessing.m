@@ -11,30 +11,24 @@
 #import "FFUtils.h"
 
 @interface FFProcessing ()
+@property (retain, nonatomic) FFProcessingOptions *options;
 - (BOOL)_processAtIndex:(NSInteger)index count:(NSInteger)count error:(NSError **)error;
 @end
 
 @implementation FFProcessing
 
-@synthesize outputPath=_outputPath, delegate=_delegate, skipEveryIFrameInterval=_skipEveryIFrameInterval, 
-smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
+@synthesize options=_options, delegate=_delegate, cancelled=_cancelled;
 
-- (id)initWithOutputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
-         outputCodecName:(NSString *)outputCodecName {
-  
+- (id)initWithOptions:(FFProcessingOptions *)options {
   if ((self = [super init])) {
-    _outputPath = [outputPath retain];
-    _outputFormat = [outputFormat retain];
-    _outputCodecName = [outputCodecName retain];
+    _options = [options retain];
   }
   return self;
 }
 
 - (void)dealloc {
   [self close];
-  [_outputPath release];
-  [_outputFormat release];
-  [_outputCodecName release];
+  [_options release];
   [super dealloc];
 }
 
@@ -64,15 +58,27 @@ smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
 }
 
 - (BOOL)_openEncoder:(NSError **)error {
-  FFPresets *presets = [[FFPresets alloc] initWithCodeName:_outputCodecName];
   
-  _encoder = [[FFEncoder alloc] initWithOptions:[_decoder options]
-                                        presets:presets
-                                           path:_outputPath 
-                                         format:_outputFormat
-                                      codecName:_outputCodecName];
+  // Fill in encoder options (with decoder properties) if not set
+  int width = _options.encoderOptions.width;
+  int height = _options.encoderOptions.height;
+  enum PixelFormat pixelFormat = _options.encoderOptions.pixelFormat;
+  AVRational videoTimeBase = _options.encoderOptions.videoTimeBase;
+  if (width == 0) width = _decoder.options.width;
+  if (height == 0) height = _decoder.options.height;
+  if (pixelFormat == PIX_FMT_NONE) pixelFormat = _decoder.options.pixelFormat;
+  if (videoTimeBase.num == 0) videoTimeBase = _decoder.options.videoTimeBase;
   
-  [presets release];
+  self.options.encoderOptions = [[FFEncoderOptions alloc] initWithPath:_options.encoderOptions.path 
+                                                                format:_options.encoderOptions.format
+                                                             codecName:_options.encoderOptions.codecName
+                                                                 width:width
+                                                                height:height
+                                                           pixelFormat:pixelFormat
+                                                         videoTimeBase:videoTimeBase];
+
+  _encoder = [[FFEncoder alloc] initWithOptions:self.options.encoderOptions];
+  
   if (![_encoder open:error])
     return NO;
   
@@ -88,6 +94,11 @@ smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
     return NO;
     
   BOOL processed = [self _processAtIndex:index count:count error:error];
+  
+  if (!processed && *error) {
+    [_delegate processing:self didError:*error index:index count:count];
+  }
+  
   [self _closeDecoder];
   return processed;
 }
@@ -113,7 +124,7 @@ smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
       return NO;
   }
 
-  while (YES) {
+  while (!_cancelled) {
     *error = nil;
     
     if (![_decoder decodeVideoFrame:_decoderFrame error:error]) {
@@ -139,6 +150,8 @@ smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
       break;
     }
     
+    if (_cancelled) break;
+    
     AVFrame *codedFrame = [_encoder codedFrame];
     
     // If bytesEncoded is zero, there was buffering
@@ -148,10 +161,10 @@ smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
         _IFrameIndex++;
         _GOPIndex = 0;
         
-        if ((_skipEveryIFrameInterval > 0) && // Skipping I-frames is on
+        if ((_options.skipEveryIFrameInterval > 0) && // Skipping I-frames is on
             !(index == 0 && _IFrameIndex == 1) && // Don't skip if first I-frame in first input, no matter what options later
             ((index > 0 && _IFrameIndex == 1) || // Skip if first I-frame in subsequent inputs
-             (_IFrameIndex % _skipEveryIFrameInterval == 0))) // We are on skip interval
+             (_IFrameIndex % _options.skipEveryIFrameInterval == 0))) // We are on skip interval
         { 
           FFDebug(@"Skipping I-frame");          
         } else {
@@ -160,9 +173,9 @@ smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
         
       } else if (codedFrame->pict_type == FF_P_TYPE) {
         _GOPIndex++;
-        if (_smoothFrameInterval > 0 && (_PFrameIndex++ % _smoothFrameInterval == 0)) {
+        if (_options.smoothFrameInterval > 0 && (_PFrameIndex++ % _options.smoothFrameInterval == 0)) {
           
-          NSInteger count = _smoothFrameRepeat + 1;
+          NSInteger count = _options.smoothFrameRepeat + 1;
           int64_t startPTS = codedFrame->pts;
           int64_t duration = (int64_t)((codedFrame->pts - _previousPTS)/(double)count);
           
@@ -190,14 +203,22 @@ smoothFrameInterval=_smoothFrameInterval, smoothFrameRepeat=_smoothFrameRepeat;
   
   FFPictureRelease(picture);
   
-  [_delegate processing:self didFinishIndex:index count:count];
-  
-  return YES;
+  if (_cancelled) {
+    [_delegate processingDidCancel:self];
+    return NO;
+  } else { 
+    [_delegate processing:self didFinishIndex:index count:count];  
+    return YES;
+  }
 }
      
 - (void)close {  
   [_encoder release];
   _encoder = nil;
+}
+
+- (void)cancel {
+  _cancelled = YES;
 }
 
 - (void)_converter {

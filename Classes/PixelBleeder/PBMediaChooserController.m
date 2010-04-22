@@ -70,7 +70,7 @@
   [[self videoController] viewDidDisappear:animated];
 }
 
-#pragma mark Delegates (UIImagePickerControllerDelegate)
+#pragma mark UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   NSURL *URL = [info objectForKey:UIImagePickerControllerMediaURL];

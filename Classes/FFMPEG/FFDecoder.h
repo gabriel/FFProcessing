@@ -9,14 +9,14 @@
 #include "libavformat/avformat.h"
 #include "libavdevice/avdevice.h"
 
-#import "FFOptions.h"
+#import "FFDecoderOptions.h"
 
 @interface FFDecoder : NSObject {
   AVFormatContext *_formatContext;
 
   AVStream *_videoStream;
   
-  FFOptions *_options;
+  FFDecoderOptions *_options;
   
   BOOL _open;
   
@@ -24,7 +24,7 @@
 }
 
 @property (readonly, nonatomic, getter=isOpen) BOOL open;
-@property (readonly, nonatomic) FFOptions *options;
+@property (readonly, nonatomic) FFDecoderOptions *options;
 @property (readonly, nonatomic) int64_t readVideoPTS;
 
 - (BOOL)openWithURL:(NSURL *)URL format:(NSString *)format error:(NSError **)error;

@@ -6,15 +6,37 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#import "FFProcessing.h"
+#import "FFProcessingThread.h"
+#import "FFProcessingOptions.h"
 
-@interface PBProcessing : NSObject <FFProcessingDelegate> {
-  FFProcessing *_processing;
+@class PBProcessing;
+
+@protocol PBProcessingDelegate <NSObject>
+- (void)processing:(PBProcessing *)processing didStartIndex:(NSInteger)index count:(NSInteger)count;
+- (void)processing:(PBProcessing *)processing didProgress:(float)progress index:(NSInteger)index count:(NSInteger)count;
+- (void)processing:(PBProcessing *)processing didFinishIndex:(NSInteger)index count:(NSInteger)count;
+- (void)processing:(PBProcessing *)processing didError:(NSError *)error index:(NSInteger)index count:(NSInteger)count;
+- (void)processingDidCancel:(PBProcessing *)processing;
+@end
+
+@interface PBProcessing : NSObject <FFProcessingThreadDelegate> {
+  FFProcessingThread *_processingThread;
   NSString *_outputPath;
+  
+  id<PBProcessingDelegate> _delegate;
 }
 
-@property (retain, nonatomic) NSString *outputPath;  
+@property (readonly, retain, nonatomic) NSString *outputPath;
+@property (assign, nonatomic) id<PBProcessingDelegate> delegate;
 
-- (void)processURLs:(NSArray *)URLs;
+- (void)startWithItems:(NSArray *)items;
+
+- (void)cancel;
+
+- (void)close;
+
+- (BOOL)isExecuting;
+
+- (NSString *)outputPath;
 
 @end

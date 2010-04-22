@@ -16,7 +16,7 @@
 - (id)initWithCodeName:(NSString *)codecName {
   if ((self = [super init])) {
     _codecName = [codecName retain];
-    _dict = [[NSMutableDictionary alloc] initWithCapacity:100];
+    _dict = [[NSMutableDictionary alloc] init];
   }
   return self;
 }

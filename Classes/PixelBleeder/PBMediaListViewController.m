@@ -48,7 +48,7 @@
   [self addItem:[PBUIItem text:text target:self action:@selector(_select:) context:URL]];
 }
 
-- (NSArray *)mediaItems {
+- (NSArray *)items {
   NSMutableArray *mediaList = [NSMutableArray arrayWithCapacity:[_items count]];
   for (id<PBUIItem> item in _items) {
     [mediaList addObject:item.context];
@@ -56,7 +56,7 @@
   return mediaList;
 }
 
-#pragma mark Delegates (PBMediaChooser)
+#pragma mark PBMediaChooserDelegate
 
 - (void)mediaChooser:(PBMediaChooser *)mediaChooser openViewController:(UIViewController *)viewController {
   [self.navigationController pushViewController:viewController animated:YES];

@@ -11,65 +11,85 @@
 #import "FFUtils.h"
 #import "FFProcessing.h"
 
+@interface PBProcessing ()
+@property (retain, nonatomic) NSString *outputPath;
+@end
 
 @implementation PBProcessing
 
-@synthesize outputPath=_outputPath;
-
-- (id)init {
-  if ((self = [super init])) {    
-    NSString *outputFormat = @"mp4";
-    NSString *outputCodecName = @"mpeg4";
-    NSString *outputPath = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"mosh.mp4", outputFormat]];
-    
-    _processing = [[FFProcessing alloc] initWithOutputPath:outputPath outputFormat:outputFormat 
-                                           outputCodecName:outputCodecName];
-    
-    _processing.delegate = self;
-    
-    _processing.skipEveryIFrameInterval = 1;
-    _processing.smoothFrameInterval = 2;
-    _processing.smoothFrameRepeat = 2;
-  }
-  return self;
-}
+@synthesize outputPath=_outputPath, delegate=_delegate;
 
 - (void)dealloc {
+  [self close];
   [_outputPath release];
-  _processing.delegate = nil;
-  [_processing release];
   [super dealloc];
 }
 
-- (void)processURLs:(NSArray *)URLs {
+- (void)close {
+  _processingThread.delegate = nil;
+  [_processingThread cancel];
+  [_processingThread release];
+}  
+
+- (void)startWithItems:(NSArray *)items {
+  if ([_processingThread isExecuting]) return;
   
-  FFDebug(@"Process: %@ to %@", URLs, self.outputPath);  
+  [self close];
   
-  NSError *error = nil;
-  NSInteger index = 0;
-  for (NSURL *URL in URLs) {
-    if (![_processing processURL:URL format:nil index:index count:[URLs count] error:&error]) {
-      FFDebug(@"Error processing: %@", error);
-      break;
-    }
-    index++;
-  }
- 
-  self.outputPath = _processing.outputPath;
-  FFDebug(@"Output path: %@", self.outputPath);
+  NSString *outputFormat = @"mp4";
+  NSString *outputCodecName = @"mpeg4";
+  NSString *outputPath = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"mosh.mp4", outputFormat]];
   
-  [_processing close];  
+  FFProcessingOptions *options = [[[FFProcessingOptions alloc] init] autorelease];
+  options.encoderOptions = [[[FFEncoderOptions alloc] initWithPath:outputPath format:outputFormat codecName:outputCodecName
+                                                             width:0 height:0 pixelFormat:PIX_FMT_NONE videoTimeBase:(AVRational){0,0}] autorelease];
+  options.skipEveryIFrameInterval = 1;
+  options.smoothFrameInterval = 2;
+  options.smoothFrameRepeat = 2;  
+  
+  [outputPath retain];
+  [_outputPath release];
+  _outputPath = outputPath;
+  
+  _processingThread = [[FFProcessingThread alloc] initWithOptions:options items:items];
+  _processingThread.delegate = self;  
+  
+  [_processingThread start];
 }
 
-- (void)processing:(FFProcessing *)processing didStartIndex:(NSInteger)index count:(NSInteger)count {
+- (void)cancel {
+  [_processingThread cancel];
 }
 
-- (void)processing:(FFProcessing *)processing didReadFramePTS:(int64_t)framePTS duration:(int64_t)duration 
-             index:(NSInteger)index count:(NSInteger)count {
-  FFDebug(@" - (%lld/%lld) (%d/%d)", framePTS, duration, index, count);
+- (BOOL)isExecuting {
+  return [_processingThread isExecuting];
 }
 
-- (void)processing:(FFProcessing *)processing didFinishIndex:(NSInteger)index count:(NSInteger)count {
+#pragma mark FFProcessingThreadDelegate
+
+- (void)processingThread:(FFProcessingThread *)processingThread didStartIndex:(NSInteger)index count:(NSInteger)count {
+  FFDebug(@"Started %d/%d", index, count);
+  [_delegate processing:self didStartIndex:index count:count];
+}
+
+- (void)processingThread:(FFProcessingThread *)processingThread didReadFramePTS:(int64_t)framePTS duration:(int64_t)duration 
+                   index:(NSInteger)index count:(NSInteger)count {
+  //FFDebug(@" - (%lld/%lld) (%d/%d)", framePTS, duration, index, count);
+  [_delegate processing:self didProgress:((double)framePTS/duration) index:index count:count];
+}
+
+- (void)processingThread:(FFProcessingThread *)processingThread didFinishIndex:(NSInteger)index count:(NSInteger)count {
+  FFDebug(@"Finished %d/%d", (index + 1), count);
+  [_delegate processing:self didFinishIndex:index count:count];
+}
+
+- (void)processingThread:(FFProcessingThread *)processingThread didError:(NSError *)error index:(NSInteger)index count:(NSInteger)count {
+  FFDebug(@"Error: %@ (%d/%d)", error, index, count);
+  [_delegate processing:self didError:error index:index count:count];
+}
+
+- (void)processingThreadDidCancel:(FFProcessingThread *)processingThread {
+  [_delegate processingDidCancel:self];
 }
 
 @end

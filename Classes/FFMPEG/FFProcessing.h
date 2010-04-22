@@ -8,6 +8,7 @@
 
 #import "FFDecoder.h"
 #import "FFEncoder.h"
+#import "FFProcessingOptions.h"
 
 @class FFProcessing;
 
@@ -16,13 +17,13 @@
 - (void)processing:(FFProcessing *)processing didReadFramePTS:(int64_t)framePTS duration:(int64_t)duration 
              index:(NSInteger)index count:(NSInteger)count;
 - (void)processing:(FFProcessing *)processing didFinishIndex:(NSInteger)index count:(NSInteger)count;
+- (void)processing:(FFProcessing *)processing didError:(NSError *)error index:(NSInteger)index count:(NSInteger)count;
+- (void)processingDidCancel:(FFProcessing *)processing;
 @end
 
 @interface FFProcessing : NSObject {
   
-  NSString *_outputPath;
-  NSString *_outputFormat;
-  NSString *_outputCodecName;
+  FFProcessingOptions *_options;
   
   FFDecoder *_decoder;
   AVFrame *_decoderFrame;
@@ -41,24 +42,19 @@
   NSInteger _frameIndex;
   NSInteger _frameCount;
   
-  // Processing options
-  NSInteger _skipEveryIFrameInterval;
-  NSInteger _smoothFrameInterval;
-  NSInteger _smoothFrameRepeat;
+  BOOL _cancelled;
 }
 
-@property (assign, nonatomic) NSInteger skipEveryIFrameInterval; // How often to skip I-frames: 0=off, 1=every, 2=every other, 3=every third, ...
-@property (assign, nonatomic) NSInteger smoothFrameInterval; // How often to duplicate P-frames: 0=off, 1=every, 2=every other, ...
-@property (assign, nonatomic) NSInteger smoothFrameRepeat; // When smoothing a frame, how many frames to repeat
-
-@property (readonly, nonatomic) NSString *outputPath;
+@property (readonly, retain, nonatomic) FFProcessingOptions *options;
+@property (readonly, nonatomic, getter=isCancelled) BOOL cancelled;
 
 @property (assign, nonatomic) id<FFProcessingDelegate> delegate;
 
-- (id)initWithOutputPath:(NSString *)outputPath outputFormat:(NSString *)outputFormat 
-         outputCodecName:(NSString *)outputCodecName;
+- (id)initWithOptions:(FFProcessingOptions *)options;
 
 - (BOOL)processURL:(NSURL *)URL format:(NSString *)format index:(NSInteger)index count:(NSInteger)count error:(NSError **)error;
+
+- (void)cancel;
 
 - (void)close;
 

@@ -8,11 +8,26 @@
 
 #import "FFProcessingQueue.h"
 
-@interface FFProcessingThread : NSThread {
+@class FFProcessingThread;
+
+@protocol FFProcessingThreadDelegate <NSObject>
+- (void)processingThread:(FFProcessingThread *)processingThread didStartIndex:(NSInteger)index count:(NSInteger)count;
+- (void)processingThread:(FFProcessingThread *)processingThread didReadFramePTS:(int64_t)framePTS duration:(int64_t)duration 
+                  index:(NSInteger)index count:(NSInteger)count;
+- (void)processingThread:(FFProcessingThread *)processingThread didFinishIndex:(NSInteger)index count:(NSInteger)count;
+- (void)processingThread:(FFProcessingThread *)processingThread didError:(NSError *)error index:(NSInteger)index count:(NSInteger)count;
+- (void)processingThreadDidCancel:(FFProcessingThread *)processingThread;
+@end
+
+
+@interface FFProcessingThread : NSThread <FFProcessingQueueDelegate> {
   FFProcessingQueue *_processingQueue;
   
+  id<FFProcessingThreadDelegate> _delegate;
 }
 
-- (id)initWithProcessingQueue:(FFProcessingQueue *)processingQueue;
+@property (assign, nonatomic) id<FFProcessingThreadDelegate> delegate;
+
+- (id)initWithOptions:(FFProcessingOptions *)options items:(NSArray *)items;
 
 @end

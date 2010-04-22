@@ -10,19 +10,20 @@
 #include "libavdevice/avdevice.h"
 #include "libswscale/swscale.h"
 
-#import "FFOptions.h"
+#import "FFDecoderOptions.h"
+#import "FFEncoderOptions.h"
 
 @interface FFConverter : NSObject {
   AVFrame *_picture;
 
-  FFOptions *_inputOptions;
-  FFOptions *_outputOptions;
+  FFDecoderOptions *_decoderOptions;
+  FFEncoderOptions *_encoderOptions;
 }
 
-@property (readonly, nonatomic) FFOptions *inputOptions;
-@property (readonly, nonatomic) FFOptions *outputOptions;
+@property (readonly, nonatomic) FFDecoderOptions *decoderOptions;
+@property (readonly, nonatomic) FFEncoderOptions *encoderOptions;
 
-- (id)initWithInputOptions:(FFOptions *)inputOptions outputOptions:(FFOptions *)outputOptions;
+- (id)initWithDecoderOptions:(FFDecoderOptions *)decoderOptions encoderOptions:(FFEncoderOptions *)encoderOptions;
 
 
 - (AVFrame *)scalePicture:(AVFrame *)picture error:(NSError **)error;

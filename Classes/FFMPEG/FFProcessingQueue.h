@@ -9,20 +9,42 @@
 #import "FFProcessing.h"
 
 @class FFProcessingItem;
+@class FFProcessingQueue;
 
-@interface FFProcessingQueue : NSObject {
+@protocol FFProcessingQueueDelegate <NSObject>
+- (void)processingQueue:(FFProcessingQueue *)processingQueue didStartIndex:(NSInteger)index count:(NSInteger)count;
+- (void)processingQueue:(FFProcessingQueue *)processingQueue didReadFramePTS:(int64_t)framePTS duration:(int64_t)duration 
+             index:(NSInteger)index count:(NSInteger)count;
+- (void)processingQueue:(FFProcessingQueue *)processingQueue didFinishIndex:(NSInteger)index count:(NSInteger)count;
+- (void)processingQueue:(FFProcessingQueue *)processingQueue didError:(NSError *)error index:(NSInteger)index count:(NSInteger)count;
+- (void)processingQueueDidCancel:(FFProcessingQueue *)processingQueue;
+@end
+
+
+@interface FFProcessingQueue : NSObject <FFProcessingDelegate> {
+  FFProcessingOptions *_options;
   FFProcessing *_processing;
   NSMutableArray *_items;
   NSInteger _index;
+  
+  id<FFProcessingQueueDelegate> _delegate;
 }
 
-- (id)initWithProcessing:(FFProcessing *)processing;
+@property (assign, nonatomic) id<FFProcessingQueueDelegate> delegate;
+
+- (id)initWithOptions:(FFProcessingOptions *)options;
+
+- (void)close;
+
+- (void)cancel;
 
 - (void)addItem:(FFProcessingItem *)item;
 
+- (void)addItems:(NSArray */*of FFProcessingItem*/)items;
+
 - (BOOL)hasNext;
 
-- (BOOL)processNext:(NSError **)error;
+- (BOOL)processNext;
 
 @end
 

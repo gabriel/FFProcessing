@@ -9,7 +9,7 @@
 #include "libavformat/avformat.h"
 #include "libavdevice/avdevice.h"
 
-#import "FFOptions.h"
+#import "FFEncoderOptions.h"
 #import "FFConverter.h"
 #import "FFPresets.h"
 
@@ -19,12 +19,7 @@
   AVStream *_videoStream;
   AVStream *_audioStream;
   
-  FFOptions *_options;
-  FFPresets *_presets;
-  FFConverter *_converter;
-  NSString *_path;
-  NSString *_format;
-  NSString *_codecName;
+  FFEncoderOptions *_options;
   
   uint8_t *_videoBuffer;
   int _videoBufferSize;
@@ -33,7 +28,7 @@
   int64_t _currentPTS;
 }
 
-- (id)initWithOptions:(FFOptions *)options presets:(FFPresets *)presets path:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName;
+- (id)initWithOptions:(FFEncoderOptions *)options;
 
 - (BOOL)open:(NSError **)error;
 
