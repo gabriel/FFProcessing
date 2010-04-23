@@ -22,7 +22,7 @@
 - (void)setFooterView:(UIView *)footerView;
 - (void)setContentView:(UIView *)contentView;
 
-- (void)setStatusWithText:(NSString *)text progress:(float)progress;
+- (void)setStatusWithText:(NSString *)text activityIndicator:(BOOL)activityIndicator;
 - (void)setStatusProgress:(float)progress;
 - (void)clearStatus;
 

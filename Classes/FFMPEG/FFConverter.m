@@ -51,8 +51,18 @@
     return NULL;
   }
   
-  sws_scale(scaleContext, picture->data, picture->linesize, 0,
-            _decoderOptions.height, _picture->data, _picture->linesize);
+  /*!
+  int sws_scale(struct SwsContext *context, const uint8_t* const srcSlice[], const int srcStride[],
+                int srcSliceY, int srcSliceH, uint8_t* const dst[], const int dstStride[]);
+   */
+
+  sws_scale(scaleContext, 
+            (const uint8_t* const *)picture->data, 
+            (const int *)picture->linesize, 
+            0,
+            _decoderOptions.height, 
+            _picture->data, 
+            _picture->linesize);
   
   _picture->pts = picture->pts;
   

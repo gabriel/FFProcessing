@@ -26,11 +26,12 @@
     
     _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicator.contentMode = UIViewContentModeCenter;
-    _activityIndicator.hidden = YES;
+    _activityIndicator.hidesWhenStopped = YES;
     [_contentView addSubview:_activityIndicator];
     [_activityIndicator release];
     
     _progressView = [[UIProgressView alloc] initWithFrame:CGRectZero];
+    _progressView.hidden = YES;
     [_contentView addSubview:_progressView];
     [_progressView release];
     
@@ -70,15 +71,17 @@
   CGFloat maxStatusWidth = (size.width - 60);
   CGFloat indicatorWidth = 24;
   
-  CGSize topSize = [_label sizeThatFits:size];  
+  CGSize labelFitsSize = [_label sizeThatFits:size];
+  CGSize topSize = labelFitsSize;
   if (!_activityIndicator.hidden) 
     topSize.width += indicatorWidth;
   
   if (topSize.width > maxStatusWidth) topSize.width = maxStatusWidth;
   if (topSize.width < minStatusWidth) topSize.width = minStatusWidth;
   
-  CGFloat statusHeight = 80;
+  CGFloat statusHeight = 56;
   if (!_button.hidden) statusHeight += 52;
+  if (!_progressView.hidden) statusHeight += 24; 
   
   CGSize statusSize = CGSizeMake(topSize.width + 40, statusHeight);
   
@@ -88,10 +91,16 @@
   _backgroundView.frame = CGRectMake(x, y, statusSize.width, statusSize.height);
   
   x += roundf((statusSize.width / 2.0) - (topSize.width / 2.0));
-  y += 20;
+  y += 18;
   
-  CGRect labelFrame = CGRectMake(x, y, topSize.width, topSize.height);
-  _activityIndicator.frame = CGRectMake(x, y, 20, 20);  
+  CGFloat labelCenter = roundf((topSize.width / 2.0) - (labelFitsSize.width / 2.0));
+  if (!_activityIndicator.hidden) {
+    labelCenter -= indicatorWidth;
+  }
+  if (labelCenter < 0) labelCenter = 0;  
+  
+  CGRect labelFrame = CGRectMake(x + labelCenter, y, topSize.width - labelCenter, topSize.height);
+  _activityIndicator.frame = CGRectMake(x + labelCenter, y, 20, 20);  
   if (!_activityIndicator.hidden) {
     labelFrame.origin.x += indicatorWidth;
     labelFrame.size.width -= indicatorWidth;
@@ -99,17 +108,23 @@
   _label.frame = labelFrame;  
   y += 30;
   
-  _progressView.frame = CGRectMake(x, y, topSize.width, 22);  
-  y += 24;
+  if (!_progressView.hidden) {
+    _progressView.frame = CGRectMake(x, y, topSize.width, 22);  
+    y += 24;
+  }
   
   _button.frame = CGRectMake(x, y, topSize.width, 37);
   y += 57;
 }
-  
+
 - (void)setButtonTitle:(NSString *)title target:(id)target action:(SEL)action {
-  _button.hidden = NO;
-  _button.title = title;
-  [_button setTarget:target action:action];
+  if (!title) {
+    _button.hidden = YES;
+  } else {
+    _button.hidden = NO;
+    _button.title = title;
+    [_button setTarget:target action:action];
+  }
   [self setNeedsLayout];
 }
 

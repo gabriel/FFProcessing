@@ -41,15 +41,12 @@
   [items addObject:[PBUIItem text:@"Media" target:self action:@selector(selectMedia) accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
   [items addObject:[PBUIItem text:@"Mosh" target:self action:@selector(process)]];
   [items addObject:[PBUIItem text:@"Play" target:self action:@selector(openMoviePlayerController)]];
+  [items addObject:[PBUIItem text:@"Save" target:self action:@selector(saveMovieToPhotosAlbum)]];
   
   [self setItems:items];
   
-  [_container.statusView setButtonTitle:@"Cancel" target:self action:@selector(_cancel)];
-  
   if (!_mediaListViewController) {
     _mediaListViewController = [[PBMediaListViewController alloc] init];
-    [_mediaListViewController addMediaItem:[FFUtils resolvedURLForURL:[NSURL URLWithString:@"bundle://short2.mov"]]];
-    [_mediaListViewController addMediaItem:[FFUtils resolvedURLForURL:[NSURL URLWithString:@"bundle://short1.mov"]]];  
   }
 }
 
@@ -82,15 +79,39 @@
   }
 }  
 
+- (void)saveMovieToPhotosAlbum {
+  FFDebug(@"Playing: %@", _processing.outputPath);
+  if (_processing.outputPath) {
+    [self.container setStatusWithText:@"Saving..." activityIndicator:YES];     
+    PBSaveThread *saveThread = [[PBSaveThread alloc] initWithPath:_processing.outputPath];
+    saveThread.delegate = self;
+    [saveThread start];
+  }
+}
+
+- (void)_showError:(NSError *)error {
+  [YPUIAlertView showOKAlertWithMessage:[NSString stringWithFormat:@"There was a problem (%@)", [error localizedDescription]] title:@"Oops"];
+}
+
+#pragma mark PBSaveThreadDelegate
+
+- (void)saveThread:(PBSaveThread *)saveThread didFinishSavingWithError:(NSError *)error {
+  [self.container clearStatus];
+  if (error) [self _showError:error];
+  saveThread.delegate = nil;
+  [saveThread autorelease];
+}
+
 #pragma mark PBProcessingDelegate
 
 - (void)processing:(PBProcessing *)processing didStartIndex:(NSInteger)index count:(NSInteger)count {
-  [self.container setStatusWithText:[NSString stringWithFormat:@"Processing (%d/%d)...", (index + 1), count] 
-                           progress:0];  
+  [self.container setStatusWithText:[NSString stringWithFormat:@"Processing (%d/%d)...", (index + 1), count] activityIndicator:NO];  
+  [_container.statusView setButtonTitle:@"Cancel" target:self action:@selector(_cancel)];
+  [self.container setStatusProgress:0];  
 }
 
 - (void)processing:(PBProcessing *)processing didProgress:(float)progress index:(NSInteger)index count:(NSInteger)count {
-  [self.container setStatusProgress:progress];  
+  [self.container setStatusProgress:progress];
 }
 
 - (void)processing:(PBProcessing *)processing didFinishIndex:(NSInteger)index count:(NSInteger)count {
@@ -101,7 +122,7 @@
 
 - (void)processing:(PBProcessing *)processing didError:(NSError *)error index:(NSInteger)index count:(NSInteger)count {
   [self.container clearStatus];
-  [YPUIAlertView showOKAlertWithMessage:[NSString stringWithFormat:@"There was a problem (%@)", [error localizedDescription]] title:@"Oops"];
+  [self _showError:error];
 }
 
 - (void)processingDidCancel:(PBProcessing *)processing {

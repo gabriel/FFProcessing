@@ -37,7 +37,7 @@
     _videoController = [[UIImagePickerController alloc] init];
     _videoController.navigationBarHidden = YES;
     _videoController.sourceType = _sourceType;    
-    _videoController.allowsImageEditing = YES;
+    _videoController.allowsEditing = YES;
     _videoController.mediaTypes = _mediaTypes;
     _videoController.delegate = self;
   }

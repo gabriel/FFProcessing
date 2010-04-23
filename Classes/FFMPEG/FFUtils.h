@@ -11,14 +11,14 @@
 
 #import "libavcodec/avcodec.h"
 
-extern NSString *const FFSourceErrorCodeKey; // Key for NSError for source error code
+extern NSString *const FFMPEGErrorCodeKey; // Key for NSError for source error code
 
-#define FFSetError(__ERROR__, __ERROR_CODE__, __FFSOURCE_ERROR_CODE__, __DESC__, ...) do { \
-NSString *message = [NSString stringWithFormat:@"%@ (%d)", [NSString stringWithFormat:__DESC__, ##__VA_ARGS__], __FFSOURCE_ERROR_CODE__]; \
+#define FFSetError(__ERROR__, __ERROR_CODE__, __FFMPEG_ERROR_CODE__, __DESC__, ...) do { \
+NSString *message = [NSString stringWithFormat:@"%@ (%d)", [NSString stringWithFormat:__DESC__, ##__VA_ARGS__], __FFMPEG_ERROR_CODE__]; \
 NSLog(@"%@", message); \
 if (__ERROR__) *__ERROR__ = [NSError errorWithDomain:@"FFMPEG" code:__ERROR_CODE__ \
 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:message, NSLocalizedDescriptionKey,  \
-[NSNumber numberWithInteger:__FFSOURCE_ERROR_CODE__], FFSourceErrorCodeKey, nil]]; \
+[NSNumber numberWithInteger:__FFMPEG_ERROR_CODE__], FFMPEGErrorCodeKey, nil]]; \
 } while (0)
 
 enum {

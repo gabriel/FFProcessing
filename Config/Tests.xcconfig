@@ -1,5 +1,10 @@
 
-#include "Shared.xcconfig"
+ARCHS = armv7
+VALID_ARCHS = armv7
+HEADER_SEARCH_PATHS = ../ffmpeg-build/ffmpeg-uarch/include/**
+GCC_PRECOMPILE_PREFIX_HEADER = YES
+ALWAYS_SEARCH_USER_PATHS = NO
+ZERO_LINK = NO
 
 PRODUCT_NAME = Tests
 OTHER_LDFLAGS = -ObjC -all_load

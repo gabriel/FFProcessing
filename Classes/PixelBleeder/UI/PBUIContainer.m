@@ -79,25 +79,34 @@
 - (void)_ensureStatusIsVisible {
   if (![_statusView superview]) {
     [self addSubview:_statusView];
-    [self setNeedsLayout];
-    [self setNeedsDisplay];
   }
+  [self setNeedsLayout];
+  [self setNeedsDisplay];
 }
 
-- (void)setStatusWithText:(NSString *)text progress:(float)progress {
-  //[_statusView.activityIndicator startAnimating];
+- (void)setStatusWithText:(NSString *)text activityIndicator:(BOOL)activityIndicator {
   _statusView.label.text = text;
-  _statusView.progressView.progress = progress;
+  if (activityIndicator) [_statusView.activityIndicator startAnimating];
+  else [_statusView.activityIndicator stopAnimating];
   [self _ensureStatusIsVisible];
 }
 
 - (void)setStatusProgress:(float)progress {
-  _statusView.progressView.progress = progress;
-  [self _ensureStatusIsVisible];
+  if (_statusView.progressView >= 0) {
+    _statusView.progressView.progress = progress;
+    _statusView.progressView.hidden = NO;
+  } else {
+    _statusView.progressView.hidden = YES;
+  }  
+  [self setNeedsLayout];
 }
 
 - (void)clearStatus {
+  _statusView.progressView.hidden = YES;
+  [_statusView.activityIndicator stopAnimating];
+  [_statusView setButtonTitle:nil target:nil action:NULL];
   [_statusView removeFromSuperview];
+  [self setNeedsLayout];
 }
 
 @end

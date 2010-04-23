@@ -136,6 +136,8 @@
 		00D16CCD11688B9B00D025EF /* FFDecoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */; };
 		00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7706A115B29A300CF9F22 /* FFEncoder.m */; };
 		00D77083115B331600CF9F22 /* FFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFUtils.m */; };
+		00D84C1D11816F3100280DBE /* PBSaveThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D84C1C11816F3100280DBE /* PBSaveThread.m */; };
+		00D84C1E11816F3100280DBE /* PBSaveThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D84C1C11816F3100280DBE /* PBSaveThread.m */; };
 		00DB9ACC116460D4002A7F8F /* PBProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACB116460D4002A7F8F /* PBProcessing.m */; };
 		00DB9ACD116460D4002A7F8F /* PBProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACB116460D4002A7F8F /* PBProcessing.m */; };
 		00DB9AD0116461CD002A7F8F /* PBApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACF116461CD002A7F8F /* PBApplicationController.m */; };
@@ -362,6 +364,8 @@
 		00D7706A115B29A300CF9F22 /* FFEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEncoder.m; sourceTree = "<group>"; };
 		00D77081115B331600CF9F22 /* FFUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFUtils.h; sourceTree = "<group>"; };
 		00D77082115B331600CF9F22 /* FFUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFUtils.m; sourceTree = "<group>"; };
+		00D84C1B11816F3100280DBE /* PBSaveThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBSaveThread.h; sourceTree = "<group>"; };
+		00D84C1C11816F3100280DBE /* PBSaveThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBSaveThread.m; sourceTree = "<group>"; };
 		00DB9ACA116460D4002A7F8F /* PBProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBProcessing.h; sourceTree = "<group>"; };
 		00DB9ACB116460D4002A7F8F /* PBProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBProcessing.m; sourceTree = "<group>"; };
 		00DB9ACE116461CD002A7F8F /* PBApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBApplicationController.h; sourceTree = "<group>"; };
@@ -505,6 +509,8 @@
 				00234B9C116D95C800088651 /* PBMediaChooser.m */,
 				00234C3D116DA75600088651 /* PBMediaListViewController.h */,
 				00234C3E116DA75600088651 /* PBMediaListViewController.m */,
+				00D84C1B11816F3100280DBE /* PBSaveThread.h */,
+				00D84C1C11816F3100280DBE /* PBSaveThread.m */,
 			);
 			path = PixelBleeder;
 			sourceTree = "<group>";
@@ -1065,6 +1071,7 @@
 				0090EEC611801C6400453CA5 /* GTMStackTrace.m in Sources */,
 				0090EECF11801C7A00453CA5 /* YPLocalized.m in Sources */,
 				0090EEFC11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
+				00D84C1D11816F3100280DBE /* PBSaveThread.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,6 +1128,7 @@
 				0090EEC411801C6400453CA5 /* GTMStackTrace.m in Sources */,
 				0090EECE11801C7A00453CA5 /* YPLocalized.m in Sources */,
 				0090EEFB11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
+				00D84C1E11816F3100280DBE /* PBSaveThread.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

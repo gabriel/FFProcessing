@@ -11,8 +11,9 @@
 #import "PBMediaListViewController.h"
 #import "PBMoviePlayerController.h"
 #import "PBProcessing.h"
+#import "PBSaveThread.h"
 
-@interface PBApplicationController : PBUITableViewController <PBProcessingDelegate> {
+@interface PBApplicationController : PBUITableViewController <PBProcessingDelegate, PBSaveThreadDelegate> {
 
   PBMediaListViewController *_mediaListViewController;
   PBMoviePlayerController *_moviePlayerController;  

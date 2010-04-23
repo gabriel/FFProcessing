@@ -8,7 +8,7 @@
 
 #import "FFUtils.h"
 
-NSString *const FFSourceErrorCodeKey = @"FFSourceErrorCodeKey";
+NSString *const FFMPEGErrorCodeKey = @"FFMPEGErrorCodeKey";
 
 static AVPacket gFlushPacket;
 static BOOL gInitialized = NO;

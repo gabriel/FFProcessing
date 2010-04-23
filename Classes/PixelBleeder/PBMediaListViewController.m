@@ -86,6 +86,7 @@
   if (editingStyle == UITableViewCellEditingStyleDelete) {
     [self removeItemAtIndex:indexPath.row];
   }
+  [self reloadData];
 }
 
 @end
