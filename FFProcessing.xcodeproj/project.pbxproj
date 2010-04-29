@@ -64,6 +64,14 @@
 		00235031116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
 		00235032116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
 		00235033116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
+		007B05C011893F34003B3A5B /* FFEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05BF11893F34003B3A5B /* FFEdgeFilter.m */; };
+		007B05C111893F34003B3A5B /* FFEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05BF11893F34003B3A5B /* FFEdgeFilter.m */; };
+		007B05EE118942AE003B3A5B /* FFEncodeProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */; };
+		007B05EF118942AE003B3A5B /* FFEncodeProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */; };
+		007B05F0118942AE003B3A5B /* FFEncodeProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */; };
+		007B05F3118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05F2118942D5003B3A5B /* FFDataMoshProcessor.m */; };
+		007B05F4118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05F2118942D5003B3A5B /* FFDataMoshProcessor.m */; };
+		007B05F5118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05F2118942D5003B3A5B /* FFDataMoshProcessor.m */; };
 		0085314B1176E0F700F9310E /* PBUIContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085314A1176E0F700F9310E /* PBUIContainer.m */; };
 		0085314C1176E0F700F9310E /* PBUIContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085314A1176E0F700F9310E /* PBUIContainer.m */; };
 		0085314D1176E0F700F9310E /* PBUIContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085314A1176E0F700F9310E /* PBUIContainer.m */; };
@@ -88,9 +96,6 @@
 		008C0A31117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A26117A9460002689B8 /* GHNSInvocation+Utils.m */; };
 		008C0A32117A9460002689B8 /* GHNSInvocationProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A28117A9460002689B8 /* GHNSInvocationProxy.m */; };
 		008C0A33117A9460002689B8 /* GHNSObject+Invocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A2A117A9460002689B8 /* GHNSObject+Invocation.m */; };
-		008C0A6F117AC261002689B8 /* FFProcessingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A6E117AC261002689B8 /* FFProcessingOptions.m */; };
-		008C0A70117AC261002689B8 /* FFProcessingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A6E117AC261002689B8 /* FFProcessingOptions.m */; };
-		008C0A71117AC261002689B8 /* FFProcessingOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 008C0A6E117AC261002689B8 /* FFProcessingOptions.m */; };
 		0090ED4B11800FFF00453CA5 /* YPUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4711800FFF00453CA5 /* YPUIButton.m */; };
 		0090ED4C11800FFF00453CA5 /* YPCGUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4911800FFF00453CA5 /* YPCGUtils.m */; };
 		0090ED4D11800FFF00453CA5 /* YPUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090ED4711800FFF00453CA5 /* YPUIButton.m */; };
@@ -270,6 +275,14 @@
 		00234C93116DB97800088651 /* short1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short1.mov; sourceTree = "<group>"; };
 		00234C94116DB97800088651 /* short2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short2.mov; sourceTree = "<group>"; };
 		00235030116EDE5100088651 /* libxvidcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libxvidcore.a; sourceTree = "<group>"; };
+		007B05BE11893F34003B3A5B /* FFEdgeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEdgeFilter.h; sourceTree = "<group>"; };
+		007B05BF11893F34003B3A5B /* FFEdgeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEdgeFilter.m; sourceTree = "<group>"; };
+		007B05C211893FE5003B3A5B /* FFFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFFilter.h; sourceTree = "<group>"; };
+		007B05E2118941F0003B3A5B /* FFProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFProcessor.h; sourceTree = "<group>"; };
+		007B05EC118942AE003B3A5B /* FFEncodeProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEncodeProcessor.h; sourceTree = "<group>"; };
+		007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEncodeProcessor.m; sourceTree = "<group>"; };
+		007B05F1118942D5003B3A5B /* FFDataMoshProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDataMoshProcessor.h; sourceTree = "<group>"; };
+		007B05F2118942D5003B3A5B /* FFDataMoshProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDataMoshProcessor.m; sourceTree = "<group>"; };
 		008531491176E0F700F9310E /* PBUIContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUIContainer.h; sourceTree = "<group>"; };
 		0085314A1176E0F700F9310E /* PBUIContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBUIContainer.m; sourceTree = "<group>"; };
 		008531AF1176E79D00F9310E /* PBUIStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUIStatusView.h; sourceTree = "<group>"; };
@@ -288,8 +301,6 @@
 		008C0A29117A9460002689B8 /* GHNSObject+Invocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GHNSObject+Invocation.h"; sourceTree = "<group>"; };
 		008C0A2A117A9460002689B8 /* GHNSObject+Invocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GHNSObject+Invocation.m"; sourceTree = "<group>"; };
 		008C0A64117AB985002689B8 /* GHKitDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHKitDefines.h; sourceTree = "<group>"; };
-		008C0A6D117AC261002689B8 /* FFProcessingOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFProcessingOptions.h; sourceTree = "<group>"; };
-		008C0A6E117AC261002689B8 /* FFProcessingOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFProcessingOptions.m; sourceTree = "<group>"; };
 		0090ED4611800FFF00453CA5 /* YPUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPUIButton.h; sourceTree = "<group>"; };
 		0090ED4711800FFF00453CA5 /* YPUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YPUIButton.m; sourceTree = "<group>"; };
 		0090ED4811800FFF00453CA5 /* YPCGUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YPCGUtils.h; sourceTree = "<group>"; };
@@ -491,7 +502,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0007416B1161CDE600D8283B /* PixelBleeder */ = {
+		0007416B1161CDE600D8283B /* PB */ = {
 			isa = PBXGroup;
 			children = (
 				00234B91116D900400088651 /* UI */,
@@ -512,7 +523,7 @@
 				00D84C1B11816F3100280DBE /* PBSaveThread.h */,
 				00D84C1C11816F3100280DBE /* PBSaveThread.m */,
 			);
-			path = PixelBleeder;
+			path = PB;
 			sourceTree = "<group>";
 		};
 		000DD3B21166C656007E8546 /* ffmpeg */ = {
@@ -556,9 +567,11 @@
 			path = "../ffmpeg-build/x264-uarch/lib";
 			sourceTree = SOURCE_ROOT;
 		};
-		00129F1911549B3500D09836 /* FFMPEG */ = {
+		00129F1911549B3500D09836 /* FFProcessing */ = {
 			isa = PBXGroup;
 			children = (
+				007B05E1118941E9003B3A5B /* Processors */,
+				007B05B911893EDB003B3A5B /* Filters */,
 				0012A0511154AE3100D09836 /* Test */,
 				00129F2911549B3500D09836 /* OpenGL */,
 				00129F1D11549B3500D09836 /* FFGLDrawable.h */,
@@ -571,8 +584,6 @@
 				00129F2811549B3500D09836 /* FFPlayerView.m */,
 				0001B1D111573C1D00109D45 /* FFProcessing.h */,
 				0001B1D211573C1D00109D45 /* FFProcessing.m */,
-				008C0A6D117AC261002689B8 /* FFProcessingOptions.h */,
-				008C0A6E117AC261002689B8 /* FFProcessingOptions.m */,
 				008532531176F5B300F9310E /* FFProcessingThread.h */,
 				008532541176F5B300F9310E /* FFProcessingThread.m */,
 				008532581176F69A00F9310E /* FFProcessingQueue.h */,
@@ -596,7 +607,7 @@
 				00D16AAE1167DD9C00D025EF /* FFPresets.h */,
 				00D16AAF1167DD9C00D025EF /* FFPresets.m */,
 			);
-			path = FFMPEG;
+			path = FFProcessing;
 			sourceTree = "<group>";
 		};
 		00129F2911549B3500D09836 /* OpenGL */ = {
@@ -651,6 +662,28 @@
 			name = libxvid;
 			path = "../ffmpeg-build/xvid-uarch/lib";
 			sourceTree = SOURCE_ROOT;
+		};
+		007B05B911893EDB003B3A5B /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				007B05C211893FE5003B3A5B /* FFFilter.h */,
+				007B05BE11893F34003B3A5B /* FFEdgeFilter.h */,
+				007B05BF11893F34003B3A5B /* FFEdgeFilter.m */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
+		007B05E1118941E9003B3A5B /* Processors */ = {
+			isa = PBXGroup;
+			children = (
+				007B05E2118941F0003B3A5B /* FFProcessor.h */,
+				007B05EC118942AE003B3A5B /* FFEncodeProcessor.h */,
+				007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */,
+				007B05F1118942D5003B3A5B /* FFDataMoshProcessor.h */,
+				007B05F2118942D5003B3A5B /* FFDataMoshProcessor.m */,
+			);
+			path = Processors;
+			sourceTree = "<group>";
 		};
 		008C0A24117A9460002689B8 /* GHKit */ = {
 			isa = PBXGroup;
@@ -840,8 +873,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0007416B1161CDE600D8283B /* PixelBleeder */,
-				00129F1911549B3500D09836 /* FFMPEG */,
+				0007416B1161CDE600D8283B /* PB */,
+				00129F1911549B3500D09836 /* FFProcessing */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1062,7 +1095,6 @@
 				008C0A2B117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */,
 				008C0A2C117A9460002689B8 /* GHNSInvocationProxy.m in Sources */,
 				008C0A2D117A9460002689B8 /* GHNSObject+Invocation.m in Sources */,
-				008C0A71117AC261002689B8 /* FFProcessingOptions.m in Sources */,
 				0090ED4F11800FFF00453CA5 /* YPUIButton.m in Sources */,
 				0090ED5011800FFF00453CA5 /* YPCGUtils.m in Sources */,
 				0090ED551180105500453CA5 /* YPUIControl.m in Sources */,
@@ -1072,6 +1104,9 @@
 				0090EECF11801C7A00453CA5 /* YPLocalized.m in Sources */,
 				0090EEFC11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
 				00D84C1D11816F3100280DBE /* PBSaveThread.m in Sources */,
+				007B05C011893F34003B3A5B /* FFEdgeFilter.m in Sources */,
+				007B05EF118942AE003B3A5B /* FFEncodeProcessor.m in Sources */,
+				007B05F4118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1119,7 +1154,6 @@
 				008C0A31117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */,
 				008C0A32117A9460002689B8 /* GHNSInvocationProxy.m in Sources */,
 				008C0A33117A9460002689B8 /* GHNSObject+Invocation.m in Sources */,
-				008C0A70117AC261002689B8 /* FFProcessingOptions.m in Sources */,
 				0090ED4D11800FFF00453CA5 /* YPUIButton.m in Sources */,
 				0090ED4E11800FFF00453CA5 /* YPCGUtils.m in Sources */,
 				0090ED541180105500453CA5 /* YPUIControl.m in Sources */,
@@ -1129,6 +1163,9 @@
 				0090EECE11801C7A00453CA5 /* YPLocalized.m in Sources */,
 				0090EEFB11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
 				00D84C1E11816F3100280DBE /* PBSaveThread.m in Sources */,
+				007B05C111893F34003B3A5B /* FFEdgeFilter.m in Sources */,
+				007B05F0118942AE003B3A5B /* FFEncodeProcessor.m in Sources */,
+				007B05F3118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1168,7 +1205,6 @@
 				008C0A2E117A9460002689B8 /* GHNSInvocation+Utils.m in Sources */,
 				008C0A2F117A9460002689B8 /* GHNSInvocationProxy.m in Sources */,
 				008C0A30117A9460002689B8 /* GHNSObject+Invocation.m in Sources */,
-				008C0A6F117AC261002689B8 /* FFProcessingOptions.m in Sources */,
 				0090ED4B11800FFF00453CA5 /* YPUIButton.m in Sources */,
 				0090ED4C11800FFF00453CA5 /* YPCGUtils.m in Sources */,
 				0090ED531180105500453CA5 /* YPUIControl.m in Sources */,
@@ -1177,6 +1213,8 @@
 				0090EEC211801C6400453CA5 /* GTMStackTrace.m in Sources */,
 				0090EECD11801C7A00453CA5 /* YPLocalized.m in Sources */,
 				0090EEFA11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
+				007B05EE118942AE003B3A5B /* FFEncodeProcessor.m in Sources */,
+				007B05F5118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

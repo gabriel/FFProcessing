@@ -3,7 +3,7 @@
 //  YelpIPhone
 //
 //  Created by Gabriel Handford on 11/18/08.
-//  Copyright 2008 Yelp. All rights reserved.
+//  Copyright 2008. All rights reserved.
 //
 
 // Patches localization call.

@@ -3,7 +3,7 @@
 //  YelpKit
 //
 //  Created by Gabriel Handford on 4/8/09.
-//  Copyright 2009 Yelp. All rights reserved.
+//  Copyright 2009. All rights reserved.
 //
 
 #define YPOrNSNull(obj) (obj ? obj : (id)[NSNull null])

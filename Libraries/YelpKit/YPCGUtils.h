@@ -3,7 +3,7 @@
 //  YelpKit
 //
 //  Created by Gabriel Handford on 12/30/08.
-//  Copyright 2008 Yelp. All rights reserved.
+//  Copyright 2008. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation
