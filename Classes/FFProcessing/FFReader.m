@@ -9,10 +9,9 @@
 #import "FFReader.h"
 
 #import "FFUtils.h"
+#import "FFEncoderOptions.h"
 
 @implementation FFReader
-
-@synthesize converter=_converter;
 
 - (id)initWithURL:(NSURL *)URL format:(NSString *)format {
   if ((self = [self init])) {
@@ -25,34 +24,32 @@
   [_readThread close];
   [_readThread release];
   [_converter release];
-  FFPictureRelease(_picture);
+  FFPictureFrameRelease(_pictureFrame);
   [super dealloc];
 }
 
-- (AVFrame *)nextFrame:(NSError **)error {  
+- (FFPictureFrame)nextFrame:(NSError **)error {  
   if (!_started) {
     _started = YES;    
     [_readThread start];
   }
     
-  if (_picture == NULL) {
-    _picture = [_readThread createPicture];
-    if (_picture == NULL) return NULL;
+  if (_pictureFrame.frame == NULL) {
+    _pictureFrame = [_readThread createPictureFrame];
+    if (_pictureFrame.frame == NULL) return _pictureFrame;
   }
   
-  if (![_readThread readPicture:_picture]) return NULL;
+  if (![_readThread readPicture:_pictureFrame.frame]) return _pictureFrame;
   
-  if (!_converter) {
-    
+  if (!_converter) {    
     FFEncoderOptions *encoderOptions = [[[FFEncoderOptions alloc] initWithPath:nil format:nil codecName:nil
-                                                                         width:256 height:256 pixelFormat:PIX_FMT_RGB24
+                                                                 pictureFormat:FFPictureFormatMake(256, 256, PIX_FMT_RGB24)
                                                                  videoTimeBase:(AVRational){0, 1}] autorelease];
     
-    _converter = [[FFConverter alloc] initWithDecoderOptions:[_readThread.decoder options]
-                                              encoderOptions:encoderOptions];    
+    _converter = [[FFConverter alloc] initWithPictureFormat:encoderOptions.pictureFormat];    
   }
 
-  return [_converter scalePicture:_picture error:error];
+  return [_converter scalePicture:_pictureFrame error:error];
 }
 
 @end

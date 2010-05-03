@@ -28,24 +28,20 @@
   return YES;
 }
 
-- (BOOL)openEncoderWithDecoder:(FFDecoder *)decoder error:(NSError **)error {
+- (BOOL)openEncoderWithPictureFormat:(FFPictureFormat)pictureFormat decoder:(FFDecoder *)decoder error:(NSError **)error {
   
   // Fill in encoder options (with decoder properties) if not set
-  int width = _encoderOptions.width;
-  int height = _encoderOptions.height;
-  enum PixelFormat pixelFormat = _encoderOptions.pixelFormat;
+  FFPictureFormat encoderPictureFormat = _encoderOptions.pictureFormat;
   AVRational videoTimeBase = _encoderOptions.videoTimeBase;
-  if (width == 0) width = decoder.options.width;
-  if (height == 0) height = decoder.options.height;
-  if (pixelFormat == PIX_FMT_NONE) pixelFormat = decoder.options.pixelFormat;
+  if (encoderPictureFormat.width == 0) encoderPictureFormat.width = pictureFormat.width;
+  if (encoderPictureFormat.height == 0) encoderPictureFormat.height = pictureFormat.height;
+  if (encoderPictureFormat.pixelFormat == PIX_FMT_NONE) encoderPictureFormat.pixelFormat = pictureFormat.pixelFormat;
   if (videoTimeBase.num == 0) videoTimeBase = decoder.options.videoTimeBase;
   
   FFEncoderOptions *options = [[FFEncoderOptions alloc] initWithPath:_encoderOptions.path 
                                                               format:_encoderOptions.format
                                                            codecName:_encoderOptions.codecName
-                                                               width:width
-                                                              height:height
-                                                         pixelFormat:pixelFormat
+                                                       pictureFormat:encoderPictureFormat
                                                        videoTimeBase:videoTimeBase];
   
   _encoder = [[FFEncoder alloc] initWithOptions:options];
@@ -65,14 +61,14 @@
   return YES;
 }
 
-- (BOOL)processFrame:(AVFrame *)frame decoder:(FFDecoder *)decoder index:(NSInteger)index error:(NSError **)error {
+- (BOOL)processPictureFrame:(FFPictureFrame)pictureFrame decoder:(FFDecoder *)decoder index:(NSInteger)index error:(NSError **)error {
   
   if (!_encoder) {
-    if (![self openEncoderWithDecoder:decoder error:error])
+    if (![self openEncoderWithPictureFormat:pictureFrame.pictureFormat decoder:decoder error:error])
       return NO;
   }
   
-  int bytesEncoded = [_encoder encodeVideoFrame:frame error:error];
+  int bytesEncoded = [_encoder encodeVideoFrame:pictureFrame.frame error:error];
   if (bytesEncoded < 0) {
     FFDebug(@"Encode error");
     return NO;

@@ -104,10 +104,10 @@
     return NO;
   }
    */
-  AVFrame *avFrame = [_reader nextFrame:nil];
-  if (avFrame == NULL) return NO;
+  FFPictureFrame pictureFrame = [_reader nextFrame:nil];
+  if (pictureFrame.frame == NULL) return NO;
 
-  uint8_t *nextData = avFrame->data[0];
+  uint8_t *nextData = pictureFrame.frame->data[0];
   if (nextData == NULL) return NO;
     
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
@@ -120,9 +120,9 @@
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   
   if (!_textureLoaded) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _reader.converter.encoderOptions.width, _reader.converter.encoderOptions.height, 0, GL_RGB, GL_UNSIGNED_BYTE, nextData);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pictureFrame.pictureFormat.width, pictureFrame.pictureFormat.height, 0, GL_RGB, GL_UNSIGNED_BYTE, nextData);
   } else {
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, _reader.converter.encoderOptions.width, _reader.converter.encoderOptions.height,
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, pictureFrame.pictureFormat.width, pictureFrame.pictureFormat.height,
                     GL_RGB, GL_UNSIGNED_BYTE, nextData);
   }
   

@@ -11,6 +11,8 @@
 
 #import "libavcodec/avcodec.h"
 
+#import "FFTypes.h"
+
 extern NSString *const FFMPEGErrorCodeKey; // Key for NSError for source error code
 
 #define FFSetError(__ERROR__, __ERROR_CODE__, __FFMPEG_ERROR_CODE__, __DESC__, ...) do { \
@@ -72,12 +74,30 @@ BOOL FFIsInitialized(void);
 
 BOOL FFIsFlushPacket(AVPacket *packet);
 
-AVFrame *FFPictureCreate(enum PixelFormat pixelFormat, int width, int height);
+FFPictureFrame FFPictureFrameCreate(FFPictureFormat pictureFormat);
 
-void FFPictureRelease(AVFrame *picture);
+void FFPictureFrameRelease(FFPictureFrame pictureFrame);
 
 // Fill dummy image
-void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int height);
+void FFFillYUVImage(FFPictureFrame pictureFrame, NSInteger frameIndex);
+
+static inline FFRGB FFRGBAt(FFPictureFrame pictureFrame, int x, int y) {
+  // TODO(gabe): Fixme
+  //NSAssert(pictureFrame.pictureFormat.pixelFormat == PIX_FMT_RGB24, @"Only supports PIX_FMT_RGB24");
+  int p = (x * 3) + (y * pictureFrame.frame->linesize[0]);
+  FFRGB rgb;
+  rgb.r = pictureFrame.frame->data[0][p];
+  rgb.g = pictureFrame.frame->data[0][p + 1];
+  rgb.b = pictureFrame.frame->data[0][p + 2];  
+  return rgb;
+}
+
+static inline void FFRGBSetAt(FFPictureFrame pictureFrame, int x, int y, FFRGB rgb) {
+  int p = (x * 3) + (y * pictureFrame.frame->linesize[0]);
+  pictureFrame.frame->data[0][p] = rgb.r;
+  pictureFrame.frame->data[0][p + 1] = rgb.g;
+  pictureFrame.frame->data[0][p + 2] = rgb.b;
+}
 
 /*!
  Find rational approximation to given real number.
@@ -101,6 +121,7 @@ void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int heigh
  */
 AVRational FFFindRationalApproximation(float r, long maxden);
 
+double FFAngleRadians(double x, double y);
 
 @interface FFUtils : NSObject { }
 

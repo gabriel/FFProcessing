@@ -9,26 +9,23 @@
 #import "libavcodec/avcodec.h"
 
 #import "FFPresets.h"
+#import "FFTypes.h"
 
 @interface FFDecoderOptions : NSObject {
-  int _width;
-  int _height;
-  enum PixelFormat _pixelFormat;  
+  FFPictureFormat _pictureFormat;
   AVRational _videoFrameRate;
   AVRational _videoTimeBase;
   AVRational _sampleAspectRatio;
   int64_t _duration;
 }
 
-@property (readonly, nonatomic) int width;
-@property (readonly, nonatomic) int height;
-@property (readonly, nonatomic) enum PixelFormat pixelFormat;
+@property (readonly, nonatomic) FFPictureFormat pictureFormat;
 @property (readonly, nonatomic) AVRational videoFrameRate;
 @property (readonly, nonatomic) AVRational videoTimeBase;
 @property (readonly, nonatomic) AVRational sampleAspectRatio;
 
-- (id)initWithWidth:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat videoFrameRate:(AVRational)videoFrameRate
-      videoTimeBase:(AVRational)videoTimeBase;
+- (id)initWithPictureFormat:(FFPictureFormat)pictureFormat videoFrameRate:(AVRational)videoFrameRate 
+              videoTimeBase:(AVRational)videoTimeBase;
 
 @end
 

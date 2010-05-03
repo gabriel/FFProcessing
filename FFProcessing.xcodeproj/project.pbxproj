@@ -10,6 +10,15 @@
 		0001B1D311573C1D00109D45 /* FFProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001B1D211573C1D00109D45 /* FFProcessing.m */; };
 		0001B1D61157413D00109D45 /* FFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001B1D51157413D00109D45 /* FFConverter.m */; };
 		0007418E1161D26C00D8283B /* FFProcessingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007418D1161D26C00D8283B /* FFProcessingTest.m */; };
+		000A660E118BFCD20018CF7C /* FFFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 000A660D118BFCD20018CF7C /* FFFilters.m */; };
+		000A660F118BFCD20018CF7C /* FFFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 000A660D118BFCD20018CF7C /* FFFilters.m */; };
+		000A6610118BFCD20018CF7C /* FFFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 000A660D118BFCD20018CF7C /* FFFilters.m */; };
+		000A6662118C02940018CF7C /* FFTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 000A6661118C02940018CF7C /* FFTypes.m */; };
+		000A6663118C02940018CF7C /* FFTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 000A6661118C02940018CF7C /* FFTypes.m */; };
+		000A6664118C02940018CF7C /* FFTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 000A6661118C02940018CF7C /* FFTypes.m */; };
+		000A67F9118E7F2A0018CF7C /* IDEAS in Resources */ = {isa = PBXBuildFile; fileRef = 000A67F8118E7F2A0018CF7C /* IDEAS */; };
+		000A67FA118E7F2A0018CF7C /* IDEAS in Resources */ = {isa = PBXBuildFile; fileRef = 000A67F8118E7F2A0018CF7C /* IDEAS */; };
+		000A67FB118E7F2A0018CF7C /* IDEAS in Resources */ = {isa = PBXBuildFile; fileRef = 000A67F8118E7F2A0018CF7C /* IDEAS */; };
 		000DD3BA1166C656007E8546 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 000DD3B31166C656007E8546 /* libavcodec.a */; };
 		000DD3BB1166C656007E8546 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 000DD3B41166C656007E8546 /* libavdevice.a */; };
 		000DD3BC1166C656007E8546 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 000DD3B51166C656007E8546 /* libavfilter.a */; };
@@ -222,6 +231,11 @@
 		0001B1D41157413D00109D45 /* FFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFConverter.h; sourceTree = "<group>"; };
 		0001B1D51157413D00109D45 /* FFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFConverter.m; sourceTree = "<group>"; };
 		0007418D1161D26C00D8283B /* FFProcessingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFProcessingTest.m; sourceTree = "<group>"; };
+		000A660C118BFCD20018CF7C /* FFFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFFilters.h; sourceTree = "<group>"; };
+		000A660D118BFCD20018CF7C /* FFFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFFilters.m; sourceTree = "<group>"; };
+		000A6660118C02940018CF7C /* FFTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFTypes.h; sourceTree = "<group>"; };
+		000A6661118C02940018CF7C /* FFTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFTypes.m; sourceTree = "<group>"; };
+		000A67F8118E7F2A0018CF7C /* IDEAS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IDEAS; sourceTree = "<group>"; };
 		000DD3B31166C656007E8546 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
 		000DD3B41166C656007E8546 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavdevice.a; sourceTree = "<group>"; };
 		000DD3B51166C656007E8546 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavfilter.a; sourceTree = "<group>"; };
@@ -381,8 +395,8 @@
 		00DB9ACB116460D4002A7F8F /* PBProcessing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBProcessing.m; sourceTree = "<group>"; };
 		00DB9ACE116461CD002A7F8F /* PBApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBApplicationController.h; sourceTree = "<group>"; };
 		00DB9ACF116461CD002A7F8F /* PBApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBApplicationController.m; sourceTree = "<group>"; };
-		00DB9BEB11647918002A7F8F /* PixelBleeder-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PixelBleeder-Info.plist"; sourceTree = "<group>"; };
-		00DB9C8C11647A3E002A7F8F /* PixelBleeder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixelBleeder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00DB9BEB11647918002A7F8F /* FFProcessing-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FFProcessing-Info.plist"; sourceTree = "<group>"; };
+		00DB9C8C11647A3E002A7F8F /* FFProcessing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFProcessing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00DB9CCE1164810D002A7F8F /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		00DB9CCF1164810D002A7F8F /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		00DB9CD01164810D002A7F8F /* Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
@@ -606,6 +620,8 @@
 				00F824FC1165A9C400175A32 /* FFCodec.m */,
 				00D16AAE1167DD9C00D025EF /* FFPresets.h */,
 				00D16AAF1167DD9C00D025EF /* FFPresets.m */,
+				000A6660118C02940018CF7C /* FFTypes.h */,
+				000A6661118C02940018CF7C /* FFTypes.m */,
 			);
 			path = FFProcessing;
 			sourceTree = "<group>";
@@ -669,6 +685,8 @@
 				007B05C211893FE5003B3A5B /* FFFilter.h */,
 				007B05BE11893F34003B3A5B /* FFEdgeFilter.h */,
 				007B05BF11893F34003B3A5B /* FFEdgeFilter.m */,
+				000A660C118BFCD20018CF7C /* FFFilters.h */,
+				000A660D118BFCD20018CF7C /* FFFilters.m */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -884,7 +902,7 @@
 			children = (
 				1D6058910D05DD3D006BFB54 /* FFPlayer.app */,
 				00DDF3EF115F3C7200310925 /* Tests.app */,
-				00DB9C8C11647A3E002A7F8F /* PixelBleeder.app */,
+				00DB9C8C11647A3E002A7F8F /* FFProcessing.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -907,6 +925,7 @@
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				00129F7E1154A41B00D09836 /* README */,
 				0085328D1176FE1100F9310E /* NOTES.md */,
+				000A67F8118E7F2A0018CF7C /* IDEAS */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -924,7 +943,7 @@
 			isa = PBXGroup;
 			children = (
 				00DB9CD411648145002A7F8F /* Images */,
-				00DB9BEB11647918002A7F8F /* PixelBleeder-Info.plist */,
+				00DB9BEB11647918002A7F8F /* FFProcessing-Info.plist */,
 				00DDF3F1115F3C7200310925 /* Tests-Info.plist */,
 				8D1107310486CEB800E47090 /* FFPlayer-Info.plist */,
 			);
@@ -951,9 +970,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00DB9C5A11647A3E002A7F8F /* PixelBleeder */ = {
+		00DB9C5A11647A3E002A7F8F /* FFProcessing */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00DB9C8911647A3E002A7F8F /* Build configuration list for PBXNativeTarget "PixelBleeder" */;
+			buildConfigurationList = 00DB9C8911647A3E002A7F8F /* Build configuration list for PBXNativeTarget "FFProcessing" */;
 			buildPhases = (
 				00DB9C5B11647A3E002A7F8F /* Resources */,
 				00DB9C6211647A3E002A7F8F /* Sources */,
@@ -963,9 +982,9 @@
 			);
 			dependencies = (
 			);
-			name = PixelBleeder;
+			name = FFProcessing;
 			productName = FFPlayer;
-			productReference = 00DB9C8C11647A3E002A7F8F /* PixelBleeder.app */;
+			productReference = 00DB9C8C11647A3E002A7F8F /* FFProcessing.app */;
 			productType = "com.apple.product-type.application";
 		};
 		00DDF3EE115F3C7200310925 /* Tests */ = {
@@ -1015,7 +1034,7 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* FFPlayer */,
-				00DB9C5A11647A3E002A7F8F /* PixelBleeder */,
+				00DB9C5A11647A3E002A7F8F /* FFProcessing */,
 				00DDF3EE115F3C7200310925 /* Tests */,
 			);
 		};
@@ -1032,6 +1051,7 @@
 				00D16AEB1167E21E00D025EF /* libx264-ipod320.ffpreset in Resources */,
 				00234C95116DB97800088651 /* short1.mov in Resources */,
 				00234C96116DB97800088651 /* short2.mov in Resources */,
+				000A67F9118E7F2A0018CF7C /* IDEAS in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,6 +1060,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00D16AEC1167E22200D025EF /* libx264-ipod320.ffpreset in Resources */,
+				000A67FA118E7F2A0018CF7C /* IDEAS in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1049,6 +1070,7 @@
 			files = (
 				00129F7F1154A41B00D09836 /* README in Resources */,
 				0012A0561154AE3100D09836 /* test.png in Resources */,
+				000A67FB118E7F2A0018CF7C /* IDEAS in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,6 +1129,8 @@
 				007B05C011893F34003B3A5B /* FFEdgeFilter.m in Sources */,
 				007B05EF118942AE003B3A5B /* FFEncodeProcessor.m in Sources */,
 				007B05F4118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
+				000A660F118BFCD20018CF7C /* FFFilters.m in Sources */,
+				000A6663118C02940018CF7C /* FFTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1166,6 +1190,8 @@
 				007B05C111893F34003B3A5B /* FFEdgeFilter.m in Sources */,
 				007B05F0118942AE003B3A5B /* FFEncodeProcessor.m in Sources */,
 				007B05F3118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
+				000A6610118BFCD20018CF7C /* FFFilters.m in Sources */,
+				000A6664118C02940018CF7C /* FFTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1215,6 +1241,8 @@
 				0090EEFA11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
 				007B05EE118942AE003B3A5B /* FFEncodeProcessor.m in Sources */,
 				007B05F5118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
+				000A660E118BFCD20018CF7C /* FFFilters.m in Sources */,
+				000A6662118C02940018CF7C /* FFTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1226,8 +1254,8 @@
 			baseConfigurationReference = 00DB9CCE1164810D002A7F8F /* Debug.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				PRODUCT_NAME = PixelBleeder;
-				SDKROOT = iphoneos3.0;
+				INFOPLIST_FILE = "Resources/FFProcessing-Info.plist";
+				PRODUCT_NAME = FFProcessing;
 			};
 			name = Debug;
 		};
@@ -1235,6 +1263,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 00DB9CCF1164810D002A7F8F /* Release.xcconfig */;
 			buildSettings = {
+				INFOPLIST_FILE = "Resources/FFProcessing-Info.plist";
 				PRODUCT_NAME = PixelBleeder;
 			};
 			name = Release;
@@ -1302,7 +1331,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00DB9C8911647A3E002A7F8F /* Build configuration list for PBXNativeTarget "PixelBleeder" */ = {
+		00DB9C8911647A3E002A7F8F /* Build configuration list for PBXNativeTarget "FFProcessing" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00DB9C8A11647A3E002A7F8F /* Debug */,

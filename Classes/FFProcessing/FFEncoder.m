@@ -175,12 +175,17 @@
 }
 
 - (BOOL)writeTrailer:(NSError **)error {
-  int averror = av_write_trailer(_formatContext);
-  if (averror != 0) {
-    FFSetError(error, FFErrorCodeWriteTrailer, averror, @"Couldn't write trailer");
+  if (_formatContext) {
+    int averror = av_write_trailer(_formatContext);
+    if (averror != 0) {
+      FFSetError(error, FFErrorCodeWriteTrailer, averror, @"Couldn't write trailer");
+      return NO;
+    }
+    FFDebug(@"Wrote trailer");
+  } else {
+    FFSetError(error, FFErrorCodeWriteTrailer, 0, @"Couldn't write trailer: no format context");
     return NO;
   }
-  FFDebug(@"Wrote trailer");
   return YES;
 }  
 

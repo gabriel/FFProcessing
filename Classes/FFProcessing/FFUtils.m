@@ -30,44 +30,45 @@ BOOL FFIsFlushPacket(AVPacket *packet) {
   return (packet->data == gFlushPacket.data);
 }
 
-AVFrame *FFPictureCreate(enum PixelFormat pixelFormat, int width, int height) {
+FFPictureFrame FFPictureFrameCreate(FFPictureFormat pictureFormat) {
   
   AVFrame *picture = avcodec_alloc_frame();
-  if (!picture) return NULL;
+  if (!picture) return FFPictureFrameNone;
   
-  int size = avpicture_get_size(pixelFormat, width, height);
+  int size = avpicture_get_size(pictureFormat.pixelFormat, pictureFormat.width, pictureFormat.height);
   uint8_t *pictureBuffer = av_malloc(size);
   
   if (!pictureBuffer) {
     av_free(picture);
-    return NULL;
+    return FFPictureFrameNone;
   }
   
-  avpicture_fill((AVPicture *)picture, pictureBuffer, pixelFormat, width, height);
-  return picture;
+  avpicture_fill((AVPicture *)picture, pictureBuffer, pictureFormat.pixelFormat, pictureFormat.width, pictureFormat.height);
+  return FFPictureFrameMake(picture, pictureFormat);
 }
 
-void FFPictureRelease(AVFrame *picture) {
-  if (picture != NULL)  {
-    if (picture->data != NULL) av_free(picture->data[0]);
-    av_free(picture);  
+void FFPictureFrameRelease(FFPictureFrame pictureFrame) {
+  if (pictureFrame.frame != NULL)  {
+    if (pictureFrame.frame->data != NULL) av_free(pictureFrame.frame->data[0]);
+    av_free(pictureFrame.frame);  
+    pictureFrame.frame = NULL;
   }
 }
 
-void FFFillYUVImage(AVFrame *picture, NSInteger frameIndex, int width, int height) {
+void FFFillYUVImage(FFPictureFrame pictureFrame, NSInteger frameIndex) {
   
   /* Y */
-  for (int y = 0; y < height; y++) {
-    for (int x = 0; x < width; x++) {
-      picture->data[0][y * picture->linesize[0] + x] = x + y + frameIndex * 3;
+  for (int y = 0; y < pictureFrame.pictureFormat.height; y++) {
+    for (int x = 0; x < pictureFrame.pictureFormat.width; x++) {
+      pictureFrame.frame->data[0][y * pictureFrame.frame->linesize[0] + x] = x + y + frameIndex * 3;
     }
   }
   
   /* Cb and Cr */
-  for (int y = 0; y < height/2; y++) {
-    for (int x = 0; x < width/2; x++) {
-      picture->data[1][y * picture->linesize[1] + x] = 128 + y + frameIndex * 2;
-      picture->data[2][y * picture->linesize[2] + x] = 64 + x + frameIndex * 5;
+  for (int y = 0; y < pictureFrame.pictureFormat.height/2.0; y++) {
+    for (int x = 0; x < pictureFrame.pictureFormat.width/2.0; x++) {
+      pictureFrame.frame->data[1][y * pictureFrame.frame->linesize[1] + x] = 128 + y + frameIndex * 2;
+      pictureFrame.frame->data[2][y * pictureFrame.frame->linesize[2] + x] = 64 + x + frameIndex * 5;
     }
   }  
 }
@@ -97,6 +98,26 @@ AVRational FFFindRationalApproximation(float r, long maxden) {
   } 
   
   return (AVRational){m[0][0], m[1][0]};
+}
+
+double FFAngleRadians(double x, double y) {
+  double xu, yu, ang;
+  
+  xu = fabs(x);
+  yu = fabs(y);
+  
+  if ((xu == 0) && (yu == 0)) return(0);
+  
+  ang = atan(yu/xu);
+  
+  if(x >= 0){
+    if(y >= 0) return(ang);
+    else return(2*M_PI - ang);
+  }
+  else{
+    if(y >= 0) return(M_PI - ang);
+    else return(M_PI + ang);
+  }
 }
 
 @implementation FFUtils

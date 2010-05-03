@@ -19,7 +19,6 @@
     _readPictureIndex = 0;
     _readIndex = 0;
     _frame = NULL;
-    _picture = NULL;
     _lock = [[NSLock alloc] init];
   }
   return self;
@@ -54,18 +53,19 @@
   return _decoder;
 }
 
-- (AVFrame *)createPicture {
-  if (!_decoder) return NULL;
-  return FFPictureCreate(_decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
+- (FFPictureFrame)createPictureFrame {
+  if (!_decoder) return FFPictureFrameNone;
+  return FFPictureFrameCreate(_decoder.options.pictureFormat);
 }
 
 - (BOOL)readPicture:(AVFrame *)picture {
-  if (_picture == NULL || _readIndex == _readPictureIndex) {
+  if (_pictureFrame.frame == NULL || _readIndex == _readPictureIndex) {
     return NO;
   }
 
   [_lock lock];
-  av_picture_copy((AVPicture *)picture, (AVPicture *)_picture, _decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
+  av_picture_copy((AVPicture *)picture, (AVPicture *)_pictureFrame.frame, _pictureFrame.pictureFormat.pixelFormat, 
+                  _pictureFrame.pictureFormat.width, _pictureFrame.pictureFormat.height);
   _readIndex = _readPictureIndex;
   [_lock unlock];
   return YES;
@@ -85,7 +85,7 @@
     _frame = avcodec_alloc_frame();
     // TODO(gabe): if (_frame == NULL)  
     
-    _picture = [self createPicture];
+    _pictureFrame = [self createPictureFrame];
     
     while (![self isCancelled]) {  
       NSError *error = nil;
@@ -96,7 +96,8 @@
       
       if (_frame != NULL) {
         [_lock lock];
-        av_picture_copy((AVPicture *)_picture, (AVPicture *)_frame, _decoder.options.pixelFormat, _decoder.options.width, _decoder.options.height);
+        av_picture_copy((AVPicture *)_pictureFrame.frame, (AVPicture *)_frame, _pictureFrame.pictureFormat.pixelFormat, 
+                        _pictureFrame.pictureFormat.width, _pictureFrame.pictureFormat.height);
         _readPictureIndex++;
         [_lock unlock];
       }
@@ -106,8 +107,7 @@
     [_lock lock];
     av_free(_frame);    
     _frame = NULL;
-    FFPictureRelease(_picture);
-    _picture = NULL;
+    FFPictureFrameRelease(_pictureFrame);
     [_lock unlock];
   }
   

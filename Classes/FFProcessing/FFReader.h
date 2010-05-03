@@ -13,15 +13,13 @@
   FFReadThread *_readThread;
   FFConverter *_converter;
   
-  AVFrame *_picture;
+  FFPictureFrame _pictureFrame;
   
   BOOL _started;
 }
 
-@property (readonly, nonatomic) FFConverter *converter;
-
 - (id)initWithURL:(NSURL *)URL format:(NSString *)format;
 
-- (AVFrame *)nextFrame:(NSError **)error;
+- (FFPictureFrame)nextFrame:(NSError **)error;
 
 @end

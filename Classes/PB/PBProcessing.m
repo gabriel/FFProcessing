@@ -14,6 +14,7 @@
 #import "FFEncodeProcessor.h"
 #import "FFDataMoshProcessor.h"
 #import "FFEdgeFilter.h"
+#import "FFFilters.h"
 
 @interface PBProcessing ()
 @property (retain, nonatomic) NSString *outputPath;
@@ -45,8 +46,8 @@
   NSString *outputPath = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"mosh.mp4", outputFormat]];
   
   FFEncoderOptions *encoderOptions = [[[FFEncoderOptions alloc] initWithPath:outputPath format:outputFormat codecName:outputCodecName
-                                                                       width:0 height:0 pixelFormat:PIX_FMT_NONE videoTimeBase:(AVRational){0,0}] autorelease];
-  
+                                                               pictureFormat:FFPictureFormatNone videoTimeBase:(AVRational){0,0}] autorelease];
+
   /*!
   FFDataMoshProcessor *processor = [[[FFDataMoshProcessor alloc] initWithEncoderOptions:encoderOptions] autorelease];
   processor.skipEveryIFrameInterval = 1;
@@ -56,7 +57,11 @@
 
   id<FFProcessor> processor = [[[FFEncodeProcessor alloc] initWithEncoderOptions:encoderOptions] autorelease];
   
-  id<FFFilter> filter = [[[FFEdgeFilter alloc] init] autorelease];
+  id<FFFilter> filter = [[FFFilters alloc] initWithFilters:[NSArray arrayWithObjects:
+                                                            [[[FFConverter alloc] initWithPictureFormat:FFPictureFormatMake(0, 0, PIX_FMT_RGB24)] autorelease],
+                                                            [[[FFEdgeFilter alloc] init] autorelease],
+                                                            [[[FFConverter alloc] initWithPictureFormat:FFPictureFormatMake(0, 0, PIX_FMT_YUV420P)] autorelease],
+                                                            nil]];
   
   [outputPath retain];
   [_outputPath release];

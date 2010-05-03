@@ -7,6 +7,7 @@
 //
 
 #import "FFPresets.h"
+#import "FFTypes.h"
 
 @interface FFEncoderOptions : NSObject {
   FFPresets *_presets;
@@ -14,9 +15,7 @@
   NSString *_format;
   NSString *_codecName;  
   
-  int _width;
-  int _height;
-  enum PixelFormat _pixelFormat;
+  FFPictureFormat _pictureFormat;
   AVRational _videoTimeBase;
   AVRational _sampleAspectRatio;
 }
@@ -25,16 +24,13 @@
 @property (readonly, nonatomic) NSString *path;
 @property (readonly, nonatomic) NSString *format;
 @property (readonly, nonatomic) NSString *codecName;  
-@property (readonly, nonatomic) int width;
-@property (readonly, nonatomic) int height;
-@property (readonly, nonatomic) enum PixelFormat pixelFormat; 
+@property (readonly, nonatomic) FFPictureFormat pictureFormat;
 @property (readonly, nonatomic) AVRational videoTimeBase;
 @property (readonly, nonatomic) AVRational sampleAspectRatio;
 
 
 - (id)initWithPath:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName
-             width:(int)width height:(int)height pixelFormat:(enum PixelFormat)pixelFormat 
-     videoTimeBase:(AVRational)videoTimeBase;
+     pictureFormat:(FFPictureFormat)pictureFormat videoTimeBase:(AVRational)videoTimeBase;
 
 - (void)apply:(AVCodecContext *)codecContext;
 

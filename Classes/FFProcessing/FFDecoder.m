@@ -109,11 +109,11 @@
   */
   
   // Set options
-  _options = [[FFDecoderOptions alloc] initWithWidth:_videoStream->codec->coded_width 
-                                              height:_videoStream->codec->coded_height 
-                                         pixelFormat:_videoStream->codec->pix_fmt
-                                      videoFrameRate:_videoStream->r_frame_rate
-                                       videoTimeBase:_videoStream->time_base];
+  _options = [[FFDecoderOptions alloc] initWithPictureFormat:FFPictureFormatMake(_videoStream->codec->coded_width,
+                                                                                   _videoStream->codec->coded_height,
+                                                                                   _videoStream->codec->pix_fmt)
+                                              videoFrameRate:_videoStream->r_frame_rate
+                                               videoTimeBase:_videoStream->time_base];
   
   FFDebug(@"Decoder options: %@", _options);
 

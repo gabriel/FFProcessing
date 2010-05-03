@@ -100,19 +100,24 @@
     //FFDebug(@"Decoded frame, pict_type=%@", NSStringFromAVFramePictType(_decoderFrame->pict_type));    
     _decoderFrame->pts += _previousEndPTS;
     
+    _decodedFrame = FFPictureFrameMake(_decoderFrame, _decoder.options.pictureFormat);
+    
     [_delegate processing:self didReadFramePTS:[_decoder readVideoPTS] duration:[_decoder videoDuration] 
                     index:index count:count];
     
     // Apply filter
-    if (_filter)
-      _decoderFrame = [_filter filterFrame:_decoderFrame decoder:_decoder];
+    if (_filter) {
+      _decodedFrame = [_filter filterPictureFrame:_decodedFrame error:error];
+      if (!_decodedFrame.frame) break;
+    }
 
     // Run processor
-    if (![_processor processFrame:_decoderFrame decoder:_decoder index:index error:error])
+    if (![_processor processPictureFrame:_decodedFrame decoder:_decoder index:index error:error])
       break;
   }
   
-  _previousEndPTS = _decoderFrame->pts + 1; // TODO(gabe): Fix me
+  if (_decoderFrame)
+    _previousEndPTS = _decoderFrame->pts + 1; // TODO(gabe): Fix me
   
   // Last file
   if (index == (count - 1)) {

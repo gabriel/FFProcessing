@@ -19,6 +19,6 @@
 
 - (id)initWithEncoderOptions:(FFEncoderOptions *)encoderOptions;
 
-- (BOOL)openEncoderWithDecoder:(FFDecoder *)decoder error:(NSError **)error;
+- (BOOL)openEncoderWithPictureFormat:(FFPictureFormat)pictureFormat decoder:(FFDecoder *)decoder error:(NSError **)error;
 
 @end
