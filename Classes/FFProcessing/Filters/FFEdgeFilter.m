@@ -40,7 +40,7 @@
     }
   }  
   
-  return _pictureFrame;
+  return pictureFrame;
 }
 
 @end

@@ -60,6 +60,13 @@
 		0012A0561154AE3100D09836 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 0012A0541154AE3100D09836 /* test.png */; };
 		001736931165A00C00959279 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A313E61163E33A0065101E /* MediaPlayer.framework */; };
 		001736941165A00D00959279 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CA117111632AAB00664274 /* MobileCoreServices.framework */; };
+		001E7A89118FFA0B009E8C00 /* FFCannyEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */; };
+		001E7A8A118FFA0B009E8C00 /* FFCannyEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */; };
+		001E7A8B118FFA0B009E8C00 /* FFCannyEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */; };
+		001E7AE6119001C5009E8C00 /* libcv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 001E7A7C118FF848009E8C00 /* libcv.a */; };
+		001E7AEA11900211009E8C00 /* libcvaux.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 001E7A7D118FF848009E8C00 /* libcvaux.a */; };
+		001E7AEE11900278009E8C00 /* libcxcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 001E7A7E118FF848009E8C00 /* libcxcore.a */; };
+		001E7B2711900473009E8C00 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 001E7B2611900473009E8C00 /* libstdc++.dylib */; };
 		00234B99116D915800088651 /* PBUITableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234B98116D915800088651 /* PBUITableViewController.m */; };
 		00234B9A116D915800088651 /* PBUITableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234B98116D915800088651 /* PBUITableViewController.m */; };
 		00234B9D116D95C800088651 /* PBMediaChooser.m in Sources */ = {isa = PBXBuildFile; fileRef = 00234B9C116D95C800088651 /* PBMediaChooser.m */; };
@@ -277,6 +284,14 @@
 		0012A0521154AE3100D09836 /* FFGLTestDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLTestDrawable.h; sourceTree = "<group>"; };
 		0012A0531154AE3100D09836 /* FFGLTestDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFGLTestDrawable.m; sourceTree = "<group>"; };
 		0012A0541154AE3100D09836 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
+		001E7A7C118FF848009E8C00 /* libcv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcv.a; sourceTree = "<group>"; };
+		001E7A7D118FF848009E8C00 /* libcvaux.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcvaux.a; sourceTree = "<group>"; };
+		001E7A7E118FF848009E8C00 /* libcxcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcxcore.a; sourceTree = "<group>"; };
+		001E7A87118FFA0B009E8C00 /* FFCannyEdgeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFCannyEdgeFilter.h; sourceTree = "<group>"; };
+		001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFCannyEdgeFilter.m; sourceTree = "<group>"; };
+		001E7ACD118FFFED009E8C00 /* libml.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libml.a; sourceTree = "<group>"; };
+		001E7ACE118FFFED009E8C00 /* libhighgui.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libhighgui.a; sourceTree = "<group>"; };
+		001E7B2611900473009E8C00 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/gcc/powerpc-apple-darwin9/4.2.1/libstdc++.dylib"; sourceTree = SDKROOT; };
 		002342C8116B16D200088651 /* star_trek.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = star_trek.mov; sourceTree = "<group>"; };
 		00234B97116D915800088651 /* PBUITableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUITableViewController.h; sourceTree = "<group>"; };
 		00234B98116D915800088651 /* PBUITableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBUITableViewController.m; sourceTree = "<group>"; };
@@ -458,6 +473,10 @@
 				000DD3C71166C656007E8546 /* libswscale.a in Frameworks */,
 				000DD3E71167D78B007E8546 /* libx264.a in Frameworks */,
 				00235031116EDE5100088651 /* libxvidcore.a in Frameworks */,
+				001E7AE6119001C5009E8C00 /* libcv.a in Frameworks */,
+				001E7AEA11900211009E8C00 /* libcvaux.a in Frameworks */,
+				001E7AEE11900278009E8C00 /* libcxcore.a in Frameworks */,
+				001E7B2711900473009E8C00 /* libstdc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,6 +674,19 @@
 			path = Test;
 			sourceTree = "<group>";
 		};
+		001E7A7B118FF848009E8C00 /* OpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				001E7ACD118FFFED009E8C00 /* libml.a */,
+				001E7ACE118FFFED009E8C00 /* libhighgui.a */,
+				001E7A7C118FF848009E8C00 /* libcv.a */,
+				001E7A7D118FF848009E8C00 /* libcvaux.a */,
+				001E7A7E118FF848009E8C00 /* libcxcore.a */,
+			);
+			name = OpenCV;
+			path = OpenCV/lib;
+			sourceTree = "<group>";
+		};
 		00234B91116D900400088651 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -687,6 +719,8 @@
 				007B05BF11893F34003B3A5B /* FFEdgeFilter.m */,
 				000A660C118BFCD20018CF7C /* FFFilters.h */,
 				000A660D118BFCD20018CF7C /* FFFilters.m */,
+				001E7A87118FFA0B009E8C00 /* FFCannyEdgeFilter.h */,
+				001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -857,6 +891,7 @@
 		00DDF3FF115F3CC100310925 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				001E7A7B118FF848009E8C00 /* OpenCV */,
 				0090EEBA11801C6400453CA5 /* GTM */,
 				0090ED4311800FFF00453CA5 /* YelpKit */,
 				008C0A24117A9460002689B8 /* GHKit */,
@@ -963,6 +998,7 @@
 				0012A0101154AC1D00D09836 /* CoreGraphics.framework */,
 				0012A0161154AC4700D09836 /* libbz2.dylib */,
 				0012A00C1154AC0C00D09836 /* libz.dylib */,
+				001E7B2611900473009E8C00 /* libstdc++.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1131,6 +1167,7 @@
 				007B05F4118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
 				000A660F118BFCD20018CF7C /* FFFilters.m in Sources */,
 				000A6663118C02940018CF7C /* FFTypes.m in Sources */,
+				001E7A89118FFA0B009E8C00 /* FFCannyEdgeFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1192,6 +1229,7 @@
 				007B05F3118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
 				000A6610118BFCD20018CF7C /* FFFilters.m in Sources */,
 				000A6664118C02940018CF7C /* FFTypes.m in Sources */,
+				001E7A8B118FFA0B009E8C00 /* FFCannyEdgeFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1243,6 +1281,7 @@
 				007B05F5118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
 				000A660E118BFCD20018CF7C /* FFFilters.m in Sources */,
 				000A6662118C02940018CF7C /* FFTypes.m in Sources */,
+				001E7A8A118FFA0B009E8C00 /* FFCannyEdgeFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1264,7 +1303,7 @@
 			baseConfigurationReference = 00DB9CCF1164810D002A7F8F /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "Resources/FFProcessing-Info.plist";
-				PRODUCT_NAME = PixelBleeder;
+				PRODUCT_NAME = FFProcessing;
 			};
 			name = Release;
 		};

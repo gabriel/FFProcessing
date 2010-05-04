@@ -14,6 +14,7 @@
 #import "FFEncodeProcessor.h"
 #import "FFDataMoshProcessor.h"
 #import "FFEdgeFilter.h"
+#import "FFCannyEdgeFilter.h"
 #import "FFFilters.h"
 
 @interface PBProcessing ()
@@ -59,7 +60,7 @@
   
   id<FFFilter> filter = [[FFFilters alloc] initWithFilters:[NSArray arrayWithObjects:
                                                             [[[FFConverter alloc] initWithPictureFormat:FFPictureFormatMake(0, 0, PIX_FMT_RGB24)] autorelease],
-                                                            [[[FFEdgeFilter alloc] init] autorelease],
+                                                            [[[FFCannyEdgeFilter alloc] init] autorelease],
                                                             [[[FFConverter alloc] initWithPictureFormat:FFPictureFormatMake(0, 0, PIX_FMT_YUV420P)] autorelease],
                                                             nil]];
   
