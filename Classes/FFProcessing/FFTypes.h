@@ -3,7 +3,7 @@
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 4/30/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 
@@ -16,26 +16,26 @@ typedef struct {
   int width;
   int height;
   FFPixelFormat pixelFormat;
-} FFPictureFormat;
+} FFAVFormat;
 
 typedef struct {
   AVFrame *frame;
-  FFPictureFormat pictureFormat;
-} FFPictureFrame;
+  FFAVFormat avFormat;
+} FFAVFrame;
 
-static inline FFPictureFormat FFPictureFormatMake(int width, int height, FFPixelFormat pixelFormat) {
-  return (FFPictureFormat){width, height, pixelFormat};
+static inline FFAVFormat FFAVFormatMake(int width, int height, FFPixelFormat pixelFormat) {
+  return (FFAVFormat){width, height, pixelFormat};
 }
 
-static inline FFPictureFrame FFPictureFrameMake(AVFrame *frame, FFPictureFormat pictureFormat) {
-  return (FFPictureFrame){frame, pictureFormat};
+static inline FFAVFrame FFAVFrameMake(AVFrame *frame, FFAVFormat avFormat) {
+  return (FFAVFrame){frame, avFormat};
 }
 
-extern FFPictureFormat FFPictureFormatNone;
-extern FFPictureFrame FFPictureFrameNone;
+extern FFAVFormat FFAVFormatNone;
+extern FFAVFrame FFAVFrameNone;
 
-static inline BOOL FFPictureFormatIsNone(FFPictureFormat pictureFormat) {
-  return (pictureFormat.width == 0 && pictureFormat.height == 0 && pictureFormat.pixelFormat == PIX_FMT_NONE);
+static inline BOOL FFAVFormatIsNone(FFAVFormat avFormat) {
+  return (avFormat.width == 0 && avFormat.height == 0 && avFormat.pixelFormat == PIX_FMT_NONE);
 }
 
 typedef struct {

@@ -42,6 +42,7 @@
   [items addObject:[PBUIItem text:@"Process" target:self action:@selector(process)]];
   [items addObject:[PBUIItem text:@"Play" target:self action:@selector(openMoviePlayerController)]];
   [items addObject:[PBUIItem text:@"Save" target:self action:@selector(saveMovieToPhotosAlbum)]];
+  [items addObject:[PBUIItem text:@"Camera Capture" target:self action:@selector(openCameraCapture)]];  
   
   [self setItems:items];
   
@@ -90,6 +91,12 @@
     saveThread.delegate = self;
     [saveThread start];
   }
+}
+
+- (void)openCameraCapture {
+  if (!_cameraCaptureController)
+    _cameraCaptureController = [[PBCameraCaptureController alloc] init];
+  [self.navigationController pushViewController:_cameraCaptureController animated:YES];
 }
 
 - (void)_showError:(NSError *)error {

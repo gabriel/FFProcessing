@@ -16,10 +16,9 @@
 
 @implementation FFPlayerView
 
-@synthesize URLString=_URLString, format=_format;
-
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame reader:(id<FFReader>)reader {
   if ((self = [super initWithFrame:frame])) {
+    _reader = [reader retain];
     
     /*!
     _displayLabel = [[UILabel alloc] initWithFrame:CGRectMake(-145, 240, 320, 30)];
@@ -37,6 +36,7 @@
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [_reader release];
   [_displayLabel release];
   [super dealloc];
 }
@@ -53,10 +53,7 @@
 }
 
 - (void)play {  
-  NSAssert(_URLString, @"Must set URLString");
-  FFReader *reader = [[FFReader alloc] initWithURL:[NSURL URLWithString:_URLString] format:_format];    
-  FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader];
-  [reader release];
+  FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:_reader];
   /*!
   FFGLTestDrawable *drawable = [[FFGLTestDrawable alloc] init];
   */
@@ -64,6 +61,10 @@
   [drawable release];    
   
   [self startAnimation];
+}
+
+- (void)stop {
+  [self stopAnimation];
 }
 
 @end

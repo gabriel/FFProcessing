@@ -69,7 +69,7 @@
 }
 
 - (void)openWithSourceType:(NSNumber *)sourceTypeNumber {
-  PBMediaChooserController *videoController = [[PBMediaChooserController alloc] initWithSourceType:[sourceTypeNumber unsignedIntegerValue]
+  PBImagePickerController *videoController = [[PBImagePickerController alloc] initWithSourceType:[sourceTypeNumber unsignedIntegerValue]
                                                                           mediaTypes:[self mediaTypesForSourceType:[sourceTypeNumber unsignedIntegerValue]]];
   videoController.delegate = self;
   [_delegate mediaChooser:self openViewController:videoController];
@@ -82,9 +82,9 @@
     [[_items objectAtIndex:(buttonIndex-1)] perform];
 }
 
-#pragma mark Delegate (PBMediaChooserControllerDelegate)
+#pragma mark Delegate (PBImagePickerControllerDelegate)
 
-- (void)videoController:(PBMediaChooserController *)videoController didSelectURL:(NSURL *)URL {
+- (void)imageController:(PBImagePickerController *)imageController didSelectURL:(NSURL *)URL {
   [_delegate mediaChooser:self didSelectURL:URL];
 }
 

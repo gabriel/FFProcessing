@@ -6,7 +6,7 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#import "PBMediaChooserController.h"
+#import "PBImagePickerController.h"
 
 @class PBMediaChooser;
 
@@ -15,7 +15,7 @@
 - (void)mediaChooser:(PBMediaChooser *)mediaChooser didSelectURL:(NSURL *)URL;
 @end
 
-@interface PBMediaChooser : NSObject <PBMediaChooserControllerDelegate, UIActionSheetDelegate> {
+@interface PBMediaChooser : NSObject <PBImagePickerControllerDelegate, UIActionSheetDelegate> {
   
   NSMutableArray *_items;
   
@@ -25,6 +25,5 @@
 @property (assign, nonatomic) id<PBMediaChooserDelegate> delegate; // Weak
 
 - (void)openSelectInView:(UIView *)view;
-
 
 @end

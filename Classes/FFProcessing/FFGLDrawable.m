@@ -12,7 +12,7 @@
 
 @implementation FFGLDrawable
 
-- (id)initWithReader:(FFReader *)reader {
+- (id)initWithReader:(id<FFReader>)reader {
   if ((self = [self init])) {
     _reader = [reader retain];
   }
@@ -26,8 +26,6 @@
 }
 
 - (void)setupView:(GHGLView *)view {
-  
-  
   glViewport(0, 0, view.backingWidth, view.backingHeight);
 	glMatrixMode(GL_PROJECTION);
   
@@ -98,16 +96,10 @@
 
 - (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view {
 
-  /*!
-  AVFrame *avframe = [_frameQueue next];
-  if (avframe == NULL) {
-    return NO;
-  }
-   */
-  FFPictureFrame pictureFrame = [_reader nextFrame:nil];
-  if (pictureFrame.frame == NULL) return NO;
+  FFAVFrame avFrame = [_reader nextFrame:nil];
+  if (avFrame.frame == NULL) return NO;
 
-  uint8_t *nextData = pictureFrame.frame->data[0];
+  uint8_t *nextData = avFrame.frame->data[0];
   if (nextData == NULL) return NO;
     
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
@@ -120,9 +112,9 @@
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   
   if (!_textureLoaded) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pictureFrame.pictureFormat.width, pictureFrame.pictureFormat.height, 0, GL_RGB, GL_UNSIGNED_BYTE, nextData);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, avFrame.avFormat.width, avFrame.avFormat.height, 0, GL_RGB, GL_UNSIGNED_BYTE, nextData);
   } else {
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, pictureFrame.pictureFormat.width, pictureFrame.pictureFormat.height,
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, avFrame.avFormat.width, avFrame.avFormat.height,
                     GL_RGB, GL_UNSIGNED_BYTE, nextData);
   }
   

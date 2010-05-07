@@ -10,7 +10,7 @@
 #import "FFTypes.h"
 
 @interface FFEdgeFilter : NSObject <FFFilter> {
-  FFPictureFrame _pictureFrame;
+  FFAVFrame _avFrame;
 }
 
 @end

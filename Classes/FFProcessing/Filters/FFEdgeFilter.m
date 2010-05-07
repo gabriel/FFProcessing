@@ -13,21 +13,21 @@
 @implementation FFEdgeFilter
 
 - (void)dealloc {
-  FFPictureFrameRelease(_pictureFrame);
+  FFAVFrameRelease(_avFrame);
   [super dealloc];
 }
 
-- (FFPictureFrame)filterPictureFrame:(FFPictureFrame)pictureFrame error:(NSError **)error {
+- (FFAVFrame)filterPictureFrame:(FFAVFrame)avFrame error:(NSError **)error {
   
-  NSAssert(pictureFrame.pictureFormat.pixelFormat == PIX_FMT_RGB24, @"Can only edge filter on PIX_FMT_RGB24");
+  NSAssert(avFrame.avFormat.pixelFormat == PIX_FMT_RGB24, @"Can only edge filter on PIX_FMT_RGB24");
   
-  if (_pictureFrame.frame == NULL)
-    _pictureFrame = FFPictureFrameCreate(pictureFrame.pictureFormat);
+  if (_avFrame.frame == NULL)
+    _avFrame = FFAVFrameCreate(avFrame.avFormat);
   
   int x = 0;
   int y = 0;
-  int width = pictureFrame.pictureFormat.width;
-  int height = pictureFrame.pictureFormat.height;
+  int width = avFrame.avFormat.width;
+  int height = avFrame.avFormat.height;
   
   while (y < height) {
 
@@ -40,7 +40,7 @@
     }
   }  
   
-  return pictureFrame;
+  return avFrame;
 }
 
 @end

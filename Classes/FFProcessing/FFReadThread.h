@@ -10,7 +10,7 @@
 
 @interface FFReadThread : NSThread {
   AVFrame *_frame;
-  FFPictureFrame _pictureFrame;
+  FFAVFrame _avFrame;
 
   NSInteger _readPictureIndex;
   NSInteger _readIndex;
@@ -24,7 +24,7 @@
 
 - (FFDecoder *)decoder;
 
-- (FFPictureFrame)createPictureFrame;
+- (FFAVFrame)createPictureFrame;
 
 - (BOOL)readPicture:(AVFrame *)picture;
 

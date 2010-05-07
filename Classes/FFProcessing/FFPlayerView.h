@@ -7,17 +7,17 @@
 //
 
 #import "GHGLView.h"
+#import "FFReader.h"
 
 @interface FFPlayerView : GHGLView {
   UILabel *_displayLabel;
-  
-  NSString *_URLString;
-  NSString *_format;
+  id<FFReader> _reader;
 }
 
-@property (retain, nonatomic) NSString *URLString;
-@property (retain, nonatomic) NSString *format;
+- (id)initWithFrame:(CGRect)frame reader:(id<FFReader>)reader;
 
 - (void)play;
+
+- (void)stop;
 
 @end

@@ -109,7 +109,7 @@
   */
   
   // Set options
-  _options = [[FFDecoderOptions alloc] initWithPictureFormat:FFPictureFormatMake(_videoStream->codec->coded_width,
+  _options = [[FFDecoderOptions alloc] initWithAVFormat:FFAVFormatMake(_videoStream->codec->coded_width,
                                                                                    _videoStream->codec->coded_height,
                                                                                    _videoStream->codec->pix_fmt)
                                               videoFrameRate:_videoStream->r_frame_rate

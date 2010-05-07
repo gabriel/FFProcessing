@@ -9,17 +9,21 @@
 #import "FFReadThread.h"
 #import "FFConverter.h"
 
-@interface FFReader : NSObject {
+@protocol FFReader <NSObject>
+- (FFAVFrame)nextFrame:(NSError **)error;
+@end
+
+@interface FFReader : NSObject <FFReader> {
   FFReadThread *_readThread;
   FFConverter *_converter;
   
-  FFPictureFrame _pictureFrame;
+  FFAVFrame _avFrame;
   
   BOOL _started;
 }
 
 - (id)initWithURL:(NSURL *)URL format:(NSString *)format;
 
-- (FFPictureFrame)nextFrame:(NSError **)error;
+- (FFAVFrame)nextFrame:(NSError **)error;
 
 @end

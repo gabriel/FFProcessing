@@ -12,19 +12,19 @@
 #import "FFTypes.h"
 
 @interface FFDecoderOptions : NSObject {
-  FFPictureFormat _pictureFormat;
+  FFAVFormat _avFormat;
   AVRational _videoFrameRate;
   AVRational _videoTimeBase;
   AVRational _sampleAspectRatio;
   int64_t _duration;
 }
 
-@property (readonly, nonatomic) FFPictureFormat pictureFormat;
+@property (readonly, nonatomic) FFAVFormat avFormat;
 @property (readonly, nonatomic) AVRational videoFrameRate;
 @property (readonly, nonatomic) AVRational videoTimeBase;
 @property (readonly, nonatomic) AVRational sampleAspectRatio;
 
-- (id)initWithPictureFormat:(FFPictureFormat)pictureFormat videoFrameRate:(AVRational)videoFrameRate 
+- (id)initWithAVFormat:(FFAVFormat)avFormat videoFrameRate:(AVRational)videoFrameRate 
               videoTimeBase:(AVRational)videoTimeBase;
 
 @end

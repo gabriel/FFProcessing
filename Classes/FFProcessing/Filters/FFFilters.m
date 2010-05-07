@@ -3,7 +3,7 @@
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 4/30/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #import "FFFilters.h"
@@ -23,12 +23,12 @@
   [super dealloc];
 }
 
-- (FFPictureFrame)filterPictureFrame:(FFPictureFrame)pictureFrame error:(NSError **)error {
+- (FFAVFrame)filterPictureFrame:(FFAVFrame)avFrame error:(NSError **)error {
   for (id<FFFilter> filter in _filters) {
-    pictureFrame = [filter filterPictureFrame:pictureFrame error:error];
-    if (pictureFrame.frame == NULL) return FFPictureFrameNone;
+    avFrame = [filter filterPictureFrame:avFrame error:error];
+    if (avFrame.frame == NULL) return FFAVFrameNone;
   }
-  return pictureFrame;
+  return avFrame;
 }
 
 @end

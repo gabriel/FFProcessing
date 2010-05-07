@@ -47,7 +47,7 @@
   NSString *outputPath = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"mosh.mp4", outputFormat]];
   
   FFEncoderOptions *encoderOptions = [[[FFEncoderOptions alloc] initWithPath:outputPath format:outputFormat codecName:outputCodecName
-                                                               pictureFormat:FFPictureFormatNone videoTimeBase:(AVRational){0,0}] autorelease];
+                                                               avFormat:FFAVFormatNone videoTimeBase:(AVRational){0,0}] autorelease];
 
   /*!
   FFDataMoshProcessor *processor = [[[FFDataMoshProcessor alloc] initWithEncoderOptions:encoderOptions] autorelease];
@@ -59,9 +59,9 @@
   id<FFProcessor> processor = [[[FFEncodeProcessor alloc] initWithEncoderOptions:encoderOptions] autorelease];
   
   id<FFFilter> filter = [[FFFilters alloc] initWithFilters:[NSArray arrayWithObjects:
-                                                            [[[FFConverter alloc] initWithPictureFormat:FFPictureFormatMake(0, 0, PIX_FMT_RGB24)] autorelease],
+                                                            [[[FFConverter alloc] initWithAVFormat:FFAVFormatMake(0, 0, PIX_FMT_RGB24)] autorelease],
                                                             [[[FFCannyEdgeFilter alloc] init] autorelease],
-                                                            [[[FFConverter alloc] initWithPictureFormat:FFPictureFormatMake(0, 0, PIX_FMT_YUV420P)] autorelease],
+                                                            [[[FFConverter alloc] initWithAVFormat:FFAVFormatMake(0, 0, PIX_FMT_YUV420P)] autorelease],
                                                             nil]];
   
   [outputPath retain];

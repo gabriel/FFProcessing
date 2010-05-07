@@ -28,12 +28,13 @@
   
   FFInitialize();
 
-  _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+  FFReader *reader = [[FFReader alloc] initWithURL:[NSURL URLWithString:@"bundle://test.mp4"] format:nil];      
+  _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) reader:reader];
+  [reader release];
   
-  _playerView.URLString = @"bundle://test.mp4"; //@"bundle://pegasus-1958-chiptune.avi";
-  
-  //_playerView.URLString = @"http://c-cam.uchicago.edu/mjpg/video.mjpg";
-  //_playerView.format = @"mjpeg"; 
+  //@"bundle://pegasus-1958-chiptune.avi";  
+  // @"http://c-cam.uchicago.edu/mjpg/video.mjpg";
+  // @"mjpeg"; 
   
   [_playerView play];
   

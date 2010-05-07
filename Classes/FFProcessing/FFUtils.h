@@ -55,6 +55,7 @@ enum {
 //#define FFDebugFrame(...) NSLog(__VA_ARGS__)
 #define FFDebug(...) NSLog(__VA_ARGS__)
 #else
+#define FFDebugFrame(...) do { } while(0)
 #define FFDebug(...) do { } while(0)
 #endif
 #define FFWarn(...) NSLog(__VA_ARGS__)
@@ -74,29 +75,29 @@ BOOL FFIsInitialized(void);
 
 BOOL FFIsFlushPacket(AVPacket *packet);
 
-FFPictureFrame FFPictureFrameCreate(FFPictureFormat pictureFormat);
+FFAVFrame FFAVFrameCreate(FFAVFormat avFormat);
 
-void FFPictureFrameRelease(FFPictureFrame pictureFrame);
+void FFAVFrameRelease(FFAVFrame avFrame);
 
 // Fill dummy image
-void FFFillYUVImage(FFPictureFrame pictureFrame, NSInteger frameIndex);
+void FFFillYUVImage(FFAVFrame avFrame, NSInteger frameIndex);
 
-static inline FFRGB FFRGBAt(FFPictureFrame pictureFrame, int x, int y) {
+static inline FFRGB FFRGBAt(FFAVFrame avFrame, int x, int y) {
   // TODO(gabe): Fixme
-  //NSAssert(pictureFrame.pictureFormat.pixelFormat == PIX_FMT_RGB24, @"Only supports PIX_FMT_RGB24");
-  int p = (x * 3) + (y * pictureFrame.frame->linesize[0]);
+  //NSAssert(avFrame.avFormat.pixelFormat == PIX_FMT_RGB24, @"Only supports PIX_FMT_RGB24");
+  int p = (x * 3) + (y * avFrame.frame->linesize[0]);
   FFRGB rgb;
-  rgb.r = pictureFrame.frame->data[0][p];
-  rgb.g = pictureFrame.frame->data[0][p + 1];
-  rgb.b = pictureFrame.frame->data[0][p + 2];  
+  rgb.r = avFrame.frame->data[0][p];
+  rgb.g = avFrame.frame->data[0][p + 1];
+  rgb.b = avFrame.frame->data[0][p + 2];  
   return rgb;
 }
 
-static inline void FFRGBSetAt(FFPictureFrame pictureFrame, int x, int y, FFRGB rgb) {
-  int p = (x * 3) + (y * pictureFrame.frame->linesize[0]);
-  pictureFrame.frame->data[0][p] = rgb.r;
-  pictureFrame.frame->data[0][p + 1] = rgb.g;
-  pictureFrame.frame->data[0][p + 2] = rgb.b;
+static inline void FFRGBSetAt(FFAVFrame avFrame, int x, int y, FFRGB rgb) {
+  int p = (x * 3) + (y * avFrame.frame->linesize[0]);
+  avFrame.frame->data[0][p] = rgb.r;
+  avFrame.frame->data[0][p + 1] = rgb.g;
+  avFrame.frame->data[0][p + 2] = rgb.b;
 }
 
 /*!

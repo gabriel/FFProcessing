@@ -53,19 +53,19 @@
   return _decoder;
 }
 
-- (FFPictureFrame)createPictureFrame {
-  if (!_decoder) return FFPictureFrameNone;
-  return FFPictureFrameCreate(_decoder.options.pictureFormat);
+- (FFAVFrame)createPictureFrame {
+  if (!_decoder) return FFAVFrameNone;
+  return FFAVFrameCreate(_decoder.options.avFormat);
 }
 
 - (BOOL)readPicture:(AVFrame *)picture {
-  if (_pictureFrame.frame == NULL || _readIndex == _readPictureIndex) {
+  if (_avFrame.frame == NULL || _readIndex == _readPictureIndex) {
     return NO;
   }
 
   [_lock lock];
-  av_picture_copy((AVPicture *)picture, (AVPicture *)_pictureFrame.frame, _pictureFrame.pictureFormat.pixelFormat, 
-                  _pictureFrame.pictureFormat.width, _pictureFrame.pictureFormat.height);
+  av_picture_copy((AVPicture *)picture, (AVPicture *)_avFrame.frame, _avFrame.avFormat.pixelFormat, 
+                  _avFrame.avFormat.width, _avFrame.avFormat.height);
   _readIndex = _readPictureIndex;
   [_lock unlock];
   return YES;
@@ -85,7 +85,7 @@
     _frame = avcodec_alloc_frame();
     // TODO(gabe): if (_frame == NULL)  
     
-    _pictureFrame = [self createPictureFrame];
+    _avFrame = [self createPictureFrame];
     
     while (![self isCancelled]) {  
       NSError *error = nil;
@@ -96,8 +96,8 @@
       
       if (_frame != NULL) {
         [_lock lock];
-        av_picture_copy((AVPicture *)_pictureFrame.frame, (AVPicture *)_frame, _pictureFrame.pictureFormat.pixelFormat, 
-                        _pictureFrame.pictureFormat.width, _pictureFrame.pictureFormat.height);
+        av_picture_copy((AVPicture *)_avFrame.frame, (AVPicture *)_frame, _avFrame.avFormat.pixelFormat, 
+                        _avFrame.avFormat.width, _avFrame.avFormat.height);
         _readPictureIndex++;
         [_lock unlock];
       }
@@ -107,7 +107,7 @@
     [_lock lock];
     av_free(_frame);    
     _frame = NULL;
-    FFPictureFrameRelease(_pictureFrame);
+    FFAVFrameRelease(_avFrame);
     [_lock unlock];
   }
   

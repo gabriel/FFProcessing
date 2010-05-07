@@ -30,45 +30,45 @@ BOOL FFIsFlushPacket(AVPacket *packet) {
   return (packet->data == gFlushPacket.data);
 }
 
-FFPictureFrame FFPictureFrameCreate(FFPictureFormat pictureFormat) {
+FFAVFrame FFAVFrameCreate(FFAVFormat avFormat) {
   
   AVFrame *picture = avcodec_alloc_frame();
-  if (!picture) return FFPictureFrameNone;
+  if (!picture) return FFAVFrameNone;
   
-  int size = avpicture_get_size(pictureFormat.pixelFormat, pictureFormat.width, pictureFormat.height);
+  int size = avpicture_get_size(avFormat.pixelFormat, avFormat.width, avFormat.height);
   uint8_t *pictureBuffer = av_malloc(size);
   
   if (!pictureBuffer) {
     av_free(picture);
-    return FFPictureFrameNone;
+    return FFAVFrameNone;
   }
   
-  avpicture_fill((AVPicture *)picture, pictureBuffer, pictureFormat.pixelFormat, pictureFormat.width, pictureFormat.height);
-  return FFPictureFrameMake(picture, pictureFormat);
+  avpicture_fill((AVPicture *)picture, pictureBuffer, avFormat.pixelFormat, avFormat.width, avFormat.height);
+  return FFAVFrameMake(picture, avFormat);
 }
 
-void FFPictureFrameRelease(FFPictureFrame pictureFrame) {
-  if (pictureFrame.frame != NULL)  {
-    if (pictureFrame.frame->data != NULL) av_free(pictureFrame.frame->data[0]);
-    av_free(pictureFrame.frame);  
-    pictureFrame.frame = NULL;
+void FFAVFrameRelease(FFAVFrame avFrame) {
+  if (avFrame.frame != NULL)  {
+    if (avFrame.frame->data != NULL) av_free(avFrame.frame->data[0]);
+    av_free(avFrame.frame);  
+    avFrame.frame = NULL;
   }
 }
 
-void FFFillYUVImage(FFPictureFrame pictureFrame, NSInteger frameIndex) {
+void FFFillYUVImage(FFAVFrame avFrame, NSInteger frameIndex) {
   
   /* Y */
-  for (int y = 0; y < pictureFrame.pictureFormat.height; y++) {
-    for (int x = 0; x < pictureFrame.pictureFormat.width; x++) {
-      pictureFrame.frame->data[0][y * pictureFrame.frame->linesize[0] + x] = x + y + frameIndex * 3;
+  for (int y = 0; y < avFrame.avFormat.height; y++) {
+    for (int x = 0; x < avFrame.avFormat.width; x++) {
+      avFrame.frame->data[0][y * avFrame.frame->linesize[0] + x] = x + y + frameIndex * 3;
     }
   }
   
   /* Cb and Cr */
-  for (int y = 0; y < pictureFrame.pictureFormat.height/2.0; y++) {
-    for (int x = 0; x < pictureFrame.pictureFormat.width/2.0; x++) {
-      pictureFrame.frame->data[1][y * pictureFrame.frame->linesize[1] + x] = 128 + y + frameIndex * 2;
-      pictureFrame.frame->data[2][y * pictureFrame.frame->linesize[2] + x] = 64 + x + frameIndex * 5;
+  for (int y = 0; y < avFrame.avFormat.height/2.0; y++) {
+    for (int x = 0; x < avFrame.avFormat.width/2.0; x++) {
+      avFrame.frame->data[1][y * avFrame.frame->linesize[1] + x] = 128 + y + frameIndex * 2;
+      avFrame.frame->data[2][y * avFrame.frame->linesize[2] + x] = 64 + x + frameIndex * 5;
     }
   }  
 }

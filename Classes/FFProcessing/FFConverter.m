@@ -12,63 +12,63 @@
 
 @implementation FFConverter
 
-- (id)initWithPictureFormat:(FFPictureFormat)pictureFormat {
+- (id)initWithAVFormat:(FFAVFormat)avFormat {
   if ((self = [self init])) {
-    _pictureFormat = pictureFormat;
+    _avFormat = avFormat;
   }
   return self;
 }
 
 - (void)dealloc {
-  FFPictureFrameRelease(_pictureFrame);
+  FFAVFrameRelease(_avFrame);
   [super dealloc];
 }  
 
-- (FFPictureFrame)scalePicture:(FFPictureFrame)pictureFrame error:(NSError **)error {
+- (FFAVFrame)scalePicture:(FFAVFrame)avFrame error:(NSError **)error {
   struct SwsContext *scaleContext = NULL;
   
-  FFPictureFormat pictureFormat = _pictureFormat;
-  if (pictureFormat.width == 0) pictureFormat.width = pictureFrame.pictureFormat.width;
-  if (pictureFormat.height == 0) pictureFormat.height = pictureFrame.pictureFormat.height;
-  if (pictureFormat.pixelFormat == PIX_FMT_NONE) pictureFormat.pixelFormat = pictureFrame.pictureFormat.pixelFormat;  
+  FFAVFormat avFormat = _avFormat;
+  if (avFormat.width == 0) avFormat.width = avFrame.avFormat.width;
+  if (avFormat.height == 0) avFormat.height = avFrame.avFormat.height;
+  if (avFormat.pixelFormat == PIX_FMT_NONE) avFormat.pixelFormat = avFrame.avFormat.pixelFormat;  
   
-  NSAssert(pictureFormat.width != 0 && pictureFormat.height != 0 && pictureFormat.pixelFormat != PIX_FMT_NONE, @"Invalid picture format");
+  NSAssert(avFormat.width != 0 && avFormat.height != 0 && avFormat.pixelFormat != PIX_FMT_NONE, @"Invalid picture format");
   
-  if (_pictureFrame.frame == NULL) {
-    _pictureFrame = FFPictureFrameCreate(pictureFormat);
-    if (_pictureFrame.frame == NULL) {
+  if (_avFrame.frame == NULL) {
+    _avFrame = FFAVFrameCreate(avFormat);
+    if (_avFrame.frame == NULL) {
       FFSetError(error, FFErrorCodeAllocateFrame, -1, @"Couldn't allocate frame in converter");
-      return _pictureFrame;
+      return _avFrame;
     }
   }
   
   scaleContext = sws_getCachedContext(scaleContext, 
-                                       pictureFrame.pictureFormat.width, pictureFrame.pictureFormat.height, pictureFrame.pictureFormat.pixelFormat,
-                                       pictureFormat.width, pictureFormat.height, pictureFormat.pixelFormat, 
+                                       avFrame.avFormat.width, avFrame.avFormat.height, avFrame.avFormat.pixelFormat,
+                                       avFormat.width, avFormat.height, avFormat.pixelFormat, 
                                        SWS_BICUBIC, NULL, NULL, NULL);
   
   if (scaleContext == NULL) {
     FFSetError(error, FFErrorCodeScaleContext, -1, @"No scale context");
-    return FFPictureFrameNone;
+    return FFAVFrameNone;
   }
   
   sws_scale(scaleContext, 
-            (const uint8_t* const *)pictureFrame.frame->data, 
-            (const int *)pictureFrame.frame->linesize, 
+            (const uint8_t* const *)avFrame.frame->data, 
+            (const int *)avFrame.frame->linesize, 
             0,
-            pictureFormat.height, 
-            _pictureFrame.frame->data, 
-            _pictureFrame.frame->linesize);
+            avFormat.height, 
+            _avFrame.frame->data, 
+            _avFrame.frame->linesize);
   
-  _pictureFrame.frame->pts = pictureFrame.frame->pts;
+  _avFrame.frame->pts = avFrame.frame->pts;
   
-  return _pictureFrame;
+  return _avFrame;
 }
 
 #pragma mark FFFilter
 
-- (FFPictureFrame)filterPictureFrame:(FFPictureFrame)pictureFrame error:(NSError **)error {
-  return [self scalePicture:pictureFrame error:error];
+- (FFAVFrame)filterPictureFrame:(FFAVFrame)avFrame error:(NSError **)error {
+  return [self scalePicture:avFrame error:error];
 }
 
 @end

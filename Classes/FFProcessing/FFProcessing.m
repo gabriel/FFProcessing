@@ -100,7 +100,7 @@
     //FFDebug(@"Decoded frame, pict_type=%@", NSStringFromAVFramePictType(_decoderFrame->pict_type));    
     _decoderFrame->pts += _previousEndPTS;
     
-    _decodedFrame = FFPictureFrameMake(_decoderFrame, _decoder.options.pictureFormat);
+    _decodedFrame = FFAVFrameMake(_decoderFrame, _decoder.options.avFormat);
     
     [_delegate processing:self didReadFramePTS:[_decoder readVideoPTS] duration:[_decoder videoDuration] 
                     index:index count:count];

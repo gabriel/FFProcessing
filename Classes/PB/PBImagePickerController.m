@@ -1,12 +1,12 @@
 //
-//  PBMediaChooserController.m
+//  PBImagePickerController.m
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 3/30/10.
 //  Copyright 2010. All rights reserved.
 //
 
-#import "PBMediaChooserController.h"
+#import "PBImagePickerController.h"
 
 #import "FFUtils.h"
 #import "FFProcessing.h"
@@ -14,9 +14,9 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 
 
-@implementation PBMediaChooserController
+@implementation PBImagePickerController
 
-@synthesize delegate=_delegate, mediaTypes=_mediaTypes;
+@synthesize delegate=_delegate, mediaTypes=_mediaTypes, imageController=_imageController;
 
 - (id)initWithSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes {
   if ((self = [super init])) {
@@ -27,54 +27,55 @@
 }
 
 - (void)dealloc {
-  [_videoController release];
+  [_imageController release];
   [_mediaTypes release];
   [super dealloc];
 }
 
-- (UIImagePickerController *)videoController {
-  if (!_videoController) {
-    _videoController = [[UIImagePickerController alloc] init];
-    _videoController.navigationBarHidden = YES;
-    _videoController.sourceType = _sourceType;    
-    _videoController.allowsEditing = YES;
-    _videoController.mediaTypes = _mediaTypes;
-    _videoController.delegate = self;
+- (UIImagePickerController *)imageController {
+  if (!_imageController) {
+    _imageController = [[UIImagePickerController alloc] init];
+    _imageController.navigationBarHidden = YES;
+    _imageController.sourceType = _sourceType;    
+    _imageController.allowsEditing = YES;
+    if (_mediaTypes)
+      _imageController.mediaTypes = _mediaTypes;
+    _imageController.delegate = self;
   }
-  return _videoController;
+  return _imageController;
 }
 
 - (void)loadView {    
-  self.view = [self videoController].view;
+  self.view = [self imageController].view;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [[self videoController] viewWillAppear:animated];
+  [[self imageController] viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  [[self videoController] viewDidAppear:animated];
+  [[self imageController] viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  [[self videoController] viewWillDisappear:animated];
+  [[self imageController] viewWillDisappear:animated];
   [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
   [super viewDidDisappear:animated];
-  [[self videoController] viewDidDisappear:animated];
+  [[self imageController] viewDidDisappear:animated];
 }
 
 #pragma mark UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   NSURL *URL = [info objectForKey:UIImagePickerControllerMediaURL];
-  if (URL) [_delegate videoController:self didSelectURL:URL];  
+  if (URL) [_delegate imageController:self didSelectURL:URL];  
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker { 

@@ -11,11 +11,11 @@
 
 @implementation FFEncoderOptions
 
-@synthesize path=_path, format=_format, codecName=_codecName, presets=_presets, pictureFormat=_pictureFormat,
+@synthesize path=_path, format=_format, codecName=_codecName, presets=_presets, avFormat=_avFormat,
 videoTimeBase=_videoTimeBase, sampleAspectRatio=_sampleAspectRatio;
 
 - (id)initWithPath:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName
-     pictureFormat:(FFPictureFormat)pictureFormat videoTimeBase:(AVRational)videoTimeBase {
+     avFormat:(FFAVFormat)avFormat videoTimeBase:(AVRational)videoTimeBase {
   
   if ((self = [self init])) {
     _path = [path retain];
@@ -23,10 +23,10 @@ videoTimeBase=_videoTimeBase, sampleAspectRatio=_sampleAspectRatio;
     _codecName = [codecName retain];
     if (_codecName)
       _presets = [[FFPresets alloc] initWithCodeName:_codecName];
-    _pictureFormat = pictureFormat;
+    _avFormat = avFormat;
     _videoTimeBase = videoTimeBase;
-    if (_pictureFormat.height > 0)
-      _sampleAspectRatio = FFFindRationalApproximation((float)_pictureFormat.width/(float)_pictureFormat.height, 255);
+    if (_avFormat.height > 0)
+      _sampleAspectRatio = FFFindRationalApproximation((float)_avFormat.width/(float)_avFormat.height, 255);
   }
   return self;
 }  
@@ -41,9 +41,9 @@ videoTimeBase=_videoTimeBase, sampleAspectRatio=_sampleAspectRatio;
 
 - (void)apply:(AVCodecContext *)codecContext {  
   [_presets apply:codecContext];
-  codecContext->width = _pictureFormat.width;
-  codecContext->height = _pictureFormat.height;
-  codecContext->pix_fmt = _pictureFormat.pixelFormat;
+  codecContext->width = _avFormat.width;
+  codecContext->height = _avFormat.height;
+  codecContext->pix_fmt = _avFormat.pixelFormat;
   codecContext->time_base = _videoTimeBase;    
   codecContext->sample_aspect_ratio = _sampleAspectRatio;
 }

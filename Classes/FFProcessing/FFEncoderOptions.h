@@ -15,7 +15,7 @@
   NSString *_format;
   NSString *_codecName;  
   
-  FFPictureFormat _pictureFormat;
+  FFAVFormat _avFormat;
   AVRational _videoTimeBase;
   AVRational _sampleAspectRatio;
 }
@@ -24,13 +24,13 @@
 @property (readonly, nonatomic) NSString *path;
 @property (readonly, nonatomic) NSString *format;
 @property (readonly, nonatomic) NSString *codecName;  
-@property (readonly, nonatomic) FFPictureFormat pictureFormat;
+@property (readonly, nonatomic) FFAVFormat avFormat;
 @property (readonly, nonatomic) AVRational videoTimeBase;
 @property (readonly, nonatomic) AVRational sampleAspectRatio;
 
 
 - (id)initWithPath:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName
-     pictureFormat:(FFPictureFormat)pictureFormat videoTimeBase:(AVRational)videoTimeBase;
+     avFormat:(FFAVFormat)avFormat videoTimeBase:(AVRational)videoTimeBase;
 
 - (void)apply:(AVCodecContext *)codecContext;
 

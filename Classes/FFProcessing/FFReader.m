@@ -24,32 +24,32 @@
   [_readThread close];
   [_readThread release];
   [_converter release];
-  FFPictureFrameRelease(_pictureFrame);
+  FFAVFrameRelease(_avFrame);
   [super dealloc];
 }
 
-- (FFPictureFrame)nextFrame:(NSError **)error {  
+- (FFAVFrame)nextFrame:(NSError **)error {  
   if (!_started) {
     _started = YES;    
     [_readThread start];
   }
     
-  if (_pictureFrame.frame == NULL) {
-    _pictureFrame = [_readThread createPictureFrame];
-    if (_pictureFrame.frame == NULL) return _pictureFrame;
+  if (_avFrame.frame == NULL) {
+    _avFrame = [_readThread createPictureFrame];
+    if (_avFrame.frame == NULL) return _avFrame;
   }
   
-  if (![_readThread readPicture:_pictureFrame.frame]) return _pictureFrame;
+  if (![_readThread readPicture:_avFrame.frame]) return _avFrame;
   
   if (!_converter) {    
     FFEncoderOptions *encoderOptions = [[[FFEncoderOptions alloc] initWithPath:nil format:nil codecName:nil
-                                                                 pictureFormat:FFPictureFormatMake(256, 256, PIX_FMT_RGB24)
+                                                                 avFormat:FFAVFormatMake(256, 256, PIX_FMT_RGB24)
                                                                  videoTimeBase:(AVRational){0, 1}] autorelease];
     
-    _converter = [[FFConverter alloc] initWithPictureFormat:encoderOptions.pictureFormat];    
+    _converter = [[FFConverter alloc] initWithAVFormat:encoderOptions.avFormat];    
   }
 
-  return [_converter scalePicture:_pictureFrame error:error];
+  return [_converter scalePicture:_avFrame error:error];
 }
 
 @end

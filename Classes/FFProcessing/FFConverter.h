@@ -14,16 +14,16 @@
 #import "FFFilter.h"
 
 @interface FFConverter : NSObject <FFFilter> {
-  FFPictureFormat _pictureFormat;
-  FFPictureFrame _pictureFrame;
+  FFAVFormat _avFormat;
+  FFAVFrame _avFrame;
 }
 
 /*!
  Converter with picture format (output).
- @param pictureFormat Picture format; If width, height, or pixelFormat are set to 0, then will use the source format for that parameter
+ @param avFormat Picture format; If width, height, or pixelFormat are set to 0, then will use the source format for that parameter
  */
-- (id)initWithPictureFormat:(FFPictureFormat)pictureFormat;
+- (id)initWithAVFormat:(FFAVFormat)avFormat;
 
-- (FFPictureFrame)scalePicture:(FFPictureFrame)pictureFrame error:(NSError **)error;
+- (FFAVFrame)scalePicture:(FFAVFrame)avFrame error:(NSError **)error;
 
 @end
