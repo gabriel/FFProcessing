@@ -41,13 +41,8 @@
   
   if (![_readThread readPicture:_avFrame.frame]) return _avFrame;
   
-  if (!_converter) {    
-    FFEncoderOptions *encoderOptions = [[[FFEncoderOptions alloc] initWithPath:nil format:nil codecName:nil
-                                                                 avFormat:FFAVFormatMake(256, 256, PIX_FMT_RGB24)
-                                                                 videoTimeBase:(AVRational){0, 1}] autorelease];
-    
-    _converter = [[FFConverter alloc] initWithAVFormat:encoderOptions.avFormat];    
-  }
+  if (!_converter)
+    _converter = [[FFConverter alloc] initWithAVFormat:FFAVFormatMake(256, 256, PIX_FMT_RGB24)];
 
   return [_converter scalePicture:_avFrame error:error];
 }

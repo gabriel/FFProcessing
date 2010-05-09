@@ -27,6 +27,7 @@
 - (FFAVFrame)scalePicture:(FFAVFrame)avFrame error:(NSError **)error {
   struct SwsContext *scaleContext = NULL;
   
+  // Set conversion parameters based on input frame if any are 0 or none
   FFAVFormat avFormat = _avFormat;
   if (avFormat.width == 0) avFormat.width = avFrame.avFormat.width;
   if (avFormat.height == 0) avFormat.height = avFrame.avFormat.height;
@@ -45,10 +46,12 @@
   scaleContext = sws_getCachedContext(scaleContext, 
                                        avFrame.avFormat.width, avFrame.avFormat.height, avFrame.avFormat.pixelFormat,
                                        avFormat.width, avFormat.height, avFormat.pixelFormat, 
-                                       SWS_BICUBIC, NULL, NULL, NULL);
+                                       SWS_FAST_BILINEAR, NULL, NULL, NULL);
   
   if (scaleContext == NULL) {
-    FFSetError(error, FFErrorCodeScaleContext, -1, @"No scale context");
+    FFSetError(error, FFErrorCodeScaleContext, -1, @"No scale context for %@ to %@", 
+               NSStringFromFFAVFormat(avFrame.avFormat),
+               NSStringFromFFAVFormat(avFormat));
     return FFAVFrameNone;
   }
   

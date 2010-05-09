@@ -12,6 +12,8 @@
 @implementation PBCameraCaptureController
 
 - (void)dealloc {
+  [_reader release];
+  [_playerView release];
   [super dealloc];
 }
 

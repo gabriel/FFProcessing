@@ -39,8 +39,8 @@
   
   NSMutableArray *items = [NSMutableArray array];
   [items addObject:[PBUIItem text:@"Media" target:self action:@selector(selectMedia) accessoryType:UITableViewCellAccessoryDisclosureIndicator]];
-  [items addObject:[PBUIItem text:@"Process" target:self action:@selector(process)]];
-  [items addObject:[PBUIItem text:@"Play" target:self action:@selector(openMoviePlayerController)]];
+  [items addObject:[PBUIItem text:@"Process Movie" target:self action:@selector(process)]];
+  [items addObject:[PBUIItem text:@"Play Movie" target:self action:@selector(openMoviePlayerController)]];
   [items addObject:[PBUIItem text:@"Save" target:self action:@selector(saveMovieToPhotosAlbum)]];
   [items addObject:[PBUIItem text:@"Camera Capture" target:self action:@selector(openCameraCapture)]];  
   

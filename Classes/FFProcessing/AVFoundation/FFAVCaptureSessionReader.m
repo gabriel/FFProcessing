@@ -11,6 +11,20 @@
 
 @implementation FFAVCaptureSessionReader
 
+- (id)init {
+  if ((self = [super init])) {
+    _avFrame = FFAVFrameNone;
+    _converter = [[FFConverter alloc] initWithAVFormat:FFAVFormatMake(256, 256, PIX_FMT_RGB24)];
+  }
+  return self;
+}
+
+- (void)dealloc {
+  FFAVFrameRelease(_avFrame);
+  av_free(_data);
+  [super dealloc];
+}
+
 - (BOOL)start:(NSError **)error {
   [_captureSession release];
   _captureSession = [[AVCaptureSession alloc] init];
@@ -31,7 +45,6 @@
   
   [_captureSession addOutput:_videoOutput];  
   [_captureSession startRunning];
-  
   return YES;
 }
 
@@ -40,6 +53,13 @@
 }
 
 - (FFAVFrame)nextFrame:(NSError **)error {
+  if (_dataChanged) {
+    FFDebug(@"Next frame");
+    FFAVFrameSetData(_avFrame, _data);
+    _avFrame = [_converter scalePicture:_avFrame error:nil];
+    _dataChanged = NO;
+    return _avFrame;
+  }
   return FFAVFrameNone;
 }
 
@@ -48,20 +68,35 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer 
        fromConnection:(AVCaptureConnection *)connection {
   
-  CVImageBufferRef frame = CMSampleBufferGetImageBuffer(sampleBuffer);
-  CVPixelBufferLockBaseAddress(frame, 0);
+  CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+  CVPixelBufferLockBaseAddress(imageBuffer, 0);
   
-  size_t width = CVPixelBufferGetWidth(frame);
-  size_t height = CVPixelBufferGetHeight(frame);
-  size_t depth = CVPixelBufferGetBytesPerRow(frame);
+  size_t width = CVPixelBufferGetWidth(imageBuffer);
+  size_t height = CVPixelBufferGetHeight(imageBuffer);
+  size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
   
-  size_t size = CVPixelBufferGetDataSize(frame);
-  bool isPlanar = CVPixelBufferIsPlanar(frame);
-  //uint8_t *data = (uint8_t *)CVPixelBufferGetBaseAddress(frame);
+  size_t size = CVPixelBufferGetDataSize(imageBuffer);
+  bool isPlanar = CVPixelBufferIsPlanar(imageBuffer);
+  uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
+
+  // TODO(gabe): Fail if planar
   
-  FFDebug(@"width=%d, height=%d, depth=%d, size=%d, isPlanar=%d", width, height, depth, size, isPlanar);
+  FFDebug(@"width=%d, height=%d, bytesPerRow=%d, size=%d, isPlanar=%d", width, height, bytesPerRow, size, isPlanar);
   
-  CVPixelBufferUnlockBaseAddress(frame, 0);
+  if (_avFrame.frame == NULL) 
+    _avFrame = FFAVFrameCreate(FFAVFormatMake(width, height, PIX_FMT_BGRA));
+
+  if (_data == NULL || size != _dataSize) {
+    FFDebug(@"Allocating video data of size: %d", size);
+    if (_data != NULL) av_free(_data);
+    _data = av_malloc(size);
+    _dataSize = size;
+  }
+    
+  memcpy(_data, baseAddress, _dataSize); 
+  _dataChanged = YES;
+  
+  CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
 }
 
 @end

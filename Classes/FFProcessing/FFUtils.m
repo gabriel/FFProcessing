@@ -30,31 +30,6 @@ BOOL FFIsFlushPacket(AVPacket *packet) {
   return (packet->data == gFlushPacket.data);
 }
 
-FFAVFrame FFAVFrameCreate(FFAVFormat avFormat) {
-  
-  AVFrame *picture = avcodec_alloc_frame();
-  if (!picture) return FFAVFrameNone;
-  
-  int size = avpicture_get_size(avFormat.pixelFormat, avFormat.width, avFormat.height);
-  uint8_t *pictureBuffer = av_malloc(size);
-  
-  if (!pictureBuffer) {
-    av_free(picture);
-    return FFAVFrameNone;
-  }
-  
-  avpicture_fill((AVPicture *)picture, pictureBuffer, avFormat.pixelFormat, avFormat.width, avFormat.height);
-  return FFAVFrameMake(picture, avFormat);
-}
-
-void FFAVFrameRelease(FFAVFrame avFrame) {
-  if (avFrame.frame != NULL)  {
-    if (avFrame.frame->data != NULL) av_free(avFrame.frame->data[0]);
-    av_free(avFrame.frame);  
-    avFrame.frame = NULL;
-  }
-}
-
 void FFFillYUVImage(FFAVFrame avFrame, NSInteger frameIndex) {
   
   /* Y */
