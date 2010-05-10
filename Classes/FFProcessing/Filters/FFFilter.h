@@ -10,6 +10,6 @@
 #import "FFDecoder.h"
 
 @protocol FFFilter <NSObject>
-- (FFAVFrame)filterPictureFrame:(FFAVFrame)avFrame error:(NSError **)error;
+- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error;
 @end
 

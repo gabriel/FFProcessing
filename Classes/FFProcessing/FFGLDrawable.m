@@ -12,21 +12,24 @@
 
 @implementation FFGLDrawable
 
-- (id)initWithReader:(id<FFReader>)reader {
+- (id)initWithReader:(id<FFReader>)reader filter:(id<FFFilter>)filter {
   if ((self = [self init])) {
     _reader = [reader retain];
+    _filter = [filter retain];
   }
   return self;
 }
 
 - (void)dealloc {
   [_reader release];
+  [_filter release];
   glDeleteTextures(1, &_videoTexture[0]);
   [super dealloc];
 }
 
 - (void)setupView:(GHGLView *)view {
   glViewport(0, 0, view.backingWidth, view.backingHeight);
+  FFDebug(@"Viewport: (%d, %d, %d, %d)", 0, 0, view.backingWidth, view.backingHeight);
 	glMatrixMode(GL_PROJECTION);
   
 	glLoadIdentity();
@@ -98,6 +101,11 @@
 
   FFAVFrame avFrame = [_reader nextFrame:nil];
   if (avFrame.frame == NULL) return NO;
+  
+  if (_filter) {
+    avFrame = [_filter filterAVFrame:avFrame error:nil];
+    if (avFrame.frame == NULL) return NO;
+  }
 
   uint8_t *nextData = avFrame.frame->data[0];
   if (nextData == NULL) return NO;
@@ -130,6 +138,7 @@
   // Portrait
   //[self drawInRect:frame];
   // Landscape
+  //FFDebug(@"Draw, rect=%@", NSStringFromCGRect(frame));
   [self drawInRect:CGRectMake(0, 0, frame.size.height, frame.size.width)]; // TODO(gabe): ?? 
   return YES;
 }

@@ -9,12 +9,18 @@
 #import "FFAVCaptureSessionReader.h"
 #import "FFUtils.h"
 
+#define kCVPixelFormat kCVPixelFormatType_32BGRA
+#define kPixelFormat PIX_FMT_BGRA
+//#define kCVPixelFormat kCVPixelFormatType_24RGB
+//#define kPixelFormat PIX_FMT_RGB24
+#define kConverterPixelFormat PIX_FMT_RGB24
+
 @implementation FFAVCaptureSessionReader
 
 - (id)init {
   if ((self = [super init])) {
-    _avFrame = FFAVFrameNone;
-    _converter = [[FFConverter alloc] initWithAVFormat:FFAVFormatMake(256, 256, PIX_FMT_RGB24)];
+    _avFrame = FFAVFrameNone;    
+    _converter = [[FFConverter alloc] initWithAVFormat:FFAVFormatMake(512, 512, kConverterPixelFormat)];
   }
   return self;
 }
@@ -39,7 +45,7 @@
   //_videoOutput.minFrameDuration = CMTimeMake(1, 10);
   _videoOutput.alwaysDiscardsLateVideoFrames = TRUE;
   _videoOutput.videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA], kCVPixelBufferPixelFormatTypeKey,
+                                [NSNumber numberWithUnsignedInt:kCVPixelFormat], kCVPixelBufferPixelFormatTypeKey,
                                 nil];
   [_videoOutput setSampleBufferDelegate:self queue:dispatch_get_current_queue()];
   
@@ -54,11 +60,10 @@
 
 - (FFAVFrame)nextFrame:(NSError **)error {
   if (_dataChanged) {
-    FFDebug(@"Next frame");
+    //FFDebug(@"Next frame");
     FFAVFrameSetData(_avFrame, _data);
-    _avFrame = [_converter scalePicture:_avFrame error:nil];
     _dataChanged = NO;
-    return _avFrame;
+    return [_converter scalePicture:_avFrame error:nil];    
   }
   return FFAVFrameNone;
 }
@@ -73,18 +78,21 @@
   
   size_t width = CVPixelBufferGetWidth(imageBuffer);
   size_t height = CVPixelBufferGetHeight(imageBuffer);
-  size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
+  //size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
   
   size_t size = CVPixelBufferGetDataSize(imageBuffer);
-  bool isPlanar = CVPixelBufferIsPlanar(imageBuffer);
+  //bool isPlanar = CVPixelBufferIsPlanar(imageBuffer);
   uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
+  
+  //size_t left, right, top, bottom;
+  //CVPixelBufferGetExtendedPixels(imageBuffer, &left, &right, &top, &bottom);
 
   // TODO(gabe): Fail if planar
   
-  FFDebug(@"width=%d, height=%d, bytesPerRow=%d, size=%d, isPlanar=%d", width, height, bytesPerRow, size, isPlanar);
+  FFDebug(@"width=%d, height=%d, size=%d", width, height, size);
   
   if (_avFrame.frame == NULL) 
-    _avFrame = FFAVFrameCreate(FFAVFormatMake(width, height, PIX_FMT_BGRA));
+    _avFrame = FFAVFrameCreate(FFAVFormatMake(width, height, kPixelFormat));
 
   if (_data == NULL || size != _dataSize) {
     FFDebug(@"Allocating video data of size: %d", size);

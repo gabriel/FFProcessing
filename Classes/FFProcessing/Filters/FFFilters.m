@@ -23,9 +23,9 @@
   [super dealloc];
 }
 
-- (FFAVFrame)filterPictureFrame:(FFAVFrame)avFrame error:(NSError **)error {
+- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
   for (id<FFFilter> filter in _filters) {
-    avFrame = [filter filterPictureFrame:avFrame error:error];
+    avFrame = [filter filterAVFrame:avFrame error:error];
     if (avFrame.frame == NULL) return FFAVFrameNone;
   }
   return avFrame;

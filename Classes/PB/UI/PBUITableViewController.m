@@ -31,10 +31,10 @@
 
 - (void)loadView {
   [_container release];
-  _container = [[PBUIContainer alloc] initWithFrame:CGRectZero];
+  _container = [[PBUIContainer alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
   
   [_tableView release];
-  _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 416) style:UITableViewStylePlain];
   _tableView.dataSource = self;
   _tableView.delegate = self;
   [_container setContentView:_tableView];

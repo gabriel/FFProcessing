@@ -8,6 +8,7 @@
 
 #import "GHGLView.h"
 #import "GHGLDefines.h"
+#import "FFUtils.h"
 
 
 @interface GHGLView ()
@@ -33,7 +34,8 @@
 		
 		EAGLLayer.opaque = YES;
 		EAGLLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-																		[NSNumber numberWithBool:NO], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
+																		[NSNumber numberWithBool:NO], kEAGLDrawablePropertyRetainedBacking, 
+                                    kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
 		
 #if kAttemptToUseOpenGLES2
 		_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -71,10 +73,11 @@
 
 - (void)drawView {
   if (!_drawable) return;
+  glBindFramebufferOES(GL_FRAMEBUFFER_OES, _viewFramebuffer);
   BOOL render = YES;
-  if (render) {
-    glBindFramebufferOES(GL_FRAMEBUFFER_OES, _viewFramebuffer);
-    render = [_drawable drawView:self.frame inView:self];
+  while (render) {
+    CGRect frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    render = [_drawable drawView:frame inView:self];
     if (render) {
       glBindRenderbufferOES(GL_RENDERBUFFER_OES, _viewRenderbuffer);
       [_context presentRenderbuffer:GL_RENDERBUFFER_OES];

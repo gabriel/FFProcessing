@@ -29,14 +29,14 @@
   FFInitialize();
 
   FFReader *reader = [[FFReader alloc] initWithURL:[NSURL URLWithString:@"bundle://test.mp4"] format:nil];      
-  _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) reader:reader];
+  _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) reader:reader filter:nil];
   [reader release];
   
   //@"bundle://pegasus-1958-chiptune.avi";  
   // @"http://c-cam.uchicago.edu/mjpg/video.mjpg";
   // @"mjpeg"; 
   
-  [_playerView play];
+  [_playerView start];
   
   [_window addSubview:_playerView];  
 }

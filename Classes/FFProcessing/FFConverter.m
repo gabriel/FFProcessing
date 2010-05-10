@@ -55,6 +55,9 @@
     return FFAVFrameNone;
   }
   
+  //FFDebug(@"Converting from %@ to %@", NSStringFromFFAVFormat(avFrame.avFormat),
+  //        NSStringFromFFAVFormat(avFormat));
+  
   sws_scale(scaleContext, 
             (const uint8_t* const *)avFrame.frame->data, 
             (const int *)avFrame.frame->linesize, 
@@ -70,7 +73,7 @@
 
 #pragma mark FFFilter
 
-- (FFAVFrame)filterPictureFrame:(FFAVFrame)avFrame error:(NSError **)error {
+- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
   return [self scalePicture:avFrame error:error];
 }
 

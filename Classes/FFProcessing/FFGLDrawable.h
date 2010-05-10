@@ -12,12 +12,13 @@
 @interface FFGLDrawable : NSObject <GHGLViewDrawable> {
   
   id<FFReader> _reader;
+  id<FFFilter> _filter;
   
   GLuint _videoTexture[1];
   BOOL _textureLoaded;
 
 }
 
-- (id)initWithReader:(id<FFReader>)reader;
+- (id)initWithReader:(id<FFReader>)reader filter:(id<FFFilter>)filter;
 
 @end

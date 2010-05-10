@@ -17,7 +17,7 @@
   [super dealloc];
 }
 
-- (FFAVFrame)filterPictureFrame:(FFAVFrame)avFrame error:(NSError **)error {
+- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
   
   NSAssert(avFrame.avFormat.pixelFormat == PIX_FMT_RGB24, @"Can only edge filter on PIX_FMT_RGB24");
   

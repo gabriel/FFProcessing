@@ -7,7 +7,7 @@
 //
 
 #import "PBUIContainer.h"
-
+#import "FFUtils.h"
 
 @implementation PBUIContainer
 
@@ -41,6 +41,7 @@
   y += _headerView.frame.size.height;
   
   _contentView.frame = CGRectMake(0, y, contentSize.width, contentSize.height);
+  FFDebug(@"Content view, frame=%@", NSStringFromCGRect(_contentView.frame));
   _statusView.frame = _contentView.frame;
   y += contentSize.height;
   
@@ -107,6 +108,7 @@
   [_statusView setButtonTitle:nil target:nil action:NULL];
   [_statusView removeFromSuperview];
   [self setNeedsLayout];
+  [self setNeedsDisplay];
 }
 
 @end

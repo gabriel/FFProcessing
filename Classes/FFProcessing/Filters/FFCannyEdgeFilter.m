@@ -21,7 +21,7 @@
   [super dealloc];
 }
 
-- (FFAVFrame)filterPictureFrame:(FFAVFrame)avFrame error:(NSError **)error {
+- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
 
   CvSize size = cvSize(avFrame.avFormat.width, avFrame.avFormat.height);
   if (!_image) _image = cvCreateImage(size, IPL_DEPTH_8U, 3);

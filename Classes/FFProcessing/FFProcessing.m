@@ -107,7 +107,7 @@
     
     // Apply filter
     if (_filter) {
-      _decodedFrame = [_filter filterPictureFrame:_decodedFrame error:error];
+      _decodedFrame = [_filter filterAVFrame:_decodedFrame error:error];
       if (!_decodedFrame.frame) break;
     }
 

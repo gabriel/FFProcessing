@@ -10,13 +10,12 @@
 #import "FFReader.h"
 
 @interface FFPlayerView : GHGLView {
-  UILabel *_displayLabel;
-  id<FFReader> _reader;
+  UILabel *_displayLabel;  
 }
 
-- (id)initWithFrame:(CGRect)frame reader:(id<FFReader>)reader;
+- (id)initWithFrame:(CGRect)frame reader:(id<FFReader>)reader filter:(id<FFFilter>)filter;
 
-- (void)play;
+- (void)start;
 
 - (void)stop;
 

@@ -16,10 +16,14 @@
 
 @implementation FFPlayerView
 
-- (id)initWithFrame:(CGRect)frame reader:(id<FFReader>)reader {
-  if ((self = [super initWithFrame:frame])) {
-    _reader = [reader retain];
+- (id)initWithFrame:(CGRect)frame reader:(id<FFReader>)reader filter:(id<FFFilter>)filter {
+  if ((self = [self initWithFrame:frame])) {
     
+    FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader filter:filter];
+    // FFGLTestDrawable *drawable = [[FFGLTestDrawable alloc] init];
+    self.drawable = drawable;
+    [drawable release];      
+
     /*!
     _displayLabel = [[UILabel alloc] initWithFrame:CGRectMake(-145, 240, 320, 30)];
     _displayLabel.textColor = [UIColor whiteColor];
@@ -36,7 +40,6 @@
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [_reader release];
   [_displayLabel release];
   [super dealloc];
 }
@@ -52,14 +55,7 @@
   _displayLabel.hidden = YES;
 }
 
-- (void)play {  
-  FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:_reader];
-  /*!
-  FFGLTestDrawable *drawable = [[FFGLTestDrawable alloc] init];
-  */
-  self.drawable = drawable;
-  [drawable release];    
-  
+- (void)start {    
   [self startAnimation];
 }
 
