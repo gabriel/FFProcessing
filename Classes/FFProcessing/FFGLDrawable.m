@@ -38,14 +38,6 @@
     if (avFrame.frame == NULL) return NO;
   }
   
-  /*
-  // NPOT
-  int width = avFrame.avFormat.width;
-  int height = avFrame.avFormat.height;
-  NSUInteger widthPOT = GHGLNextPOT(width);
-  NSUInteger heightPOT = GHGLNextPOT(height);
-   */
-
   uint8_t *nextData = avFrame.frame->data[0];
   if (nextData == NULL) return NO;
     

@@ -11,7 +11,7 @@
 
 #define kCVPixelFormat kCVPixelFormatType_32BGRA
 #define kPixelFormat PIX_FMT_BGRA
-#define kConverterPixelFormat PIX_FMT_BGRA
+//#define kConverterPixelFormat PIX_FMT_BGRA
 //#define kConverterPixelFormat PIX_FMT_RGB24
 //#define kCVPixelFormat kCVPixelFormatType_24RGB
 //#define kPixelFormat PIX_FMT_RGB24

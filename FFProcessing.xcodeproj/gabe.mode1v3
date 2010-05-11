@@ -386,8 +386,7 @@
 										<string>080E96DDFE201D6D7F000001</string>
 										<string>0007416B1161CDE600D8283B</string>
 										<string>00129F1911549B3500D09836</string>
-										<string>00BBEBF911940ABA001BE653</string>
-										<string>00129F2911549B3500D09836</string>
+										<string>007B05B911893EDB003B3A5B</string>
 										<string>00DDF3E8115F3BB200310925</string>
 										<string>00F57DA511991B0000ED284D</string>
 										<string>00DB9CCD1164810D002A7F8F</string>
@@ -400,15 +399,14 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>27</integer>
-											<integer>25</integer>
+											<integer>38</integer>
 											<integer>24</integer>
 											<integer>1</integer>
 											<integer>0</integer>
 										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-									<string>{{0, 389}, {335, 292}}</string>
+									<string>{{0, 474}, {335, 292}}</string>
 								</dict>
 								<key>PBXTopSmartGroupGIDs</key>
 								<array/>
@@ -449,7 +447,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>FFAVCaptureSessionReader.m</string>
+								<string>FFGLDrawable.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -457,11 +455,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>FFAVCaptureSessionReader.m</string>
+										<string>FFGLDrawable.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>003AED26119949F90074D7F0</string>
+										<string>003AED471199547B0074D7F0</string>
 										<key>history</key>
 										<array>
 											<string>0001B24B11574EB400109D45</string>
@@ -547,7 +545,6 @@
 											<string>000A683B118E852C0018CF7C</string>
 											<string>000A6870118E8E250018CF7C</string>
 											<string>001E7A90118FFA2F009E8C00</string>
-											<string>001E7BC21190087C009E8C00</string>
 											<string>001E7C12119087FC009E8C00</string>
 											<string>00C6EA951193D746001B5EF4</string>
 											<string>00C6EA991193D746001B5EF4</string>
@@ -592,7 +589,6 @@
 											<string>00062E2811989D4000AC040C</string>
 											<string>00062E2C11989D4000AC040C</string>
 											<string>00062E2D11989D4000AC040C</string>
-											<string>00062E3211989D4000AC040C</string>
 											<string>00062E3311989D4000AC040C</string>
 											<string>00062E3411989D4000AC040C</string>
 											<string>00062E3511989D4000AC040C</string>
@@ -614,17 +610,19 @@
 											<string>003AECBB119937BE0074D7F0</string>
 											<string>003AECDC11993F520074D7F0</string>
 											<string>003AECDD11993F520074D7F0</string>
-											<string>003AECDE11993F520074D7F0</string>
 											<string>003AECDF11993F520074D7F0</string>
 											<string>003AECE011993F520074D7F0</string>
 											<string>003AECE111993F520074D7F0</string>
 											<string>003AECE411993F520074D7F0</string>
 											<string>003AED0F1199464C0074D7F0</string>
 											<string>003AED15119947390074D7F0</string>
-											<string>003AED16119947390074D7F0</string>
-											<string>003AED23119949F90074D7F0</string>
-											<string>003AED24119949F90074D7F0</string>
-											<string>003AED25119949F90074D7F0</string>
+											<string>003AED3C119953550074D7F0</string>
+											<string>003AED3D119953550074D7F0</string>
+											<string>003AED3F119953550074D7F0</string>
+											<string>003AED40119953550074D7F0</string>
+											<string>003AED43119953E20074D7F0</string>
+											<string>003AED461199547B0074D7F0</string>
+											<string>003AED44119953E20074D7F0</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -809,7 +807,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>295258617.328457</real>
+	<real>295261307.95427901</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -826,7 +824,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>003AED27119949F90074D7F0</string>
 		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>003AECC4119937BE0074D7F0</string>
 		<string>003AECC5119937BE0074D7F0</string>

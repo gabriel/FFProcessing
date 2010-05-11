@@ -24,17 +24,17 @@
 - (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
 
   CvSize size = cvSize(avFrame.avFormat.width, avFrame.avFormat.height);
-  if (!_image) _image = cvCreateImage(size, IPL_DEPTH_8U, 3);
+  if (!_image) _image = cvCreateImage(size, IPL_DEPTH_8U, 4);
   if (!_grey) _grey = cvCreateImage(size, IPL_DEPTH_8U, 1);
   if (!_edges) _edges = cvCreateImage(size, IPL_DEPTH_8U, 1);
-  if (!_output) _output = cvCreateImage(size, IPL_DEPTH_8U, 3);
+  if (!_output) _output = cvCreateImage(size, IPL_DEPTH_8U, 4);
   
   _image->imageData = (char *)avFrame.frame->data[0];
 
-  cvCvtColor(_image, _grey, CV_RGB2GRAY);
+  cvCvtColor(_image, _grey, CV_BGRA2GRAY);
   cvCanny(_grey, _edges, 10, 100, 3);
   
-  cvCvtColor(_edges, _output, CV_GRAY2RGB);
+  cvCvtColor(_edges, _output, CV_GRAY2BGRA);
   avFrame.frame->data[0] = (uint8_t *)_output->imageData;
   
   return avFrame;

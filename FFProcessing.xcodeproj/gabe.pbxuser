@@ -75,8 +75,8 @@
 	00032D851193F7B2008389DA /* PBCameraCaptureController.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1022, 672}}";
-			sepNavSelRange = "{592, 0}";
-			sepNavVisRange = "{35, 805}";
+			sepNavSelRange = "{438, 0}";
+			sepNavVisRange = "{0, 840}";
 		};
 	};
 	00032D981193F832008389DA /* PBXTextBookmark */ = {
@@ -551,7 +551,7 @@
 		fRef = 001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */;
 		name = "FFCannyEdgeFilter.m: 38";
 		rLen = 76;
-		rLoc = 1014;
+		rLoc = 1016;
 		rType = 0;
 		vrLen = 1052;
 		vrLoc = 47;
@@ -601,7 +601,7 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 23";
 		rLen = 0;
-		rLoc = 575;
+		rLoc = 577;
 		rType = 0;
 		vrLen = 1441;
 		vrLoc = 204;
@@ -653,9 +653,9 @@
 	};
 	000A6661118C02940018CF7C /* FFTypes.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1022, 1472}}";
-			sepNavSelRange = "{377, 55}";
-			sepNavVisRange = "{217, 1191}";
+			sepNavIntBoundsRect = "{{0, 0}, {922, 1536}}";
+			sepNavSelRange = "{1314, 0}";
+			sepNavVisRange = "{988, 619}";
 		};
 	};
 	000A6678118C03DD0018CF7C /* PBXTextBookmark */ = {
@@ -851,9 +851,9 @@
 	};
 	00129F1E11549B3500D09836 /* FFGLDrawable.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1154, 1344}}";
-			sepNavSelRange = "{1115, 0}";
-			sepNavVisRange = "{975, 946}";
+			sepNavIntBoundsRect = "{{0, 0}, {1022, 1280}}";
+			sepNavSelRange = "{785, 0}";
+			sepNavVisRange = "{511, 1432}";
 		};
 	};
 	00129F2111549B3500D09836 /* FFPlayerAppDelegate.h */ = {
@@ -925,7 +925,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1146, 2096}}";
 			sepNavSelRange = "{2986, 0}";
-			sepNavVisRange = "{2407, 505}";
+			sepNavVisRange = "{2407, 508}";
 		};
 	};
 	00129F2E11549B3500D09836 /* GHGLUCommon.h */ = {
@@ -1038,8 +1038,8 @@
 	001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1022, 704}}";
-			sepNavSelRange = "{1014, 76}";
-			sepNavVisRange = "{47, 1052}";
+			sepNavSelRange = "{605, 0}";
+			sepNavVisRange = "{47, 1054}";
 		};
 	};
 	001E7A90118FFA2F009E8C00 /* PBXTextBookmark */ = {
@@ -1718,7 +1718,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 61";
 		rLen = 0;
-		rLoc = 1724;
+		rLoc = 1534;
 		rType = 0;
 		vrLen = 1200;
 		vrLoc = 961;
@@ -1837,7 +1837,7 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 91";
 		rLen = 0;
-		rLoc = 2968;
+		rLoc = 2970;
 		rType = 0;
 		vrLen = 1324;
 		vrLoc = 2205;
@@ -1877,7 +1877,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 62";
 		rLen = 12;
-		rLoc = 1625;
+		rLoc = 1435;
 		rType = 0;
 		vrLen = 1269;
 		vrLoc = 926;
@@ -1917,7 +1917,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 62";
 		rLen = 12;
-		rLoc = 1625;
+		rLoc = 1435;
 		rType = 0;
 		vrLen = 1269;
 		vrLoc = 926;
@@ -1927,7 +1927,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 70";
 		rLen = 0;
-		rLoc = 2039;
+		rLoc = 1849;
 		rType = 0;
 		vrLen = 1222;
 		vrLoc = 979;
@@ -1937,7 +1937,7 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 91";
 		rLen = 0;
-		rLoc = 2968;
+		rLoc = 2970;
 		rType = 0;
 		vrLen = 1323;
 		vrLoc = 2206;
@@ -1947,7 +1947,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 70";
 		rLen = 0;
-		rLoc = 2039;
+		rLoc = 1849;
 		rType = 0;
 		vrLen = 1222;
 		vrLoc = 979;
@@ -1967,7 +1967,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 67";
 		rLen = 0;
-		rLoc = 1927;
+		rLoc = 1737;
 		rType = 0;
 		vrLen = 1229;
 		vrLoc = 968;
@@ -1977,7 +1977,7 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 91";
 		rLen = 0;
-		rLoc = 2968;
+		rLoc = 2970;
 		rType = 0;
 		vrLen = 1382;
 		vrLoc = 2147;
@@ -1997,7 +1997,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 64";
 		rLen = 15;
-		rLoc = 1774;
+		rLoc = 1584;
 		rType = 0;
 		vrLen = 1229;
 		vrLoc = 968;
@@ -2007,7 +2007,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 68";
 		rLen = 0;
-		rLoc = 1960;
+		rLoc = 1770;
 		rType = 0;
 		vrLen = 1275;
 		vrLoc = 922;
@@ -2058,7 +2058,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 72;
+		rLoc = 64;
 		rType = 1;
 	};
 	003AED06119945E90074D7F0 /* PBXTextBookmark */ = {
@@ -2066,7 +2066,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 45";
 		rLen = 0;
-		rLoc = 921;
+		rLoc = 785;
 		rType = 0;
 		vrLen = 610;
 		vrLoc = 782;
@@ -2086,7 +2086,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 45";
 		rLen = 0;
-		rLoc = 921;
+		rLoc = 785;
 		rType = 0;
 		vrLen = 638;
 		vrLoc = 782;
@@ -2106,7 +2106,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 48";
 		rLen = 0;
-		rLoc = 974;
+		rLoc = 785;
 		rType = 0;
 		vrLen = 638;
 		vrLoc = 782;
@@ -2126,7 +2126,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 68";
 		rLen = 0;
-		rLoc = 1960;
+		rLoc = 1770;
 		rType = 0;
 		vrLen = 1353;
 		vrLoc = 838;
@@ -2146,7 +2146,7 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 16";
 		rLen = 0;
-		rLoc = 458;
+		rLoc = 460;
 		rType = 0;
 		vrLen = 1173;
 		vrLoc = 0;
@@ -2156,7 +2156,7 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 80";
 		rLen = 0;
-		rLoc = 2350;
+		rLoc = 2352;
 		rType = 0;
 		vrLen = 1228;
 		vrLoc = 1850;
@@ -2166,7 +2166,7 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 75";
 		rLen = 0;
-		rLoc = 2122;
+		rLoc = 2124;
 		rType = 0;
 		vrLen = 1228;
 		vrLoc = 1850;
@@ -2216,7 +2216,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 56";
 		rLen = 0;
-		rLoc = 1165;
+		rLoc = 975;
 		rType = 0;
 		vrLen = 1355;
 		vrLoc = 838;
@@ -2236,7 +2236,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 56";
 		rLen = 0;
-		rLoc = 1165;
+		rLoc = 975;
 		rType = 0;
 		vrLen = 1353;
 		vrLoc = 838;
@@ -2246,7 +2246,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 56";
 		rLen = 19;
-		rLoc = 1179;
+		rLoc = 989;
 		rType = 0;
 		vrLen = 1353;
 		vrLoc = 838;
@@ -2256,7 +2256,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 48";
 		rLen = 0;
-		rLoc = 974;
+		rLoc = 785;
 		rType = 0;
 		vrLen = 953;
 		vrLoc = 975;
@@ -2276,7 +2276,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 52";
 		rLen = 0;
-		rLoc = 1115;
+		rLoc = 925;
 		rType = 0;
 		vrLen = 946;
 		vrLoc = 975;
@@ -2306,7 +2306,7 @@
 		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
 		name = "FFGLDrawable.m: 59";
 		rLen = 0;
-		rLoc = 1348;
+		rLoc = 1158;
 		rType = 0;
 		vrLen = 1468;
 		vrLoc = 922;
@@ -2316,7 +2316,7 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 75";
 		rLen = 0;
-		rLoc = 2122;
+		rLoc = 2124;
 		rType = 0;
 		vrLen = 1262;
 		vrLoc = 1816;
@@ -2326,10 +2326,216 @@
 		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
 		name = "FFAVCaptureSessionReader.m: 23";
 		rLen = 0;
-		rLoc = 575;
+		rLoc = 577;
 		rType = 0;
 		vrLen = 1409;
 		vrLoc = 249;
+	};
+	003AED2A11994B210074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 59";
+		rLen = 0;
+		rLoc = 1201;
+		rType = 0;
+		vrLen = 953;
+		vrLoc = 975;
+	};
+	003AED2B11994B210074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F2D11549B3500D09836 /* GHGLTexture.m */;
+		name = "GHGLTexture.m: 73";
+		rLen = 0;
+		rLoc = 2986;
+		rType = 0;
+		vrLen = 508;
+		vrLoc = 2407;
+	};
+	003AED2C11994C330074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
+		name = "FFAVCaptureSessionReader.m: 103";
+		rLen = 0;
+		rLoc = 3283;
+		rType = 0;
+		vrLen = 1324;
+		vrLoc = 2184;
+	};
+	003AED361199534B0074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 59";
+		rLen = 0;
+		rLoc = 1201;
+		rType = 0;
+		vrLen = 953;
+		vrLoc = 975;
+	};
+	003AED371199534B0074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F2D11549B3500D09836 /* GHGLTexture.m */;
+		name = "GHGLTexture.m: 73";
+		rLen = 0;
+		rLoc = 2986;
+		rType = 0;
+		vrLen = 508;
+		vrLoc = 2407;
+	};
+	003AED381199534C0074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 59";
+		rLen = 0;
+		rLoc = 1201;
+		rType = 0;
+		vrLen = 953;
+		vrLoc = 975;
+	};
+	003AED391199534C0074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F2D11549B3500D09836 /* GHGLTexture.m */;
+		name = "GHGLTexture.m: 73";
+		rLen = 0;
+		rLoc = 2986;
+		rType = 0;
+		vrLen = 508;
+		vrLoc = 2407;
+	};
+	003AED3A1199534D0074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 56";
+		rLen = 0;
+		rLoc = 1015;
+		rType = 0;
+		vrLen = 953;
+		vrLoc = 975;
+	};
+	003AED3B1199534D0074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F2D11549B3500D09836 /* GHGLTexture.m */;
+		name = "GHGLTexture.m: 73";
+		rLen = 0;
+		rLoc = 2986;
+		rType = 0;
+		vrLen = 508;
+		vrLoc = 2407;
+	};
+	003AED3C119953550074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */;
+		name = "FFAVCaptureSessionReader.m: 93";
+		rLen = 0;
+		rLoc = 2946;
+		rType = 0;
+		vrLen = 1382;
+		vrLoc = 2126;
+	};
+	003AED3D119953550074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 003AED3E119953550074D7F0 /* cv.h */;
+		name = "cv.h: 187";
+		rLen = 0;
+		rLoc = 7190;
+		rType = 0;
+		vrLen = 928;
+		vrLoc = 6671;
+	};
+	003AED3E119953550074D7F0 /* cv.h */ = {
+		isa = PBXFileReference;
+		name = cv.h;
+		path = /Users/gabe/Projects/FFProcessing/Libraries/OpenCV/include/cv.h;
+		sourceTree = "<absolute>";
+	};
+	003AED3F119953550074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00032D851193F7B2008389DA /* PBCameraCaptureController.m */;
+		name = "PBCameraCaptureController.m: 24";
+		rLen = 0;
+		rLoc = 438;
+		rType = 0;
+		vrLen = 840;
+		vrLoc = 0;
+	};
+	003AED40119953550074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */;
+		name = "FFCannyEdgeFilter.m: 27";
+		rLen = 0;
+		rLoc = 605;
+		rType = 0;
+		vrLen = 1054;
+		vrLoc = 47;
+	};
+	003AED41119953550074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 67";
+		rLen = 0;
+		rLoc = 1632;
+		rType = 0;
+		vrLen = 1423;
+		vrLoc = 975;
+	};
+	003AED42119953550074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 67";
+		rLen = 0;
+		rLoc = 1632;
+		rType = 0;
+		vrLen = 1423;
+		vrLoc = 975;
+	};
+	003AED43119953E20074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1D11549B3500D09836 /* FFGLDrawable.h */;
+		name = "FFGLDrawable.h: 17";
+		rLen = 0;
+		rLoc = 299;
+		rType = 0;
+		vrLen = 396;
+		vrLoc = 0;
+	};
+	003AED44119953E20074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1429;
+		vrLoc = 492;
+	};
+	003AED45119953E20074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 65";
+		rLen = 0;
+		rLoc = 1464;
+		rType = 0;
+		vrLen = 1395;
+		vrLoc = 785;
+	};
+	003AED461199547B0074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00BBEC3311940FBD001BE653 /* gl.h */;
+		name = "gl.h: 409";
+		rLen = 49;
+		rLoc = 15690;
+		rType = 0;
+		vrLen = 1236;
+		vrLoc = 14771;
+	};
+	003AED471199547B0074D7F0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00129F1E11549B3500D09836 /* FFGLDrawable.m */;
+		name = "FFGLDrawable.m: 41";
+		rLen = 0;
+		rLoc = 785;
+		rType = 0;
+		vrLen = 1432;
+		vrLoc = 511;
 	};
 	007B05B611893EC1003B3A5B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -2342,6 +2548,12 @@
 		vrLoc = 0;
 	};
 	007B05BE11893F34003B3A5B /* FFEdgeFilter.h */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.h;
+		name = FFEdgeFilter.h;
+		path = /Users/gabe/Projects/FFProcessing/Classes/FFProcessing/Filters/FFEdgeFilter.h;
+		sourceTree = "<absolute>";
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1047, 448}}";
 			sepNavSelRange = "{240, 0}";
@@ -2349,10 +2561,16 @@
 		};
 	};
 	007B05BF11893F34003B3A5B /* FFEdgeFilter.m */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.objc;
+		name = FFEdgeFilter.m;
+		path = /Users/gabe/Projects/FFProcessing/Classes/FFProcessing/Filters/FFEdgeFilter.m;
+		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1047, 752}}";
-			sepNavSelRange = "{873, 0}";
-			sepNavVisRange = "{288, 595}";
+			sepNavIntBoundsRect = "{{0, 0}, {1022, 752}}";
+			sepNavSelRange = "{246, 0}";
+			sepNavVisRange = "{130, 663}";
 		};
 	};
 	007B05C211893FE5003B3A5B /* FFFilter.h */ = {
@@ -3071,9 +3289,9 @@
 	};
 	00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1022, 1808}}";
-			sepNavSelRange = "{575, 0}";
-			sepNavVisRange = "{249, 1409}";
+			sepNavIntBoundsRect = "{{0, 0}, {916, 1872}}";
+			sepNavSelRange = "{725, 0}";
+			sepNavVisRange = "{504, 360}";
 			sepNavWindowFrame = "{{15, 91}, {1412, 787}}";
 		};
 	};
@@ -3141,9 +3359,9 @@
 		path = /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.0.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/ES1/gl.h;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1022, 13856}}";
-			sepNavSelRange = "{19856, 49}";
-			sepNavVisRange = "{19000, 1592}";
+			sepNavIntBoundsRect = "{{0, 0}, {1022, 14272}}";
+			sepNavSelRange = "{15690, 49}";
+			sepNavVisRange = "{14771, 1236}";
 		};
 	};
 	00C6EA671193CCE0001B5EF4 /* PBCameraPickerCaptureController.h */ = {
@@ -4274,6 +4492,26 @@
 			003AED24119949F90074D7F0 /* PBXTextBookmark */ = 003AED24119949F90074D7F0 /* PBXTextBookmark */;
 			003AED25119949F90074D7F0 /* PBXTextBookmark */ = 003AED25119949F90074D7F0 /* PBXTextBookmark */;
 			003AED26119949F90074D7F0 /* PBXTextBookmark */ = 003AED26119949F90074D7F0 /* PBXTextBookmark */;
+			003AED2A11994B210074D7F0 /* PBXTextBookmark */ = 003AED2A11994B210074D7F0 /* PBXTextBookmark */;
+			003AED2B11994B210074D7F0 /* PBXTextBookmark */ = 003AED2B11994B210074D7F0 /* PBXTextBookmark */;
+			003AED2C11994C330074D7F0 /* PBXTextBookmark */ = 003AED2C11994C330074D7F0 /* PBXTextBookmark */;
+			003AED361199534B0074D7F0 /* PBXTextBookmark */ = 003AED361199534B0074D7F0 /* PBXTextBookmark */;
+			003AED371199534B0074D7F0 /* PBXTextBookmark */ = 003AED371199534B0074D7F0 /* PBXTextBookmark */;
+			003AED381199534C0074D7F0 /* PBXTextBookmark */ = 003AED381199534C0074D7F0 /* PBXTextBookmark */;
+			003AED391199534C0074D7F0 /* PBXTextBookmark */ = 003AED391199534C0074D7F0 /* PBXTextBookmark */;
+			003AED3A1199534D0074D7F0 /* PBXTextBookmark */ = 003AED3A1199534D0074D7F0 /* PBXTextBookmark */;
+			003AED3B1199534D0074D7F0 /* PBXTextBookmark */ = 003AED3B1199534D0074D7F0 /* PBXTextBookmark */;
+			003AED3C119953550074D7F0 /* PBXTextBookmark */ = 003AED3C119953550074D7F0 /* PBXTextBookmark */;
+			003AED3D119953550074D7F0 /* PBXTextBookmark */ = 003AED3D119953550074D7F0 /* PBXTextBookmark */;
+			003AED3F119953550074D7F0 /* PBXTextBookmark */ = 003AED3F119953550074D7F0 /* PBXTextBookmark */;
+			003AED40119953550074D7F0 /* PBXTextBookmark */ = 003AED40119953550074D7F0 /* PBXTextBookmark */;
+			003AED41119953550074D7F0 /* PBXTextBookmark */ = 003AED41119953550074D7F0 /* PBXTextBookmark */;
+			003AED42119953550074D7F0 /* PBXTextBookmark */ = 003AED42119953550074D7F0 /* PBXTextBookmark */;
+			003AED43119953E20074D7F0 /* PBXTextBookmark */ = 003AED43119953E20074D7F0 /* PBXTextBookmark */;
+			003AED44119953E20074D7F0 /* PBXTextBookmark */ = 003AED44119953E20074D7F0 /* PBXTextBookmark */;
+			003AED45119953E20074D7F0 /* PBXTextBookmark */ = 003AED45119953E20074D7F0 /* PBXTextBookmark */;
+			003AED461199547B0074D7F0 /* PBXTextBookmark */ = 003AED461199547B0074D7F0 /* PBXTextBookmark */;
+			003AED471199547B0074D7F0 /* PBXTextBookmark */ = 003AED471199547B0074D7F0 /* PBXTextBookmark */;
 			007B05B611893EC1003B3A5B = 007B05B611893EC1003B3A5B /* PBXTextBookmark */;
 			007B05D7118941CE003B3A5B = 007B05D7118941CE003B3A5B /* PBXTextBookmark */;
 			007B067E118962DF003B3A5B = 007B067E118962DF003B3A5B /* PBXTextBookmark */;

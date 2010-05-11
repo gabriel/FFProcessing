@@ -78,8 +78,6 @@
 		00235032116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
 		00235033116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
 		003AEC4F119923470074D7F0 /* libGHUnitIPhone4_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 003AEC4E1199233E0074D7F0 /* libGHUnitIPhone4_0.a */; };
-		007B05C011893F34003B3A5B /* FFEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05BF11893F34003B3A5B /* FFEdgeFilter.m */; };
-		007B05C111893F34003B3A5B /* FFEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05BF11893F34003B3A5B /* FFEdgeFilter.m */; };
 		007B05EE118942AE003B3A5B /* FFEncodeProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */; };
 		007B05EF118942AE003B3A5B /* FFEncodeProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */; };
 		007B05F0118942AE003B3A5B /* FFEncodeProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */; };
@@ -322,8 +320,6 @@
 		00234C94116DB97800088651 /* short2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short2.mov; sourceTree = "<group>"; };
 		00235030116EDE5100088651 /* libxvidcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libxvidcore.a; sourceTree = "<group>"; };
 		003AEC4E1199233E0074D7F0 /* libGHUnitIPhone4_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGHUnitIPhone4_0.a; sourceTree = "<group>"; };
-		007B05BE11893F34003B3A5B /* FFEdgeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEdgeFilter.h; sourceTree = "<group>"; };
-		007B05BF11893F34003B3A5B /* FFEdgeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEdgeFilter.m; sourceTree = "<group>"; };
 		007B05C211893FE5003B3A5B /* FFFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFFilter.h; sourceTree = "<group>"; };
 		007B05E2118941F0003B3A5B /* FFProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFProcessor.h; sourceTree = "<group>"; };
 		007B05EC118942AE003B3A5B /* FFEncodeProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEncodeProcessor.h; sourceTree = "<group>"; };
@@ -762,8 +758,6 @@
 			isa = PBXGroup;
 			children = (
 				007B05C211893FE5003B3A5B /* FFFilter.h */,
-				007B05BE11893F34003B3A5B /* FFEdgeFilter.h */,
-				007B05BF11893F34003B3A5B /* FFEdgeFilter.m */,
 				000A660C118BFCD20018CF7C /* FFFilters.h */,
 				000A660D118BFCD20018CF7C /* FFFilters.m */,
 				001E7A87118FFA0B009E8C00 /* FFCannyEdgeFilter.h */,
@@ -1232,7 +1226,6 @@
 				0090EECF11801C7A00453CA5 /* YPLocalized.m in Sources */,
 				0090EEFC11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
 				00D84C1D11816F3100280DBE /* PBSaveThread.m in Sources */,
-				007B05C011893F34003B3A5B /* FFEdgeFilter.m in Sources */,
 				007B05EF118942AE003B3A5B /* FFEncodeProcessor.m in Sources */,
 				007B05F4118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
 				000A660F118BFCD20018CF7C /* FFFilters.m in Sources */,
@@ -1298,7 +1291,6 @@
 				0090EECE11801C7A00453CA5 /* YPLocalized.m in Sources */,
 				0090EEFB11801D7500453CA5 /* GTMObjC2Runtime.m in Sources */,
 				00D84C1E11816F3100280DBE /* PBSaveThread.m in Sources */,
-				007B05C111893F34003B3A5B /* FFEdgeFilter.m in Sources */,
 				007B05F0118942AE003B3A5B /* FFEncodeProcessor.m in Sources */,
 				007B05F3118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */,
 				000A6610118BFCD20018CF7C /* FFFilters.m in Sources */,
