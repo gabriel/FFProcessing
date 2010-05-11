@@ -7,7 +7,7 @@
 //
 
 #import "PBUIStatusView.h"
-
+#import <QuartzCore/QuartzCore.h>
 
 @implementation PBUIStatusView
 

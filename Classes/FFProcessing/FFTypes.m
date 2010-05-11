@@ -18,6 +18,7 @@ FFAVFrame FFAVFrameCreate(FFAVFormat avFormat) {
 }
 
 void FFAVFrameSetData(FFAVFrame avFrame, uint8_t *data) {
+  // TODO(gabe): Deallocate existing data
   avpicture_fill((AVPicture *)avFrame.frame, data, avFrame.avFormat.pixelFormat, avFrame.avFormat.width, avFrame.avFormat.height);
 }
 

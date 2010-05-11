@@ -8,7 +8,7 @@
 
 #import "GHGLView.h"
 #import "GHGLDefines.h"
-#import "FFUtils.h"
+#import "GHGLUtils.h"
 
 
 @interface GHGLView ()
@@ -50,6 +50,14 @@
 #if kAttemptToUseOpenGLES2
 		}
 #endif
+
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
+    _supportsNPOT = GHGLCheckForExtension(GHGLExtension_GL_APPLE_texture_2D_limited_npot);
+    _supportsBGRA8888 = GHGLCheckForExtension(GHGLExtension_GL_IMG_texture_format_BGRA8888);
+    
+    GHGLDebug(@"GL_MAX_TEXTURE_SIZE: %d", _maxTextureSize);
+    GHGLDebug(@"Supports BGRA8888 textures: %d", _supportsBGRA8888);
+    GHGLDebug(@"Supports NPOT textures: %d", _supportsNPOT);
 			
 		_animationInterval = 1.0 / 10.0;
 		
@@ -174,6 +182,90 @@
 		[self stopAnimation];
 		[self startAnimation];
 	}
+}
+
+@end
+
+
+@implementation GHGLViewDrawable
+
+- (void)dealloc {
+  glDeleteTextures(1, &_videoTexture[0]);
+  [super dealloc];
+}
+
+- (void)setupView:(GHGLView *)view {
+  glViewport(0, 0, view.backingWidth, view.backingHeight);
+  GHGLDebug(@"Viewport: (%d, %d, %d, %d)", 0, 0, view.backingWidth, view.backingHeight);
+	glMatrixMode(GL_PROJECTION);
+  
+	glLoadIdentity();
+  
+	glOrthof(0, view.backingWidth, view.backingHeight, 0, -100, 100);
+	glMatrixMode(GL_MODELVIEW);
+  
+  glEnable(GL_TEXTURE_2D);
+  glGenTextures(1, &_videoTexture[0]);
+}
+
+- (void)drawInRect:(CGRect)rect {
+  
+  // Portrait
+  /*
+   const GLfloat vertices[] = {
+   rect.origin.x, rect.origin.y,
+   rect.origin.x + rect.size.width, rect.origin.y,
+   rect.origin.x, rect.origin.y + rect.size.height,
+   rect.origin.x + rect.size.width, rect.origin.y + rect.size.height
+   };
+   
+   // Coords flipped so we appear right side up
+   const GLfloat texCoords[] = {
+   0, 0,
+   1, 0,
+   0, 1,
+   1, 1,
+   };
+   */
+  
+  // Landscape
+  const GLfloat vertices[] = {
+    rect.origin.y, rect.origin.x,
+    rect.origin.y, rect.origin.x + rect.size.width,
+    rect.origin.y + rect.size.height, rect.origin.x, 
+    rect.origin.y + rect.size.height, rect.origin.x + rect.size.width,
+	};
+	
+	const GLfloat texCoords[] = {
+    0, 1,
+    1, 1,
+    0, 0,
+    1, 0,
+  };  
+  
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, _videoTexture[0]);
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+  
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+	
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisable(GL_TEXTURE_2D);
+  
+}
+
+- (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view {
+  // Subclasses should implement
+  return NO;
 }
 
 @end

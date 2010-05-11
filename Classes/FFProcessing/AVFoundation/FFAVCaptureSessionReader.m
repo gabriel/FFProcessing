@@ -3,7 +3,7 @@
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 5/7/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #import "FFAVCaptureSessionReader.h"
@@ -11,23 +11,24 @@
 
 #define kCVPixelFormat kCVPixelFormatType_32BGRA
 #define kPixelFormat PIX_FMT_BGRA
+#define kConverterPixelFormat PIX_FMT_BGRA
+//#define kConverterPixelFormat PIX_FMT_RGB24
 //#define kCVPixelFormat kCVPixelFormatType_24RGB
 //#define kPixelFormat PIX_FMT_RGB24
-#define kConverterPixelFormat PIX_FMT_RGB24
 
 @implementation FFAVCaptureSessionReader
 
 - (id)init {
   if ((self = [super init])) {
-    _avFrame = FFAVFrameNone;    
-    _converter = [[FFConverter alloc] initWithAVFormat:FFAVFormatMake(512, 512, kConverterPixelFormat)];
+    _avFrame = FFAVFrameNone;
   }
   return self;
 }
 
 - (void)dealloc {
   FFAVFrameRelease(_avFrame);
-  av_free(_data);
+  // Data is free above since it was set in the FFAVFrame
+  //av_free(_data);
   [super dealloc];
 }
 
@@ -63,7 +64,11 @@
     //FFDebug(@"Next frame");
     FFAVFrameSetData(_avFrame, _data);
     _dataChanged = NO;
-    return [_converter scalePicture:_avFrame error:nil];    
+    if (_converter) {
+      return [_converter scalePicture:_avFrame error:nil];    
+    } else {
+      return _avFrame;
+    }
   }
   return FFAVFrameNone;
 }

@@ -9,13 +9,12 @@
 #import "GHGLView.h"
 #import "FFReader.h"
 
-@interface FFGLDrawable : NSObject <GHGLViewDrawable> {
+@interface FFGLDrawable : GHGLViewDrawable {
   
   id<FFReader> _reader;
   id<FFFilter> _filter;
   
-  GLuint _videoTexture[1];
-  BOOL _textureLoaded;
+  GLint _format; // For example, GL_RGB, GL_BGRA
 
 }
 

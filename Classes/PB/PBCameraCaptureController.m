@@ -8,20 +8,21 @@
 
 #import "PBCameraCaptureController.h"
 #import "FFUtils.h"
-#import "FFCannyEdgeFilter.h"
 
 @implementation PBCameraCaptureController
+
+@synthesize filter=_filter;
 
 - (void)dealloc {
   [_reader release];
   [_playerView release];
+  [_filter release];
   [super dealloc];
 }
 
 - (void)loadView {
   _reader = [[FFAVCaptureSessionReader alloc] init];
-  id<FFFilter> filter = [[[FFCannyEdgeFilter alloc] init] autorelease];
-  _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 416) reader:_reader filter:filter];
+  _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 416) reader:_reader filter:_filter];
   self.view = _playerView;
 }
 

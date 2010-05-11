@@ -10,7 +10,6 @@
 
 #import "PBMediaListViewController.h"
 #import "PBMoviePlayerController.h"
-#import "PBCameraCaptureController.h"
 #import "PBProcessing.h"
 #import "PBSaveThread.h"
 
@@ -19,8 +18,6 @@
   PBMediaListViewController *_mediaListViewController;
   PBMoviePlayerController *_moviePlayerController;  
   PBProcessing *_processing;
-  
-  PBCameraCaptureController *_cameraCaptureController;
   
   NSURL *_sourceURL;
 }

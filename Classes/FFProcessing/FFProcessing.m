@@ -27,6 +27,7 @@
 }
 
 - (void)dealloc {
+  [self close:nil];
   [_processor release];
   [_filter release];
   [super dealloc];
@@ -83,6 +84,7 @@
     _previousEndPTS = 0;
     if (![_processor open:error])
       return NO;
+    _open = YES;
   }
 
   while (!_cancelled) {
@@ -121,8 +123,7 @@
   
   // Last file
   if (index == (count - 1)) {
-    // TODO(gabe): What to do with errors
-    [_processor close:nil];
+    [self close:error];
   }
   
   if (_cancelled) {
@@ -138,16 +139,13 @@
   _cancelled = YES;
 }
 
-- (void)_converter {
-  // Setup converter
-  /*!
-   _converter = [[FFConverter alloc] initWithSourceWidth:[_options sourceWidth]
-   sourceHeight:[_options sourceHeight]
-   sourcePixelFormat:[_options sourcePixelFormat]
-   destWidth:[_options width]
-   destHeight:[_options height]
-   destPixelFormat:[_options pixelFormat]];
-   */
+- (BOOL)close:(NSError **)error {
+  if (_open) {
+    BOOL closed = [_processor close:error];
+    _open = NO;
+    return closed;
+  }
+  return NO;
 }  
 
 @end

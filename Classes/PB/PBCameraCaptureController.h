@@ -14,6 +14,10 @@
 @interface PBCameraCaptureController : UIViewController {
   FFPlayerView *_playerView;
   FFAVCaptureSessionReader *_reader;
+  
+  id<FFFilter> _filter;
 }
+
+@property (retain, nonatomic) id<FFFilter> filter;
 
 @end

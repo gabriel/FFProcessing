@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		0001B1D311573C1D00109D45 /* FFProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001B1D211573C1D00109D45 /* FFProcessing.m */; };
 		0001B1D61157413D00109D45 /* FFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0001B1D51157413D00109D45 /* FFConverter.m */; };
-		00032D861193F7B2008389DA /* PBCameraCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00032D851193F7B2008389DA /* PBCameraCaptureController.m */; };
 		00032D871193F7B2008389DA /* PBCameraCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00032D851193F7B2008389DA /* PBCameraCaptureController.m */; };
+		00062E001197CD0100AC040C /* FFErodeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 00062DFF1197CD0100AC040C /* FFErodeFilter.m */; };
+		00062E011197CD0100AC040C /* FFErodeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 00062DFF1197CD0100AC040C /* FFErodeFilter.m */; };
 		0007418E1161D26C00D8283B /* FFProcessingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0007418D1161D26C00D8283B /* FFProcessingTest.m */; };
 		000A660E118BFCD20018CF7C /* FFFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 000A660D118BFCD20018CF7C /* FFFilters.m */; };
 		000A660F118BFCD20018CF7C /* FFFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = 000A660D118BFCD20018CF7C /* FFFilters.m */; };
@@ -76,6 +77,7 @@
 		00234C96116DB97800088651 /* short2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 00234C94116DB97800088651 /* short2.mov */; };
 		00235032116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
 		00235033116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
+		003AEC4F119923470074D7F0 /* libGHUnitIPhone4_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 003AEC4E1199233E0074D7F0 /* libGHUnitIPhone4_0.a */; };
 		007B05C011893F34003B3A5B /* FFEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05BF11893F34003B3A5B /* FFEdgeFilter.m */; };
 		007B05C111893F34003B3A5B /* FFEdgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05BF11893F34003B3A5B /* FFEdgeFilter.m */; };
 		007B05EE118942AE003B3A5B /* FFEncodeProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */; };
@@ -148,7 +150,6 @@
 		00BBEBC1119402B5001BE653 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEBC0119402B5001BE653 /* CoreMedia.framework */; };
 		00BBEBC7119402C6001BE653 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEBC6119402C6001BE653 /* CoreVideo.framework */; };
 		00BBEBFC11940AEB001BE653 /* FFAVCaptureSessionReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */; };
-		00BBEBFD11940AEB001BE653 /* FFAVCaptureSessionReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 00BBEBFB11940AEB001BE653 /* FFAVCaptureSessionReader.m */; };
 		00C6EA691193CCE0001B5EF4 /* PBCameraPickerCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6EA681193CCE0001B5EF4 /* PBCameraPickerCaptureController.m */; };
 		00C6EA6A1193CCE0001B5EF4 /* PBCameraPickerCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6EA681193CCE0001B5EF4 /* PBCameraPickerCaptureController.m */; };
 		00CA0FDA1163034900664274 /* FFReadThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 00CA0FD91163034900664274 /* FFReadThread.m */; };
@@ -173,7 +174,6 @@
 		00DB9ACC116460D4002A7F8F /* PBProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACB116460D4002A7F8F /* PBProcessing.m */; };
 		00DB9ACD116460D4002A7F8F /* PBProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACB116460D4002A7F8F /* PBProcessing.m */; };
 		00DB9AD0116461CD002A7F8F /* PBApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACF116461CD002A7F8F /* PBApplicationController.m */; };
-		00DB9AD1116461CD002A7F8F /* PBApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00DB9ACF116461CD002A7F8F /* PBApplicationController.m */; };
 		00DB9C5C11647A3E002A7F8F /* README in Resources */ = {isa = PBXBuildFile; fileRef = 00129F7E1154A41B00D09836 /* README */; };
 		00DB9C5D11647A3E002A7F8F /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 0012A0541154AE3100D09836 /* test.png */; };
 		00DB9C6311647A3E002A7F8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -222,8 +222,24 @@
 		00DDF543115F3F6600310925 /* GHTextureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00129F3511549B3500D09836 /* GHTextureManager.m */; };
 		00DDF545115F3F6C00310925 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		00DDF547115F3F6F00310925 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DDF3F5115F3C8F00310925 /* CoreFoundation.framework */; };
+		00F57D9511991A1200ED284D /* GHGLUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F57D9411991A1200ED284D /* GHGLUtils.m */; };
+		00F57D9611991A1200ED284D /* GHGLUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F57D9411991A1200ED284D /* GHGLUtils.m */; };
+		00F57DA711991B0E00ED284D /* GHGLUtilsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F57DA611991B0E00ED284D /* GHGLUtilsTest.m */; };
+		00F57DD511991E2E00ED284D /* libcv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 001E7A7C118FF848009E8C00 /* libcv.a */; };
+		00F57DD611991E2E00ED284D /* libcvaux.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 001E7A7D118FF848009E8C00 /* libcvaux.a */; };
+		00F57DD711991E2E00ED284D /* libcxcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 001E7A7E118FF848009E8C00 /* libcxcore.a */; };
+		00F57DD811991E2E00ED284D /* libml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB6E1193FBCB001BE653 /* libml.a */; };
+		00F57DD911991E2E00ED284D /* libhighgui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB6F1193FBCB001BE653 /* libhighgui.a */; };
+		00F57DDB11991E3300ED284D /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB741193FBF6001BE653 /* libstdc++.dylib */; };
+		00F57E0011991EC000ED284D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEBC0119402B5001BE653 /* CoreMedia.framework */; };
+		00F57E0111991EC000ED284D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEBC6119402C6001BE653 /* CoreVideo.framework */; };
+		00F57E0811991EEE00ED284D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB5D1193FB9F001BE653 /* CoreGraphics.framework */; };
+		00F57E0911991EEE00ED284D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB5F1193FB9F001BE653 /* MediaPlayer.framework */; };
+		00F57E0A11991EEE00ED284D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB611193FB9F001BE653 /* MobileCoreServices.framework */; };
+		00F57E0B11991EEE00ED284D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB631193FB9F001BE653 /* OpenGLES.framework */; };
+		00F57E0C11991EEE00ED284D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB651193FB9F001BE653 /* UIKit.framework */; };
+		00F57F191199207500ED284D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BBEB811193FC59001BE653 /* AVFoundation.framework */; };
 		00F824CA1165A43600175A32 /* GHUnitIPhoneTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F824C41165A43600175A32 /* GHUnitIPhoneTestMain.m */; };
-		00F824CB1165A43600175A32 /* libGHUnitIPhone3_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00F824C61165A43600175A32 /* libGHUnitIPhone3_0.a */; };
 		00F824FD1165A9C400175A32 /* FFCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F824FC1165A9C400175A32 /* FFCodec.m */; };
 		00F824FE1165A9C400175A32 /* FFCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F824FC1165A9C400175A32 /* FFCodec.m */; };
 		00F824FF1165A9C400175A32 /* FFCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F824FC1165A9C400175A32 /* FFCodec.m */; };
@@ -240,6 +256,8 @@
 		0001B1D51157413D00109D45 /* FFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFConverter.m; sourceTree = "<group>"; };
 		00032D841193F7B2008389DA /* PBCameraCaptureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBCameraCaptureController.h; sourceTree = "<group>"; };
 		00032D851193F7B2008389DA /* PBCameraCaptureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBCameraCaptureController.m; sourceTree = "<group>"; };
+		00062DFE1197CD0100AC040C /* FFErodeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFErodeFilter.h; sourceTree = "<group>"; };
+		00062DFF1197CD0100AC040C /* FFErodeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFErodeFilter.m; sourceTree = "<group>"; };
 		0007418D1161D26C00D8283B /* FFProcessingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFProcessingTest.m; sourceTree = "<group>"; };
 		000A660C118BFCD20018CF7C /* FFFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFFilters.h; sourceTree = "<group>"; };
 		000A660D118BFCD20018CF7C /* FFFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFFilters.m; sourceTree = "<group>"; };
@@ -303,6 +321,7 @@
 		00234C93116DB97800088651 /* short1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short1.mov; sourceTree = "<group>"; };
 		00234C94116DB97800088651 /* short2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short2.mov; sourceTree = "<group>"; };
 		00235030116EDE5100088651 /* libxvidcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libxvidcore.a; sourceTree = "<group>"; };
+		003AEC4E1199233E0074D7F0 /* libGHUnitIPhone4_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGHUnitIPhone4_0.a; sourceTree = "<group>"; };
 		007B05BE11893F34003B3A5B /* FFEdgeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEdgeFilter.h; sourceTree = "<group>"; };
 		007B05BF11893F34003B3A5B /* FFEdgeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEdgeFilter.m; sourceTree = "<group>"; };
 		007B05C211893FE5003B3A5B /* FFFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFFilter.h; sourceTree = "<group>"; };
@@ -433,6 +452,9 @@
 		00DDF3EF115F3C7200310925 /* Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00DDF3F1115F3C7200310925 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		00DDF3F5115F3C8F00310925 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		00F57D9311991A1200ED284D /* GHGLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHGLUtils.h; sourceTree = "<group>"; };
+		00F57D9411991A1200ED284D /* GHGLUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHGLUtils.m; sourceTree = "<group>"; };
+		00F57DA611991B0E00ED284D /* GHGLUtilsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHGLUtilsTest.m; sourceTree = "<group>"; };
 		00F824BA1165A43600175A32 /* GHAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHAsyncTestCase.h; sourceTree = "<group>"; };
 		00F824BB1165A43600175A32 /* GHTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTest.h; sourceTree = "<group>"; };
 		00F824BC1165A43600175A32 /* GHTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHTestCase.h; sourceTree = "<group>"; };
@@ -445,7 +467,6 @@
 		00F824C31165A43600175A32 /* GHUnitIPhoneAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUnitIPhoneAppDelegate.h; sourceTree = "<group>"; };
 		00F824C41165A43600175A32 /* GHUnitIPhoneTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUnitIPhoneTestMain.m; sourceTree = "<group>"; };
 		00F824C51165A43600175A32 /* GHUNSObject+Swizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GHUNSObject+Swizzle.h"; sourceTree = "<group>"; };
-		00F824C61165A43600175A32 /* libGHUnitIPhone3_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGHUnitIPhone3_0.a; sourceTree = "<group>"; };
 		00F824C71165A43600175A32 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		00F824C81165A43600175A32 /* NSException+GHTestFailureExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSException+GHTestFailureExceptions.h"; sourceTree = "<group>"; };
 		00F824C91165A43600175A32 /* NSValue+GHValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+GHValueFormatter.h"; sourceTree = "<group>"; };
@@ -499,12 +520,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00F57E0C11991EEE00ED284D /* UIKit.framework in Frameworks */,
+				003AEC4F119923470074D7F0 /* libGHUnitIPhone4_0.a in Frameworks */,
 				00DDF50A115F3E0100310925 /* Foundation.framework in Frameworks */,
-				00DDF50B115F3E0200310925 /* libbz2.dylib in Frameworks */,
-				00DDF50C115F3E0200310925 /* libz.dylib in Frameworks */,
 				00DDF545115F3F6C00310925 /* QuartzCore.framework in Frameworks */,
 				00DDF547115F3F6F00310925 /* CoreFoundation.framework in Frameworks */,
-				00F824CB1165A43600175A32 /* libGHUnitIPhone3_0.a in Frameworks */,
+				00F57E0811991EEE00ED284D /* CoreGraphics.framework in Frameworks */,
+				00F57E0911991EEE00ED284D /* MediaPlayer.framework in Frameworks */,
+				00F57E0A11991EEE00ED284D /* MobileCoreServices.framework in Frameworks */,
+				00F57E0B11991EEE00ED284D /* OpenGLES.framework in Frameworks */,
+				00F57E0011991EC000ED284D /* CoreMedia.framework in Frameworks */,
+				00F57E0111991EC000ED284D /* CoreVideo.framework in Frameworks */,
+				00F57F191199207500ED284D /* AVFoundation.framework in Frameworks */,
+				00F57DDB11991E3300ED284D /* libstdc++.dylib in Frameworks */,
+				00F57DD511991E2E00ED284D /* libcv.a in Frameworks */,
+				00F57DD611991E2E00ED284D /* libcvaux.a in Frameworks */,
+				00F57DD711991E2E00ED284D /* libcxcore.a in Frameworks */,
+				00F57DD811991E2E00ED284D /* libml.a in Frameworks */,
+				00F57DD911991E2E00ED284D /* libhighgui.a in Frameworks */,
+				00DDF50B115F3E0200310925 /* libbz2.dylib in Frameworks */,
+				00DDF50C115F3E0200310925 /* libz.dylib in Frameworks */,
 				000DD3BA1166C656007E8546 /* libavcodec.a in Frameworks */,
 				000DD3BB1166C656007E8546 /* libavdevice.a in Frameworks */,
 				000DD3BC1166C656007E8546 /* libavfilter.a in Frameworks */,
@@ -670,6 +705,8 @@
 				00129F3311549B3500D09836 /* GHQuaternion.h */,
 				00129F3411549B3500D09836 /* GHTextureManager.h */,
 				00129F3511549B3500D09836 /* GHTextureManager.m */,
+				00F57D9311991A1200ED284D /* GHGLUtils.h */,
+				00F57D9411991A1200ED284D /* GHGLUtils.m */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -731,6 +768,8 @@
 				000A660D118BFCD20018CF7C /* FFFilters.m */,
 				001E7A87118FFA0B009E8C00 /* FFCannyEdgeFilter.h */,
 				001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */,
+				00062DFE1197CD0100AC040C /* FFErodeFilter.h */,
+				00062DFF1197CD0100AC040C /* FFErodeFilter.m */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -899,6 +938,7 @@
 		00DDF3E8115F3BB200310925 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				00F57DA511991B0000ED284D /* OpenGL */,
 				00DDF3E9115F3BCC00310925 /* FFEncoderTest.m */,
 				0007418D1161D26C00D8283B /* FFProcessingTest.m */,
 				00F825001165AE3600175A32 /* FFCodecTest.m */,
@@ -919,9 +959,18 @@
 			path = Libraries;
 			sourceTree = "<group>";
 		};
+		00F57DA511991B0000ED284D /* OpenGL */ = {
+			isa = PBXGroup;
+			children = (
+				00F57DA611991B0E00ED284D /* GHGLUtilsTest.m */,
+			);
+			path = OpenGL;
+			sourceTree = "<group>";
+		};
 		00F824B91165A43600175A32 /* libGHUnitIPhone3_0 */ = {
 			isa = PBXGroup;
 			children = (
+				003AEC4E1199233E0074D7F0 /* libGHUnitIPhone4_0.a */,
 				00F824BA1165A43600175A32 /* GHAsyncTestCase.h */,
 				00F824BB1165A43600175A32 /* GHTest.h */,
 				00F824BC1165A43600175A32 /* GHTestCase.h */,
@@ -934,7 +983,6 @@
 				00F824C31165A43600175A32 /* GHUnitIPhoneAppDelegate.h */,
 				00F824C41165A43600175A32 /* GHUnitIPhoneTestMain.m */,
 				00F824C51165A43600175A32 /* GHUNSObject+Swizzle.h */,
-				00F824C61165A43600175A32 /* libGHUnitIPhone3_0.a */,
 				00F824C71165A43600175A32 /* Makefile */,
 				00F824C81165A43600175A32 /* NSException+GHTestFailureExceptions.h */,
 				00F824C91165A43600175A32 /* NSValue+GHValueFormatter.h */,
@@ -1193,6 +1241,8 @@
 				00C6EA691193CCE0001B5EF4 /* PBCameraPickerCaptureController.m in Sources */,
 				00032D871193F7B2008389DA /* PBCameraCaptureController.m in Sources */,
 				00BBEBFC11940AEB001BE653 /* FFAVCaptureSessionReader.m in Sources */,
+				00062E011197CD0100AC040C /* FFErodeFilter.m in Sources */,
+				00F57D9611991A1200ED284D /* GHGLUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1221,7 +1271,6 @@
 				00CA114A116328BA00664274 /* PBImagePickerController.m in Sources */,
 				00A313D41163E2B20065101E /* PBMoviePlayerController.m in Sources */,
 				00DB9ACC116460D4002A7F8F /* PBProcessing.m in Sources */,
-				00DB9AD1116461CD002A7F8F /* PBApplicationController.m in Sources */,
 				00F824CA1165A43600175A32 /* GHUnitIPhoneTestMain.m in Sources */,
 				00F824FF1165A9C400175A32 /* FFCodec.m in Sources */,
 				00F825011165AE3600175A32 /* FFCodecTest.m in Sources */,
@@ -1256,8 +1305,9 @@
 				000A6664118C02940018CF7C /* FFTypes.m in Sources */,
 				001E7A8B118FFA0B009E8C00 /* FFCannyEdgeFilter.m in Sources */,
 				00C6EA6A1193CCE0001B5EF4 /* PBCameraPickerCaptureController.m in Sources */,
-				00032D861193F7B2008389DA /* PBCameraCaptureController.m in Sources */,
-				00BBEBFD11940AEB001BE653 /* FFAVCaptureSessionReader.m in Sources */,
+				00062E001197CD0100AC040C /* FFErodeFilter.m in Sources */,
+				00F57D9511991A1200ED284D /* GHGLUtils.m in Sources */,
+				00F57DA711991B0E00ED284D /* GHGLUtilsTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1352,6 +1402,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 00DB9CD11164810D002A7F8F /* Tests.xcconfig */;
 			buildSettings = {
+				SDKROOT = iphonesimulator4.0;
 			};
 			name = Debug;
 		};
@@ -1359,7 +1410,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 00DB9CD11164810D002A7F8F /* Tests.xcconfig */;
 			buildSettings = {
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphonesimulator4.0;
 			};
 			name = Release;
 		};

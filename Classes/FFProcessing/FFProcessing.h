@@ -26,6 +26,8 @@
   id<FFFilter>_filter;
   id<FFProcessor> _processor;
   
+  BOOL _open;
+  
   FFDecoder *_decoder;
   AVFrame *_decoderFrame;
   FFAVFrame _decodedFrame;
@@ -46,5 +48,7 @@
 - (BOOL)processURL:(NSURL *)URL format:(NSString *)format index:(NSInteger)index count:(NSInteger)count error:(NSError **)error;
 
 - (void)cancel;
+
+- (BOOL)close:(NSError **)error;
 
 @end

@@ -34,6 +34,10 @@
 	id _displayLink;
 	BOOL _displayLinkSupported;
     
+  GLint _maxTextureSize;
+  BOOL _supportsBGRA8888;
+  BOOL _supportsNPOT;
+  
 	id<GHGLViewDrawable> _drawable; // weak
 		
 }
@@ -46,5 +50,15 @@
 - (void)startAnimation;
 - (void)stopAnimation;
 - (void)drawView;
+
+@end
+
+
+@interface GHGLViewDrawable : NSObject <GHGLViewDrawable> {
+  GLuint _videoTexture[1];
+  BOOL _textureLoaded;
+}
+
+- (void)drawInRect:(CGRect)rect;
 
 @end

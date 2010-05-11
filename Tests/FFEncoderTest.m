@@ -18,13 +18,18 @@
 
 - (void)testEncoding {
   NSString *path = [[FFUtils documentsDirectory] stringByAppendingPathComponent:@"test.mp4"];
-  FFOptions *options = [[FFOptions alloc] initWithWidth:320 height:480 pixelFormat:PIX_FMT_YUV420P];
-  FFEncoder *encoder = [[FFEncoder alloc] initWithOptions:options presets:[[[FFPresets alloc] init] autorelease]
-                                                   path:path format:nil codecName:nil];
+  NSString *outputFormat = @"mp4";
+  NSString *outputCodecName = @"mpeg4";
+  FFAVFormat avFormat = FFAVFormatMake(320, 480, PIX_FMT_YUV420P);
+  
+  FFEncoderOptions *options = [[FFEncoderOptions alloc] initWithPath:path format:outputFormat codecName:outputCodecName
+                                                            avFormat:avFormat
+                                                       videoTimeBase:(AVRational){0,1}];
+  FFEncoder *encoder = [[FFEncoder alloc] initWithOptions:options];
   NSError *error = nil;
   
-  AVFrame *picture = FFPictureCreate(PIX_FMT_YUV420P, 320, 480);
-  GHAssertNotNULL(picture, nil);
+  FFAVFrame avFrame = FFAVFrameCreate(avFormat);
+  GHAssertNotNULL(avFrame.frame, nil);
   
   GHAssertTrue([encoder open:&error], nil);
   
@@ -32,15 +37,15 @@
 
   // Fill in dummy picture data
   for (NSUInteger i = 0; i < 200; i++) {
-    FFFillYUVImage(picture, i, 320, 480);    
-    GHAssertTrue([encoder writeVideoFrame:picture error:&error], nil);
+    FFFillYUVImage(avFrame, i);    
+    GHAssertTrue([encoder writeVideoFrame:avFrame.frame error:&error], nil);
   }
   
   GHAssertTrue([encoder writeTrailer:&error], nil);
   
   [encoder close];
   
-  FFPictureRelease(picture);
+  FFAVFrameRelease(avFrame);
   
   [encoder release];
 }  

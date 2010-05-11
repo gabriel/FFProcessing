@@ -3,7 +3,7 @@
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 5/7/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #import <AVFoundation/AVFoundation.h>

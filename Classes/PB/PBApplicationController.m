@@ -11,6 +11,9 @@
 #import "FFUtils.h"
 #import "PBUIItem.h"
 #import "YPUIAlertView.h"
+#import "PBCameraCaptureController.h"
+#import "FFCannyEdgeFilter.h"
+#import "FFErodeFilter.h"
 
 @implementation PBApplicationController
 
@@ -43,7 +46,8 @@
   [items addObject:[PBUIItem text:@"Play Movie" target:self action:@selector(openMoviePlayerController)]];
   [items addObject:[PBUIItem text:@"Save" target:self action:@selector(saveMovieToPhotosAlbum)]];
   [items addObject:[PBUIItem text:@"Camera Capture" target:self action:@selector(openCameraCapture)]];  
-  
+  [items addObject:[PBUIItem text:@"Camera Capture (Edge)" target:self action:@selector(openCameraCaptureEdge)]];  
+  [items addObject:[PBUIItem text:@"Camera Capture (Test)" target:self action:@selector(openCameraCaptureTest)]];  
   [self setItems:items];
   
   if (!_mediaListViewController) {
@@ -94,9 +98,23 @@
 }
 
 - (void)openCameraCapture {
-  if (!_cameraCaptureController)
-    _cameraCaptureController = [[PBCameraCaptureController alloc] init];
-  [self.navigationController pushViewController:_cameraCaptureController animated:YES];
+  PBCameraCaptureController *cameraCaptureController = [[PBCameraCaptureController alloc] init];
+  [self.navigationController pushViewController:cameraCaptureController animated:YES];
+  [cameraCaptureController release];
+}
+
+- (void)openCameraCaptureEdge {
+  PBCameraCaptureController *cameraCaptureController = [[PBCameraCaptureController alloc] init];
+  cameraCaptureController.filter = [[[FFCannyEdgeFilter alloc] init] autorelease];
+  [self.navigationController pushViewController:cameraCaptureController animated:YES];
+  [cameraCaptureController release];
+}
+
+- (void)openCameraCaptureTest {
+  PBCameraCaptureController *cameraCaptureController = [[PBCameraCaptureController alloc] init];
+  cameraCaptureController.filter = [[[FFErodeFilter alloc] init] autorelease];
+  [self.navigationController pushViewController:cameraCaptureController animated:YES];
+  [cameraCaptureController release];
 }
 
 - (void)_showError:(NSError *)error {

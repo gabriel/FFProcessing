@@ -41,7 +41,7 @@
   FFEncoderOptions *options = [[FFEncoderOptions alloc] initWithPath:_encoderOptions.path 
                                                               format:_encoderOptions.format
                                                            codecName:_encoderOptions.codecName
-                                                       avFormat:encoderAVFormat
+                                                            avFormat:encoderAVFormat
                                                        videoTimeBase:videoTimeBase];
   
   _encoder = [[FFEncoder alloc] initWithOptions:options];
