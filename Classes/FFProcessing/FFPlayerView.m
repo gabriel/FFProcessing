@@ -16,13 +16,10 @@
 
 @implementation FFPlayerView
 
-- (id)initWithFrame:(CGRect)frame reader:(id<FFReader>)reader filter:(id<FFFilter>)filter {
-  if ((self = [self initWithFrame:frame])) {
+- (id)initWithFrame:(CGRect)frame {
+  if ((self = [super initWithFrame:frame])) {
     
-    FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader filter:filter];
     // FFGLTestDrawable *drawable = [[FFGLTestDrawable alloc] init];
-    self.drawable = drawable;
-    [drawable release];      
 
     /*!
     _displayLabel = [[UILabel alloc] initWithFrame:CGRectMake(-145, 240, 320, 30)];
@@ -33,13 +30,12 @@
     [self addSubview:_displayLabel];
      */
   
-    [self setAnimationInterval:(1.0 / 10.0)];  
+    [self setAnimationInterval:(1.0 / 30.0)];  
   }
   return self;
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [_displayLabel release];
   [super dealloc];
 }
@@ -49,18 +45,6 @@
   FFDebug(@"%@", text);
   _displayLabel.hidden = NO;
   _displayLabel.text = text;
-}
-
-- (void)_onOpened {
-  _displayLabel.hidden = YES;
-}
-
-- (void)start {    
-  [self startAnimation];
-}
-
-- (void)stop {
-  [self stopAnimation];
 }
 
 @end

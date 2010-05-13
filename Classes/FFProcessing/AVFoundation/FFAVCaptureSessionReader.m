@@ -26,22 +26,18 @@
 }
 
 - (void)dealloc {
-  FFAVFrameRelease(_avFrame);
-  // Data is free above since it was set in the FFAVFrame
-  //av_free(_data);
+  [self close];
   [super dealloc];
 }
 
-- (BOOL)start:(NSError **)error {
-  [_captureSession release];
+- (BOOL)_start:(NSError **)error {
   _captureSession = [[AVCaptureSession alloc] init];
   AVCaptureDevice *videoCaptureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
   AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoCaptureDevice error:error];
   if (!videoInput) return NO;
   
   [_captureSession addInput:videoInput];
-  
-  [_videoOutput release];
+    
   _videoOutput = [[AVCaptureVideoDataOutput alloc] init];
   //_videoOutput.minFrameDuration = CMTimeMake(1, 10);
   _videoOutput.alwaysDiscardsLateVideoFrames = TRUE;
@@ -52,14 +48,36 @@
   
   [_captureSession addOutput:_videoOutput];  
   [_captureSession startRunning];
+  FFDebug(@"Started capture session");
   return YES;
 }
 
-- (void)stop {
+- (void)close {
+  if (!_captureSession) return;
+
   [_captureSession stopRunning];
+  [_captureSession release];
+  _captureSession = nil;
+  //_videoOutput.sampleBufferDelegate = nil;
+  [_videoOutput release];
+  _videoOutput = nil;
+  if (_avFrame.frame != NULL) {
+    FFAVFrameRelease(_avFrame);
+    // Data is free above since it was set in the FFAVFrame
+    //av_free(_data);  
+    _avFrame = FFAVFrameNone;
+  }
+  _data = NULL;
+  _dataSize = 0;  
+  FFDebug(@"Closed capture session");
 }
 
 - (FFAVFrame)nextFrame:(NSError **)error {
+  if (!_captureSession) {
+    [self _start:error];
+    return FFAVFrameNone;
+  }
+  
   if (_dataChanged) {
     //FFDebug(@"Next frame");
     FFAVFrameSetData(_avFrame, _data);
@@ -94,7 +112,7 @@
 
   // TODO(gabe): Fail if planar
   
-  FFDebug(@"width=%d, height=%d, size=%d", width, height, size);
+  //FFDebug(@"width=%d, height=%d, size=%d", width, height, size);
   
   if (_avFrame.frame == NULL) 
     _avFrame = FFAVFrameCreate(FFAVFormatMake(width, height, kPixelFormat));
@@ -105,7 +123,12 @@
     _data = av_malloc(size);
     _dataSize = size;
   }
-    
+  
+#if DEBUG
+  static NSInteger DebugCount = 0;
+  if (DebugCount++ % 30 == 0) FFDebug(@"[SAMPLE BUFFER]");
+#endif  
+  
   memcpy(_data, baseAddress, _dataSize); 
   _dataChanged = YES;
   

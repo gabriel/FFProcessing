@@ -43,10 +43,16 @@
 #endif
 			_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
 			
-			if (!_context || ![EAGLContext setCurrentContext:_context]) {
+			if (!_context) {
+        GHGLDebug(@"No GL context");
 				[self release];
 				return nil;
 			}
+      if (![EAGLContext setCurrentContext:_context]) {
+        GHGLDebug(@"Couldn't set current context");
+				[self release];
+				return nil;        
+      }
 #if kAttemptToUseOpenGLES2
 		}
 #endif
@@ -60,10 +66,6 @@
     GHGLDebug(@"Supports NPOT textures: %d", _supportsNPOT);
 			
 		_animationInterval = 1.0 / 10.0;
-		
-		// A system version of 3.1 or greater is required to use CADisplayLink. The NSTimer
-		// class is used as fallback when it isn't available.
-		// _displayLinkSupported = ([[[UIDevice currentDevice] systemVersion] compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending);	
 	}
 	return self;
 }
@@ -149,39 +151,30 @@
 }
 
 - (void)startAnimation {
-	if (_displayLinkSupported) {
-		// CADisplayLink is API new to iPhone SDK 3.1. Compiling against earlier versions will result in a warning, but can be dismissed
-		// if the system version runtime check for CADisplayLink exists in -initWithCoder:. The runtime check ensures this code will
-		// not be called in system versions earlier than 3.1.
-		
-//		_displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(drawView)];
-//		[_displayLink setFrameInterval:_animationInterval];
-//		[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-	} else {	
-		self.animationTimer = [NSTimer scheduledTimerWithTimeInterval:_animationInterval target:self selector:@selector(drawView) userInfo:nil repeats:YES];
-	}
+  if (!_displayLink) {
+    GHGLDebug(@"Start animation");
+    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView)];  
+    [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [_drawable start];
+  }
+}
+
+- (BOOL)isAnimating {
+  return (!!_displayLink);
 }
 
 - (void)stopAnimation {
-	if (_displayLinkSupported) {
-		[_displayLink invalidate];
-		_displayLink = nil;
-	} else {	
-		self.animationTimer = nil;
-	}
-}
-
-- (void)setAnimationTimer:(NSTimer *)timer {
-	[_animationTimer invalidate];
-	_animationTimer = timer;
+  if (_displayLink) {
+    GHGLDebug(@"Stop animation");
+    [_displayLink invalidate];
+    _displayLink = nil;
+    [_drawable stop];
+  }
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)animationInterval {
 	_animationInterval = animationInterval;
-	if (_animationTimer) {
-		[self stopAnimation];
-		[self startAnimation];
-	}
+  [_displayLink setFrameInterval:_animationInterval];
 }
 
 @end
@@ -267,5 +260,8 @@
   // Subclasses should implement
   return NO;
 }
+
+- (void)start { }
+- (void)stop { }
 
 @end

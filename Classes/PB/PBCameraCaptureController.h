@@ -9,15 +9,11 @@
 #import "FFAVCaptureSessionReader.h"
 
 #import "FFPlayerView.h"
-#import "FFAVCaptureSessionReader.h"
 
 @interface PBCameraCaptureController : UIViewController {
   FFPlayerView *_playerView;
-  FFAVCaptureSessionReader *_reader;
-  
-  id<FFFilter> _filter;
 }
 
-@property (retain, nonatomic) id<FFFilter> filter;
+- (void)setFilter:(id<FFFilter>)filter;
 
 @end

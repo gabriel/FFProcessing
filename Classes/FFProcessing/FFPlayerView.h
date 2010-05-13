@@ -13,10 +13,6 @@
   UILabel *_displayLabel;  
 }
 
-- (id)initWithFrame:(CGRect)frame reader:(id<FFReader>)reader filter:(id<FFFilter>)filter;
-
-- (void)start;
-
-- (void)stop;
+- (id)initWithFrame:(CGRect)frame;
 
 @end

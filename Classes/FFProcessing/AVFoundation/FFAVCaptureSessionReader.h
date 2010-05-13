@@ -23,8 +23,4 @@
   FFConverter *_converter;
 }
 
-- (BOOL)start:(NSError **)error;
-
-- (void)stop;
-
 @end

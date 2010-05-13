@@ -21,11 +21,18 @@
 }
 
 - (void)dealloc {
+  [self close];
+  [super dealloc];
+}
+
+- (void)close {
   [_readThread close];
   [_readThread release];
+  _readThread = nil;
   [_converter release];
-  FFAVFrameRelease(_avFrame);
-  [super dealloc];
+  _converter = nil;
+  FFAVFrameRelease(_avFrame);  
+  _avFrame = FFAVFrameNone;
 }
 
 - (FFAVFrame)nextFrame:(NSError **)error {  

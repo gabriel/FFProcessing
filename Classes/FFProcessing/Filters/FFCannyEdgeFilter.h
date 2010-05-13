@@ -12,7 +12,6 @@
   IplImage *_image;
   IplImage *_grey;
   IplImage *_edges;
-  IplImage *_output;
 }
 
 @end

@@ -11,6 +11,7 @@
 
 @protocol FFReader <NSObject>
 - (FFAVFrame)nextFrame:(NSError **)error;
+- (void)close;
 @end
 
 @interface FFReader : NSObject <FFReader> {

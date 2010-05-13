@@ -165,6 +165,8 @@
 		00D16CCB11688B9B00D025EF /* FFDecoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */; };
 		00D16CCC11688B9B00D025EF /* FFDecoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */; };
 		00D16CCD11688B9B00D025EF /* FFDecoderOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */; };
+		00D50847119BF8B200693640 /* FFDilateFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D50846119BF8B200693640 /* FFDilateFilter.m */; };
+		00D50848119BF8B200693640 /* FFDilateFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D50846119BF8B200693640 /* FFDilateFilter.m */; };
 		00D7706B115B29A300CF9F22 /* FFEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D7706A115B29A300CF9F22 /* FFEncoder.m */; };
 		00D77083115B331600CF9F22 /* FFUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D77082115B331600CF9F22 /* FFUtils.m */; };
 		00D84C1D11816F3100280DBE /* PBSaveThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D84C1C11816F3100280DBE /* PBSaveThread.m */; };
@@ -427,6 +429,8 @@
 		00D16CCA11688B9B00D025EF /* FFDecoderOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDecoderOptions.m; sourceTree = "<group>"; };
 		00D16D6A11692FE700D025EF /* output.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = output.mp4; sourceTree = "<group>"; };
 		00D16E5C11694A8700D025EF /* test-x264.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-x264.mp4"; sourceTree = "<group>"; };
+		00D50845119BF8B200693640 /* FFDilateFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDilateFilter.h; sourceTree = "<group>"; };
+		00D50846119BF8B200693640 /* FFDilateFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDilateFilter.m; sourceTree = "<group>"; };
 		00D77069115B29A300CF9F22 /* FFEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFEncoder.h; sourceTree = "<group>"; };
 		00D7706A115B29A300CF9F22 /* FFEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEncoder.m; sourceTree = "<group>"; };
 		00D77081115B331600CF9F22 /* FFUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFUtils.h; sourceTree = "<group>"; };
@@ -764,6 +768,8 @@
 				001E7A88118FFA0B009E8C00 /* FFCannyEdgeFilter.m */,
 				00062DFE1197CD0100AC040C /* FFErodeFilter.h */,
 				00062DFF1197CD0100AC040C /* FFErodeFilter.m */,
+				00D50845119BF8B200693640 /* FFDilateFilter.h */,
+				00D50846119BF8B200693640 /* FFDilateFilter.m */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -1236,6 +1242,7 @@
 				00BBEBFC11940AEB001BE653 /* FFAVCaptureSessionReader.m in Sources */,
 				00062E011197CD0100AC040C /* FFErodeFilter.m in Sources */,
 				00F57D9611991A1200ED284D /* GHGLUtils.m in Sources */,
+				00D50847119BF8B200693640 /* FFDilateFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1300,6 +1307,7 @@
 				00062E001197CD0100AC040C /* FFErodeFilter.m in Sources */,
 				00F57D9511991A1200ED284D /* GHGLUtils.m in Sources */,
 				00F57DA711991B0E00ED284D /* GHGLUtilsTest.m in Sources */,
+				00D50848119BF8B200693640 /* FFDilateFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

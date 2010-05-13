@@ -28,12 +28,27 @@
   [super dealloc];
 }
 
-- (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view {
+- (void)start { }
 
+- (void)stop {
+  [_reader close];
+}
+
+- (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view {
+  NSAssert(_reader, @"No reader");
+
+  BOOL debugFrame = NO;
+#if DEBUG
+  static NSInteger DebugCount = 0;
+  if (DebugCount++ % 30 == 0) debugFrame = YES;
+  if (debugFrame) FFDebug(@"[DEBUG FRAME]");
+#endif
+  
   FFAVFrame avFrame = [_reader nextFrame:nil];
   if (avFrame.frame == NULL) return NO;
   
   if (_filter) {
+    if (debugFrame) FFDebug(@"Applying filter...");
     avFrame = [_filter filterAVFrame:avFrame error:nil];
     if (avFrame.frame == NULL) return NO;
   }
@@ -41,6 +56,8 @@
   uint8_t *nextData = avFrame.frame->data[0];
   if (nextData == NULL) return NO;
     
+  if (debugFrame) FFDebug(@"Rendering...");
+  
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	glLoadIdentity();
 

@@ -14,6 +14,7 @@
 #import "PBCameraCaptureController.h"
 #import "FFCannyEdgeFilter.h"
 #import "FFErodeFilter.h"
+#import "FFDilateFilter.h"
 
 @implementation PBApplicationController
 
@@ -47,7 +48,8 @@
   [items addObject:[PBUIItem text:@"Save" target:self action:@selector(saveMovieToPhotosAlbum)]];
   [items addObject:[PBUIItem text:@"Camera Capture" target:self action:@selector(openCameraCapture)]];  
   [items addObject:[PBUIItem text:@"Camera Capture (Edge)" target:self action:@selector(openCameraCaptureEdge)]];  
-  [items addObject:[PBUIItem text:@"Camera Capture (Test)" target:self action:@selector(openCameraCaptureTest)]];  
+  [items addObject:[PBUIItem text:@"Camera Capture (Erode)" target:self action:@selector(openCameraCaptureErode)]];  
+  [items addObject:[PBUIItem text:@"Camera Capture (Dilate)" target:self action:@selector(openCameraCaptureDilate)]];    
   [self setItems:items];
   
   if (!_mediaListViewController) {
@@ -97,24 +99,33 @@
   }
 }
 
+- (PBCameraCaptureController *)cameraCaptureControllerWithFilter:(id<FFFilter>)filter {
+  if (!_cameraCaptureController)
+    _cameraCaptureController = [[PBCameraCaptureController alloc] init];
+  [_cameraCaptureController setFilter:filter];
+  return _cameraCaptureController;
+}
+
 - (void)openCameraCapture {
-  PBCameraCaptureController *cameraCaptureController = [[PBCameraCaptureController alloc] init];
-  [self.navigationController pushViewController:cameraCaptureController animated:YES];
-  [cameraCaptureController release];
+  [self.navigationController pushViewController:[self cameraCaptureControllerWithFilter:nil] animated:YES];
 }
 
 - (void)openCameraCaptureEdge {
-  PBCameraCaptureController *cameraCaptureController = [[PBCameraCaptureController alloc] init];
-  cameraCaptureController.filter = [[[FFCannyEdgeFilter alloc] init] autorelease];
-  [self.navigationController pushViewController:cameraCaptureController animated:YES];
-  [cameraCaptureController release];
+  id<FFFilter> filter = [[FFCannyEdgeFilter alloc] init];
+  [self.navigationController pushViewController:[self cameraCaptureControllerWithFilter:filter] animated:YES];
+  [filter release];
 }
 
-- (void)openCameraCaptureTest {
-  PBCameraCaptureController *cameraCaptureController = [[PBCameraCaptureController alloc] init];
-  cameraCaptureController.filter = [[[FFErodeFilter alloc] init] autorelease];
-  [self.navigationController pushViewController:cameraCaptureController animated:YES];
-  [cameraCaptureController release];
+- (void)openCameraCaptureErode {
+  id<FFFilter> filter = [[FFErodeFilter alloc] init];
+  [self.navigationController pushViewController:[self cameraCaptureControllerWithFilter:filter] animated:YES];
+  [filter release];
+}
+
+- (void)openCameraCaptureDilate {
+  id<FFFilter> filter = [[FFDilateFilter alloc] init];
+  [self.navigationController pushViewController:[self cameraCaptureControllerWithFilter:filter] animated:YES];
+  [filter release];
 }
 
 - (void)_showError:(NSError *)error {

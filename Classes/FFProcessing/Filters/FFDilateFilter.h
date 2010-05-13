@@ -1,16 +1,15 @@
 //
-//  FFErodeFilter.h
+//  FFDilateFilter.h
 //  FFProcessing
 //
-//  Created by Gabriel Handford on 5/9/10.
+//  Created by Gabriel Handford on 5/13/10.
 //  Copyright 2010. All rights reserved.
 //
 
 #import "cv.h"
-
 #import "FFFilter.h"
 
-@interface FFErodeFilter : NSObject <FFFilter> {
+@interface FFDilateFilter : NSObject <FFFilter> {
   IplImage *_image;
 }
 

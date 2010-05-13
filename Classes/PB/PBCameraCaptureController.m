@@ -8,34 +8,40 @@
 
 #import "PBCameraCaptureController.h"
 #import "FFUtils.h"
+#import "FFAVCaptureSessionReader.h"
+#import "FFGLDrawable.h"
 
 @implementation PBCameraCaptureController
 
-@synthesize filter=_filter;
-
 - (void)dealloc {
-  [_reader release];
   [_playerView release];
-  [_filter release];
   [super dealloc];
 }
 
 - (void)loadView {
-  _reader = [[FFAVCaptureSessionReader alloc] init];
-  _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 416) reader:_reader filter:_filter];
+  if (!_playerView)
+    _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];  
   self.view = _playerView;
+}
+
+- (void)setFilter:(id<FFFilter>)filter {
+  NSAssert(![_playerView isAnimating], @"Can't set filter while animating");
+  
+  FFAVCaptureSessionReader *reader = [[FFAVCaptureSessionReader alloc] init];
+  FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader filter:filter];
+  _playerView.drawable = drawable;
+  [drawable release];
+  [reader release];  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  [_playerView start];
-  [_reader start:nil];
+  [_playerView startAnimation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  [_reader stop];
-  [_playerView stop];
+  [_playerView stopAnimation];
 }
 
 @end

@@ -11,6 +11,8 @@
 @class GHGLView;
 
 @protocol GHGLViewDrawable <NSObject>
+- (void)start;
+- (void)stop;
 - (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view;
 - (void)setupView:(GHGLView *)view;
 @end
@@ -24,15 +26,9 @@
 	GLuint _viewFramebuffer;
 	GLuint _depthRenderbuffer;
       
-	NSTimer *_animationTimer;
 	NSTimeInterval _animationInterval;
 	
-	// Use of the CADisplayLink class is the preferred method for controlling your animation timing.
-	// CADisplayLink will link to the main display and fire every vsync when added to a given run-loop.
-	// The NSTimer class is used only as fallback when running on a pre 3.1 device where CADisplayLink
-	// isn't available.
-	id _displayLink;
-	BOOL _displayLinkSupported;
+	CADisplayLink *_displayLink;
     
   GLint _maxTextureSize;
   BOOL _supportsBGRA8888;
@@ -49,6 +45,7 @@
 
 - (void)startAnimation;
 - (void)stopAnimation;
+- (BOOL)isAnimating;
 - (void)drawView;
 
 @end

@@ -13,7 +13,6 @@
 
 #import "FFEncodeProcessor.h"
 #import "FFDataMoshProcessor.h"
-#import "FFEdgeFilter.h"
 #import "FFCannyEdgeFilter.h"
 #import "FFFilters.h"
 
