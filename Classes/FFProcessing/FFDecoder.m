@@ -109,11 +109,11 @@
   */
   
   // Set options
-  _options = [[FFDecoderOptions alloc] initWithAVFormat:FFAVFormatMake(_videoStream->codec->coded_width,
-                                                                                   _videoStream->codec->coded_height,
-                                                                                   _videoStream->codec->pix_fmt)
-                                              videoFrameRate:_videoStream->r_frame_rate
-                                               videoTimeBase:_videoStream->time_base];
+  _options = [[FFDecoderOptions alloc] initWithFormat:FFVFormatMake(_videoStream->codec->coded_width,
+                                                                    _videoStream->codec->coded_height,
+                                                                    _videoStream->codec->pix_fmt)
+                                       videoFrameRate:_videoStream->r_frame_rate
+                                        videoTimeBase:_videoStream->time_base];
   
   FFDebug(@"Decoder options: %@", _options);
 
@@ -127,7 +127,7 @@
   return _videoStream->duration;
 }
 
-- (BOOL)readFrame:(AVPacket *)packet error:(NSError **)error {
+- (BOOL)readAVPacket:(AVPacket *)packet error:(NSError **)error {
   
   // Read the packet
   int averror = av_read_frame(_formatContext, packet);
@@ -154,25 +154,25 @@
   return YES;
 }
 
-- (BOOL)decodeVideoFrame:(AVFrame *)picture error:(NSError **)error {
+- (BOOL)decodeAVFrame:(AVFrame *)frame error:(NSError **)error {
   AVPacket packet;
   
-  if (![self readFrame:&packet error:error]) 
+  if (![self readAVPacket:&packet error:error]) 
     return NO;
   
   FFDebugFrame(@"Read frame; pts=%lld", packet.pts);
-  BOOL decoded = [self decodeVideoFrame:picture packet:&packet error:error];
+  BOOL decoded = [self decodeAVFrame:frame packet:&packet error:error];
   _readVideoPTS = packet.pts;
-  picture->pts = packet.pts;
+  frame->pts = packet.pts;
   
   av_free_packet(&packet);
   
   return decoded;
 }
 
-- (BOOL)decodeVideoFrame:(AVFrame *)picture packet:(AVPacket *)packet error:(NSError **)error {  
+- (BOOL)decodeAVFrame:(AVFrame *)frame packet:(AVPacket *)packet error:(NSError **)error {  
   int gotFrame = 0;
-  int bytesDecoded = avcodec_decode_video2(_videoStream->codec, picture, &gotFrame, packet);
+  int bytesDecoded = avcodec_decode_video2(_videoStream->codec, frame, &gotFrame, packet);
   
   if (bytesDecoded < 0) return NO;
   if (!gotFrame) return NO;

@@ -8,6 +8,8 @@
 
 #import "FFUtils.h"
 
+#include "libavformat/avformat.h"
+
 NSString *const FFMPEGErrorCodeKey = @"FFMPEGErrorCodeKey";
 
 static AVPacket gFlushPacket;
@@ -30,20 +32,31 @@ BOOL FFIsFlushPacket(AVPacket *packet) {
   return (packet->data == gFlushPacket.data);
 }
 
-void FFFillYUVImage(FFAVFrame avFrame, NSInteger frameIndex) {
+void FFFillYUVImage(FFVFrameRef frame, NSInteger frameIndex) {
+  
+  FFVFormat format = FFVFrameGetFormat(frame);
+
+  uint8_t *data0 = FFVFrameGetData(frame, 0);
+  int linesize0 = FFVFrameGetBytesPerRow(frame, 0);
   
   /* Y */
-  for (int y = 0; y < avFrame.avFormat.height; y++) {
-    for (int x = 0; x < avFrame.avFormat.width; x++) {
-      avFrame.frame->data[0][y * avFrame.frame->linesize[0] + x] = x + y + frameIndex * 3;
+  for (int y = 0; y < format.height; y++) {
+    for (int x = 0; x < format.width; x++) {
+      data0[y * linesize0 + x] = x + y + frameIndex * 3;
     }
   }
   
+  uint8_t *data1 = FFVFrameGetData(frame, 1);
+  int linesize1 = FFVFrameGetBytesPerRow(frame, 1);
+
+  uint8_t *data2 = FFVFrameGetData(frame, 2);
+  int linesize2 = FFVFrameGetBytesPerRow(frame, 2);
+
   /* Cb and Cr */
-  for (int y = 0; y < avFrame.avFormat.height/2.0; y++) {
-    for (int x = 0; x < avFrame.avFormat.width/2.0; x++) {
-      avFrame.frame->data[1][y * avFrame.frame->linesize[1] + x] = 128 + y + frameIndex * 2;
-      avFrame.frame->data[2][y * avFrame.frame->linesize[2] + x] = 64 + x + frameIndex * 5;
+  for (int y = 0; y < format.height/2.0; y++) {
+    for (int x = 0; x < format.width/2.0; x++) {
+      data1[y * linesize1 + x] = 128 + y + frameIndex * 2;
+      data2[y * linesize2 + x] = 64 + x + frameIndex * 5;
     }
   }  
 }

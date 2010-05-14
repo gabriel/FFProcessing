@@ -45,8 +45,8 @@
   FFInitialize();
   
   const char *filename = [_options.path UTF8String];  
-  FFDebug(@"Encoder; path=%@, format=%@", _options.path, _options.format);
-  AVOutputFormat *outputFormat = av_guess_format([_options.format UTF8String], NULL, NULL);
+  FFDebug(@"Encoder; path=%@, format=%@", _options.path, _options.formatName);
+  AVOutputFormat *outputFormat = av_guess_format([_options.formatName UTF8String], NULL, NULL);
   if (!outputFormat) {
     FFSetError(error, FFErrorCodeUnknownOutputFormat, -1, @"Couldn't deduce output format");
     return NO;
@@ -217,7 +217,7 @@
   }  
 }
 
-- (int)encodeVideoFrame:(AVFrame *)picture error:(NSError **)error {    
+- (int)encodeAVFrame:(AVFrame *)picture error:(NSError **)error {    
   AVCodecContext *codecContext = _videoStream->codec;
   
   int bytesEncoded = avcodec_encode_video(codecContext, _videoBuffer, _videoBufferSize, picture);
@@ -267,7 +267,7 @@
 }
 
 - (BOOL)writeVideoFrame:(AVFrame *)picture error:(NSError **)error {
-  int bytesEncoded = [self encodeVideoFrame:picture error:error];
+  int bytesEncoded = [self encodeAVFrame:picture error:error];
   if (bytesEncoded < 0) {
     FFSetError(error, FFErrorCodeEncodeFrame, bytesEncoded, @"Error encoding frame");
     return NO;

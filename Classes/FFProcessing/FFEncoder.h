@@ -39,7 +39,7 @@
 /*!
  Encode frame to video buffer.
  */
-- (int)encodeVideoFrame:(AVFrame *)picture error:(NSError **)error;
+- (int)encodeAVFrame:(AVFrame *)picture error:(NSError **)error;
 
 - (AVFrame *)codedFrame;
 

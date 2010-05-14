@@ -24,10 +24,10 @@
   return self;
 }
 
-- (id)initWithURL:(NSURL *)URL format:(NSString *)format {
+- (id)initWithURL:(NSURL *)URL formatName:(NSString *)formatName {
   if ((self = [self init])) {
     _URL = [URL retain];
-    _format = [format retain];
+    _formatName = [formatName retain];
   }
   return self;
 }
@@ -35,8 +35,9 @@
 - (void)dealloc {
   [_decoder release];
   [_URL release];
-  [_format release];
+  [_formatName release];
   [_lock release];
+  FFVFrameRelease(_frame);
   [super dealloc];
 }
 
@@ -53,19 +54,18 @@
   return _decoder;
 }
 
-- (FFAVFrame)createPictureFrame {
-  if (!_decoder) return FFAVFrameNone;
-  return FFAVFrameCreate(_decoder.options.avFormat);
+- (FFVFormat)format {
+  NSAssert(_decoder.options, @"Must have decoder options set");
+  return _decoder.options.format;
 }
 
-- (BOOL)readPicture:(AVFrame *)picture {
-  if (_avFrame.frame == NULL || _readIndex == _readPictureIndex) {
+- (BOOL)readFrame:(FFVFrameRef)frame {
+  if (_frame == NULL || _readIndex == _readPictureIndex) {
     return NO;
   }
 
   [_lock lock];
-  av_picture_copy((AVPicture *)picture, (AVPicture *)_avFrame.frame, _avFrame.avFormat.pixelFormat, 
-                  _avFrame.avFormat.width, _avFrame.avFormat.height);
+  FFVFrameCopy(_frame, frame);
   _readIndex = _readPictureIndex;
   [_lock unlock];
   return YES;
@@ -75,39 +75,39 @@
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   FFDebug(@"Started");
   
-  if (![_decoder openWithURL:_URL format:_format error:nil]) {
+  if (![_decoder openWithURL:_URL format:_formatName error:nil]) {
     FFDebug(@"Error opening player");
     // TODO(gabe): Handle error
   }
   
   if ([_decoder isOpen]) {
     // Frame decoded from video stream (before conversion)
-    _frame = avcodec_alloc_frame();
+    _avFrame = avcodec_alloc_frame();
     // TODO(gabe): if (_frame == NULL)  
-    
-    _avFrame = [self createPictureFrame];
+
+    FFVFormat format = self.format;
+    if (_frame == NULL)
+      _frame = FFVFrameCreate(self.format);
     
     while (![self isCancelled]) {  
       NSError *error = nil;
       // Note: This may block on http streaming
-      [_decoder decodeVideoFrame:_frame error:&error];    
+      [_decoder decodeAVFrame:_avFrame error:&error];    
       if (error)
         break;
       
-      if (_frame != NULL) {
+      if (_avFrame != NULL) {
         [_lock lock];
-        av_picture_copy((AVPicture *)_avFrame.frame, (AVPicture *)_frame, _avFrame.avFormat.pixelFormat, 
-                        _avFrame.avFormat.width, _avFrame.avFormat.height);
+        FFVFrameCopyFromAVFrame(_frame, _avFrame, format);
         _readPictureIndex++;
         [_lock unlock];
       }
     }
     FFDebug(@"Cancelled");
     
-    [_lock lock];
-    av_free(_frame);    
-    _frame = NULL;
-    FFAVFrameRelease(_avFrame);
+    [_lock lock];    
+    av_free(_avFrame);    
+    _avFrame = NULL;
     [_lock unlock];
   }
   

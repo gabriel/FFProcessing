@@ -10,7 +10,7 @@
 #import "FFConverter.h"
 
 @protocol FFReader <NSObject>
-- (FFAVFrame)nextFrame:(NSError **)error;
+- (FFVFrameRef)nextFrame:(NSError **)error;
 - (void)close;
 @end
 
@@ -18,13 +18,13 @@
   FFReadThread *_readThread;
   FFConverter *_converter;
   
-  FFAVFrame _avFrame;
+  FFVFrameRef _frame;
   
   BOOL _started;
 }
 
 - (id)initWithURL:(NSURL *)URL format:(NSString *)format;
 
-- (FFAVFrame)nextFrame:(NSError **)error;
+- (FFVFrameRef)nextFrame:(NSError **)error;
 
 @end

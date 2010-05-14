@@ -14,7 +14,7 @@
   AVCaptureSession *_captureSession;
   AVCaptureVideoDataOutput *_videoOutput;
   
-  FFAVFrame _avFrame;
+  FFVFrameRef _frame;
   BOOL _dataChanged;
 
   uint8_t *_data; // Data from camera

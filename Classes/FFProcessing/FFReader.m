@@ -31,27 +31,23 @@
   _readThread = nil;
   [_converter release];
   _converter = nil;
-  FFAVFrameRelease(_avFrame);  
-  _avFrame = FFAVFrameNone;
+  FFVFrameRelease(_frame);  
 }
 
-- (FFAVFrame)nextFrame:(NSError **)error {  
+- (FFVFrameRef)nextFrame:(NSError **)error {  
   if (!_started) {
     _started = YES;    
     [_readThread start];
   }
     
-  if (_avFrame.frame == NULL) {
-    _avFrame = [_readThread createPictureFrame];
-    if (_avFrame.frame == NULL) return _avFrame;
+  if (_frame == NULL) {
+    _frame = FFVFrameCreate([_readThread format]);
+    if (_frame == NULL) return NULL;
   }
   
-  if (![_readThread readPicture:_avFrame.frame]) return _avFrame;
+  if (![_readThread readFrame:_frame]) return _frame;
   
-  if (!_converter)
-    _converter = [[FFConverter alloc] initWithAVFormat:FFAVFormatMake(256, 256, PIX_FMT_RGB24)];
-
-  return [_converter scalePicture:_avFrame error:error];
+  return _frame;
 }
 
 @end

@@ -6,10 +6,9 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#import "libavcodec/avcodec.h"
-#import "FFDecoder.h"
+#import "FFTypes.h"
 
 @protocol FFFilter <NSObject>
-- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error;
+- (FFVFrameRef)filterFrame:(FFVFrameRef)frame error:(NSError **)error;
 @end
 

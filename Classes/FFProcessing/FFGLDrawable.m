@@ -34,7 +34,7 @@
   [_reader close];
 }
 
-- (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view {
+- (BOOL)drawView:(CGRect)rect inView:(GHGLView *)view {
   NSAssert(_reader, @"No reader");
 
   BOOL debugFrame = NO;
@@ -44,17 +44,19 @@
   if (debugFrame) FFDebug(@"[DEBUG FRAME]");
 #endif
   
-  FFAVFrame avFrame = [_reader nextFrame:nil];
-  if (avFrame.frame == NULL) return NO;
+  FFVFrameRef frame = [_reader nextFrame:nil];
+  if (frame == NULL) return NO;
   
   if (_filter) {
     if (debugFrame) FFDebug(@"Applying filter...");
-    avFrame = [_filter filterAVFrame:avFrame error:nil];
-    if (avFrame.frame == NULL) return NO;
+    frame = [_filter filterFrame:frame error:nil];
+    if (frame == NULL) return NO;
   }
   
-  uint8_t *nextData = avFrame.frame->data[0];
-  if (nextData == NULL) return NO;
+  uint8_t *data = FFVFrameGetData(frame, 0);
+  FFVFormat format = FFVFrameGetFormat(frame);
+  // TODO(gabe): Assert (pixel) format is correct for our GL setup
+  if (data == NULL) return NO;
     
   if (debugFrame) FFDebug(@"Rendering...");
   
@@ -71,10 +73,9 @@
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   
   if (!_textureLoaded) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, avFrame.avFormat.width, avFrame.avFormat.height, 0, _format, GL_UNSIGNED_BYTE, nextData);    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, format.width, format.height, 0, _format, GL_UNSIGNED_BYTE, data);    
   } else {
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, avFrame.avFormat.width, avFrame.avFormat.height,
-                    _format, GL_UNSIGNED_BYTE, nextData);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, format.width, format.height, _format, GL_UNSIGNED_BYTE, data);
   }
   
   GLenum GLError = glGetError();
@@ -87,10 +88,10 @@
   }
   
   // Portrait
-  //[self drawInRect:frame];
+  //[self drawInRect:rect];
   // Landscape
-  //FFDebug(@"Draw, rect=%@", NSStringFromCGRect(frame));
-  [self drawInRect:CGRectMake(0, 0, frame.size.height, frame.size.width)]; // TODO(gabe): ?? 
+  //FFDebug(@"Draw, rect=%@", NSStringFromCGRect(rect));
+  [self drawInRect:CGRectMake(0, 0, rect.size.height, rect.size.width)]; // TODO(gabe): ?? 
   return YES;
 }
 

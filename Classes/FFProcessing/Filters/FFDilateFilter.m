@@ -17,18 +17,18 @@
   [super dealloc];
 }
 
-- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
+- (FFVFrameRef)filterFrame:(FFVFrameRef)frame error:(NSError **)error {
   
-  CvSize size = cvSize(avFrame.avFormat.width, avFrame.avFormat.height);
+  CvSize size = cvSize(frame->format.width, frame->format.height);
   if (!_image) _image = cvCreateImage(size, IPL_DEPTH_8U, 4);
   
-  _image->imageData = (char *)avFrame.frame->data[0];
+  _image->imageData = (char *)frame->data[0];
   
   cvDilate(_image, _image, NULL, 4);
   
-  avFrame.frame->data[0] = (uint8_t *)_image->imageData;
+  frame->data[0] = (uint8_t *)_image->imageData;
   
-  return avFrame;
+  return frame;
 }
 
 @end

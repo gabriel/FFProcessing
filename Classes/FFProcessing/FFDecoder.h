@@ -35,24 +35,24 @@
  @param error Out error
  @result YES if read
  */
-- (BOOL)readFrame:(AVPacket *)packet error:(NSError **)error;
+- (BOOL)readAVPacket:(AVPacket *)packet error:(NSError **)error;
 
 /*!
- Decode packet into picture.
- @param picture If decoded, picture is set
+ Decode packet into AVFrame.
+ @param frame If decoded, picture is set
  @param packet Packet to decode
  @param error Out error
  @result YES if decoded
  */
-- (BOOL)decodeVideoFrame:(AVFrame *)picture packet:(AVPacket *)packet error:(NSError **)error;
+- (BOOL)decodeAVFrame:(AVFrame *)frame packet:(AVPacket *)packet error:(NSError **)error;
 
 /*!
- Read packet and decode into picture.
- @param picture If decoded, picture is set
+ Read packet and decode into AVFrame.
+ @param frame If decoded, picture is set
  @param error Out error
  @result YES if decoded
  */
-- (BOOL)decodeVideoFrame:(AVFrame *)picture error:(NSError **)error;
+- (BOOL)decodeAVFrame:(AVFrame *)frame error:(NSError **)error;
 
 //! Duration of video stream
 - (int64_t)videoDuration;

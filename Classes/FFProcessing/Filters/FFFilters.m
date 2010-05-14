@@ -23,12 +23,12 @@
   [super dealloc];
 }
 
-- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
+- (FFVFrameRef)filterFrame:(FFVFrameRef)frame error:(NSError **)error {
   for (id<FFFilter> filter in _filters) {
-    avFrame = [filter filterAVFrame:avFrame error:error];
-    if (avFrame.frame == NULL) return FFAVFrameNone;
+    frame = [filter filterFrame:frame error:error];
+    if (frame == NULL) return NULL;
   }
-  return avFrame;
+  return frame;
 }
 
 @end

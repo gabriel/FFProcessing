@@ -16,12 +16,17 @@ typedef struct {
   int width;
   int height;
   FFPixelFormat pixelFormat;
-} FFAVFormat;
+} FFVFormat;
 
-typedef struct {
-  AVFrame *frame;
-  FFAVFormat avFormat;
-} FFAVFrame;
+struct __FFVFrame {  
+  uint8_t *data[4]; //! Pointer to the picture planes  
+  int linesize[4]; //! Line size of picture planes
+  
+  int64_t pts;
+  FFVFormat format;
+} FFVFrame;
+
+typedef struct __FFVFrame *FFVFrameRef;
 
 typedef struct {
   uint8_t r;
@@ -31,59 +36,70 @@ typedef struct {
 
 #pragma mark FFAVFormat
 
-static inline FFAVFormat FFAVFormatMake(int width, int height, FFPixelFormat pixelFormat) {
-  return (FFAVFormat){width, height, pixelFormat};
+static inline FFVFormat FFVFormatMake(int width, int height, FFPixelFormat pixelFormat) {
+  return (FFVFormat){width, height, pixelFormat};
 }
 
-static inline NSString *NSStringFromFFAVFormat(FFAVFormat avFormat) {
-  return [NSString stringWithFormat:@"(%d,%d,%d)", avFormat.width, avFormat.height, avFormat.pixelFormat];
+static inline NSString *NSStringFromFFVFormat(FFVFormat format) {
+  return [NSString stringWithFormat:@"(%d,%d,%d)", format.width, format.height, format.pixelFormat];
 }
 
-extern FFAVFormat FFAVFormatNone;
+extern FFVFormat FFVFormatNone;
 
-static inline BOOL FFAVFormatIsNone(FFAVFormat avFormat) {
-  return (avFormat.width == 0 && avFormat.height == 0 && avFormat.pixelFormat == PIX_FMT_NONE);
+#pragma mark FFVFrame
+
+FFVFrameRef FFVFrameCreate(FFVFormat format);
+
+FFVFrameRef FFVFrameCreateWithData(FFVFormat format, uint8_t *data);
+
+void FFVFrameSetData(FFVFrameRef frame, uint8_t *data);
+
+void FFVFrameRelease(FFVFrameRef frame);
+
+void FFVFrameCopy(FFVFrameRef source, FFVFrameRef dest);
+
+FFVFrameRef FFVFrameCreateFromCGImage(CGImageRef image);
+
+FFVFrameRef FFVFrameCreateFromAVFrame(AVFrame *frame, FFVFormat format);
+
+void FFVFrameCopyFromAVFrame(FFVFrameRef frame, AVFrame *avFrame, FFVFormat format);
+
+static inline uint8_t *FFVFrameGetData(FFVFrameRef frame, int index) {
+  return frame->data[index];
 }
 
+static inline int FFVFrameGetBytesPerPixel(FFVFrameRef frame, int index) {
+  return frame->linesize[index] / frame->format.width;
+}
+
+static inline int FFVFrameGetBytesPerRow(FFVFrameRef frame, int index) {
+  return frame->linesize[index];
+}
+
+static inline FFVFormat FFVFrameGetFormat(FFVFrameRef frame) {
+  return frame->format;
+}
+
+/*!
 #pragma mark FFRBG
 
-static inline FFRGB FFRGBMake(uint8_t r, uint8_t g, uint8_t b) {
-  return (FFRGB){r, g, b};
+static inline void FFVFrameGetRGB(FFVFrameRef frame, int x, int y, uint8_t *r, uint8_t *g, uint8_t *b) {
+  //NSAssert(frame->format.pixelFormat == PIX_FMT_RGB24, @"Only supports PIX_FMT_RGB24");
+  int p = (x * (FFVFrameGetBytesPerPixel(frame, 0))) + (y * FFVFrameGetBytesPerRow(frame, 0));
+  
+  uint8_t *data = FFVFrameGetData(frame, 0);
+  *r = data[p];
+  *g = data[p + 1];
+  *b = data[p + 2];
 }
 
-static inline FFRGB FFRGBAt(FFAVFrame avFrame, int x, int y) {
-  // TODO(gabe): Fixme
-  //NSAssert(avFrame.avFormat.pixelFormat == PIX_FMT_RGB24, @"Only supports PIX_FMT_RGB24");
-  int p = (x * 3) + (y * avFrame.frame->linesize[0]);
-  FFRGB rgb;
-  rgb.r = avFrame.frame->data[0][p];
-  rgb.g = avFrame.frame->data[0][p + 1];
-  rgb.b = avFrame.frame->data[0][p + 2];  
-  return rgb;
+static inline void FFVFrameSetRGB(FFVFrameRef frame, int x, int y, uint8_t r, uint8_t g, uint8_t b) {
+  int p = (x * (FFVFrameGetBytesPerPixel(frame, 0))) + (y * FFVFrameGetBytesPerRow(frame, 0));
+  uint8_t *data = FFVFrameGetData(frame, 0);
+  data[p] = r;
+  data[p + 1] = g;
+  data[p + 2] = b;
 }
+*/
 
-static inline void FFRGBSetAt(FFAVFrame avFrame, int x, int y, FFRGB rgb) {
-  int p = (x * 3) + (y * avFrame.frame->linesize[0]);
-  avFrame.frame->data[0][p] = rgb.r;
-  avFrame.frame->data[0][p + 1] = rgb.g;
-  avFrame.frame->data[0][p + 2] = rgb.b;
-}
-
-#pragma mark AVFrame
-
-extern FFAVFrame FFAVFrameNone;
-
-static inline FFAVFrame FFAVFrameMake(AVFrame *frame, FFAVFormat avFormat) {
-  return (FFAVFrame){frame, avFormat};
-}
-
-FFAVFrame FFAVFrameCreate(FFAVFormat avFormat);
-
-FFAVFrame FFAVFrameCreateWithData(FFAVFormat avFormat, uint8_t *data);
-
-void FFAVFrameSetData(FFAVFrame avFrame, uint8_t *data);
-
-void FFAVFrameRelease(FFAVFrame avFrame);
-
-FFAVFrame FFAVFrameCreateFromCGImageRef(CGImageRef image);
 

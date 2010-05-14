@@ -9,47 +9,59 @@
 #import "FFTypes.h"
 #import "FFUtils.h"
 
-FFAVFormat FFAVFormatNone = {0, 0, PIX_FMT_NONE};
+FFVFormat FFVFormatNone = {0, 0, PIX_FMT_NONE};
 
-FFAVFrame FFAVFrameNone = {NULL, {0, 0, PIX_FMT_NONE}};
+FFVFrameRef FFVFrameCreate(FFVFormat format) {
+  int size = avpicture_get_size(format.pixelFormat, format.width, format.height);
+  uint8_t *data = av_malloc(size);  
+  if (data == NULL)
+    return NULL;
 
-FFAVFrame FFAVFrameCreate(FFAVFormat avFormat) {
-  return FFAVFrameCreateWithData(avFormat, NULL);
+  return FFVFrameCreateWithData(format, data);  
 }
 
-void FFAVFrameSetData(FFAVFrame avFrame, uint8_t *data) {
-  // TODO(gabe): Deallocate existing data
-  avpicture_fill((AVPicture *)avFrame.frame, data, avFrame.avFormat.pixelFormat, avFrame.avFormat.width, avFrame.avFormat.height);
+void FFVFrameCopy(FFVFrameRef source, FFVFrameRef dest) {
+  dest->format = source->format;
+  dest->pts = source->pts;
+  FFVFrameSetData(dest, source->data[0]);
 }
 
-FFAVFrame FFAVFrameCreateWithData(FFAVFormat avFormat, uint8_t *data) {
-  
-  AVFrame *picture = avcodec_alloc_frame();
-  if (!picture) return FFAVFrameNone;
-  
-  if (data == NULL) {
-    int size = avpicture_get_size(avFormat.pixelFormat, avFormat.width, avFormat.height);
-    data = av_malloc(size);
+void FFVFrameSetData(FFVFrameRef frame, uint8_t *data) {
+  // TODO(gabe): Release existing data?
+  FFVFormat format = FFVFrameGetFormat(frame);
+  avpicture_fill((AVPicture *)frame, data, format.pixelFormat, format.width, format.height);
+}
+
+FFVFrameRef FFVFrameCreateWithData(FFVFormat format, uint8_t *data) {  
+  FFVFrameRef frame = (FFVFrameRef)malloc(sizeof(FFVFrame));  
+  if (data != NULL) FFVFrameSetData(frame, data);
+  return frame;
+}
+
+void FFVFrameRelease(FFVFrameRef frame) {
+  if (frame) {
+    if (frame->data) {
+      free(frame->data);
+      frame->data[0] = NULL;
+    }
+    free(frame);
   }
-  
-  if (data == NULL) {
-    av_free(picture);
-    return FFAVFrameNone;
-  }
-  
-  avpicture_fill((AVPicture *)picture, data, avFormat.pixelFormat, avFormat.width, avFormat.height);
-  return FFAVFrameMake(picture, avFormat);
 }
 
-void FFAVFrameRelease(FFAVFrame avFrame) {
-  if (avFrame.frame != NULL)  {
-    if (avFrame.frame->data != NULL) av_free(avFrame.frame->data[0]);
-    av_free(avFrame.frame);
-    avFrame.frame = NULL;
-  }
+FFVFrameRef FFVFrameCreateFromAVFrame(AVFrame *avFrame, FFVFormat format) {
+  FFVFrameRef frame = FFVFrameCreateWithData(format, NULL);
+  FFVFrameCopyFromAVFrame(frame, avFrame, format);
+  return frame;
 }
 
-FFAVFrame FFAVFrameCreateFromCGImageRef(CGImageRef image) {
+void FFVFrameCopyFromAVFrame(FFVFrameRef frame, AVFrame *avFrame, FFVFormat format) {
+  // TODO(gabe): Release existing data?
+  av_picture_copy((AVPicture *)frame, (AVPicture *)avFrame, format.pixelFormat, 
+                  format.width, format.height);
+}
+
+FFVFrameRef FFVFrameCreateFromCGImage(CGImageRef image) {
+
   //CGBitmapInfo info = CGImageGetBitmapInfo(image); // CGImage may return pixels in RGBA, BGRA, or ARGB order
 	CGColorSpaceModel colorSpaceModel = CGColorSpaceGetModel(CGImageGetColorSpace(image));
 	size_t bpp = CGImageGetBitsPerPixel(image);
@@ -69,9 +81,9 @@ FFAVFrame FFAVFrameCreateFromCGImageRef(CGImageRef image) {
   
   if (pixelFormat == PIX_FMT_NONE) {
     FFWarn(@"Invalid pixel format for colorSpaceModel=%d, bpp=%d", colorSpaceModel, bpp);
-    return FFAVFrameNone;
+    return NULL;
   }
-  FFAVFormat format = FFAVFormatMake(CGImageGetWidth(image), CGImageGetHeight(image), pixelFormat);
+  FFVFormat format = FFVFormatMake(CGImageGetWidth(image), CGImageGetHeight(image), pixelFormat);
   
   CFDataRef dataRef = CGDataProviderCopyData(CGImageGetDataProvider(image));
   uint8_t *data = (uint8_t *)CFDataGetBytePtr(dataRef);  
@@ -80,7 +92,5 @@ FFAVFrame FFAVFrameCreateFromCGImageRef(CGImageRef image) {
   memcpy(dataCopy, data, length); 
   CFRelease(dataRef);
   
-  FFAVFrame avFrame = FFAVFrameCreateWithData(format, dataCopy);  
-  return avFrame;
+  return FFVFrameCreateWithData(format, dataCopy);
 }
-

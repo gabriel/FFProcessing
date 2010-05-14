@@ -86,11 +86,14 @@
       return NO;
     _open = YES;
   }
+  
+  FFVFormat format = _decoder.options.format;
+  _decodedFrame = FFVFrameCreate(format);
 
   while (!_cancelled) {
     *error = nil;
     
-    if (![_decoder decodeVideoFrame:_decoderFrame error:error]) {
+    if (![_decoder decodeAVFrame:_decoderFrame error:error]) {
       if (*error) {
         FFDebug(@"Decode error");
         break;
@@ -102,21 +105,24 @@
     //FFDebug(@"Decoded frame, pict_type=%@", NSStringFromAVFramePictType(_decoderFrame->pict_type));    
     _decoderFrame->pts += _previousEndPTS;
     
-    _decodedFrame = FFAVFrameMake(_decoderFrame, _decoder.options.avFormat);
+    FFVFrameSetData(_decodedFrame, _decoderFrame->data[0]);
     
     [_delegate processing:self didReadFramePTS:[_decoder readVideoPTS] duration:[_decoder videoDuration] 
                     index:index count:count];
     
     // Apply filter
     if (_filter) {
-      _decodedFrame = [_filter filterAVFrame:_decodedFrame error:error];
-      if (!_decodedFrame.frame) break;
+      _decodedFrame = [_filter filterFrame:_decodedFrame error:error];
+      if (!_decodedFrame) break;
     }
 
     // Run processor
-    if (![_processor processPictureFrame:_decodedFrame decoder:_decoder index:index error:error])
+    if (![_processor processFrame:_decodedFrame decoder:_decoder index:index error:error])
       break;
   }
+  
+  // Clear, don't release; Will be freed by av_free
+  _decodedFrame->data[0] = NULL;
   
   if (_decoderFrame)
     _previousEndPTS = _decoderFrame->pts + 1; // TODO(gabe): Fix me

@@ -9,6 +9,7 @@
 #import "FFCodec.h"
 
 #import "libavcodec/avcodec.h"
+#import "libavformat/avformat.h"
 
 
 #import "FFUtils.h"

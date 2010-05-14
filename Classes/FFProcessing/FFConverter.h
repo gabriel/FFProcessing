@@ -6,24 +6,20 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#include "libavformat/avformat.h"
-#include "libavdevice/avdevice.h"
-#include "libswscale/swscale.h"
-
 #import "FFTypes.h"
 #import "FFFilter.h"
 
 @interface FFConverter : NSObject <FFFilter> {
-  FFAVFormat _avFormat;
-  FFAVFrame _avFrame;
+  FFVFormat _format;
+  FFVFrameRef _frame;
 }
 
 /*!
- Converter with picture format (output).
- @param avFormat Picture format; If width, height, or pixelFormat are set to 0, then will use the source format for that parameter
+ Converter with format (output).
+ @param format Format; If width, height, or pixelFormat are set to 0, then will use the source format for that parameter
  */
-- (id)initWithAVFormat:(FFAVFormat)avFormat;
+- (id)initWithFormat:(FFVFormat)format;
 
-- (FFAVFrame)scalePicture:(FFAVFrame)avFrame error:(NSError **)error;
+- (FFVFrameRef)scaleFrame:(FFVFrameRef)frame error:(NSError **)error;
 
 @end

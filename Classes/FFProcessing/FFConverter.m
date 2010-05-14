@@ -8,73 +8,77 @@
 
 #import "FFConverter.h"
 #import "FFUtils.h"
-#import "FFFilter.h"
+#import "FFTypes.h"
+
+#include "libswscale/swscale.h"
 
 @implementation FFConverter
 
-- (id)initWithAVFormat:(FFAVFormat)avFormat {
+- (id)initWithFormat:(FFVFormat)format {
   if ((self = [self init])) {
-    _avFormat = avFormat;
+    _format = format;
   }
   return self;
 }
 
 - (void)dealloc {
-  FFAVFrameRelease(_avFrame);
+  FFVFrameRelease(_frame);
   [super dealloc];
 }  
 
-- (FFAVFrame)scalePicture:(FFAVFrame)avFrame error:(NSError **)error {
+- (FFVFrameRef)scaleFrame:(FFVFrameRef)frame error:(NSError **)error {
   struct SwsContext *scaleContext = NULL;
   
   // Set conversion parameters based on input frame if any are 0 or none
-  FFAVFormat avFormat = _avFormat;
-  if (avFormat.width == 0) avFormat.width = avFrame.avFormat.width;
-  if (avFormat.height == 0) avFormat.height = avFrame.avFormat.height;
-  if (avFormat.pixelFormat == PIX_FMT_NONE) avFormat.pixelFormat = avFrame.avFormat.pixelFormat;  
+  FFVFormat format = _format;
+  FFVFormat frameFormat = FFVFrameGetFormat(frame);
+  if (format.width == 0) format.width = frameFormat.width;
+  if (format.height == 0) format.height = frameFormat.height;
+  if (format.pixelFormat == PIX_FMT_NONE) format.pixelFormat = frameFormat.pixelFormat;  
   
-  NSAssert(avFormat.width != 0 && avFormat.height != 0 && avFormat.pixelFormat != PIX_FMT_NONE, @"Invalid picture format");
+  NSAssert(format.width != 0 && format.height != 0 && format.pixelFormat != PIX_FMT_NONE, @"Invalid picture format");
   
-  if (_avFrame.frame == NULL) {
-    _avFrame = FFAVFrameCreate(avFormat);
-    if (_avFrame.frame == NULL) {
+  if (_frame == NULL) {
+    _frame = FFVFrameCreate(format);
+    if (_frame == NULL) {
       FFSetError(error, FFErrorCodeAllocateFrame, -1, @"Couldn't allocate frame in converter");
-      return _avFrame;
+      return NULL;
     }
   }
   
   scaleContext = sws_getCachedContext(scaleContext, 
-                                       avFrame.avFormat.width, avFrame.avFormat.height, avFrame.avFormat.pixelFormat,
-                                       avFormat.width, avFormat.height, avFormat.pixelFormat, 
+                                       frameFormat.width, frameFormat.height, frameFormat.pixelFormat,
+                                       format.width, format.height, format.pixelFormat, 
                                        SWS_FAST_BILINEAR, NULL, NULL, NULL);
   
   if (scaleContext == NULL) {
     FFSetError(error, FFErrorCodeScaleContext, -1, @"No scale context for %@ to %@", 
-               NSStringFromFFAVFormat(avFrame.avFormat),
-               NSStringFromFFAVFormat(avFormat));
-    return FFAVFrameNone;
+               NSStringFromFFVFormat(frameFormat),
+               NSStringFromFFVFormat(format));
+    return NULL;
   }
   
   //FFDebug(@"Converting from %@ to %@", NSStringFromFFAVFormat(avFrame.avFormat),
   //        NSStringFromFFAVFormat(avFormat));
   
   sws_scale(scaleContext, 
-            (const uint8_t* const *)avFrame.frame->data, 
-            (const int *)avFrame.frame->linesize, 
+            (const uint8_t* const *)frame->data,
+            (const int *)frame->linesize,
             0,
-            avFormat.height, 
-            _avFrame.frame->data, 
-            _avFrame.frame->linesize);
+            format.height, 
+            _frame->data,
+            _frame->linesize);
   
-  _avFrame.frame->pts = avFrame.frame->pts;
+  // TODO(gabe): Should make sure we have all the fields set with fill method (probably do this in FFTypes)
+  _frame->pts = frame->pts;
   
-  return _avFrame;
+  return _frame;
 }
 
 #pragma mark FFFilter
 
-- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
-  return [self scalePicture:avFrame error:error];
+- (FFVFrameRef)filterFrame:(FFVFrameRef)frame error:(NSError **)error {
+  return [self scaleFrame:frame error:error];
 }
 
 @end

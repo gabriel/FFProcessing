@@ -25,14 +25,14 @@
   return YES;
 }
 
-- (BOOL)processFrame:(FFAVFrame)avFrame decoder:(FFDecoder *)decoder index:(NSInteger)index error:(NSError **)error {
+- (BOOL)processFrame:(FFVFrameRef)frame decoder:(FFDecoder *)decoder index:(NSInteger)index error:(NSError **)error {
   
   if (!_encoder) {
-    if (![self openEncoderWithAVFormat:avFrame.avFormat decoder:decoder error:error])
+    if (![self openEncoderWithFormat:FFVFrameGetFormat(frame) decoder:decoder error:error])
       return NO;
   }
   
-  int bytesEncoded = [_encoder encodeVideoFrame:avFrame.frame error:error];
+  int bytesEncoded = [_encoder encodeAVFrame:frame error:error];
   if (bytesEncoded < 0) {
     FFDebug(@"Encode error");
     return NO;

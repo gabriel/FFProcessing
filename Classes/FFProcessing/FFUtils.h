@@ -6,11 +6,6 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#include "libavformat/avformat.h"
-#include "libavdevice/avdevice.h"
-
-#import "libavcodec/avcodec.h"
-
 #import "FFTypes.h"
 
 extern NSString *const FFMPEGErrorCodeKey; // Key for NSError for source error code
@@ -77,7 +72,7 @@ BOOL FFIsInitialized(void);
 BOOL FFIsFlushPacket(AVPacket *packet);
 
 // Fill dummy image
-void FFFillYUVImage(FFAVFrame avFrame, NSInteger frameIndex);
+void FFFillYUVImage(FFVFrameRef frame, NSInteger frameIndex);
 
 /*!
  Find rational approximation to given real number.

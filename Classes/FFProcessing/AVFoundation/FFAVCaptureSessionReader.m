@@ -18,13 +18,6 @@
 
 @implementation FFAVCaptureSessionReader
 
-- (id)init {
-  if ((self = [super init])) {
-    _avFrame = FFAVFrameNone;
-  }
-  return self;
-}
-
 - (void)dealloc {
   [self close];
   [super dealloc];
@@ -61,34 +54,32 @@
   //_videoOutput.sampleBufferDelegate = nil;
   [_videoOutput release];
   _videoOutput = nil;
-  if (_avFrame.frame != NULL) {
-    FFAVFrameRelease(_avFrame);
-    // Data is free above since it was set in the FFAVFrame
-    //av_free(_data);  
-    _avFrame = FFAVFrameNone;
-  }
+  FFVFrameRelease(_frame);
+  // Data is free above since it was set in the FFAVFrame
+  //av_free(_data);  
+  _frame = NULL;
   _data = NULL;
   _dataSize = 0;  
   FFDebug(@"Closed capture session");
 }
 
-- (FFAVFrame)nextFrame:(NSError **)error {
+- (FFVFrameRef)nextFrame:(NSError **)error {
   if (!_captureSession) {
     [self _start:error];
-    return FFAVFrameNone;
+    return NULL;
   }
   
   if (_dataChanged) {
     //FFDebug(@"Next frame");
-    FFAVFrameSetData(_avFrame, _data);
+    FFVFrameSetData(_frame, _data);
     _dataChanged = NO;
     if (_converter) {
-      return [_converter scalePicture:_avFrame error:nil];    
+      return [_converter scaleFrame:_frame error:nil];    
     } else {
-      return _avFrame;
+      return _frame;
     }
   }
-  return FFAVFrameNone;
+  return NULL;
 }
 
 #pragma mark AVCaptureVideoDataOutputSampleBufferDelegate
@@ -114,8 +105,8 @@
   
   //FFDebug(@"width=%d, height=%d, size=%d", width, height, size);
   
-  if (_avFrame.frame == NULL) 
-    _avFrame = FFAVFrameCreate(FFAVFormatMake(width, height, kPixelFormat));
+  if (_frame == NULL) 
+    _frame = FFVFrameCreate(FFVFormatMake(width, height, kPixelFormat));
 
   if (_data == NULL || size != _dataSize) {
     FFDebug(@"Allocating video data of size: %d", size);

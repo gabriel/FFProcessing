@@ -30,7 +30,7 @@
   
   FFDecoder *_decoder;
   AVFrame *_decoderFrame;
-  FFAVFrame _decodedFrame;
+  FFVFrameRef _decodedFrame;
   
   id<FFProcessingDelegate> _delegate; // Weak
   

@@ -11,22 +11,22 @@
 
 @implementation FFEncoderOptions
 
-@synthesize path=_path, format=_format, codecName=_codecName, presets=_presets, avFormat=_avFormat,
+@synthesize path=_path, formatName=_formatName, codecName=_codecName, presets=_presets, format=_format,
 videoTimeBase=_videoTimeBase, sampleAspectRatio=_sampleAspectRatio;
 
-- (id)initWithPath:(NSString *)path format:(NSString *)format codecName:(NSString *)codecName
-     avFormat:(FFAVFormat)avFormat videoTimeBase:(AVRational)videoTimeBase {
+- (id)initWithPath:(NSString *)path formatName:(NSString *)formatName codecName:(NSString *)codecName
+            format:(FFVFormat)format videoTimeBase:(AVRational)videoTimeBase {
   
   if ((self = [self init])) {
     _path = [path retain];
-    _format = [format retain];
+    _formatName = [formatName retain];
     _codecName = [codecName retain];
     if (_codecName)
       _presets = [[FFPresets alloc] initWithCodeName:_codecName];
-    _avFormat = avFormat;
+    _format = format;
     _videoTimeBase = videoTimeBase;
-    if (_avFormat.height > 0)
-      _sampleAspectRatio = FFFindRationalApproximation((float)_avFormat.width/(float)_avFormat.height, 255);
+    if (_format.height > 0)
+      _sampleAspectRatio = FFFindRationalApproximation((float)_format.width/(float)_format.height, 255);
   }
   return self;
 }  
@@ -34,16 +34,16 @@ videoTimeBase=_videoTimeBase, sampleAspectRatio=_sampleAspectRatio;
 - (void)dealloc {
   [_presets release];
   [_path release];
-  [_format release];
+  [_formatName release];
   [_codecName release];
   [super dealloc];
 }
 
 - (void)apply:(AVCodecContext *)codecContext {  
   [_presets apply:codecContext];
-  codecContext->width = _avFormat.width;
-  codecContext->height = _avFormat.height;
-  codecContext->pix_fmt = _avFormat.pixelFormat;
+  codecContext->width = _format.width;
+  codecContext->height = _format.height;
+  codecContext->pix_fmt = _format.pixelFormat;
   codecContext->time_base = _videoTimeBase;    
   codecContext->sample_aspect_ratio = _sampleAspectRatio;
 }

@@ -21,22 +21,22 @@
   [super dealloc];
 }
 
-- (FFAVFrame)filterAVFrame:(FFAVFrame)avFrame error:(NSError **)error {
+- (FFVFrameRef)filterFrame:(FFVFrameRef)frame error:(NSError **)error {
 
-  CvSize size = cvSize(avFrame.avFormat.width, avFrame.avFormat.height);
+  CvSize size = cvSize(frame->format.width, frame->format.height);
   if (!_image) _image = cvCreateImage(size, IPL_DEPTH_8U, 4);
   if (!_grey) _grey = cvCreateImage(size, IPL_DEPTH_8U, 1);
   if (!_edges) _edges = cvCreateImage(size, IPL_DEPTH_8U, 1);
   
-  _image->imageData = (char *)avFrame.frame->data[0];
+  _image->imageData = (char *)frame->data[0];
   cvCvtColor(_image, _grey, CV_BGRA2GRAY);
   
   cvCanny(_grey, _edges, 10, 100, 3);
   
   cvCvtColor(_edges, _image, CV_GRAY2BGRA);
-  avFrame.frame->data[0] = (uint8_t *)_image->imageData;
+  frame->data[0] = (uint8_t *)_image->imageData;
   
-  return avFrame;
+  return frame;
 }
 
 @end
