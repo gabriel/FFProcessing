@@ -1,23 +1,23 @@
 //
-//  FFCodec.m
+//  FFMPCodec.m
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 4/1/10.
 //  Copyright 2010. All rights reserved.
 //
 
-#import "FFCodec.h"
+#import "FFMPCodec.h"
 
 #import "libavcodec/avcodec.h"
 #import "libavformat/avformat.h"
 
-
+#import "FFMPUtils.h"
 #import "FFUtils.h"
 
-@implementation FFCodec
+@implementation FFMPCodec
 
 + (void)debug {
-  FFInitialize();
+  FFMPInitialize();
   
   AVCodec *codec = NULL;
   while ((codec = av_codec_next(codec))) {

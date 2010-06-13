@@ -12,13 +12,13 @@
 
 @interface FFEncodeProcessor : NSObject <FFProcessor> {
   
-  FFEncoder *_encoder;
+  id<FFEncoder> _encoder;
   FFEncoderOptions *_encoderOptions;
   
 }
 
 - (id)initWithEncoderOptions:(FFEncoderOptions *)encoderOptions;
 
-- (BOOL)openEncoderWithFormat:(FFVFormat)format decoder:(FFDecoder *)decoder error:(NSError **)error;
+- (BOOL)openEncoderWithFormat:(FFVFormat)format decoder:(id<FFDecoder>)decoder error:(NSError **)error;
 
 @end

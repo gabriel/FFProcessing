@@ -7,6 +7,7 @@
 //
 
 #import "FFProcessing.h"
+#import "FFDecoder.h"
 
 @class FFProcessingItem;
 @class FFProcessingQueue;
@@ -27,6 +28,7 @@
   NSMutableArray *_items;
   NSInteger _index;
   
+  id<FFDecoder> _decoder;
   id<FFProcessor> _processor;
   id<FFFilter> _filter;
   
@@ -35,7 +37,7 @@
 
 @property (assign, nonatomic) id<FFProcessingQueueDelegate> delegate;
 
-- (id)initWithProcessor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter;
+- (id)initWithDecoder:(id<FFDecoder>)decoder processor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter;
 
 - (void)close;
 

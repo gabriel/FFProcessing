@@ -9,6 +9,7 @@
 #import "FFAVCaptureSessionReader.h"
 
 #import "FFPlayerView.h"
+#import "FFFilter.h"
 
 @interface PBCameraCaptureController : UIViewController {
   FFPlayerView *_playerView;

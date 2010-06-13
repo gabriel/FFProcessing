@@ -1,6 +1,6 @@
 //
 //  FFProcessingAppDelegate.m
-//  FFMPEG
+//  FFMP
 //
 //  Created by Gabriel Handford on 3/4/10.
 //  Copyright 2010. All rights reserved.
@@ -10,8 +10,9 @@
 
 #import "FFUtils.h"
 #import "FFProcessing.h"
-#import "FFEncoder.h"
 #import "FFGLDrawable.h"
+#import "FFMPUtils.h"
+#import "FFMPReadThread.h"
 
 @implementation FFPlayerAppDelegate
 
@@ -27,14 +28,16 @@
   _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];  
   [_window makeKeyAndVisible];
   
-  FFInitialize();
+  FFMPInitialize();
 
-  FFReader *reader = [[FFReader alloc] initWithURL:[NSURL URLWithString:@"bundle://test.mp4"] format:nil];      
+  FFMPReadThread *readThread = [[FFMPReadThread alloc] initWithURL:[NSURL URLWithString:@"bundle://test.mp4"] formatName:nil];
+  FFReader *reader = [[FFReader alloc] initWithReading:readThread];      
   FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader filter:nil];
   _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
   _playerView.drawable = drawable;
   [drawable release];
   [reader release];
+  [readThread release];
   
   //@"bundle://pegasus-1958-chiptune.avi";  
   // @"http://c-cam.uchicago.edu/mjpg/video.mjpg";

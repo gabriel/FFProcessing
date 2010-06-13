@@ -4,8 +4,11 @@
 //
 
 #import "GHGLTexture.h"
+#import "GHGLUtils.h"
 
 @implementation GHGLTexture
+
+@synthesize width=_width, height=_height;
 
 - (id)initWithName:(NSString *)name {
 	return [self initWithName:name width:0 height:0];
@@ -13,6 +16,9 @@
 
 - (id)initWithName:(NSString *)name width:(GLuint)width height:(GLuint)height {
 	if ((self = [self init])) {
+    _width = width;
+    _height = height;
+    
 		glEnable(GL_TEXTURE_2D);
 		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  
@@ -41,22 +47,20 @@
 			if (image == nil)
 				return nil;
 			
-			if (width == 0) width = CGImageGetWidth(image.CGImage);
-			if (height == 0) height = CGImageGetHeight(image.CGImage);
-      NSAssert(width > 0, @"Invalid width");
-      NSAssert(height > 0, @"Invalid height");
+			if (_width == 0) _width = CGImageGetWidth(image.CGImage);
+			if (_height == 0) _height = CGImageGetHeight(image.CGImage);
+      NSAssert(_width > 0, @"Invalid width");
+      NSAssert(_height > 0, @"Invalid height");
 			CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-			void *imageData = malloc(height * width * 4);
-			CGContextRef context = CGBitmapContextCreate(imageData, width, height, 8, 4 * width, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big );
+      int bpp = 4;
+			void *imageData = malloc(_height * _width * bpp);
+			CGContextRef context = CGBitmapContextCreate(imageData, _width, _height, 8, bpp * _width, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
-			CGContextClearRect(context, CGRectMake(0, 0, width, height));
-			CGContextDrawImage(context, CGRectMake(0, 0, width, height), image.CGImage);
+			CGContextClearRect(context, CGRectMake(0, 0, _width, _height));
+			CGContextDrawImage(context, CGRectMake(0, 0, _width, _height), image.CGImage);
 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-#if DEBUG
-			GLuint GLError = glGetError();
-      NSAssert(GLError == GL_NO_ERROR, @"Error loading texture");
-#endif
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);      
+      GHGLCheckError();
 			CGContextRelease(context);
 			
 			free(imageData);

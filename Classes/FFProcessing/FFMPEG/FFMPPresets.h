@@ -1,5 +1,5 @@
 //
-//  FFPresets.h
+//  FFMPPresets.h
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 4/3/10.
@@ -8,7 +8,7 @@
 
 #import "libavcodec/avcodec.h"
 
-@interface FFPresets : NSObject {
+@interface FFMPPresets : NSObject {
   NSMutableDictionary *_dict;
   NSString *_codecName;
 }

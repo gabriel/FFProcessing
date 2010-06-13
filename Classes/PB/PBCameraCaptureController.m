@@ -26,7 +26,7 @@
 
 - (void)setFilter:(id<FFFilter>)filter {
   NSAssert(![_playerView isAnimating], @"Can't set filter while animating");
-  
+  self.view;
   FFAVCaptureSessionReader *reader = [[FFAVCaptureSessionReader alloc] init];
   FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader filter:filter];
   _playerView.drawable = drawable;

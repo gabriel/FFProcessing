@@ -1,15 +1,15 @@
 //
-//  FFPresets.m
+//  FFMPPresets.m
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 4/3/10.
 //  Copyright 2010. All rights reserved.
 //
 
-#import "FFPresets.h"
+#import "FFMPPresets.h"
 #import "FFUtils.h"
 
-@implementation FFPresets
+@implementation FFMPPresets
 
 @synthesize dict=_dict;
 

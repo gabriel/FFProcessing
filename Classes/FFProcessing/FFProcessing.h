@@ -28,9 +28,8 @@
   
   BOOL _open;
   
-  FFDecoder *_decoder;
-  AVFrame *_decoderFrame;
-  FFVFrameRef _decodedFrame;
+  id<FFDecoder> _decoder;
+  FFVFrameRef _frame; // Decoded frame
   
   id<FFProcessingDelegate> _delegate; // Weak
   
@@ -43,7 +42,7 @@
 
 @property (assign, nonatomic) id<FFProcessingDelegate> delegate;
 
-- (id)initWithProcessor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter;
+- (id)initWithDecoder:(id<FFDecoder>)decoder processor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter;
 
 - (BOOL)processURL:(NSURL *)URL format:(NSString *)format index:(NSInteger)index count:(NSInteger)count error:(NSError **)error;
 

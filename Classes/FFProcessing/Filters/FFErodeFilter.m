@@ -14,8 +14,7 @@
 @implementation FFErodeFilter
 
 - (void)dealloc {
-  // TODO(gabe): Fix leak
-  //if (_image) cvReleaseImage(&_image);
+  if (_image) cvReleaseImage(&_image);
   [super dealloc];
 }
 

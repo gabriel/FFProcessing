@@ -8,6 +8,8 @@
 
 #import "FFEncodeProcessor.h"
 #import "FFUtils.h"
+#import "FFMPUtils.h"
+#import "FFMPEncoder.h"
 
 @implementation FFEncodeProcessor
 
@@ -19,8 +21,8 @@
 }
 
 - (void)dealloc {
+  [self close:nil];
   [_encoderOptions release];
-  [_encoder release];
   [super dealloc];
 }
 
@@ -28,14 +30,14 @@
   return YES;
 }
 
-- (BOOL)openEncoderWithFormat:(FFVFormat)format decoder:(FFDecoder *)decoder error:(NSError **)error {
+- (BOOL)openEncoderWithFormat:(FFVFormat)format decoder:(id<FFDecoder>)decoder error:(NSError **)error {
   
   // Fill in encoder options (with decoder properties) if not set
   FFVFormat encoderFormat = _encoderOptions.format;
-  AVRational videoTimeBase = _encoderOptions.videoTimeBase;
+  FFRational videoTimeBase = _encoderOptions.videoTimeBase;
   if (encoderFormat.width == 0) encoderFormat.width = format.width;
   if (encoderFormat.height == 0) encoderFormat.height = format.height;
-  if (encoderFormat.pixelFormat == PIX_FMT_NONE) encoderFormat.pixelFormat = format.pixelFormat;
+  if (encoderFormat.pixelFormat == kFFPixelFormatType_None) encoderFormat.pixelFormat = format.pixelFormat;
   if (videoTimeBase.num == 0) videoTimeBase = decoder.options.videoTimeBase;
   
   FFEncoderOptions *options = [[FFEncoderOptions alloc] initWithPath:_encoderOptions.path 
@@ -44,31 +46,34 @@
                                                               format:encoderFormat
                                                        videoTimeBase:videoTimeBase];
   
-  _encoder = [[FFEncoder alloc] initWithOptions:options];
+  _encoder = [[FFMPEncoder alloc] initWithOptions:options];
   [options release];  
   
-  if ([_encoder open:error]) {
+  if ([_encoder open:error]) {    
     return [_encoder writeHeader:error];
   }
+
   return NO;
 }
 
 - (BOOL)close:(NSError **)error {
-  [_encoder writeTrailer:error]; // TODO: return NO on error
-  [_encoder close];
+  if ([_encoder isOpen]) {
+    [_encoder writeTrailer:error]; // TODO: return NO on error
+    [_encoder close];
+  }
   [_encoder release];
   _encoder = nil;
   return YES;
 }
 
-- (BOOL)processFrame:(FFVFrameRef)frame decoder:(FFDecoder *)decoder index:(NSInteger)index error:(NSError **)error {
+- (BOOL)processFrame:(FFVFrameRef)frame decoder:(id<FFDecoder>)decoder index:(NSInteger)index error:(NSError **)error {
   
   if (!_encoder) {
     if (![self openEncoderWithFormat:FFVFrameGetFormat(frame) decoder:decoder error:error])
       return NO;
   }
   
-  int bytesEncoded = [_encoder encodeAVFrame:frame error:error];
+  int bytesEncoded = [_encoder encodeFrame:frame error:error];
   if (bytesEncoded < 0) {
     FFDebug(@"Encode error");
     return NO;

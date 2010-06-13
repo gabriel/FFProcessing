@@ -1,21 +1,22 @@
 //
-//  FFReadThread.m
+//  FFMPReadThread.m
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 3/30/10.
 //  Copyright 2010. All rights reserved.
 //
 
-#import "FFReadThread.h"
+#import "FFMPReadThread.h"
 
 #import "FFUtils.h"
+#import "FFMPUtils.h"
 
-@implementation FFReadThread
+@implementation FFMPReadThread
 
 - (id)init {
   if ((self = [super init])) {
-    self.name = @"FFReadThread";
-    _decoder = [[FFDecoder alloc] init];
+    self.name = @"FFMPReadThread";
+    _decoder = [[FFMPDecoder alloc] init];
     _readPictureIndex = 0;
     _readIndex = 0;
     _frame = NULL;
@@ -48,10 +49,6 @@
   while (![self isFinished]) {
     [NSThread sleepForTimeInterval:0.05];
   }
-}
-
-- (FFDecoder *)decoder {
-  return _decoder;
 }
 
 - (FFVFormat)format {

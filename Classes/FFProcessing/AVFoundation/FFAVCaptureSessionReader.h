@@ -8,7 +8,6 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "FFReader.h"
-#import "FFConverter.h"
 
 @interface FFAVCaptureSessionReader : NSObject <FFReader, AVCaptureVideoDataOutputSampleBufferDelegate> {
   AVCaptureSession *_captureSession;
@@ -16,11 +15,14 @@
   
   FFVFrameRef _frame;
   BOOL _dataChanged;
+  BOOL _wantsData;
 
   uint8_t *_data; // Data from camera
   size_t _dataSize;
   
-  FFConverter *_converter;
+  CVImageBufferRef _imageBuffer;
+  
+  dispatch_queue_t _queue;
 }
 
 @end

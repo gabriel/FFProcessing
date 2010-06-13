@@ -11,8 +11,7 @@
 #import "FFReader.h"
 #import "FFGLDrawable.h"
 
-
-#import "FFGLTestDrawable.h"
+//#import "FFGLTestDrawable.h"
 
 @implementation FFPlayerView
 
@@ -30,7 +29,7 @@
     [self addSubview:_displayLabel];
      */
   
-    [self setAnimationInterval:(1.0 / 30.0)];  
+    [self setFrameInterval:(1.0 / 30.0)];  
   }
   return self;
 }

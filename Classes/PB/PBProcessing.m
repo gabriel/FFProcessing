@@ -11,6 +11,8 @@
 #import "FFUtils.h"
 #import "FFProcessing.h"
 
+#import "FFMPConverter.h"
+#import "FFMPDecoder.h"
 #import "FFEncodeProcessor.h"
 #import "FFDataMoshProcessor.h"
 #import "FFCannyEdgeFilter.h"
@@ -46,7 +48,7 @@
   NSString *outputPath = [[FFUtils documentsDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"mosh.mp4", outputFormat]];
   
   FFEncoderOptions *encoderOptions = [[[FFEncoderOptions alloc] initWithPath:outputPath formatName:outputFormat codecName:outputCodecName
-                                                                      format:FFVFormatNone videoTimeBase:(AVRational){0,0}] autorelease];
+                                                                      format:FFVFormatNone videoTimeBase:(FFRational){0,0}] autorelease];
 
   /*!
   FFDataMoshProcessor *processor = [[[FFDataMoshProcessor alloc] initWithEncoderOptions:encoderOptions] autorelease];
@@ -58,17 +60,19 @@
   id<FFProcessor> processor = [[[FFEncodeProcessor alloc] initWithEncoderOptions:encoderOptions] autorelease];
   
   id<FFFilter> filter = [[FFFilters alloc] initWithFilters:[NSArray arrayWithObjects:
-                                                            [[(FFConverter *)[FFConverter alloc] initWithFormat:FFVFormatMake(0, 0, PIX_FMT_RGB24)] autorelease],
-                                                            [[[FFCannyEdgeFilter alloc] init] autorelease],
-                                                            [[(FFConverter *)[FFConverter alloc] initWithFormat:FFVFormatMake(0, 0, PIX_FMT_YUV420P)] autorelease],
+                                                            [[(FFMPConverter *)[FFMPConverter alloc] initWithFormat:FFVFormatMake(0, 0, kFFPixelFormatType_32BGRA)] autorelease],
+                                                            //[[[FFCannyEdgeFilter alloc] init] autorelease],
+                                                            [[(FFMPConverter *)[FFMPConverter alloc] initWithFormat:FFVFormatMake(0, 0, kFFPixelFormatType_YUV420P)] autorelease],
                                                             nil]];
   
   [outputPath retain];
   [_outputPath release];
   _outputPath = outputPath;
   
-  _processingThread = [[FFProcessingThread alloc] initWithProcessor:processor filter:filter items:items];
+  id<FFDecoder> decoder = [[FFMPDecoder alloc] init];
+  _processingThread = [[FFProcessingThread alloc] initWithDecoder:decoder processor:processor filter:filter items:items];
   _processingThread.delegate = self;  
+  [decoder release];
   
   [_processingThread start];
 }

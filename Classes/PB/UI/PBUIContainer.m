@@ -29,23 +29,29 @@
 }
 
 - (void)layoutSubviews {
-  [super layoutSubviews];
-
   CGSize contentSize = self.frame.size;  
   contentSize.height -= _footerView.frame.size.height;
   contentSize.height -= _headerView.frame.size.height;
   
   CGFloat y = 0;
   
-  _headerView.frame = CGRectMake(0, 0, contentSize.width, _headerView.frame.size.height);  
+  _headerView.frame = CGRectMake(0, 0, contentSize.width, _headerView.frame.size.height);    
   y += _headerView.frame.size.height;
+  [_headerView setNeedsLayout];
   
-  _contentView.frame = CGRectMake(0, y, contentSize.width, contentSize.height);
-  FFDebug(@"Content view, frame=%@", NSStringFromCGRect(_contentView.frame));
+  CGRect contentFrame = CGRectMake(0, y, contentSize.width, contentSize.height);  
+  // This prevents UIScrollViews from causing a layoutSubviews call after setFrame
+  if (!YPCGRectIsEqual(contentFrame, _contentView.frame)) {
+    FFDebug(@"Content view, frame=%@", NSStringFromCGRect(contentFrame));
+    _contentView.frame = contentFrame;
+    [_contentView setNeedsLayout];
+  }
+  
   _statusView.frame = _contentView.frame;
-  y += contentSize.height;
+  y += contentSize.height;  
   
   _footerView.frame = CGRectMake(0, y, contentSize.width, _footerView.frame.size.height);
+  [_footerView setNeedsLayout];
 }
 
 - (void)setHeaderView:(UIView *)headerView {
@@ -72,6 +78,7 @@
   [_contentView removeFromSuperview];
   [_contentView release];
   _contentView = contentView;
+  _contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight |  UIViewAutoresizingFlexibleWidth;
   [self addSubview:_contentView];
   [self setNeedsLayout];
   [self setNeedsDisplay];

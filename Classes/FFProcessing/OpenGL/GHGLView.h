@@ -25,8 +25,6 @@
 	GLuint _viewRenderbuffer;
 	GLuint _viewFramebuffer;
 	GLuint _depthRenderbuffer;
-      
-	NSTimeInterval _animationInterval;
 	
 	CADisplayLink *_displayLink;
     
@@ -37,7 +35,7 @@
 	id<GHGLViewDrawable> _drawable; // weak
 		
 }
-@property (assign, nonatomic) NSTimeInterval animationInterval;
+
 @property (retain, nonatomic) id<GHGLViewDrawable> drawable;
 @property (readonly, nonatomic) GLint backingWidth;
 @property (readonly, nonatomic) GLint backingHeight;
@@ -47,6 +45,8 @@
 - (void)stopAnimation;
 - (BOOL)isAnimating;
 - (void)drawView;
+
+- (void)setFrameInterval:(NSInteger)frameInterval;
 
 @end
 

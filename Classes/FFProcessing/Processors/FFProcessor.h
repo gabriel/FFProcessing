@@ -11,6 +11,6 @@
 
 @protocol FFProcessor <NSObject>
 - (BOOL)open:(NSError **)error;
-- (BOOL)processFrame:(FFVFrameRef)frame decoder:(FFDecoder *)decoder index:(NSInteger)index error:(NSError **)error;
+- (BOOL)processFrame:(FFVFrameRef)frame decoder:(id<FFDecoder>)decoder index:(NSInteger)index error:(NSError **)error;
 - (BOOL)close:(NSError **)error;
 @end

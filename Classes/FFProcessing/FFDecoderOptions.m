@@ -8,14 +8,15 @@
 
 #import "FFDecoderOptions.h"
 #import "FFUtils.h"
+#import "FFMPUtils.h"
 
 @implementation FFDecoderOptions
 
 @synthesize format=_format, videoFrameRate=_videoFrameRate, videoTimeBase=_videoTimeBase,
 sampleAspectRatio=_sampleAspectRatio;
 
-- (id)initWithFormat:(FFVFormat)format videoFrameRate:(AVRational)videoFrameRate 
-       videoTimeBase:(AVRational)videoTimeBase {
+- (id)initWithFormat:(FFVFormat)format videoFrameRate:(FFRational)videoFrameRate 
+       videoTimeBase:(FFRational)videoTimeBase {
   
   if ((self = [super init])) {
     _format = format;

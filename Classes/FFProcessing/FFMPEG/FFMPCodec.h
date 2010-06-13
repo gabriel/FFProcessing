@@ -1,5 +1,5 @@
 //
-//  FFCodec.h
+//  FFMPCodec.h
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 4/1/10.
@@ -7,7 +7,7 @@
 //
 
 
-@interface FFCodec : NSObject {
+@interface FFMPCodec : NSObject {
 
 }
 

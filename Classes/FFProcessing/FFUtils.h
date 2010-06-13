@@ -8,15 +8,14 @@
 
 #import "FFTypes.h"
 
-extern NSString *const FFMPEGErrorCodeKey; // Key for NSError for source error code
-
-#define FFSetError(__ERROR__, __ERROR_CODE__, __FFMPEG_ERROR_CODE__, __DESC__, ...) do { \
-NSString *message = [NSString stringWithFormat:@"%@ (%d)", [NSString stringWithFormat:__DESC__, ##__VA_ARGS__], __FFMPEG_ERROR_CODE__]; \
+#define FFSetError(__ERROR__, __ERROR_CODE__, __DESC__, ...) do { \
+NSString *message = [NSString stringWithFormat:__DESC__, ##__VA_ARGS__]; \
 NSLog(@"%@", message); \
-if (__ERROR__) *__ERROR__ = [NSError errorWithDomain:@"FFMPEG" code:__ERROR_CODE__ \
+if (__ERROR__) *__ERROR__ = [NSError errorWithDomain:@"FFProcessing" code:__ERROR_CODE__ \
 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:message, NSLocalizedDescriptionKey,  \
-[NSNumber numberWithInteger:__FFMPEG_ERROR_CODE__], FFMPEGErrorCodeKey, nil]]; \
+nil]]; \
 } while (0)
+
 
 enum {
   // Opening
@@ -56,21 +55,6 @@ enum {
 #define FFWarn(...) do { } while(0)
 #endif
 
-static inline NSString *NSStringFromAVFramePictType(int pictType) {
-  switch (pictType) {
-    case FF_I_TYPE: return @"I";
-    case FF_P_TYPE: return @"P";    
-    case FF_B_TYPE: return @"B";
-    default: return @"-";
-  }
-}
-
-
-void FFInitialize(void);
-BOOL FFIsInitialized(void);
-
-BOOL FFIsFlushPacket(AVPacket *packet);
-
 // Fill dummy image
 void FFFillYUVImage(FFVFrameRef frame, NSInteger frameIndex);
 
@@ -94,7 +78,7 @@ void FFFillYUVImage(FFVFrameRef frame, NSInteger frameIndex);
  Instead of keeping the sequence of continued fraction terms,
  we just keep the last partial product of these matrices.
  */
-AVRational FFFindRationalApproximation(float r, long maxden);
+FFRational FFFindRationalApproximation(float r, long maxden);
 
 double FFAngleRadians(double x, double y);
 

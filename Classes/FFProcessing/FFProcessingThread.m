@@ -14,9 +14,9 @@
 
 @synthesize delegate=_delegate;
 
-- (id)initWithProcessor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter items:(NSArray *)items {
+- (id)initWithDecoder:(id<FFDecoder>)decoder processor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter items:(NSArray *)items {
   if ((self = [self init])) {
-    _processingQueue = [(FFProcessingQueue *)[FFProcessingQueue alloc] initWithProcessor:processor filter:filter];
+    _processingQueue = [(FFProcessingQueue *)[FFProcessingQueue alloc] initWithDecoder:decoder processor:processor filter:filter];
     _processingQueue.delegate = self;
     [_processingQueue addItems:items];
   }

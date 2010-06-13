@@ -8,30 +8,6 @@
 
 #import "FFUtils.h"
 
-#include "libavformat/avformat.h"
-
-NSString *const FFMPEGErrorCodeKey = @"FFMPEGErrorCodeKey";
-
-static AVPacket gFlushPacket;
-static BOOL gInitialized = NO;
-
-void FFInitialize(void) {
-  if (FFIsInitialized()) return;
-  gInitialized = YES;
-  av_register_all();
-  
-  av_init_packet(&gFlushPacket);
-  gFlushPacket.data = (uint8_t *)"FLUSH";
-}
-
-BOOL FFIsInitialized(void) {
-  return gInitialized;
-}
-
-BOOL FFIsFlushPacket(AVPacket *packet) {
-  return (packet->data == gFlushPacket.data);
-}
-
 void FFFillYUVImage(FFVFrameRef frame, NSInteger frameIndex) {
   
   FFVFormat format = FFVFrameGetFormat(frame);
@@ -61,7 +37,7 @@ void FFFillYUVImage(FFVFrameRef frame, NSInteger frameIndex) {
   }  
 }
 
-AVRational FFFindRationalApproximation(float r, long maxden) {  
+FFRational FFFindRationalApproximation(float r, long maxden) {  
 
   long m[2][2];
   long ai;
@@ -85,7 +61,7 @@ AVRational FFFindRationalApproximation(float r, long maxden) {
     if (x > (double)0x7FFFFFFF) break;  // AF: representation failure
   } 
   
-  return (AVRational){m[0][0], m[1][0]};
+  return (FFRational){m[0][0], m[1][0]};
 }
 
 double FFAngleRadians(double x, double y) {

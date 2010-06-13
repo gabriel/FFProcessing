@@ -6,11 +6,15 @@
 //  Copyright 2010. All rights reserved.
 //
 
-
-#include "libavutil/pixfmt.h"
-#include "libavcodec/avcodec.h"
-
-typedef enum PixelFormat FFPixelFormat;
+typedef enum {
+  kFFPixelFormatType_None = 0,
+  kFFPixelFormatType_YUV420P,
+  kFFPixelFormatType_32BGRA,
+  kFFPixelFormatType_32RGBA,
+  kFFPixelFormatType_32ARGB,
+  kFFPixelFormatType_24RGB,
+  kFFPixelFormatType_1Monochrome,  
+} FFPixelFormat;
 
 typedef struct {
   int width;
@@ -24,15 +28,19 @@ struct __FFVFrame {
   
   int64_t pts;
   FFVFormat format;
-} FFVFrame;
+  int32_t flags; // Flags (see FFVFLAGS)
+} _FFVFrame;
+
+typedef enum {
+  FFVFLAGS_EXTERNAL_DATA = 1 << 1
+} FFVFLAGS;
+
+typedef struct _FFRational {
+  int num; // Numerator
+  int den; // Denominator
+} FFRational;
 
 typedef struct __FFVFrame *FFVFrameRef;
-
-typedef struct {
-  uint8_t r;
-  uint8_t g;
-  uint8_t b;
-} FFRGB;
 
 #pragma mark FFAVFormat
 
@@ -43,6 +51,8 @@ static inline FFVFormat FFVFormatMake(int width, int height, FFPixelFormat pixel
 static inline NSString *NSStringFromFFVFormat(FFVFormat format) {
   return [NSString stringWithFormat:@"(%d,%d,%d)", format.width, format.height, format.pixelFormat];
 }
+
+BOOL FFVFormatIsEqual(FFVFormat format1, FFVFormat format2);
 
 extern FFVFormat FFVFormatNone;
 
@@ -60,9 +70,7 @@ void FFVFrameCopy(FFVFrameRef source, FFVFrameRef dest);
 
 FFVFrameRef FFVFrameCreateFromCGImage(CGImageRef image);
 
-FFVFrameRef FFVFrameCreateFromAVFrame(AVFrame *frame, FFVFormat format);
-
-void FFVFrameCopyFromAVFrame(FFVFrameRef frame, AVFrame *avFrame, FFVFormat format);
+#pragma mark - 
 
 static inline uint8_t *FFVFrameGetData(FFVFrameRef frame, int index) {
   return frame->data[index];
@@ -84,7 +92,7 @@ static inline FFVFormat FFVFrameGetFormat(FFVFrameRef frame) {
 #pragma mark FFRBG
 
 static inline void FFVFrameGetRGB(FFVFrameRef frame, int x, int y, uint8_t *r, uint8_t *g, uint8_t *b) {
-  //NSAssert(frame->format.pixelFormat == PIX_FMT_RGB24, @"Only supports PIX_FMT_RGB24");
+  //NSAssert(frame->format.pixelFormat == , @"Only supports RGB24");
   int p = (x * (FFVFrameGetBytesPerPixel(frame, 0))) + (y * FFVFrameGetBytesPerRow(frame, 0));
   
   uint8_t *data = FFVFrameGetData(frame, 0);
@@ -101,5 +109,3 @@ static inline void FFVFrameSetRGB(FFVFrameRef frame, int x, int y, uint8_t r, ui
   data[p + 2] = b;
 }
 */
-
-

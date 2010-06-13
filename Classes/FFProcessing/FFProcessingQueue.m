@@ -20,8 +20,9 @@
   return self;
 }
 
-- (id)initWithProcessor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter {
+- (id)initWithDecoder:(id<FFDecoder>)decoder processor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter {
   if ((self = [self init])) {
+    _decoder = [decoder retain];
     _processor = [processor retain];    
     _filter = [filter retain];
   }
@@ -31,6 +32,7 @@
 - (void)dealloc {
   [self close];
   [_items release];
+  [_decoder release];
   [_processor release];
   [_filter release];
   [_processing release];
@@ -65,7 +67,7 @@
   }
   
   if (!_processing) {
-    _processing = [(FFProcessing *)[FFProcessing alloc] initWithProcessor:_processor filter:_filter];
+    _processing = [(FFProcessing *)[FFProcessing alloc] initWithDecoder:_decoder processor:_processor filter:_filter];
     _processing.delegate = self;
   }
 

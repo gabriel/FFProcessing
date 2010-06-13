@@ -14,8 +14,7 @@
 @implementation FFCannyEdgeFilter
 
 - (void)dealloc {
-  // TODO(gabe): Fix leak
-  //if (_image) cvReleaseImage(&_image);
+  if (_image) cvReleaseImage(&_image);
   if (_grey) cvReleaseImage(&_grey);
   if (_edges) cvReleaseImage(&_edges);  
   [super dealloc];

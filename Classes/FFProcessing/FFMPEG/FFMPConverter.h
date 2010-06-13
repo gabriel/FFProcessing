@@ -1,5 +1,5 @@
 //
-//  FFConverter.h
+//  FFMPConverter.h
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 3/21/10.
@@ -9,7 +9,7 @@
 #import "FFTypes.h"
 #import "FFFilter.h"
 
-@interface FFConverter : NSObject <FFFilter> {
+@interface FFMPConverter : NSObject <FFFilter> {
   FFVFormat _format;
   FFVFrameRef _frame;
 }

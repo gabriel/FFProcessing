@@ -6,26 +6,23 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#import "libavcodec/avcodec.h"
-
-#import "FFPresets.h"
 #import "FFTypes.h"
 
 @interface FFDecoderOptions : NSObject {
   FFVFormat _format;
-  AVRational _videoFrameRate;
-  AVRational _videoTimeBase;
-  AVRational _sampleAspectRatio;
+  FFRational _videoFrameRate;
+  FFRational _videoTimeBase;
+  FFRational _sampleAspectRatio;
   int64_t _duration;
 }
 
 @property (readonly, nonatomic) FFVFormat format;
-@property (readonly, nonatomic) AVRational videoFrameRate;
-@property (readonly, nonatomic) AVRational videoTimeBase;
-@property (readonly, nonatomic) AVRational sampleAspectRatio;
+@property (readonly, nonatomic) FFRational videoFrameRate;
+@property (readonly, nonatomic) FFRational videoTimeBase;
+@property (readonly, nonatomic) FFRational sampleAspectRatio;
 
-- (id)initWithFormat:(FFVFormat)format videoFrameRate:(AVRational)videoFrameRate 
-       videoTimeBase:(AVRational)videoTimeBase;
+- (id)initWithFormat:(FFVFormat)format videoFrameRate:(FFRational)videoFrameRate 
+       videoTimeBase:(FFRational)videoTimeBase;
 
 @end
 

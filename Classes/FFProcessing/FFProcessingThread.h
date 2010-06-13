@@ -28,6 +28,6 @@
 
 @property (assign, nonatomic) id<FFProcessingThreadDelegate> delegate;
 
-- (id)initWithProcessor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter items:(NSArray *)items;
+- (id)initWithDecoder:(id<FFDecoder>)decoder processor:(id<FFProcessor>)processor filter:(id<FFFilter>)filter items:(NSArray *)items;
 
 @end

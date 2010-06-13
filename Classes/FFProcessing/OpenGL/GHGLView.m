@@ -1,7 +1,4 @@
-//
-// Modified from Jeff Lamarche's OpenGL ES Template for XCode
-// http://iphonedevelopment.blogspot.com/2009/05/opengl-es-from-ground-up-table-of.html
-//
+
 
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
@@ -13,7 +10,6 @@
 
 @interface GHGLView ()
 @property (retain, nonatomic) EAGLContext *context;
-@property (assign, nonatomic) NSTimer *animationTimer;
 - (BOOL)_createFramebuffer;
 - (void)_destroyFramebuffer;
 @end
@@ -21,8 +17,8 @@
 
 @implementation GHGLView
 
-@synthesize animationInterval=_animationInterval, drawable=_drawable, backingWidth=_backingWidth, backingHeight=_backingHeight;
-@synthesize context=_context, animationTimer=_animationTimer; // Private properties
+@synthesize drawable=_drawable, backingWidth=_backingWidth, backingHeight=_backingHeight;
+@synthesize context=_context; // Private properties
 
 + (Class)layerClass {
 	return [CAEAGLLayer class];
@@ -64,8 +60,6 @@
     GHGLDebug(@"GL_MAX_TEXTURE_SIZE: %d", _maxTextureSize);
     GHGLDebug(@"Supports BGRA8888 textures: %d", _supportsBGRA8888);
     GHGLDebug(@"Supports NPOT textures: %d", _supportsNPOT);
-			
-		_animationInterval = 1.0 / 10.0;
 	}
 	return self;
 }
@@ -153,8 +147,11 @@
 - (void)startAnimation {
   if (!_displayLink) {
     GHGLDebug(@"Start animation");
-    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView)];  
+    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView)];    
+    _displayLink.frameInterval = 3;
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    GHGLDebug(@"Display link; frame interval %d", _displayLink.frameInterval);
+    NSAssert(_drawable, @"No drawable set");
     [_drawable start];
   }
 }
@@ -172,9 +169,9 @@
   }
 }
 
-- (void)setAnimationInterval:(NSTimeInterval)animationInterval {
-	_animationInterval = animationInterval;
-  [_displayLink setFrameInterval:_animationInterval];
+- (void)setFrameInterval:(NSInteger)frameInterval {
+  GHGLDebug(@"Set frame interval: %d", frameInterval);
+  _displayLink.frameInterval = frameInterval;
 }
 
 @end

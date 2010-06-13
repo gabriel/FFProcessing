@@ -1,16 +1,17 @@
 //
-//  FFDecoder.m
-//  FFMPEG
+//  FFMPDecoder.m
+//  FFMP
 //
 //  Created by Gabriel Handford on 3/6/10.
 //  Copyright 2010. All rights reserved.
 //
 
-#import "FFDecoder.h"
+#import "FFMPDecoder.h"
 
 #import "FFUtils.h"
+#import "FFMPUtils.h"
 
-@implementation FFDecoder
+@implementation FFMPDecoder
 
 @synthesize open=_open, options=_options, readVideoPTS=_readVideoPTS;
 
@@ -23,29 +24,35 @@
   NSParameterAssert(URL);
   
   if (_open) {
-    FFSetError(error, FFErrorCodeOpenAlready, -1, @"Already open");
+    FFMPSetError(error, FFErrorCodeOpenAlready, -1, @"Already open");
     return NO;
   }
   
-  FFInitialize();
+  FFMPInitialize();
+  
+  _avFrame = avcodec_alloc_frame();
+  if (_avFrame == NULL) {
+    FFMPSetError(error, FFErrorCodeAllocateFrame, -1, @"Couldn't allocate frame");
+    return NO;
+  }  
   
   NSString *path = [FFUtils resolvedPathForURL:URL];
   FFDebug(@"Path: %@", path);
   if (!path) {
-    FFSetError(error, FFErrorCodeOpen, -1, @"Failed to open, invalid path");
+    FFMPSetError(error, FFErrorCodeOpen, -1, @"Failed to open, invalid path");
     return NO;
   }
   
   AVInputFormat *avformat = NULL;
   if (format) {
     avformat = av_find_input_format([format UTF8String]);
-    if (avformat == NULL) FFSetError(error, FFErrorCodeInputFormatNotFound, -1, @"Couldn't find specified format");
+    if (avformat == NULL) FFMPSetError(error, FFErrorCodeInputFormatNotFound, -1, @"Couldn't find specified format");
     else FFDebug(@"Format: %s (flags=%x)", avformat->long_name, avformat->flags);
   }
 
   int averror = av_open_input_file(&_formatContext, [path UTF8String], avformat, 0, NULL);
   if (averror != 0) {
-    FFSetError(error, FFErrorCodeOpen, averror, @"Failed to open");
+    FFMPSetError(error, FFErrorCodeOpen, averror, @"Failed to open");
     return NO;
   }
   
@@ -63,7 +70,7 @@
   averror = av_find_stream_info(_formatContext);
   if (averror < 0) {
     av_close_input_file(_formatContext);
-    FFSetError(error, FFErrorCodeStreamInfoNotFound, averror, @"Failed to find stream info");
+    FFMPSetError(error, FFErrorCodeStreamInfoNotFound, averror, @"Failed to find stream info");
     return NO;
   }
     
@@ -77,21 +84,21 @@
     }
   }
   if (_videoStream == NULL) {
-    FFSetError(error, FFErrorCodeVideoStreamNotFound, -1, @"Couldn't find video stream");
+    FFMPSetError(error, FFErrorCodeVideoStreamNotFound, -1, @"Couldn't find video stream");
     return NO;
   }
   
   FFDebug(@"Finding codec (decoder)");
   AVCodec *codec = avcodec_find_decoder(_videoStream->codec->codec_id);
   if (!codec) {
-    FFSetError(error, FFErrorCodeCodecNotFound, -1, @"Codec not found for video stream");
+    FFMPSetError(error, FFErrorCodeCodecNotFound, -1, @"Codec not found for video stream");
     return NO;
   }
   FFDebug(@"Codec (decoder) found: %s", codec->name);
   
   averror = avcodec_open(_videoStream->codec, codec);
   if (averror < 0) {
-    FFSetError(error, FFErrorCodeCodecOpen, averror, @"Codec (decoder) open failed for video stream");
+    FFMPSetError(error, FFErrorCodeCodecOpen, averror, @"Codec (decoder) open failed for video stream");
     return NO;
   }
   FFDebug(@"Codec opened");
@@ -108,12 +115,15 @@
   }
   */
   
+  int testSize = avpicture_get_size(PIX_FMT_YUV420P, 1, 1);
+  FFDebug(@"bpp=%d", testSize);
+  
   // Set options
   _options = [[FFDecoderOptions alloc] initWithFormat:FFVFormatMake(_videoStream->codec->coded_width,
                                                                     _videoStream->codec->coded_height,
-                                                                    _videoStream->codec->pix_fmt)
-                                       videoFrameRate:_videoStream->r_frame_rate
-                                        videoTimeBase:_videoStream->time_base];
+                                                                    FFPixelFormatFromPixelFormat(_videoStream->codec->pix_fmt))
+                                       videoFrameRate:FFRationalFromAVRational(_videoStream->r_frame_rate)
+                                        videoTimeBase:FFRationalFromAVRational(_videoStream->time_base)];
   
   FFDebug(@"Decoder options: %@", _options);
 
@@ -132,7 +142,7 @@
   // Read the packet
   int averror = av_read_frame(_formatContext, packet);
   if (averror < 0) { 
-    FFSetError(error, FFErrorCodeReadFrame, averror, @"Failed to read frame");
+    FFMPSetError(error, FFErrorCodeReadFrame, averror, @"Failed to read frame");
     return NO;
   }
   
@@ -145,12 +155,20 @@
   }
   
   // If flush packet, flush and continue
-  if (FFIsFlushPacket(packet)) {
+  if (FFIsAVFlushPacket(packet)) {
     FFDebug(@"avcodec_flush_buffers");
     avcodec_flush_buffers(_videoStream->codec);
     return NO;
   }
   
+  return YES;
+}
+
+- (BOOL)decodeFrame:(FFVFrameRef)frame error:(NSError **)error {
+  if (![self decodeAVFrame:_avFrame error:error])
+    return NO;
+
+  FFVFrameFillFromAVFrame(frame, _avFrame);
   return YES;
 }
 
@@ -185,6 +203,13 @@
   _formatContext = NULL;
   [_options release];
   _options = nil;
+  
+  if (_avFrame != NULL) {
+    av_free(_avFrame);
+    _avFrame = NULL;
+  }  
+  _readVideoPTS = 0;
+  
   _open = NO;
 }
 

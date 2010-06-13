@@ -22,7 +22,7 @@
 
 - (id)init {
   if ((self = [super init])) {
-    self.title = @"VideoMosher";
+    self.title = @"FFProcessing";
     _processing = [[PBProcessing alloc] init];
     _processing.delegate = self;
   }

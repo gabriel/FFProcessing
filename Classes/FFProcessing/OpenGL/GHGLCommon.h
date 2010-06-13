@@ -116,6 +116,24 @@ static inline float TimeDelta(CFTimeInterval *lastTime) {
 	return delta;
 }
 
+#pragma mark Texture
+
+typedef struct {
+	GLuint texID;
+	GLsizei wide, high;	// Texture size
+	GLfloat s, t;	// Texcoords to show full image, taking any POT padding into account
+} Texture;
+
+typedef struct {
+	GLfloat s;
+	GLfloat t;
+} TextureCoord3D;
+
+typedef struct {
+  GLsizei wide;
+  GLsizei high;
+} TextureSize;
+
 #pragma mark Vertex3D
 
 typedef struct {
@@ -283,9 +301,9 @@ static inline Vector3D Triangle3DCalculateSurfaceNormal(Triangle3D triangle) {
 #pragma mark Interleaving
 
 typedef struct {
-	GLfloat s;
-	GLfloat t;
-} TextureCoord3D;
+	Vertex2D vertex;
+	TextureCoord3D texCoord;
+} TexturedVertexData2D;
 
 typedef struct {
 	Vertex3D vertex;
@@ -481,14 +499,14 @@ static inline void Matrix3DSetUniformScaling(Matrix3D matrix, GLfloat scale) {
     Matrix3DSetScaling(matrix, scale, scale, scale);
 }
 
-static inline void Matrix3DSetXRotationUsingRadians(Matrix3D matrix, GLfloat degrees) {
+static inline void Matrix3DSetXRotationUsingRadians(Matrix3D matrix, GLfloat radians) {
     matrix[0] = matrix[15] = 1.0;
     matrix[1] = matrix[2] = matrix[3] = matrix[4] = 0.0;
     matrix[7] = matrix[8] = 0.0;    
     matrix[11] = matrix[12] = matrix[13] = matrix[14] = 0.0;
     
-    matrix[5] = cosf(degrees);
-    matrix[6] = -fastSinf(degrees);
+    matrix[5] = cosf(radians);
+    matrix[6] = -fastSinf(radians);
     matrix[9] = -matrix[6];
     matrix[10] = matrix[5];
 }
@@ -527,14 +545,11 @@ static inline void Matrix3DSetZRotationUsingDegrees(Matrix3D matrix, GLfloat deg
 
 static inline void Matrix3DSetRotationByRadians(Matrix3D matrix, GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     GLfloat mag = sqrtf((x*x) + (y*y) + (z*z));
-    if (mag == 0.0)
-    {
+    if (mag == 0.0) {
         x = 1.0;
         y = 0.0;
         z = 0.0;
-    }
-    else if (mag != 1.0)
-    {
+    } else if (mag != 1.0) {
         x /= mag;
         y /= mag;
         z /= mag;
@@ -544,7 +559,6 @@ static inline void Matrix3DSetRotationByRadians(Matrix3D matrix, GLfloat angle, 
     GLfloat s = fastSinf(angle);
     matrix[3] = matrix[7] = matrix[11] = matrix[12] = matrix[13] = matrix[14] = 0.0;
     matrix[15] = 1.0;
-    
     
     matrix[0] = (x*x)*(1-c) + c;
     matrix[1] = (y*x)*(1-c) + (z*s);
@@ -593,11 +607,11 @@ typedef struct {
 	GLuint	originalVertex;
 	GLuint	textureCoords;
 	GLuint	actualVertex;
-	void	*greater;
-	void	*lesser;	
+	void *greater;
+	void *lesser;	
 } VertexTextureIndex;
 
-static inline VertexTextureIndex * VertexTextureIndexMake (GLuint inVertex, GLuint inTextureCoords, GLuint inActualVertex) {
+static inline VertexTextureIndex *VertexTextureIndexMake(GLuint inVertex, GLuint inTextureCoords, GLuint inActualVertex) {
 	VertexTextureIndex *ret = malloc(sizeof(VertexTextureIndex));
 	ret->originalVertex = inVertex;
 	ret->textureCoords = inTextureCoords;

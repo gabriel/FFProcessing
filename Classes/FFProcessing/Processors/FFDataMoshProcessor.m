@@ -8,6 +8,7 @@
 
 #import "FFDataMoshProcessor.h"
 #import "FFUtils.h"
+#import "FFMPUtils.h"
 
 @implementation FFDataMoshProcessor
 
@@ -25,14 +26,14 @@
   return YES;
 }
 
-- (BOOL)processFrame:(FFVFrameRef)frame decoder:(FFDecoder *)decoder index:(NSInteger)index error:(NSError **)error {
+- (BOOL)processFrame:(FFVFrameRef)frame decoder:(id<FFDecoder>)decoder index:(NSInteger)index error:(NSError **)error {
   
   if (!_encoder) {
     if (![self openEncoderWithFormat:FFVFrameGetFormat(frame) decoder:decoder error:error])
       return NO;
   }
   
-  int bytesEncoded = [_encoder encodeAVFrame:frame error:error];
+  int bytesEncoded = [_encoder encodeFrame:frame error:error];
   if (bytesEncoded < 0) {
     FFDebug(@"Encode error");
     return NO;
@@ -42,7 +43,7 @@
   if (bytesEncoded == 0) 
     return NO;
   
-  AVFrame *codedFrame = [_encoder codedFrame];
+  AVFrame *codedFrame = (AVFrame *)[_encoder codedFrame];
 
   if (codedFrame->pict_type == FF_I_TYPE) {        
     FFDebug(@"I-frame %lld (%d, %d)", codedFrame->pts, _IFrameIndex, _GOPIndex);

@@ -1,14 +1,16 @@
 //
-//  FFReadThread.h
+//  FFMPReadThread.h
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 3/30/10.
 //  Copyright 2010. All rights reserved.
 //
 
-#import "FFDecoder.h"
+#import "FFTypes.h"
+#import "FFMPDecoder.h"
+#import "FFReading.h"
 
-@interface FFReadThread : NSThread {
+@interface FFMPReadThread : NSThread <FFReading> {
 
   AVFrame *_avFrame;  
   FFVFrameRef _frame;
@@ -16,7 +18,7 @@
   NSInteger _readPictureIndex;
   NSInteger _readIndex;
 
-  FFDecoder *_decoder;
+  FFMPDecoder *_decoder;
   NSURL *_URL;
   NSString *_formatName;
   
@@ -24,8 +26,6 @@
 }
 
 - (id)initWithURL:(NSURL *)URL formatName:(NSString *)formatName;
-
-//- (FFDecoder *)decoder;
 
 - (FFVFormat)format;
 

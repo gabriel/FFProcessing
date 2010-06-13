@@ -1,6 +1,6 @@
 //
 //  FFGLDrawable.m
-//  FFMPEG
+//  FFMP
 //
 //  Created by Gabriel Handford on 3/6/10.
 //  Copyright 2010. All rights reserved.
@@ -17,7 +17,7 @@
   if ((self = [self init])) {
     _reader = [reader retain];
     _filter = [filter retain];
-    _format = GL_BGRA;
+    _GLFormat = GL_BGRA;
   }
   return self;
 }
@@ -73,16 +73,14 @@
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   
   if (!_textureLoaded) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, format.width, format.height, 0, _format, GL_UNSIGNED_BYTE, data);    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, format.width, format.height, 0, _GLFormat, GL_UNSIGNED_BYTE, data);    
   } else {
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, format.width, format.height, _format, GL_UNSIGNED_BYTE, data);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, format.width, format.height, _GLFormat, GL_UNSIGNED_BYTE, data);
   }
   
-  GLenum GLError = glGetError();
-  if (GLError != GL_NO_ERROR) {
-    FFDebug(@"GL error: %@", GHGLErrorDescription(GLError));
-    return NO;
-  } else if (!_textureLoaded) {
+  GHGLCheckError();
+
+  if (!_textureLoaded) {
     FFDebug(@"Texture loaded");
     _textureLoaded = YES;
   }

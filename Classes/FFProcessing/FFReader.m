@@ -1,6 +1,6 @@
 //
 //  FFReader.m
-//  FFMPEG
+//  FFMP
 //
 //  Created by Gabriel Handford on 3/8/10.
 //  Copyright 2010. All rights reserved.
@@ -13,9 +13,9 @@
 
 @implementation FFReader
 
-- (id)initWithURL:(NSURL *)URL format:(NSString *)format {
+- (id)initWithReading:(id<FFReading>)reading {
   if ((self = [self init])) {
-    _readThread = [[FFReadThread alloc] initWithURL:URL format:format];
+    _reading = [reading retain];
   }
   return self;
 }
@@ -26,26 +26,24 @@
 }
 
 - (void)close {
-  [_readThread close];
-  [_readThread release];
-  _readThread = nil;
-  [_converter release];
-  _converter = nil;
+  [_reading close];
+  [_reading release];
+  _reading = nil;
   FFVFrameRelease(_frame);  
 }
 
 - (FFVFrameRef)nextFrame:(NSError **)error {  
   if (!_started) {
     _started = YES;    
-    [_readThread start];
+    [_reading start];
   }
     
   if (_frame == NULL) {
-    _frame = FFVFrameCreate([_readThread format]);
+    _frame = FFVFrameCreate([_reading format]);
     if (_frame == NULL) return NULL;
   }
   
-  if (![_readThread readFrame:_frame]) return _frame;
+  if (![_reading readFrame:_frame]) return _frame;
   
   return _frame;
 }
