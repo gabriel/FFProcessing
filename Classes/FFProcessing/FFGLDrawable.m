@@ -10,7 +10,6 @@
 #import "FFUtils.h"
 #import "GHGLUtils.h"
 
-
 @implementation FFGLDrawable
 
 - (id)initWithReader:(id<FFReader>)reader filter:(id<FFFilter>)filter {
@@ -23,6 +22,7 @@
 }
 
 - (void)dealloc {
+  [_imaging release];
   [_reader release];
   [_filter release];
   [super dealloc];
@@ -34,21 +34,20 @@
   [_reader close];
 }
 
-- (BOOL)drawView:(CGRect)rect inView:(GHGLView *)view {
+- (void)setupView:(GHGLView *)view {
+  [super setupView:view];
+  TextureSize texSize = {(GLsizei)view.frame.size.width, (GLsizei)view.frame.size.height};
+  TextureCoord3D texCoord = {1, 1}; 
+  _imaging = [[FFGLImaging alloc] initWithTextureSize:texSize textureCoord:texCoord];
+}
+
+- (BOOL)drawView:(GHGLView *)view {
   NSAssert(_reader, @"No reader");
 
-  BOOL debugFrame = NO;
-#if DEBUG
-  static NSInteger DebugCount = 0;
-  if (DebugCount++ % 30 == 0) debugFrame = YES;
-  if (debugFrame) FFDebug(@"[DEBUG FRAME]");
-#endif
-  
   FFVFrameRef frame = [_reader nextFrame:nil];
   if (frame == NULL) return NO;
   
   if (_filter) {
-    if (debugFrame) FFDebug(@"Applying filter...");
     frame = [_filter filterFrame:frame error:nil];
     if (frame == NULL) return NO;
   }
@@ -57,15 +56,11 @@
   FFVFormat format = FFVFrameGetFormat(frame);
   // TODO(gabe): Assert (pixel) format is correct for our GL setup
   if (data == NULL) return NO;
-    
-  if (debugFrame) FFDebug(@"Rendering...");
   
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	glLoadIdentity();
-
-  glEnable(GL_TEXTURE_2D);
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);  
-  glBindTexture(GL_TEXTURE_2D, _videoTexture[0]);
+  
+  glBindTexture(GL_TEXTURE_2D, _texture);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   // You have to do clamp to edge to support NPOT textures
@@ -73,23 +68,37 @@
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   
   if (!_textureLoaded) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, format.width, format.height, 0, _GLFormat, GL_UNSIGNED_BYTE, data);    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, format.width, format.height, 0, _GLFormat, GL_UNSIGNED_BYTE, data);        
+    _textureLoaded = YES;
+    FFDebug(@"Texture loaded");
   } else {
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, format.width, format.height, _GLFormat, GL_UNSIGNED_BYTE, data);
   }
   
   GHGLCheckError();
 
-  if (!_textureLoaded) {
-    FFDebug(@"Texture loaded");
-    _textureLoaded = YES;
-  }
+  CGRect texRect = CGRectMake(0, 0, view.frame.size.height, view.frame.size.width); // TODO(gabe): ??
   
-  // Portrait
-  //[self drawInRect:rect];
-  // Landscape
-  //FFDebug(@"Draw, rect=%@", NSStringFromCGRect(rect));
-  [self drawInRect:CGRectMake(0, 0, rect.size.height, rect.size.width)]; // TODO(gabe): ?? 
+  TexturedVertexData2D quad[4] = {
+    {{texRect.origin.y, texRect.origin.x}, {0, 1}},
+    {{texRect.origin.y, texRect.origin.x + texRect.size.width}, {1, 1}},
+    {{texRect.origin.y + texRect.size.height, texRect.origin.x}, {0, 0}},
+    {{texRect.origin.y + texRect.size.height, texRect.origin.x + texRect.size.width}, {1, 0}}
+  };
+  
+  glBindTexture(GL_TEXTURE_2D, _texture);
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);	  
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  
+  /*
+	glVertexPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].vertex.x);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].texCoord.s);	
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+   */
+  
+  //FFHue(quad, 0.8);
+  [_imaging greyscale:quad amount:1];
+  
   return YES;
 }
 

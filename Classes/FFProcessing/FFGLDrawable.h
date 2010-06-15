@@ -9,6 +9,7 @@
 #import "GHGLView.h"
 #import "FFReader.h"
 #import "FFFilter.h"
+#import "FFGLImaging.h"
 
 @interface FFGLDrawable : GHGLViewDrawable {
   
@@ -16,6 +17,8 @@
   id<FFFilter> _filter;
   
   GLint _GLFormat; // For example, GL_RGB, GL_BGRA
+  
+  FFGLImaging *_imaging;
 
 }
 

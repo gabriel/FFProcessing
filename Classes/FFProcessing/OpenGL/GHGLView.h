@@ -13,7 +13,7 @@
 @protocol GHGLViewDrawable <NSObject>
 - (void)start;
 - (void)stop;
-- (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view;
+- (BOOL)drawView:(GHGLView *)view;
 - (void)setupView:(GHGLView *)view;
 @end
 
@@ -52,10 +52,8 @@
 
 
 @interface GHGLViewDrawable : NSObject <GHGLViewDrawable> {
-  GLuint _videoTexture[1];
+  GLuint _texture;
   BOOL _textureLoaded;
 }
-
-- (void)drawInRect:(CGRect)rect;
 
 @end

@@ -94,8 +94,7 @@
   if (_captureSession.isInterrupted) FFWarn(@"Capture session is interrupted");
   
   if (!_dataChanged) return NULL;
-  
-  FFDebug(@"Setting data on frame");
+
   FFVFrameSetData(_frame, _data);
   _dataChanged = NO;
   return _frame;

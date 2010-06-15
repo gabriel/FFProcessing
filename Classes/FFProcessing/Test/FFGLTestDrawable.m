@@ -33,7 +33,7 @@
 - (void)start { }
 - (void)stop { }
 
-- (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view {
+- (BOOL)drawView:(GHGLView *)view {
   
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	glLoadIdentity();  

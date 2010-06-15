@@ -3,7 +3,7 @@
 //  FFProcessing
 //
 //  Created by Gabriel Handford on 6/13/10.
-//  Copyright 2010 Yelp. All rights reserved.
+//  Copyright 2010. All rights reserved.
 //
 
 #import "GHGLCommon.h"
@@ -16,13 +16,27 @@
   GLuint _degenFBO;
   GLuint _scratchFBO;
 
+  TextureSize _texSize;
+  TextureCoord3D _texCoord;
+
   // Textures used for filtering
-  Texture *_input;
-  Texture *_half;
-  Texture *_degen;
-  Texture *_scratch;
+  Texture _half;
+  Texture _degen;
+  Texture _scratch;
 }
 
-- (void)initWithTexture:(Texture *)texture;
+- (id)initWithTextureSize:(TextureSize)texSize textureCoord:(TextureCoord3D)texCoord;
+
+- (void)brightness:(TexturedVertexData2D[4])quad amount:(float)amount;
+
+- (void)contrast:(TexturedVertexData2D[4])quad amount:(float)amount;
+
+- (void)greyscale:(TexturedVertexData2D[4])quad amount:(float)amount;
+
+- (void)extrapolate:(TexturedVertexData2D[4])quad amount:(float)amount;
+
+- (void)hue:(TexturedVertexData2D[4])quad amount:(float)amount;
+
+- (void)blur:(TexturedVertexData2D[4])quad amount:(float)amount;
 
 @end

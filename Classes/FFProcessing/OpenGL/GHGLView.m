@@ -80,8 +80,7 @@
   glBindFramebufferOES(GL_FRAMEBUFFER_OES, _viewFramebuffer);
   BOOL render = YES;
   while (render) {
-    CGRect frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    render = [_drawable drawView:frame inView:self];
+    render = [_drawable drawView:self];
     if (render) {
       glBindRenderbufferOES(GL_RENDERBUFFER_OES, _viewRenderbuffer);
       [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
@@ -110,7 +109,7 @@
 	
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, _viewFramebuffer);
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, _viewRenderbuffer);
-	[_context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(CAEAGLLayer*)self.layer];
+	[_context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(CAEAGLLayer *)self.layer];
 	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, _viewRenderbuffer);
 	
 	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &_backingWidth);
@@ -180,7 +179,7 @@
 @implementation GHGLViewDrawable
 
 - (void)dealloc {
-  glDeleteTextures(1, &_videoTexture[0]);
+  glDeleteTextures(1, &_texture);
   [super dealloc];
 }
 
@@ -191,69 +190,19 @@
   
 	glLoadIdentity();
   
-	glOrthof(0, view.backingWidth, view.backingHeight, 0, -100, 100);
+	glOrthof(0, view.backingWidth, view.backingHeight, 0, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
-  
-  glEnable(GL_TEXTURE_2D);
-  glGenTextures(1, &_videoTexture[0]);
-}
+  glLoadIdentity();
+  //glScalef(view.backingWidth, view.backingHeight, 1);
 
-- (void)drawInRect:(CGRect)rect {
-  
-  // Portrait
-  /*
-   const GLfloat vertices[] = {
-   rect.origin.x, rect.origin.y,
-   rect.origin.x + rect.size.width, rect.origin.y,
-   rect.origin.x, rect.origin.y + rect.size.height,
-   rect.origin.x + rect.size.width, rect.origin.y + rect.size.height
-   };
-   
-   // Coords flipped so we appear right side up
-   const GLfloat texCoords[] = {
-   0, 0,
-   1, 0,
-   0, 1,
-   1, 1,
-   };
-   */
-  
-  // Landscape
-  const GLfloat vertices[] = {
-    rect.origin.y, rect.origin.x,
-    rect.origin.y, rect.origin.x + rect.size.width,
-    rect.origin.y + rect.size.height, rect.origin.x, 
-    rect.origin.y + rect.size.height, rect.origin.x + rect.size.width,
-	};
-	
-	const GLfloat texCoords[] = {
-    0, 1,
-    1, 1,
-    0, 0,
-    1, 0,
-  };  
-  
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D, _videoTexture[0]);
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	
-	glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-  
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
-	
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-  
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_2D);
-  
+  glEnable(GL_TEXTURE_2D);
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+  glGenTextures(1, &_texture);  
 }
 
-- (BOOL)drawView:(CGRect)frame inView:(GHGLView *)view {
+- (BOOL)drawView:(GHGLView *)view {
   // Subclasses should implement
   return NO;
 }
