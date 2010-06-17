@@ -73,6 +73,8 @@
 		007B05F0118942AE003B3A5B /* FFEncodeProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */; };
 		007B05F3118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05F2118942D5003B3A5B /* FFDataMoshProcessor.m */; };
 		007B05F4118942D5003B3A5B /* FFDataMoshProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 007B05F2118942D5003B3A5B /* FFDataMoshProcessor.m */; };
+		00841C9F11C9EE2D00ADE406 /* FFGLImageEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00841C9E11C9EE2D00ADE406 /* FFGLImageEncoder.m */; };
+		00841CA011C9EE2D00ADE406 /* FFGLImageEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 00841C9E11C9EE2D00ADE406 /* FFGLImageEncoder.m */; };
 		0085314B1176E0F700F9310E /* PBUIContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085314A1176E0F700F9310E /* PBUIContainer.m */; };
 		0085314C1176E0F700F9310E /* PBUIContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085314A1176E0F700F9310E /* PBUIContainer.m */; };
 		008531B11176E79D00F9310E /* PBUIStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 008531B01176E79D00F9310E /* PBUIStatusView.m */; };
@@ -293,6 +295,8 @@
 		007B05ED118942AE003B3A5B /* FFEncodeProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFEncodeProcessor.m; sourceTree = "<group>"; };
 		007B05F1118942D5003B3A5B /* FFDataMoshProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDataMoshProcessor.h; sourceTree = "<group>"; };
 		007B05F2118942D5003B3A5B /* FFDataMoshProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDataMoshProcessor.m; sourceTree = "<group>"; };
+		00841C9D11C9EE2D00ADE406 /* FFGLImageEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFGLImageEncoder.h; sourceTree = "<group>"; };
+		00841C9E11C9EE2D00ADE406 /* FFGLImageEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFGLImageEncoder.m; sourceTree = "<group>"; };
 		008531491176E0F700F9310E /* PBUIContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUIContainer.h; sourceTree = "<group>"; };
 		0085314A1176E0F700F9310E /* PBUIContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBUIContainer.m; sourceTree = "<group>"; };
 		008531AF1176E79D00F9310E /* PBUIStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUIStatusView.h; sourceTree = "<group>"; };
@@ -616,6 +620,8 @@
 				000EE83511C2D6B2000D2C97 /* FFReading.m */,
 				000EE85811C2D9B3000D2C97 /* FFDecoder.h */,
 				000EE88E11C2DFCA000D2C97 /* FFEncoder.h */,
+				00841C9D11C9EE2D00ADE406 /* FFGLImageEncoder.h */,
+				00841C9E11C9EE2D00ADE406 /* FFGLImageEncoder.m */,
 			);
 			path = FFProcessing;
 			sourceTree = "<group>";
@@ -1180,6 +1186,7 @@
 				000EE83611C2D6B2000D2C97 /* FFReading.m in Sources */,
 				000EE8FA11C2E4F7000D2C97 /* FFMPConverter.m in Sources */,
 				00512E4111C5948100A46E09 /* FFGLImaging.m in Sources */,
+				00841C9F11C9EE2D00ADE406 /* FFGLImageEncoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1249,6 +1256,7 @@
 				000EE83711C2D6B2000D2C97 /* FFReading.m in Sources */,
 				000EE8FB11C2E4F7000D2C97 /* FFMPConverter.m in Sources */,
 				00512E4011C5948100A46E09 /* FFGLImaging.m in Sources */,
+				00841CA011C9EE2D00ADE406 /* FFGLImageEncoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

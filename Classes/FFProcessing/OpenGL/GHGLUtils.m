@@ -61,8 +61,7 @@ NSString *GHGLErrorDescription(GLenum GLError) {
  
  From GLImageProcessing Apple example.
  */
-#if DEBUG
-void GHGLValidateTexEnv(void) {  
+void _GHGLValidateTexEnv(void) {  
   
   typedef struct {
 		GLint combine;
@@ -184,6 +183,18 @@ void GHGLValidateTexEnv(void) {
 	glActiveTexture(active);
 	GHGLCheckError();
 }
-#else
-void GHGLValidateTexEnv(void) { }
-#endif
+
+CGImageRef GHGLCreateImageFromBuffer(GLubyte *buffer, int length, GLsizei width, GLsizei height, CGColorSpaceRef colorSpace) {
+  CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, length, NULL);
+  
+  int bitsPerComponent = 8;
+  int bytesPerPixel = 4;
+  int bitsPerPixel = bytesPerPixel * 8;
+  int bytesPerRow = bytesPerPixel * width;
+  
+  CGImageRef image = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpace, 
+                                   kCGBitmapByteOrderDefault, provider, NULL, NO, kCGRenderingIntentDefault);
+  
+  CGDataProviderRelease(provider);
+  return image;
+}

@@ -10,6 +10,7 @@
 #import "FFReader.h"
 #import "FFFilter.h"
 #import "FFGLImaging.h"
+#import "FFGLImageEncoder.h"
 
 @interface FFGLDrawable : GHGLViewDrawable {
   
@@ -19,6 +20,9 @@
   GLint _GLFormat; // For example, GL_RGB, GL_BGRA
   
   FFGLImaging *_imaging;
+  
+  NSUInteger _frameCount;
+  FFGLImageEncoder *_imageEncoder;
 
 }
 

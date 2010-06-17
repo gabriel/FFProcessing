@@ -43,5 +43,12 @@ NSString *GHGLErrorDescription(GLenum error);
 #define GHGLCheckError() do { } while(0)
 #endif
 
-//! Only validates if DEBUG
-void GHGLValidateTexEnv(void);
+void _GHGLValidateTexEnv(void);
+
+#if DEBUG
+#define GHGLValidateTexEnv() _GHGLValidateTexEnv()
+#else
+#define GHGLValidateTexEnv() do { } while (0)
+#endif
+
+CGImageRef GHGLCreateImageFromBuffer(GLubyte *buffer, int length, GLsizei width, GLsizei height, CGColorSpaceRef colorSpace);

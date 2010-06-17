@@ -321,7 +321,7 @@
 										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-									<string>{{0, 2933}, {273, 195}}</string>
+									<string>{{0, 2947}, {273, 181}}</string>
 								</dict>
 								<key>PBXTopSmartGroupGIDs</key>
 								<array/>
@@ -333,7 +333,7 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {290, 213}}</string>
+								<string>{{0, 0}, {290, 199}}</string>
 								<key>GroupTreeTableConfiguration</key>
 								<array>
 									<string>MainColumn</string>
@@ -345,7 +345,7 @@
 							<key>Module</key>
 							<string>PBXSmartGroupTreeModule</string>
 							<key>Proportion</key>
-							<string>213pt</string>
+							<string>199pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -409,7 +409,7 @@
 										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-									<string>{{0, 312}, {273, 455}}</string>
+									<string>{{0, 312}, {273, 469}}</string>
 								</dict>
 								<key>PBXTopSmartGroupGIDs</key>
 								<array/>
@@ -421,7 +421,7 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 218}, {290, 473}}</string>
+								<string>{{0, 204}, {290, 487}}</string>
 								<key>GroupTreeTableConfiguration</key>
 								<array>
 									<string>MainColumn</string>
@@ -433,7 +433,7 @@
 							<key>Module</key>
 							<string>PBXSmartGroupTreeModule</string>
 							<key>Proportion</key>
-							<string>473pt</string>
+							<string>487pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -462,7 +462,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>0051327F11C765B600A46E09</string>
+										<string>00841C8811C9E35400ADE406</string>
 										<key>history</key>
 										<array>
 											<string>0001B24B11574EB400109D45</string>
@@ -645,7 +645,7 @@
 											<string>0051327311C7652900A46E09</string>
 											<string>0051327411C7652900A46E09</string>
 											<string>0051327511C7652900A46E09</string>
-											<string>0051327611C7652900A46E09</string>
+											<string>0051328011C7F12D00A46E09</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -705,11 +705,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>005131BD11C7442500A46E09</string>
-				<string>005131BE11C7442500A46E09</string>
+				<string>00841C8911C9E35400ADE406</string>
+				<string>00841C8A11C9E35400ADE406</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>005131BF11C7442500A46E09</string>
+				<string>00841C8B11C9E35400ADE406</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -830,7 +830,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>298280374.545035</real>
+	<real>298443604.38136101</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -847,11 +847,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C530D57069F1CE1000CFCEE</string>
-		<string>005131FD11C7532700A46E09</string>
-		<string>005131FE11C7532700A46E09</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>00129F5B1154A03800D09836</string>
 		<string>/Users/gabe/Projects/FFProcessing/FFProcessing.xcodeproj</string>
 	</array>
@@ -872,14 +867,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>FFGLImaging.h</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -935,7 +928,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>00129F5B1154A03800D09836</string>
-				<string>005131C011C7442500A46E09</string>
+				<string>00841C8C11C9E35400ADE406</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

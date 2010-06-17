@@ -23,6 +23,7 @@
 
 - (void)dealloc {
   [_imaging release];
+  [_imageEncoder release];
   [_reader release];
   [_filter release];
   [super dealloc];
@@ -39,6 +40,7 @@
   TextureSize texSize = {(GLsizei)view.frame.size.width, (GLsizei)view.frame.size.height};
   TextureCoord3D texCoord = {1, 1}; 
   _imaging = [[FFGLImaging alloc] initWithTextureSize:texSize textureCoord:texCoord];
+  _imageEncoder = [[FFGLImageEncoder alloc] initWithWidth:texSize.wide height:texSize.high];
 }
 
 - (BOOL)drawView:(GHGLView *)view {
@@ -97,8 +99,14 @@
    */
   
   //FFHue(quad, 0.8);
-  [_imaging greyscale:quad amount:1];
+  [_imaging greyscale:quad amount:2];
   
+  [_imageEncoder GLReadPixels];
+  if (_frameCount == 30) {
+    [_imageEncoder writeToPhotosAlbum];    
+  }
+  
+  _frameCount++;
   return YES;
 }
 
