@@ -21,18 +21,18 @@
   
   _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];  
   
-  _navigationController = [[UINavigationController alloc] init];
+  _applicationController = [[PBApplicationController alloc] init];
+  
+  _navigationController = [[UINavigationController alloc] initWithRootViewController:_applicationController];
+  _navigationController.navigationBarHidden = YES;
   _navigationController.navigationBar.tintColor = [UIColor blackColor];
   [_window addSubview:_navigationController.view];
-  
-  _applicationController = [[PBApplicationController alloc] init];
-  [_navigationController pushViewController:_applicationController animated:NO];
     
   [_window makeKeyAndVisible];
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {}
-- (void)applicationDidBecomeActive:(UIApplication *)application {}
+//- (void)applicationWillResignActive:(UIApplication *)application {}
+//- (void)applicationDidBecomeActive:(UIApplication *)application {}
 - (void)applicationWillTerminate:(UIApplication *)application {}
 
 @end

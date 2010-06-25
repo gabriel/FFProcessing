@@ -1,14 +1,14 @@
 //
-//  YPUIControl.m
+//  YKUIControl.m
 //  YelpKit
 //
 //  Created by Gabriel Handford on 10/27/09.
 //  Copyright 2009. All rights reserved.
 //
 
-#import "YPUIControl.h"
+#import "YKUIControl.h"
 
-@implementation YPUIControl 
+@implementation YKUIControl 
 
 @synthesize target=_target, action=_action, highlightedEnabled=_highlightedEnabled, selectedEnabled=_selectedEnabled;
 
@@ -22,7 +22,7 @@
 }
 
 - (void)removeAllTargets {
-  [YPUIControl removeAllTargets:self];
+  [YKUIControl removeAllTargets:self];
 }
 
 - (BOOL)touchesAllInView:(NSSet */*of UITouch*/)touches withEvent:(UIEvent *)event {

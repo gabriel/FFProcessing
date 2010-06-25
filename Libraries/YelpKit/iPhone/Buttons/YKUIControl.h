@@ -1,12 +1,12 @@
 //
-//  YPUIControl.h
+//  YKUIControl.h
 //  YelpKit
 //
 //  Created by Gabriel Handford on 10/27/09.
 //  Copyright 2009. All rights reserved.
 //
 
-@interface YPUIControl : UIControl {
+@interface YKUIControl : UIControl {
   id _target; // weak
   SEL _action;
   

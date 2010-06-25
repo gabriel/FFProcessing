@@ -1,5 +1,5 @@
 //
-//  YPUIButton.h
+//  YKUIButton.h
 //  YelpKit
 //
 //  Created by Gabriel Handford on 12/17/08.
@@ -27,8 +27,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "YPUIControl.h"
-#import "YPCGUtils.h"
+#import "YKUIControl.h"
+#import "YKCGUtils.h"
 
 #define kButtonHeight 37
 
@@ -36,21 +36,21 @@
  Pre-canned button styles  
  */
 typedef enum {
-  YPUIButtonStyleBasic,
-  YPUIButtonStyleBlue, //! Button with white text on blue linear shaded background
-  YPUIButtonStyleDarkBlue, //! Button with white (etched) text on dark blue linear shaded background
-  YPUIButtonStyleGray, //! Gray background with linear shaded background and etched text
-  YPUIButtonStyleBlack,
-  YPUIButtonStyleLink, //! Button with blue text on clear background
-  YPUIButtonStyleBlackToolbar, //! Black translucent button with white text
-  YPUIButtonStyleToggleBlue, //! Blueish toggle button
-} YPUIButtonStyle;
+  YKUIButtonStyleBasic,
+  YKUIButtonStyleBlue, //! Button with white text on blue linear shaded background
+  YKUIButtonStyleDarkBlue, //! Button with white (etched) text on dark blue linear shaded background
+  YKUIButtonStyleGray, //! Gray background with linear shaded background and etched text
+  YKUIButtonStyleBlack,
+  YKUIButtonStyleLink, //! Button with blue text on clear background
+  YKUIButtonStyleBlackToolbar, //! Black translucent button with white text
+  YKUIButtonStyleToggleBlue, //! Blueish toggle button
+} YKUIButtonStyle;
 
 
 /*!
  Custom button control.
  */
-@interface YPUIButton : YPUIControl {
+@interface YKUIButton : YKUIControl {
 
   NSString *_title;
   
@@ -82,7 +82,7 @@ typedef enum {
   
   UIColor *_borderColor;
   
-  YPUIBorderStyle _borderStyle; // Defaults to YPUIBorderStyleRounded
+  YKUIBorderStyle _borderStyle; // Defaults to YKUIBorderStyleRounded
   
   CGFloat _strokeWidth;
   CGFloat _alternateStrokeWidth; // Defaults to 1; Used with borderStyle
@@ -123,7 +123,7 @@ typedef enum {
 @property (assign, nonatomic) YPUIShadingType disabledShadingType;
 
 @property (retain, nonatomic) UIColor *borderColor;
-@property (assign, nonatomic) YPUIBorderStyle borderStyle;
+@property (assign, nonatomic) YKUIBorderStyle borderStyle;
 
 @property (assign, nonatomic) CGFloat strokeWidth;
 @property (assign, nonatomic) CGFloat alternateStrokeWidth;
@@ -150,7 +150,7 @@ typedef enum {
 /*!
  Basic button with white background and blueish bold text
  */
-+ (YPUIButton *)button;
++ (YKUIButton *)button;
 
 /*!
  Button with style.
@@ -158,17 +158,17 @@ typedef enum {
  @param style Button style
  @param title Title
  */
-+ (YPUIButton *)buttonWithFrame:(CGRect)frame style:(YPUIButtonStyle)style title:(NSString *)title;
++ (YKUIButton *)buttonWithFrame:(CGRect)frame style:(YKUIButtonStyle)style title:(NSString *)title;
 
 
 /*!
  Set button to built-in style.
  */
-- (void)setStyle:(YPUIButtonStyle)style;
+- (void)setStyle:(YKUIButtonStyle)style;
 
 @end
 
-@interface YPUIButtonBackground : UIView { 
+@interface YKUIButtonBackground : UIView { 
   UIColor *_color;
   UIColor *_alternateColor;
   CGFloat _strokeWidth;

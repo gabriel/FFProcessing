@@ -1,5 +1,5 @@
 //
-//  YPCGUtils.m
+//  YKCGUtils.m
 //  YelpKit
 //
 //  Created by Gabriel Handford on 12/30/08.
@@ -27,22 +27,22 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "YPCGUtils.h"
-#import "YPDefines.h"
+#import "YKCGUtils.h"
+#import "YKDefines.h"
 
-const CGPoint YPCGPointNull = {CGFLOAT_MAX, CGFLOAT_MAX};
+const CGPoint YKCGPointNull = {CGFLOAT_MAX, CGFLOAT_MAX};
 
-bool YPCGPointIsNull(CGPoint point) {
-  return point.x == YPCGPointNull.x && point.y == YPCGPointNull.y;
+bool YKCGPointIsNull(CGPoint point) {
+  return point.x == YKCGPointNull.x && point.y == YKCGPointNull.y;
 }
 
-const CGSize YPCGSizeNull = {CGFLOAT_MAX, CGFLOAT_MAX};
+const CGSize YKCGSizeNull = {CGFLOAT_MAX, CGFLOAT_MAX};
 
-bool YPCGSizeIsNull(CGSize size) {
-  return size.width == YPCGSizeNull.width && size.height == YPCGSizeNull.height;
+bool YKCGSizeIsNull(CGSize size) {
+  return size.width == YKCGSizeNull.width && size.height == YKCGSizeNull.height;
 }
 
-CGPathRef YPCreateRoundedRect(CGRect rect, CGFloat strokeWidth, CGFloat cornerRadius) { 
+CGPathRef YKCGPathCreateRoundedRect(CGRect rect, CGFloat strokeWidth, CGFloat cornerRadius) { 
   
   CGMutablePathRef path = CGPathCreateMutable();
 
@@ -67,13 +67,13 @@ CGPathRef YPCreateRoundedRect(CGRect rect, CGFloat strokeWidth, CGFloat cornerRa
   return path;
 }
 
-void YPContextAddRoundedRect(CGContextRef context, CGRect rect, CGFloat strokeWidth, CGFloat cornerRadius) {      
-  CGPathRef path = YPCreateRoundedRect(rect, strokeWidth, cornerRadius);
+void YKCGContextAddRoundedRect(CGContextRef context, CGRect rect, CGFloat strokeWidth, CGFloat cornerRadius) {      
+  CGPathRef path = YKCGPathCreateRoundedRect(rect, strokeWidth, cornerRadius);
   CGContextAddPath(context, path);  
   CGPathRelease(path);
 }
 
-void YPContextDrawPath(CGContextRef context, CGPathRef path, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth) { 
+void YKCGContextDrawPath(CGContextRef context, CGPathRef path, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth) { 
   if (fillColor != NULL) CGContextSetFillColorWithColor(context, fillColor);  
   if (strokeColor != NULL) CGContextSetStrokeColorWithColor(context, strokeColor);    
   CGContextSetLineWidth(context, strokeWidth);
@@ -83,41 +83,41 @@ void YPContextDrawPath(CGContextRef context, CGPathRef path, CGColorRef fillColo
   else if (strokeColor != NULL && fillColor == NULL) CGContextDrawPath(context, kCGPathStroke);
 }
 
-void YPContextDrawRoundedRect(CGContextRef context, CGRect rect, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius) {   
-  CGPathRef path = YPCreateRoundedRect(rect, strokeWidth, cornerRadius);
-  YPContextDrawPath(context, path, fillColor, strokeColor, strokeWidth);
+void YKCGContextDrawRoundedRect(CGContextRef context, CGRect rect, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius) {   
+  CGPathRef path = YKCGPathCreateRoundedRect(rect, strokeWidth, cornerRadius);
+  YKCGContextDrawPath(context, path, fillColor, strokeColor, strokeWidth);
   CGPathRelease(path);
 }
 
-void YPContextAddLine(CGContextRef context, CGFloat x, CGFloat y, CGFloat x2, CGFloat y2) {
+void YKCGContextAddLine(CGContextRef context, CGFloat x, CGFloat y, CGFloat x2, CGFloat y2) {
   CGContextMoveToPoint(context, x, y);
   CGContextAddLineToPoint(context, x2, y2);
 }
 
-void YPContextDrawLine(CGContextRef context, CGFloat x, CGFloat y, CGFloat x2, CGFloat y2, CGColorRef strokeColor, CGFloat strokeWidth) {
+void YKCGContextDrawLine(CGContextRef context, CGFloat x, CGFloat y, CGFloat x2, CGFloat y2, CGColorRef strokeColor, CGFloat strokeWidth) {
   CGContextBeginPath(context);  
-  YPContextAddLine(context, x, y, x2, y2);
+  YKCGContextAddLine(context, x, y, x2, y2);
   if (strokeColor != NULL) CGContextSetStrokeColorWithColor(context, strokeColor);
   CGContextSetLineWidth(context, strokeWidth);
   CGContextStrokePath(context);   
 }
 
-void _YPContextDrawImage(CGContextRef context, CGImageRef image, CGRect rect, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius, BOOL maintainAspectRatio, CGColorRef backgroundColor);
+void _YKCGContextDrawImage(CGContextRef context, CGImageRef image, CGRect rect, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius, BOOL maintainAspectRatio, CGColorRef backgroundColor);
 
-void YPContextDrawImage(CGContextRef context, CGImageRef image, CGRect rect, CGColorRef strokeColor, CGFloat strokeWidth, BOOL maintainAspectRatio, CGColorRef backgroundColor) { 
-  _YPContextDrawImage(context, image, rect, strokeColor, strokeWidth, 0.0, maintainAspectRatio, backgroundColor);
+void YKCGContextDrawImage(CGContextRef context, CGImageRef image, CGRect rect, CGColorRef strokeColor, CGFloat strokeWidth, BOOL maintainAspectRatio, CGColorRef backgroundColor) { 
+  _YKCGContextDrawImage(context, image, rect, strokeColor, strokeWidth, 0.0, maintainAspectRatio, backgroundColor);
 }
 
-void YPContextDrawRoundedRectImage(CGContextRef context, CGImageRef image, CGRect rect, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius, BOOL maintainAspectRatio, CGColorRef backgroundColor) {  
-  _YPContextDrawImage(context, image, rect, strokeColor, strokeWidth, cornerRadius, maintainAspectRatio, backgroundColor);
+void YKCGContextDrawRoundedRectImage(CGContextRef context, CGImageRef image, CGRect rect, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius, BOOL maintainAspectRatio, CGColorRef backgroundColor) {  
+  _YKCGContextDrawImage(context, image, rect, strokeColor, strokeWidth, cornerRadius, maintainAspectRatio, backgroundColor);
 }
 
-void _YPContextDrawImage(CGContextRef context, CGImageRef image, CGRect rect, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius, BOOL maintainAspectRatio, CGColorRef backgroundColor) {  
+void _YKCGContextDrawImage(CGContextRef context, CGImageRef image, CGRect rect, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius, BOOL maintainAspectRatio, CGColorRef backgroundColor) {
   CGContextSaveGState(context);
   
   // TODO(gabe): Fails if cornerRadius = 0
   if (strokeWidth > 0 && cornerRadius > 0) {
-    YPContextAddRoundedRect(context, rect, strokeWidth, cornerRadius);
+    YKCGContextAddRoundedRect(context, rect, strokeWidth, cornerRadius);
     CGContextClip(context);
   }
   
@@ -137,7 +137,7 @@ void _YPContextDrawImage(CGContextRef context, CGImageRef image, CGRect rect, CG
   } else {
     CGFloat imageHeight = (CGFloat)CGImageGetHeight(image);
     CGFloat imageWidth = (CGFloat)CGImageGetWidth(image);
-    imageBounds = YPScaleToFillAndCenter(CGSizeMake(imageWidth, imageHeight), rect.size);
+    imageBounds = YKCGRectScaleToFillAndCenter(CGSizeMake(imageWidth, imageHeight), rect.size);
   }
   
   if (image != NULL) {
@@ -151,53 +151,53 @@ void _YPContextDrawImage(CGContextRef context, CGImageRef image, CGRect rect, CG
   }
   
   if (strokeColor != NULL && strokeWidth > 0 && cornerRadius > 0)
-    YPContextDrawRoundedRect(context, rect, NULL, strokeColor, strokeWidth, cornerRadius);
+    YKCGContextDrawRoundedRect(context, rect, NULL, strokeColor, strokeWidth, cornerRadius);
   CGContextRestoreGState(context);
 }
 
-CGRect YPScaleToFillAndCenter(CGSize size, CGSize sizeToFill) {
-  if (YPCGSizeIsEmpty(size)) return CGRectZero;
+CGRect YKCGRectScaleToFillAndCenter(CGSize size, CGSize sizeToFill) {
+  if (YKCGSizeIsEmpty(size)) return CGRectZero;
   
   CGRect rect;
   CGFloat widthScaleRatio = sizeToFill.width / size.width;
   CGFloat heightScaleRatio = sizeToFill.height / size.height;
     
   if (widthScaleRatio < heightScaleRatio) {
-    CGFloat height = size.height * widthScaleRatio;
-    CGFloat y = sizeToFill.height / 2.0 - height / 2.0;
+    CGFloat height = roundf(size.height * widthScaleRatio);
+    CGFloat y = roundf((sizeToFill.height / 2.0) - (height / 2.0));
     rect = CGRectMake(0, y, sizeToFill.width, height);
   } else {
-    CGFloat width = size.width * heightScaleRatio;
-    CGFloat x = sizeToFill.width / 2.0 - width / 2.0;
+    CGFloat width = roundf(size.width * heightScaleRatio);
+    CGFloat x = roundf((sizeToFill.width / 2.0) - (width / 2.0));
     rect = CGRectMake(x, 0, width, sizeToFill.height);
   }
   return rect;
 }
 
-BOOL YPCGPointIsZero(CGPoint p) {
-  return (YPIsEqualWithAccuracy(p.x, 0, 0.0001) && YPIsEqualWithAccuracy(p.y, 0, 0.0001));
+BOOL YKCGPointIsZero(CGPoint p) {
+  return (YKIsEqualWithAccuracy(p.x, 0, 0.0001) && YKIsEqualWithAccuracy(p.y, 0, 0.0001));
 }
 
-BOOL YPCGPointIsEqual(CGPoint p1, CGPoint p2) {
-  return (YPIsEqualWithAccuracy(p1.x, p2.x, 0.0001) && YPIsEqualWithAccuracy(p1.y, p2.y, 0.0001));
+BOOL YKCGPointIsEqual(CGPoint p1, CGPoint p2) {
+  return (YKIsEqualWithAccuracy(p1.x, p2.x, 0.0001) && YKIsEqualWithAccuracy(p1.y, p2.y, 0.0001));
 }
 
-BOOL YPCGRectIsEqual(CGRect rect1, CGRect rect2) {
-  return (YPCGPointIsEqual(rect1.origin, rect2.origin) && YPCGSizeIsEqual(rect1.size, rect2.size));  
+BOOL YKCGRectIsEqual(CGRect rect1, CGRect rect2) {
+  return (YKCGPointIsEqual(rect1.origin, rect2.origin) && YKCGSizeIsEqual(rect1.size, rect2.size));  
 }
                       
-CGRect YPCGRectToCenterY(CGRect rect, CGRect inRect) {
-  CGPoint centeredPoint = YPPointToCenter(rect.size, inRect.size);
-  return YPCGRectSetY(rect, centeredPoint.y);
+CGRect YKCGRectToCenterY(CGRect rect, CGRect inRect) {
+  CGPoint centeredPoint = YKCGPointToCenter(rect.size, inRect.size);
+  return YKCGRectSetY(rect, centeredPoint.y);
 }
 
-CGPoint YPCGPointToCenterY(CGSize size, CGSize inSize) {
+CGPoint YKCGPointToCenterY(CGSize size, CGSize inSize) {
   CGPoint p = CGPointMake(0, roundf((inSize.height - size.height) / 2.0));
   if (p.y < 0) p.y = 0;
   return p;
 }
 
-CGPoint YPPointToCenter(CGSize size, CGSize inSize) {
+CGPoint YKCGPointToCenter(CGSize size, CGSize inSize) {
   // We round otherwise views will anti-alias
   CGPoint p = CGPointMake(roundf((inSize.width - size.width) / 2.0), roundf((inSize.height - size.height) / 2.0));
   if (p.x < 0) p.x = 0;
@@ -205,135 +205,135 @@ CGPoint YPPointToCenter(CGSize size, CGSize inSize) {
   return p;
 }
 
-CGPoint YPPointToRight(CGSize size, CGSize inSize) {
+CGPoint YKCGPointToRight(CGSize size, CGSize inSize) {
   CGPoint p = CGPointMake(inSize.width - size.width, roundf(inSize.height / 2.0 - size.height / 2.0));
   if (p.x < 0) p.x = 0;
   if (p.y < 0) p.y = 0;
   return p;
 }
 
-BOOL YPCGSizeIsEqual(CGSize size1, CGSize size2) {
-  return (YPIsEqualWithAccuracy(size1.height, size2.height, 0.0001) && YPIsEqualWithAccuracy(size1.width, size2.width, 0.0001));
+BOOL YKCGSizeIsEqual(CGSize size1, CGSize size2) {
+  return (YKIsEqualWithAccuracy(size1.height, size2.height, 0.0001) && YKIsEqualWithAccuracy(size1.width, size2.width, 0.0001));
 }
 
-
-BOOL YPCGSizeIsEmpty(CGSize size) {
-  return (YPIsEqualWithAccuracy(size.height, 0, 0.0001) && YPIsEqualWithAccuracy(size.width, 0, 0.0001));
+BOOL YKCGSizeIsEmpty(CGSize size) {
+  return (YKIsEqualWithAccuracy(size.height, 0, 0.0001) && YKIsEqualWithAccuracy(size.width, 0, 0.0001));
 }
 
-CGRect YPSizeToCenterRect(CGSize size, CGSize inSize) {
-  CGPoint p = YPPointToCenter(size, inSize);
+CGRect YKCGRectToCenter(CGSize size, CGSize inSize) {
+  CGPoint p = YKCGPointToCenter(size, inSize);
   return CGRectMake(p.x, p.y, size.width, size.height);
 }
 
-CGRect YPRectToCenterRect(CGSize size, CGRect inRect) {
-  CGPoint p = YPPointToCenter(size, inRect.size);
+CGRect YKCGRectToCenterInRect(CGSize size, CGRect inRect) {
+  CGPoint p = YKCGPointToCenter(size, inRect.size);
   return CGRectMake(p.x + inRect.origin.x, p.y + inRect.origin.y, size.width, size.height);
 }
 
-CGFloat YPPositionToCenter(CGFloat length, CGFloat inLength, CGFloat min) {
+CGFloat YKCGFloatToCenter(CGFloat length, CGFloat inLength, CGFloat min) {
   CGFloat pos = roundf(inLength / 2.0 - length / 2.0);
   if (pos < min) pos = min;
   return pos;
 }
 
-CGRect YPCGRectAdd(CGRect rect1, CGRect rect2) {
+CGRect YKCGRectAdd(CGRect rect1, CGRect rect2) {
   return CGRectMake(rect1.origin.x + rect2.origin.x, rect1.origin.y + rect2.origin.y, rect1.size.width + rect2.size.width, rect1.size.height + rect2.size.height);
 }
 
-CGRect YPCGRectRightAlign(CGFloat y, CGFloat width, CGFloat inWidth, CGFloat maxWidth, CGFloat padRight, CGFloat height) {
+CGRect YKCGRectRightAlign(CGFloat y, CGFloat width, CGFloat inWidth, CGFloat maxWidth, CGFloat padRight, CGFloat height) {
   if (width > maxWidth) width = maxWidth;
   CGFloat x = (inWidth - width - padRight);
   return CGRectMake(x, y, width, height);
 }
 
-CGRect YPCGRectZeroOrigin(CGRect rect) {
+CGRect YKCGRectZeroOrigin(CGRect rect) {
   return CGRectMake(0, 0, rect.size.width, rect.size.height);
 }
 
-CGRect YPCGRectSetSize(CGRect rect, CGSize size) {
+CGRect YKCGRectSetSize(CGRect rect, CGSize size) {
   rect.size = size;
   return rect;
 }
 
-CGRect YPCGRectSetHeight(CGRect rect, CGFloat height) {
+CGRect YKCGRectSetHeight(CGRect rect, CGFloat height) {
   rect.size.height = height;
   return rect;  
 }
 
-CGRect YPCGRectAddHeight(CGRect rect, CGFloat add) {
+CGRect YKCGRectAddHeight(CGRect rect, CGFloat add) {
   rect.size.height += add;
   return rect;  
 }
 
-CGRect YPCGRectAddX(CGRect rect, CGFloat add) {
+CGRect YKCGRectAddX(CGRect rect, CGFloat add) {
   rect.origin.x += add;
   return rect;  
 }
 
-CGRect YPCGRectAddY(CGRect rect, CGFloat add) {
+CGRect YKCGRectAddY(CGRect rect, CGFloat add) {
   rect.origin.y += add;
   return rect;  
 }
 
-CGRect YPCGRectSetWidth(CGRect rect, CGFloat width) {
+CGRect YKCGRectSetWidth(CGRect rect, CGFloat width) {
   rect.size.width = width;
   return rect;  
 }
 
-CGRect YPCGRectSetOrigin(CGRect rect, CGFloat x, CGFloat y) {
+CGRect YKCGRectSetOrigin(CGRect rect, CGFloat x, CGFloat y) {
   rect.origin = CGPointMake(x, y);
   return rect;
 }
 
-CGRect YPCGRectSetX(CGRect rect, CGFloat x) {
+CGRect YKCGRectSetX(CGRect rect, CGFloat x) {
   rect.origin.x = x;
   return rect;
 }
 
-CGRect YPCGRectSetY(CGRect rect, CGFloat y) {
+CGRect YKCGRectSetY(CGRect rect, CGFloat y) {
   rect.origin.y = y;
   return rect;
 }
 
-CGRect YPCGRectSetOriginPoint(CGRect rect, CGPoint p) {
+CGRect YKCGRectSetOriginPoint(CGRect rect, CGPoint p) {
   rect.origin = p;
   return rect;
 }
 
-CGRect YPCGRectOriginSize(CGPoint origin, CGSize size) {
+CGRect YKCGRectOriginSize(CGPoint origin, CGSize size) {
   CGRect rect;
   rect.origin = origin;
   rect.size = size;
   return rect;
 }
 
-CGRect YPCGRectAddPoint(CGRect rect, CGPoint p) {
+CGRect YKCGRectAddPoint(CGRect rect, CGPoint p) {
   rect.origin.x += p.x;
   rect.origin.y += p.y;
   return rect;
 }
 
-CGPoint YPBottomRight(CGRect rect) {
+CGPoint YKCGPointBottomRight(CGRect rect) {
   return CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
 }
 
 #pragma mark Border Styles
 
-void YPContextAddStyledRect(CGContextRef context, CGRect rect, YPUIBorderStyle style, CGFloat strokeWidth, CGFloat alternateStrokeWidth, CGFloat cornerRadius) {  
-  CGPathRef path = YPCreateStyledRect(rect, style, strokeWidth, alternateStrokeWidth, cornerRadius);
+void YKCGContextAddStyledRect(CGContextRef context, CGRect rect, YKUIBorderStyle style, CGFloat strokeWidth, CGFloat alternateStrokeWidth, CGFloat cornerRadius) {  
+  CGPathRef path = YKCGPathCreateStyledRect(rect, style, strokeWidth, alternateStrokeWidth, cornerRadius);
   CGContextAddPath(context, path);  
   CGPathRelease(path);
 }
 
-CGPathRef YPCreateStyledRect(CGRect rect, YPUIBorderStyle style, CGFloat strokeWidth, CGFloat alternateStrokeWidth, CGFloat cornerRadius) {  
+CGPathRef YKCGPathCreateStyledRect(CGRect rect, YKUIBorderStyle style, CGFloat strokeWidth, CGFloat alternateStrokeWidth, CGFloat cornerRadius) {  
   
   CGFloat fw, fh;
-  CGFloat cornerWidth = cornerRadius, cornerHeight = cornerRadius;
-  assert(cornerWidth > 0 && cornerHeight > 0);
+  CGFloat cornerWidth = cornerRadius, cornerHeight = cornerRadius;  
   
-  if (style == YPUIBorderStyleRounded)
-    return YPCreateRoundedRect(rect, strokeWidth, cornerRadius);
+  if (style == YKUIBorderStyleRounded) {
+    assert(cornerRadius > 0);
+    return YKCGPathCreateRoundedRect(rect, strokeWidth, cornerRadius);
+  }
   
   CGFloat strokeInset = strokeWidth/2.0;
   CGFloat alternateStrokeInset = alternateStrokeWidth/2.0;
@@ -341,36 +341,48 @@ CGPathRef YPCreateStyledRect(CGRect rect, YPUIBorderStyle style, CGFloat strokeW
   // Need to adjust path rect to inset (since the stroke is drawn from the middle of the path)
   CGRect insetBounds;
   switch(style) {
-    case YPUIBorderStyleRoundedBottomWithAlternateTop:
-      insetBounds = CGRectMake(rect.origin.x + strokeInset, rect.origin.y + alternateStrokeInset, rect.size.width-(strokeInset * 2), rect.size.height-alternateStrokeInset-strokeInset);
+    case YKUIBorderStyleRoundedBottomWithAlternateTop:
+      insetBounds = CGRectMake(rect.origin.x + strokeInset, rect.origin.y + alternateStrokeInset, rect.size.width - (strokeInset * 2), rect.size.height - alternateStrokeInset - strokeInset);
       break;
       
-    case YPUIBorderStyleLeftRightWithAlternateTop:
-      insetBounds = CGRectMake(rect.origin.x + strokeInset, rect.origin.y + alternateStrokeInset, rect.size.width-(strokeInset * 2), rect.size.height-alternateStrokeInset);
+    case YKUIBorderStyleLeftRightWithAlternateTop:
+      insetBounds = CGRectMake(rect.origin.x + strokeInset, rect.origin.y + alternateStrokeInset, rect.size.width - (strokeInset * 2), rect.size.height - alternateStrokeInset);
       break;
       
-    case YPUIBorderStyleRoundedTop:
+    case YKUIBorderStyleRoundedTop:
       // Inset stroke width except for bottom border
-      insetBounds = CGRectMake(rect.origin.x + strokeInset, rect.origin.y + strokeInset, rect.size.width-(strokeInset * 2), rect.size.height-strokeInset);
+      insetBounds = CGRectMake(rect.origin.x + strokeInset, rect.origin.y + strokeInset, rect.size.width - (strokeInset * 2), rect.size.height - strokeInset);
       break;
-      
-    case YPUIBorderStyleNormal:
+
+    case YKUIBorderStyleTopOnly:
+      insetBounds = CGRectMake(rect.origin.x, rect.origin.y + strokeInset, rect.size.width, rect.size.height - strokeInset);
+      break;
+
+    case YKUIBorderStyleNormal:
       insetBounds = CGRectMake(rect.origin.x + strokeInset, rect.origin.y + strokeInset, rect.size.width - (strokeInset * 2), rect.size.height - (strokeInset * 2));
+      break;
+
+    default:
+      insetBounds = CGRectMake(0, 0, 0, 0);
       break;
   }
   rect = insetBounds;
   
   CGAffineTransform transform = CGAffineTransformIdentity;
   transform = CGAffineTransformTranslate(transform, CGRectGetMinX(rect), CGRectGetMinY(rect));
-  transform = CGAffineTransformScale(transform, cornerWidth, cornerHeight);
-  
-  fw = CGRectGetWidth(rect) / cornerWidth;
-  fh = CGRectGetHeight(rect) / cornerHeight;
+  if (cornerWidth > 0 && cornerHeight > 0) {
+    transform = CGAffineTransformScale(transform, cornerWidth, cornerHeight);
+    fw = CGRectGetWidth(rect) / cornerWidth;
+    fh = CGRectGetHeight(rect) / cornerHeight;
+  } else {
+    fw = CGRectGetWidth(rect);
+    fh = CGRectGetHeight(rect);
+  }
   
   CGMutablePathRef path = CGPathCreateMutable();
   
   switch(style) {
-    case YPUIBorderStyleRoundedBottomWithAlternateTop:
+    case YKUIBorderStyleRoundedBottomWithAlternateTop:
       CGPathMoveToPoint(path, &transform, fw, 0); 
       CGPathAddLineToPoint(path, &transform, fw, fh/2);
       CGPathAddArcToPoint(path, &transform, fw, fh, fw/2, fh, 1);
@@ -379,7 +391,7 @@ CGPathRef YPCreateStyledRect(CGRect rect, YPUIBorderStyle style, CGFloat strokeW
       CGPathMoveToPoint(path, &transform, fw, 0); // Don't draw top border
       break;
       
-    case YPUIBorderStyleRoundedTop:
+    case YKUIBorderStyleRoundedTop:
       CGPathMoveToPoint(path, &transform, 0, fh);
       CGPathAddLineToPoint(path, &transform, 0, fh/2);
       CGPathAddArcToPoint(path, &transform, 0, 0, fw/2, 0, 1);
@@ -388,7 +400,12 @@ CGPathRef YPCreateStyledRect(CGRect rect, YPUIBorderStyle style, CGFloat strokeW
       CGPathMoveToPoint(path, &transform, 0, fh); // Don't draw bottom border
       break;
       
-    case YPUIBorderStyleLeftRightWithAlternateTop:
+    case YKUIBorderStyleTopOnly:
+      CGPathMoveToPoint(path, &transform, 0, 0);
+      CGPathAddLineToPoint(path, &transform, fw, 0);
+      break;
+      
+    case YKUIBorderStyleLeftRightWithAlternateTop:
       // Go +/- 2 in order to clip the top and bottom border; Only draw left, right border
       CGPathMoveToPoint(path, &transform, 0, fh + 2);
       CGPathAddLineToPoint(path, &transform, 0, -2);
@@ -397,7 +414,7 @@ CGPathRef YPCreateStyledRect(CGRect rect, YPUIBorderStyle style, CGFloat strokeW
       CGPathAddLineToPoint(path, &transform, 0, fh + 2);
       break;
       
-    case YPUIBorderStyleNormal:
+    case YKUIBorderStyleNormal:
       CGPathMoveToPoint(path, &transform, 0, fh);
       CGPathAddLineToPoint(path, &transform, 0, 0);
       CGPathAddLineToPoint(path, &transform, fw, 0);      
@@ -409,7 +426,13 @@ CGPathRef YPCreateStyledRect(CGRect rect, YPUIBorderStyle style, CGFloat strokeW
   return path;
 }
 
-BOOL YPAddAlternateBorderToPath(CGContextRef context, CGRect rect, YPUIBorderStyle style) {
+BOOL YKCGContextAddAlternateBorderToPath(CGContextRef context, CGRect rect, YKUIBorderStyle style) {
+  // Skip styles that don't have alternate border path
+  if (style != YKUIBorderStyleRoundedBottomWithAlternateTop &&
+      style != YKUIBorderStyleLeftRightWithAlternateTop) {
+    return NO;
+  }
+  
   CGFloat cornerWidth = 10, cornerHeight = 10;
   
   CGContextSaveGState(context);
@@ -417,29 +440,16 @@ BOOL YPAddAlternateBorderToPath(CGContextRef context, CGRect rect, YPUIBorderSty
   CGContextScaleCTM (context, cornerWidth, cornerHeight);
   CGFloat fw = CGRectGetWidth(rect) / cornerWidth;
   
-  BOOL hasPath = NO;
-  
-  switch(style) {
-    case YPUIBorderStyleRoundedBottomWithAlternateTop:
-    case YPUIBorderStyleLeftRightWithAlternateTop:
-      CGContextMoveToPoint(context, 0, 0);
-      CGContextAddLineToPoint(context, fw, 0);
-      hasPath = YES;
-      break;
-      
-    default:
-      // Other styles don't use alternate stroke
-      break;
-  }
-  
+  CGContextMoveToPoint(context, 0, 0);
+  CGContextAddLineToPoint(context, fw, 0);
   CGContextRestoreGState(context);
-  return hasPath;
+  return YES;
 }
 
-void _YPContextDrawStyledRect(CGContextRef context, CGRect rect, YPUIBorderStyle style, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius) {
+void _YKCGContextDrawStyledRect(CGContextRef context, CGRect rect, YKUIBorderStyle style, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat cornerRadius) {
   CGContextSetLineWidth(context, strokeWidth);
   
-  YPContextAddStyledRect(context, rect, style, strokeWidth, 0, cornerRadius); 
+  YKCGContextAddStyledRect(context, rect, style, strokeWidth, 0, cornerRadius); 
   
   if (strokeColor != NULL) CGContextSetStrokeColorWithColor(context, strokeColor);  
   if (fillColor != NULL) CGContextSetFillColorWithColor(context, fillColor);
@@ -453,25 +463,25 @@ void _YPContextDrawStyledRect(CGContextRef context, CGRect rect, YPUIBorderStyle
   } 
 }
 
-void YPDrawBorder(CGContextRef context, CGRect rect, YPUIBorderStyle style, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat alternateStrokeWidth, CGFloat cornerRadius) {
+void YKCGContextDrawBorder(CGContextRef context, CGRect rect, YKUIBorderStyle style, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth, CGFloat alternateStrokeWidth, CGFloat cornerRadius) {
 
-  _YPContextDrawStyledRect(context, rect, style, fillColor, strokeColor, strokeWidth, cornerRadius);
+  _YKCGContextDrawStyledRect(context, rect, style, fillColor, strokeColor, strokeWidth, cornerRadius);
   
   if (alternateStrokeWidth > 0) {
     CGContextSetLineWidth(context, alternateStrokeWidth);
     CGContextBeginPath(context);
-    if (YPAddAlternateBorderToPath(context, rect, style))
+    if (YKCGContextAddAlternateBorderToPath(context, rect, style))
       CGContextDrawPath(context, kCGPathStroke);
   }
 }
 
-void YPContextDrawRect(CGContextRef context, CGRect rect, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth) {
-  _YPContextDrawStyledRect(context, rect, YPUIBorderStyleNormal, fillColor, strokeColor, strokeWidth, 1);
+void YKCGContextDrawRect(CGContextRef context, CGRect rect, CGColorRef fillColor, CGColorRef strokeColor, CGFloat strokeWidth) {
+  _YKCGContextDrawStyledRect(context, rect, YKUIBorderStyleNormal, fillColor, strokeColor, strokeWidth, 1);
 }
 
 #pragma mark Colors
 
-void YPGetColorComponents(CGColorRef color, CGFloat *red, CGFloat *green, CGFloat *blue, CGFloat *alpha) {
+void YKCGColorGetComponents(CGColorRef color, CGFloat *red, CGFloat *green, CGFloat *blue, CGFloat *alpha) {
   const CGFloat *components = CGColorGetComponents(color);
   *red = *green = *blue = 0.0;
   *alpha = 1.0;
@@ -501,11 +511,11 @@ void YPGetColorComponents(CGColorRef color, CGFloat *red, CGFloat *green, CGFloa
 typedef struct {
   CGFloat red1, green1, blue1, alpha1;
   CGFloat red2, green2, blue2, alpha2;
-} _YPUIButtonTwoColors;
+} _YKUIButtonTwoColors;
 
 // Only uses main color
-void _horizontalEdgeColorBlendFunctionImpl(void *info, const float *in, float *out, BOOL reverse) {
-  _YPUIButtonTwoColors *twoColors = (_YPUIButtonTwoColors *)info;
+void _horizontalEdgeColorBlendFunctionImpl(void *info, const CGFloat *in, CGFloat *out, BOOL reverse) {
+  _YKUIButtonTwoColors *twoColors = (_YKUIButtonTwoColors *)info;
   
   float v = *in;
   if ((!reverse && v < 0.5) || (reverse && v >= 0.5)) {
@@ -522,16 +532,16 @@ void _horizontalEdgeColorBlendFunctionImpl(void *info, const float *in, float *o
   }
 }
 
-void _horizontalEdgeColorBlendFunction(void *info, const float *in, float *out) {
+void _horizontalEdgeColorBlendFunction(void *info, const CGFloat *in, CGFloat *out) {
   _horizontalEdgeColorBlendFunctionImpl(info, in, out, NO);
 }
 
-void _horizontalReverseEdgeColorBlendFunction(void *info, const float *in, float *out) {
+void _horizontalReverseEdgeColorBlendFunction(void *info, const CGFloat *in, CGFloat *out) {
   _horizontalEdgeColorBlendFunctionImpl(info, in, out, YES);
 }
 
-void _linearColorBlendFunction(void *info, const float *in, float *out) {
-  _YPUIButtonTwoColors *twoColors = info;
+void _linearColorBlendFunction(void *info, const CGFloat *in, CGFloat *out) {
+  _YKUIButtonTwoColors *twoColors = info;
   
   out[0] = (1.0 - *in) * twoColors->red1 + *in * twoColors->red2;
   out[1] = (1.0 - *in) * twoColors->green1 + *in * twoColors->green2;
@@ -539,8 +549,8 @@ void _linearColorBlendFunction(void *info, const float *in, float *out) {
   out[3] = (1.0 - *in) * twoColors->alpha1 + *in * twoColors->alpha2;
 }
 
-void _exponentialColorBlendFunction(void *info, const float *in, float *out) {
-  _YPUIButtonTwoColors *twoColors = info;
+void _exponentialColorBlendFunction(void *info, const CGFloat *in, CGFloat *out) {
+  _YKUIButtonTwoColors *twoColors = info;
   float amount1 = (1.0 - powf(*in, 2));
   float amount2 = (1.0 - amount1);
   
@@ -560,11 +570,11 @@ static const CGFunctionCallbacks horizontalReverseEdgeFunctionCallbacks = {0, &_
 static const CGFunctionCallbacks exponentialFunctionCallbacks = {0, &_exponentialColorBlendFunction, &_colorReleaseInfoFunction};
 
 
-void YPContextDrawShadingWithHeight(CGContextRef context, CGColorRef color, CGColorRef alternateColor, CGFloat height, YPUIShadingType shadingType) {
-  YPContextDrawShading(context, color, alternateColor, CGPointMake(0, 0), CGPointMake(0, height), shadingType, YES, YES);
+void YKCGContextDrawShadingWithHeight(CGContextRef context, CGColorRef color, CGColorRef alternateColor, CGFloat height, YPUIShadingType shadingType) {
+  YKCGContextDrawShading(context, color, alternateColor, CGPointMake(0, 0), CGPointMake(0, height), shadingType, YES, YES);
 }
 
-void YPContextDrawShading(CGContextRef context, CGColorRef color, CGColorRef alternateColor, CGPoint start, CGPoint end, YPUIShadingType shadingType, 
+void YKCGContextDrawShading(CGContextRef context, CGColorRef color, CGColorRef alternateColor, CGPoint start, CGPoint end, YPUIShadingType shadingType, 
                           BOOL extendStart, BOOL extendEnd) {
 
   const CGFunctionCallbacks *callbacks;
@@ -588,12 +598,12 @@ void YPContextDrawShading(CGContextRef context, CGColorRef color, CGColorRef alt
   
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   
-  _YPUIButtonTwoColors *twoColors = malloc(sizeof(_YPUIButtonTwoColors));
+  _YKUIButtonTwoColors *twoColors = malloc(sizeof(_YKUIButtonTwoColors));
   
-  YPGetColorComponents(color, &twoColors->red1, &twoColors->green1, &twoColors->blue1, &twoColors->alpha1);
-  YPGetColorComponents((alternateColor != NULL ? alternateColor : color), &twoColors->red2, &twoColors->green2, &twoColors->blue2, &twoColors->alpha2);
+  YKCGColorGetComponents(color, &twoColors->red1, &twoColors->green1, &twoColors->blue1, &twoColors->alpha1);
+  YKCGColorGetComponents((alternateColor != NULL ? alternateColor : color), &twoColors->red2, &twoColors->green2, &twoColors->blue2, &twoColors->alpha2);
   
-  static const float domainAndRange[8] = {0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0};
+  static const CGFloat domainAndRange[8] = {0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0};
   
   CGFunctionRef blendFunctionRef = CGFunctionCreate(twoColors, 1, domainAndRange, 4, domainAndRange, callbacks);
   CGShadingRef shading = CGShadingCreateAxial(colorSpace, start, end, blendFunctionRef, extendStart, extendEnd);

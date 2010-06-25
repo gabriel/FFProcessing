@@ -1,5 +1,5 @@
 //
-//  YPLocalized.h
+//  YKLocalized.h
 //  YelpIPhone
 //
 //  Created by Gabriel Handford on 11/18/08.
@@ -17,13 +17,13 @@
 
 
 // Use instead of NSLocalizedString
-#ifdef YPLocalizedString
-#undef YPLocalizedString
+#ifdef YKLocalizedString
+#undef YKLocalizedString
 #endif
-#define YPLocalizedString(key, ...) [YPLocalized localize:[NSString stringWithFormat:key, ##__VA_ARGS__] table:nil value:nil]
-#define YPLocalizedFormat(key, ...) [NSString stringWithFormat:[YPLocalized localize:key table:nil value:nil], ##__VA_ARGS__]
-#define YPLocalizedStringWithDefaultValue(key, tbl, val) [YPLocalized localize:key table:tbl value:[YPLocalized localize:val table:tbl value:nil]]
-#define YPLocalizedSharedString(key, ...) [YPLocalized localize:[NSString stringWithFormat:key, ##__VA_ARGS__] table:@"Shared" value:nil]
+#define YKLocalizedString(__KEY__) [YKLocalized localize:__KEY__ table:nil value:nil]
+#define YKLocalizedFormat(__KEY__, ...) [NSString stringWithFormat:[YKLocalized localize:__KEY__ table:nil value:nil], ##__VA_ARGS__]
+#define YKLocalizedStringWithDefaultValue(__KEY__, __TABLE__, __VALUE__) [YKLocalized localize:__KEY__ table:__TABLE__ value:[YKLocalized localize:__VALUE__ table:__TABLE__ value:nil]]
+#define YKLocalizedStringForTable(__TABLE__, __KEY__) [YKLocalized localize:__KEY__ table:__TABLE__ value:nil]
 
 /*!
  Single/plural localized formats.
@@ -31,52 +31,37 @@
  @code
    XMobilePhoto = "%d Photo";
    XMobilePhotos = "%d Photos";
-   header = YPLocalizedCount(@"XMobilePhoto", @"XMobilePhotos", YES, [item.bizLargePhotoURLs count]);
+   header = YKLocalizedCount(@"XMobilePhoto", @"XMobilePhotos", [item.bizLargePhotoURLs count]);
  @endcode
  or:
  @code
-   MobilePhoto = "Photo"; // Does not include %d (so includeSingularFormat is NO below)
-   XMobilePhotos = "%d Photos";
-   header = YPLocalizedCount(@"MobilePhoto", @"XMobilePhotos", NO, [item.bizLargePhotoURLs count]);
+   MobilePhoto = "a photo"; // Does not include %d
+   XMobilePhotos = "%d photos";
+   header = YKLocalizedCount(@"MobilePhoto", @"XMobilePhotos", [item.bizLargePhotoURLs count]);
  @endcode
  */
-#define YPLocalizedCount(singularKey, pluralKey, includeSingularFormat, n, ...) (n == 1 ? \
-  (includeSingularFormat ? \
-    [NSString stringWithFormat:[YPLocalized localize:singularKey table:nil value:nil], n, ##__VA_ARGS__] : \
-    [NSString stringWithFormat:[YPLocalized localize:singularKey table:nil value:nil], ##__VA_ARGS__]) : \
-  [NSString stringWithFormat:[YPLocalized localize:pluralKey table:nil value:nil], n, ##__VA_ARGS__])
+#define YKLocalizedCount(__SINGULAR_KEY__, __PLURAL_KEY__, __COUNT__) (__COUNT__ == 1 ? \
+  [NSString stringWithFormat:[YKLocalized localize:__SINGULAR_KEY__ table:nil value:nil], __COUNT__] : \
+  [NSString stringWithFormat:[YKLocalized localize:__PLURAL_KEY__ table:nil value:nil], __COUNT__])
 
 /*!
- Single/plural localized formats.
- Does not automatically include number in format, for when you need custom formats for both singular and plural.
- @code
- MobilePhoto = "%@'s only photo";
- MobilePhotos = "%@ has more than 1 photo";
- header = YPLocalizedCountWithFormat(@"UserHasMobilePhoto", @"UserHasMobilePhotos", [item.bizLargePhotoURLs count], @"Bob");
- @endcode
+ Localized string from choice.
+ YKLocalizedChoice(@"This", @"That", YES) => YKLocalizedString(@"This")
+ YKLocalizedChoice(@"This", @"That", NO) => YKLocalizedString(@"That")
  */
-#define YPLocalizedCountWithFormat(singularKey, pluralKey, n, ...) (n == 1 ? \
-  [NSString stringWithFormat:[YPLocalized localize:singularKey table:nil value:nil], ##__VA_ARGS__] : \
-  [NSString stringWithFormat:[YPLocalized localize:pluralKey table:nil value:nil], ##__VA_ARGS__])
-
-/*!
- Male/Female localized strings
- Different strings with format for YPGenderMale and YPGenderFemale
- Defaults to YPGenderFemale
- */
-#define YPLocalizedStringWithGender(maleKey, femaleKey, gender, ...) (gender == YPGenderMale ? \
-  [NSString stringWithFormat:[YPLocalized localize:maleKey table:nil value:nil], ##__VA_ARGS__] : \
-  [NSString stringWithFormat:[YPLocalized localize:femaleKey table:nil value:nil], ##__VA_ARGS__])
+#define YKLocalizedChoice(__KEY_TRUE__, __KEY_FALSE__, __BOOL__) (__BOOL__ ? \
+  [YKLocalized localize:__KEY_TRUE__ table:nil value:nil] : \
+  [YKLocalized localize:__KEY_FALSE__ table:nil value:nil])
 
 /*!
  Localized language name (English, German, French, etc) from two-letter language code (en, de, fr, etc)
  */
-#define YPLocalizedLanguageNameFromCode(languageCode) [YPLocalized localize:[languageCode lowercaseString] table:nil value:nil]
+#define YKLocalizedLanguageNameFromCode(languageCode) [YKLocalized localize:[languageCode lowercaseString] table:nil value:nil]
 
 // Mixin for patched localizedStringForKey method.
 // There seem to be issues with locales and localized resources not being picked up correctly.
 // @see https://devforums.apple.com/thread/3210?tstart=0
-@interface NSBundle (YPLocalized)
+@interface NSBundle (YKLocalized)
 
 /*!
  Localize string with key.
@@ -115,7 +100,7 @@
 @end
 
 // Obj-C wrapper for localize call. Also caches localized key/value pairs.
-@interface YPLocalized : NSObject { }
+@interface YKLocalized : NSObject { }
 
 // Cache for localized strings
 + (NSMutableDictionary *)localizationCache;
@@ -129,6 +114,13 @@
  @param value Default if key is not present
  */
 + (NSString *)localize:(NSString *)key table:(NSString *)table value:(NSString *)value;
+
+/*!
+ Set default table name.
+ Defaults to "Localizable".
+ Set to nil to reset to default.
+ */
++ (void)setDefaultTableName:(NSString *)defaultTableName;
 
 // Shortcut for determining if current locale is metric
 + (BOOL)isMetric;

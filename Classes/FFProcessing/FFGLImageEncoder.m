@@ -13,10 +13,11 @@
 
 @implementation FFGLImageEncoder
 
-- (id)initWithWidth:(GLsizei)width height:(GLsizei)height {
+- (id)initWithWidth:(GLsizei)width height:(GLsizei)height format:(GLint)format {
   if ((self = [super init])) {
     _width = width;
     _height = height;
+    _format = format;
     _length = (_width * _height * 4);
     _buffer = (GLubyte *)malloc(_length);
     _colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -31,7 +32,7 @@
 }
 
 - (void)GLReadPixels {
-  glReadPixels(0, 0, _width, _height, GL_BGRA, GL_UNSIGNED_BYTE, _buffer);
+  glReadPixels(0, 0, _width, _height, _format, GL_UNSIGNED_BYTE, _buffer);
 }
 
 - (CGImageRef)createImageFromGL {

@@ -6,7 +6,7 @@
 //  Copyright 2010. All rights reserved.
 //
 
-#import "YPUIButton.h"
+#import "YKUIButton.h"
 
 @interface PBUIStatusView : UIView {
   UIView *_contentView;
@@ -15,14 +15,14 @@
   UIProgressView *_progressView;
   UILabel *_label;
   
-  YPUIButton *_button;
+  YKUIButton *_button;
   
 }
 
 @property (readonly, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property (readonly, nonatomic) UIProgressView *progressView;
 @property (readonly, nonatomic) UILabel *label;
-@property (readonly, nonatomic) YPUIButton *button;
+@property (readonly, nonatomic) YKUIButton *button;
 
 - (void)setButtonTitle:(NSString *)title target:(id)target action:(SEL)action;
 

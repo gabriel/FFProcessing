@@ -150,7 +150,7 @@
     _displayLink.frameInterval = 3;
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     GHGLDebug(@"Display link; frame interval %d", _displayLink.frameInterval);
-    NSAssert(_drawable, @"No drawable set");
+    if (!_drawable) GHGLError(@"No drawable set");
     [_drawable start];
   }
 }

@@ -1,5 +1,5 @@
 //
-//  YPUIButton.m
+//  YKUIButton.m
 //  YelpKit
 //
 //  Created by Gabriel Handford on 12/17/08.
@@ -27,10 +27,10 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "YPUIButton.h"
+#import "YKUIButton.h"
 
 
-@implementation YPUIButton
+@implementation YKUIButton
 
 @synthesize title=_title, titleColor=_titleColor, titleFont=_titleFont, strokeWidth=_strokeWidth, alternateStrokeWidth=_alternateStrokeWidth,
 cornerRadius=_cornerRadius, color=_color, alternateColor=_alternateColor, 
@@ -58,11 +58,11 @@ selectedShadingType=_selectedShadingType;
     _titleEdgeInsets = UIEdgeInsetsMake(0, 14, 0, 0);
     
     self.borderColor = [UIColor blackColor];
-    self.borderStyle = YPUIBorderStyleRounded;
+    self.borderStyle = YKUIBorderStyleRounded;
     self.shadingType = YPUIShadingTypeNone;
     _titleShadowOffset = CGPointMake(1, 0);
 
-    [self setStyle:YPUIButtonStyleBasic];
+    [self setStyle:YKUIButtonStyleBasic];
         
     // Highlighted: White text on gray linear shading
     self.highlightedTitleColor = [UIColor whiteColor];
@@ -119,7 +119,7 @@ selectedShadingType=_selectedShadingType;
 
 - (void)setFrame:(CGRect)frame {
   [super setFrame:frame];
-  _titleSize = YPCGSizeNull;
+  _titleSize = YKCGSizeNull;
 }
 
 - (void)didChangeValueForKey:(NSString *)key {
@@ -129,7 +129,7 @@ selectedShadingType=_selectedShadingType;
 
 - (void)setTitleEdgeInsets:(UIEdgeInsets)titleEdgeInsets {
   _titleEdgeInsets = titleEdgeInsets;
-  _titleSize = YPCGSizeNull;
+  _titleSize = YKCGSizeNull;
 }
 
 - (void)setTitleFont:(UIFont *)titleFont {
@@ -137,7 +137,7 @@ selectedShadingType=_selectedShadingType;
   [_titleFont release];
   _titleFont = titleFont;
   [self didChangeValueForKey:@"titleFont"];
-  _titleSize = YPCGSizeNull;
+  _titleSize = YKCGSizeNull;
 }
 
 - (UIFont *)titleFont {
@@ -151,24 +151,24 @@ selectedShadingType=_selectedShadingType;
   [_title release];
   _title = title;
   [self didChangeValueForKey:@"title"];
-  _titleSize = YPCGSizeNull;
+  _titleSize = YKCGSizeNull;
 }
 
 
-+ (YPUIButton *)button {
-  return [[[YPUIButton alloc] initWithFrame:CGRectZero] autorelease];
++ (YKUIButton *)button {
+  return [[[YKUIButton alloc] initWithFrame:CGRectZero] autorelease];
 }
 
-+ (YPUIButton *)buttonWithFrame:(CGRect)frame style:(YPUIButtonStyle)style title:(NSString *)title {
-  YPUIButton *button = [[[YPUIButton alloc] initWithFrame:frame] autorelease];
++ (YKUIButton *)buttonWithFrame:(CGRect)frame style:(YKUIButtonStyle)style title:(NSString *)title {
+  YKUIButton *button = [[[YKUIButton alloc] initWithFrame:frame] autorelease];
   [button setStyle:style];
   button.title = title;
   return button;
 }
 
-- (void)setStyle:(YPUIButtonStyle)style {
+- (void)setStyle:(YKUIButtonStyle)style {
   switch(style) {
-    case YPUIButtonStyleBasic:
+    case YKUIButtonStyleBasic:
       self.titleColor = [UIColor colorWithRed:(77.0/255.0) green:(95.0/255.0) blue:(154.0/255.0) alpha:1];
       self.titleFont = nil;
       self.titleShadowColor = nil;
@@ -179,7 +179,7 @@ selectedShadingType=_selectedShadingType;
       self.strokeWidth = 0.5;   
       break;
       
-    case YPUIButtonStyleBlue:
+    case YKUIButtonStyleBlue:
       self.titleColor = [UIColor whiteColor];
       self.titleFont = nil;
       self.titleShadowColor = nil;
@@ -190,7 +190,7 @@ selectedShadingType=_selectedShadingType;
       self.strokeWidth = 0.5;   
       break;
       
-    case YPUIButtonStyleDarkBlue:           
+    case YKUIButtonStyleDarkBlue:           
       self.titleColor = [UIColor whiteColor];
       self.titleFont = nil;
       self.titleShadowColor = [UIColor blackColor];
@@ -201,7 +201,7 @@ selectedShadingType=_selectedShadingType;
       self.strokeWidth = 0.5;
       break;
 
-    case YPUIButtonStyleBlack:
+    case YKUIButtonStyleBlack:
       // Normal: White text on black horizontal edge shading
       self.titleColor = [UIColor whiteColor];     
       self.titleFont = nil;
@@ -213,7 +213,7 @@ selectedShadingType=_selectedShadingType;
       self.strokeWidth = 0.5; 
       break;
       
-    case YPUIButtonStyleGray:
+    case YKUIButtonStyleGray:
       self.titleColor = [UIColor blackColor];
       self.titleFont = nil;
       self.titleShadowColor = [UIColor whiteColor];
@@ -224,7 +224,7 @@ selectedShadingType=_selectedShadingType;
       self.strokeWidth = 0.5;
       break;
       
-    case YPUIButtonStyleLink:
+    case YKUIButtonStyleLink:
       self.titleColor = [UIColor colorWithRed:(77.0/255.0) green:(95.0/255.0) blue:(154.0/255.0) alpha:1];
       self.titleFont = [UIFont systemFontOfSize:15.0];
       self.titleShadowColor = nil;
@@ -235,7 +235,7 @@ selectedShadingType=_selectedShadingType;
       self.strokeWidth = 0;
       break;
       
-    case YPUIButtonStyleBlackToolbar:
+    case YKUIButtonStyleBlackToolbar:
       self.titleColor = [UIColor whiteColor];     
       self.titleFont = [UIFont fontWithName:@"Helvetica-Bold" size:13];
       self.titleShadowColor = nil;
@@ -254,7 +254,7 @@ selectedShadingType=_selectedShadingType;
       self.disabledAlternateColor = self.alternateColor;
       break;
       
-    case YPUIButtonStyleToggleBlue:
+    case YKUIButtonStyleToggleBlue:
       self.color = [UIColor colorWithRed:(120.0/255.0) green:(141.0/255.0) blue:(169.0/255.0) alpha:1.0];     
       self.cornerRadius = 10.0;
       self.strokeWidth = 0.5; 
@@ -291,7 +291,7 @@ selectedShadingType=_selectedShadingType;
 
 - (void)drawRect:(CGRect)rect {
   CGContextRef context = UIGraphicsGetCurrentContext();
-  if (YPCGSizeIsNull(_titleSize) && _title) {
+  if (YKCGSizeIsNull(_titleSize) && _title) {
     CGSize constrainedToSize = self.frame.size;
     constrainedToSize.width -= (_titleEdgeInsets.left + _titleEdgeInsets.right);
     _titleSize = [_title sizeWithFont:self.titleFont constrainedToSize:constrainedToSize lineBreakMode:UILineBreakModeTailTruncation];    
@@ -336,21 +336,21 @@ selectedShadingType=_selectedShadingType;
   if (isHighlighted && _accessoryImageView.highlightedImage) accessoryIcon = _accessoryImageView.highlightedImage;
   
   if (color && shadingType != YPUIShadingTypeNone) {
-    YPContextAddStyledRect(context, bounds, _borderStyle, _strokeWidth, _alternateStrokeWidth, _cornerRadius);  
+    YKCGContextAddStyledRect(context, bounds, _borderStyle, _strokeWidth, _alternateStrokeWidth, _cornerRadius);  
     CGContextClip(context);
-    YPContextDrawShadingWithHeight(context, color.CGColor, alternateColor.CGColor, self.bounds.size.height, shadingType);
+    YKCGContextDrawShadingWithHeight(context, color.CGColor, alternateColor.CGColor, self.bounds.size.height, shadingType);
     fillColor = nil;
   }
   
   if (_strokeWidth > 0) {
-    YPDrawBorder(context, bounds, _borderStyle, fillColor.CGColor, _borderColor.CGColor, _strokeWidth, _alternateStrokeWidth, _cornerRadius);
+    YKCGContextDrawBorder(context, bounds, _borderStyle, fillColor.CGColor, _borderColor.CGColor, _strokeWidth, _alternateStrokeWidth, _cornerRadius);
   }
   
   UIColor *textColor = [self textColorForState:state];
   
   UIFont *font = self.titleFont;
   
-  CGFloat y = roundf(YPPointToCenter(_titleSize, size).y);
+  CGFloat y = roundf(YKCGPointToCenter(_titleSize, size).y);
   
   BOOL showIcon = (icon != nil && !_imageView.hidden);
   if (!_titleHidden) {
@@ -379,17 +379,17 @@ selectedShadingType=_selectedShadingType;
   }
   
   if (accessoryIcon)
-    [accessoryIcon drawAtPoint:YPPointToRight(accessoryIcon.size, CGSizeMake(size.width - 10, size.height))];
+    [accessoryIcon drawAtPoint:YKCGPointToRight(accessoryIcon.size, CGSizeMake(size.width - 10, size.height))];
   
   if (showIcon) {
-    [icon drawAtPoint:YPPointToCenter(icon.size, size)];
+    [icon drawAtPoint:YKCGPointToCenter(icon.size, size)];
   }  
 }
 
 @end
 
 
-@implementation YPUIButtonBackground
+@implementation YKUIButtonBackground
 
 @synthesize color=_color, alternateColor=_alternateColor, strokeWidth=_strokeWidth, cornerRadius=_cornerRadius, shadingType=_shadingType, borderColor=_borderColor;
 
@@ -418,10 +418,10 @@ selectedShadingType=_selectedShadingType;
   CGContextRef context = UIGraphicsGetCurrentContext(); 
   CGRect bounds = self.bounds;
   CGSize size = bounds.size;
-  YPContextAddRoundedRect(context, bounds, _strokeWidth, _cornerRadius);
+  YKCGContextAddRoundedRect(context, bounds, _strokeWidth, _cornerRadius);
   CGContextClip(context);
-  YPContextDrawShadingWithHeight(context, _color.CGColor, _alternateColor.CGColor, size.height, _shadingType);
-  YPContextDrawRoundedRect(context, bounds, NULL, [_borderColor CGColor], _strokeWidth, _cornerRadius);
+  YKCGContextDrawShadingWithHeight(context, _color.CGColor, _alternateColor.CGColor, size.height, _shadingType);
+  YKCGContextDrawRoundedRect(context, bounds, NULL, [_borderColor CGColor], _strokeWidth, _cornerRadius);
 } 
 
 @end

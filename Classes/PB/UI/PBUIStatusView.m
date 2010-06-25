@@ -44,7 +44,7 @@
     _label.shadowOffset = CGSizeMake(0, 1);
     [_contentView addSubview:_label];    
     
-    _button = [[YPUIButton alloc] initWithFrame:CGRectMake(0, 0, 200, 37)];
+    _button = [[YKUIButton alloc] initWithFrame:CGRectMake(0, 0, 200, 37)];
     _button.hidden = YES;
     _button.titleColor = [UIColor whiteColor];     
     _button.titleFont = [UIFont boldSystemFontOfSize:16];

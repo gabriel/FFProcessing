@@ -1,15 +1,13 @@
 //
-//  YPUIAlertView.h
+//  YKUIAlertView.h
 //  YelpKit
 //
 //  Created by Gabriel Handford on 7/16/09.
 //  Copyright 2009. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
-
-@interface YPUIAlertView : NSObject <UIAlertViewDelegate> {
+@interface YKUIAlertView : NSObject <UIAlertViewDelegate> {
   
   id _target; // weak
   SEL _action;
@@ -57,7 +55,7 @@
 
 @end
 
-@protocol YPUIAlertViewActions
+@protocol YKUIAlertViewActions
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex context:(id)context; // If context not nil
 @end
 
@@ -65,7 +63,7 @@
 /*!
  Target, action for use in showAlertWithTarget context.
  */
-@interface YPUIAlertViewTarget : NSObject {
+@interface YKUIAlertViewTarget : NSObject {
   
   id _target; // weak
   SEL _action;
@@ -74,7 +72,7 @@
 
 - (id)initWithTarget:(id)target action:(SEL)action;
 
-+ (YPUIAlertViewTarget *)target:(id)target action:(SEL)action;
++ (YKUIAlertViewTarget *)target:(id)target action:(SEL)action;
 
 - (void)perform;
 

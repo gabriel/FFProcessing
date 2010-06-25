@@ -2,31 +2,18 @@
 //  PBApplicationController.h
 //  FFProcessing
 //
-//  Created by Gabriel Handford on 3/31/10.
+//  Created by Gabriel Handford on 6/21/10.
 //  Copyright 2010. All rights reserved.
 //
 
-#import "PBUITableViewController.h"
-
-#import "PBMediaListViewController.h"
-#import "PBMoviePlayerController.h"
+#import "YKUIMultiViewController.h"
 #import "PBCameraCaptureController.h"
-#import "PBProcessing.h"
-#import "PBSaveThread.h"
+#import "PBUIOptionsView.h"
 
-@interface PBApplicationController : PBUITableViewController <PBProcessingDelegate, PBSaveThreadDelegate> {
-
-  PBMediaListViewController *_mediaListViewController;
-  PBMoviePlayerController *_moviePlayerController;  
-  PBProcessing *_processing;
-  
+@interface PBApplicationController : YKUIMultiViewController <PBUIOptionsViewDelegate, PBCameraCaptureControllerDelegate> {
   PBCameraCaptureController *_cameraCaptureController;
   
-  NSURL *_sourceURL;
+  PBUIOptionsView *_optionsView;
 }
-
-@property (retain, nonatomic) NSURL *sourceURL;
-
-
 
 @end

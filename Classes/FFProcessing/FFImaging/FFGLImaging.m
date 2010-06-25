@@ -166,6 +166,38 @@ TexturedVertexData2D flipquad[4] = {
   return self;
 }
 
+- (BOOL)apply:(TexturedVertexData2D[4])quad options:(FFGLImagingOptions)options {
+  BOOL applied = NO;
+  if (options.hueEnabled) {
+    [self hue:quad amount:options.hueAmount];
+    applied = YES;
+  }
+  
+  if (options.brightnessEnabled) {
+    [self brightness:quad amount:options.brightnessAmount];
+    applied = YES;
+  }  
+  
+  if (options.blurEnabled) {
+    [self blur:quad amount:options.blurAmount];
+    applied = YES;
+  }  
+
+  if (options.contrastEnabled) {
+    [self blur:quad amount:options.contrastAmount];
+    applied = YES;
+  }  
+  
+  // Render normal if no options were applied
+  if (!applied) {
+    glVertexPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].vertex.x);
+    glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].texCoord.s);	
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  }
+  
+  return applied;
+}
+
 // The following filters change the TexEnv state in various ways.
 // To reduce state change overhead, the convention adopted here is
 // that each filter is responsible for setting up common state, and

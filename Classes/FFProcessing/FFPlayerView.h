@@ -9,9 +9,19 @@
 #import "GHGLView.h"
 #import "FFReader.h"
 
+@class FFPlayerView;
+
+@protocol FFPlayerViewDelegate <NSObject>
+- (void)playerViewDidTouch:(FFPlayerView *)playerView;
+@end
+
 @interface FFPlayerView : GHGLView {
   UILabel *_displayLabel;  
+  
+  id<FFPlayerViewDelegate> _delegate;
 }
+
+@property (assign, nonatomic) id<FFPlayerViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame;
 

@@ -32,10 +32,18 @@
   AVCaptureDevice *videoCaptureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
   AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoCaptureDevice error:error];
   if (!videoInput) return NO;
-  
+    
   [_captureSession setSessionPreset:AVCaptureSessionPresetMedium];
   [_captureSession addInput:videoInput];
-    
+  
+  NSArray *audioCaptureDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
+  if ([audioCaptureDevices count] > 0) {
+    AVCaptureDevice *audioCaptureDevice = [audioCaptureDevices objectAtIndex:0];
+    AVCaptureDeviceInput *audioInput = [AVCaptureDeviceInput deviceInputWithDevice:audioCaptureDevice error:error];
+    if (!audioInput) return NO;
+    [_captureSession addInput:audioInput];
+  }  
+ 
   _videoOutput = [[AVCaptureVideoDataOutput alloc] init];
   _videoOutput.minFrameDuration = CMTimeMake(1, 15);
   //_videoOutput.alwaysDiscardsLateVideoFrames = TRUE;
@@ -108,6 +116,11 @@
   if (!_wantsData) return;
   
   CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+  if (imageBuffer == NULL) {
+    // TODO: Capture audio
+    return;
+  }
+
   CVPixelBufferLockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
   
   //size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);

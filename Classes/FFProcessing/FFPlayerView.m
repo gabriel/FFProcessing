@@ -15,6 +15,8 @@
 
 @implementation FFPlayerView
 
+@synthesize delegate=_delegate;
+
 - (id)initWithFrame:(CGRect)frame {
   if ((self = [super initWithFrame:frame])) {
     
@@ -45,5 +47,20 @@
   _displayLabel.hidden = NO;
   _displayLabel.text = text;
 }
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {  
+  [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+  [super touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+  [super touchesEnded:touches withEvent:event];
+  FFDebug(@"Touches ended");
+  [_delegate playerViewDidTouch:self];
+}
+
 
 @end

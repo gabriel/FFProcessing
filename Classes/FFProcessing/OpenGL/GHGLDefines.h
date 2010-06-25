@@ -3,7 +3,13 @@
 // http://iphonedevelopment.blogspot.com/2009/05/opengl-es-from-ground-up-table-of.html
 //
 
+#if DEBUG
 #define GHGLDebug(...) NSLog(__VA_ARGS__)
+#else
+#define GHGLDebug(...) do { } while (0)
+#endif
+
+#define GHGLError(...) NSLog(__VA_ARGS__)
 
 // How many times a second to refresh the screen
 #if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR

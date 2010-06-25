@@ -14,11 +14,12 @@
   
   GLsizei _width;
   GLsizei _height;
+  GLint _format;
   
   CGColorSpaceRef _colorSpace;
 }
 
-- (id)initWithWidth:(GLsizei)width height:(GLsizei)height;
+- (id)initWithWidth:(GLsizei)width height:(GLsizei)height format:(GLint)format;
 
 - (void)writeToPhotosAlbum;
 

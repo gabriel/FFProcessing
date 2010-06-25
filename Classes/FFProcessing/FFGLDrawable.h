@@ -20,6 +20,7 @@
   GLint _GLFormat; // For example, GL_RGB, GL_BGRA
   
   FFGLImaging *_imaging;
+  FFGLImagingOptions _imagingOptions;
   
   NSUInteger _frameCount;
   FFGLImageEncoder *_imageEncoder;
@@ -27,5 +28,7 @@
 }
 
 - (id)initWithReader:(id<FFReader>)reader filter:(id<FFFilter>)filter;
+
+- (void)setImagingOptions:(FFGLImagingOptions)imagingOptions;
 
 @end

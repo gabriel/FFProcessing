@@ -1,24 +1,24 @@
 //
-//  YPUIAlertView.m
+//  YKUIAlertView.m
 //  YelpKit
 //
 //  Created by Gabriel Handford on 7/16/09.
 //  Copyright 2009. All rights reserved.
 //
 
-#import "YPUIAlertView.h"
-#import "YPLocalized.h"
-#import "YPDefines.h"
+#import "YKUIAlertView.h"
+#import "YKLocalized.h"
+#import "YKDefines.h"
 #import "GHNSObject+Invocation.h"
 
-@implementation YPUIAlertView
+@implementation YKUIAlertView
 
 - (id)initWithTarget:(id)target action:(SEL)action context:(id)context {
   if ((self = [super init])) {
     // TODO(gabe): check for different method signature if context is nil
-    YPAssertSelectorNilOrImplementedWithArguments(target, action, @encode(UIAlertView *), @encode(NSInteger), @encode(id), 0);
+    YKAssertSelectorNilOrImplementedWithArguments(target, action, @encode(UIAlertView *), @encode(NSInteger), @encode(id), 0);
 
-    _target = target; 
+    _target = [target retain];
     _action = action;
     _context = [context retain];
   }
@@ -42,7 +42,7 @@
 + (void)showAlertWithTarget:(id)target action:(SEL)action context:(id)context title:(NSString *)title message:(NSString *)message 
           cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitle:(NSString *)otherButtonTitle args:(va_list)args {
   
-  YPUIAlertView *delegate = [[YPUIAlertView alloc] initWithTarget:target action:action context:context] NS_RETURNS_RETAINED; // Released in alertView:clickedButtonAtIndex:context:
+  YKUIAlertView *delegate = [[YKUIAlertView alloc] initWithTarget:target action:action context:context] NS_RETURNS_RETAINED; // Released in alertView:clickedButtonAtIndex:context:
   
   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
     
@@ -57,6 +57,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
   [[_target gh_argumentProxy:_action] alertView:alertView clickedButtonAtIndex:buttonIndex context:_context];
+  [_target release];
   [self autorelease];
 }
 
@@ -68,13 +69,13 @@
 }
 
 + (UIAlertView *)showOKAlertWithMessage:(NSString *)message title:(NSString *)title {
-  return [self showAlertWithMessage:message title:title cancelButtonTitle:YPLocalizedString(@"OK")];
+  return [self showAlertWithMessage:message title:title cancelButtonTitle:YKLocalizedString(@"OK")];
 }
 
 @end
 
 
-@implementation YPUIAlertViewTarget
+@implementation YKUIAlertViewTarget
 
 - (id)initWithTarget:(id)target action:(SEL)action {
   if ((self = [super init])) {
@@ -89,8 +90,8 @@
   [super dealloc];
 }
 
-+ (YPUIAlertViewTarget *)target:(id)target action:(SEL)action {
-  return [[[YPUIAlertViewTarget alloc] initWithTarget:target action:action] autorelease];
++ (YKUIAlertViewTarget *)target:(id)target action:(SEL)action {
+  return [[[YKUIAlertViewTarget alloc] initWithTarget:target action:action] autorelease];
 }
 
 - (void)perform {

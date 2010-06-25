@@ -1,24 +1,27 @@
 //
-//  YPLocalized.m
+//  YKLocalized.m
 //  YelpIPhone
 //
 //  Created by Gabriel Handford on 11/18/08.
 //  Copyright 2008. All rights reserved.
 //
 
-#import "YPLocalized.h"
-#import "YPDefines.h"
+#import "YKLocalized.h"
+#import "YKDefines.h"
 
 #include <math.h>
 
-@implementation NSBundle (YPLocalized)
+#define kDefaultTableName @"Localizable"
+static NSString *gDefaultTableName = kDefaultTableName;
+
+@implementation NSBundle (YKLocalized)
 
 static NSMutableDictionary *gLocalizationResourceCache = nil;
 static NSString *LocaleIdentifier = nil;
 
 // Get resource cache
 + (NSMutableDictionary *)yelp_localizationResourceCache {
-  @synchronized([YPLocalized class]) {
+  @synchronized([YKLocalized class]) {
     if (!gLocalizationResourceCache) gLocalizationResourceCache = [[NSMutableDictionary alloc] init];
   }
   return gLocalizationResourceCache;
@@ -37,7 +40,7 @@ static NSString *LocaleIdentifier = nil;
   
   NSDictionary *dict = nil;
   
-  @synchronized([YPLocalized class]) {
+  @synchronized([YKLocalized class]) {
     dict = [[NSBundle yelp_localizationResourceCache] objectForKey:resource];   
     if (!dict) {
       NSDictionary *newDict = [[NSDictionary alloc] initWithContentsOfFile:resource];
@@ -51,15 +54,20 @@ static NSString *LocaleIdentifier = nil;
 
 // Look for string with localization string
 - (NSString *)yelp_stringForKey:(NSString *)key tableName:(NSString *)tableName localization:(NSString *)localization {
-  if (!localization || [localization isEqualToString:@"en_US"]) localization = @"en";
+  if (!localization || [localization isEqualToString:@"en_US"]) {
+    localization = @"en";
+  } else if ([localization hasPrefix:@"fr_"]) {
+    // TODO(gabe): This logic shouldn't be in YelpKit
+    localization = @"fr_FR"; 
+  }
   
-  NSString *value = [[YPLocalized localizationCache] objectForKey:key];
+  NSString *value = [[YKLocalized localizationCache] objectForKey:key];
   if (value) return value;
 
   NSDictionary *dict = [self yelp_loadResourceForTableName:tableName localization:localization];
   value = [dict objectForKey:key];
   if (value) {
-    [[YPLocalized localizationCache] setObject:value forKey:key];
+    [[YKLocalized localizationCache] setObject:value forKey:key];
   }
   return value;
 }
@@ -85,9 +93,13 @@ static NSString *LocaleIdentifier = nil;
     YPWarn(@"Trying to localize nil key, (with value=%@, tableName=%@)", value, tableName);
     return nil;
   }
-  if (!tableName) tableName = @"Localizable"; // Default file is Localizable.strings
+  if (!tableName) tableName = gDefaultTableName; // Default file is Localizable.strings
 
-  if (!LocaleIdentifier) LocaleIdentifier = [[[NSLocale currentLocale] localeIdentifier] retain];
+  if (!LocaleIdentifier) {
+    LocaleIdentifier = [[[NSLocale currentLocale] localeIdentifier] retain];
+    YPDebug(@"LocaleIdentifier: %@", LocaleIdentifier);
+  }
+
   NSString *localizedString = [self yelp_stringForKey:key tableName:tableName localization:LocaleIdentifier];
 
   // If not found, check preferredLanguages
@@ -107,16 +119,17 @@ static NSString *LocaleIdentifier = nil;
 
 @end
 
-@implementation YPLocalized
+@implementation YKLocalized
 
 static NSMutableDictionary *gLocalizationCache = nil;
 
 + (NSMutableDictionary *)localizationCache {
-  @synchronized([YPLocalized class]) {
+  @synchronized([YKLocalized class]) {
     if (!gLocalizationCache) gLocalizationCache = [[NSMutableDictionary alloc] init];
   }
   return gLocalizationCache;
 }
+
 
 + (void)clearCache {
   [[self localizationCache] removeAllObjects];
@@ -125,6 +138,11 @@ static NSMutableDictionary *gLocalizationCache = nil;
 
 + (NSString *)localize:(NSString *)key table:(NSString *)table value:(NSString *)value {
   return NSLocalizedStringWithDefaultValue(key, table, [NSBundle bundleForClass:[self class]], value, @"");
+}
+
++ (void)setDefaultTableName:(NSString *)defaultTableName {
+  [gDefaultTableName release];
+  gDefaultTableName = (defaultTableName ? [defaultTableName copy] : kDefaultTableName);
 }
 
 + (BOOL)isMetric {
@@ -155,8 +173,12 @@ static NSMutableDictionary *gLocalizationCache = nil;
   return ([countryCode compare:code options:NSCaseInsensitiveSearch] == NSOrderedSame);
 }
 
-+ (NSString *)localizedPath:(NSString *)name ofType:(NSString *)type  {
++ (NSString *)localizedPath:(NSString *)name ofType:(NSString *)type {
   NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
+
+  // TODO(gabe): This is a temporary setting for all fr
+  if ([localeIdentifier hasPrefix:@"fr_"]) localeIdentifier = @"fr_FR";
+  
   NSString *resourcePath = [[NSBundle mainBundle] pathForResource:name ofType:type inDirectory:nil forLocalization:localeIdentifier];
   // Default to 'en'; TODO(alex): for Ireland, fall back on GB, not en
   if (!resourcePath) resourcePath = [[NSBundle mainBundle] pathForResource:name ofType:type inDirectory:nil forLocalization:@"en"];
@@ -173,11 +195,11 @@ static NSMutableDictionary *gLocalizationCache = nil;
   if (!strings || ([strings count] <= 0)) return nil;
   if ([strings count] == 1) return [strings objectAtIndex:0];
   if ([strings count] == 2) {
-    return [NSString stringWithFormat:@"%@ %@ %@", [strings objectAtIndex:0], YPLocalizedString(@"and"), [strings objectAtIndex:1], nil];
+    return [NSString stringWithFormat:@"%@ %@ %@", [strings objectAtIndex:0], YKLocalizedString(@"and"), [strings objectAtIndex:1], nil];
   }
   NSMutableString *localizedList = [[[NSMutableString alloc] initWithString:[strings objectAtIndex:0]] autorelease];
   for (NSInteger i = 1; i < [strings count]; i++) {
-    if (i == ([strings count] - 1)) [localizedList appendFormat:@" %@ ", YPLocalizedString(@"and"), nil];
+    if (i == ([strings count] - 1)) [localizedList appendFormat:@" %@ ", YKLocalizedString(@"and"), nil];
     else [localizedList appendString:@", "];
     [localizedList appendString:[strings objectAtIndex:i]];
   }

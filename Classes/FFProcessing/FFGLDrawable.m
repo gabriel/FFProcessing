@@ -35,12 +35,16 @@
   [_reader close];
 }
 
+- (void)setImagingOptions:(FFGLImagingOptions)imagingOptions {
+  _imagingOptions = imagingOptions;
+}
+
 - (void)setupView:(GHGLView *)view {
   [super setupView:view];
   TextureSize texSize = {(GLsizei)view.frame.size.width, (GLsizei)view.frame.size.height};
   TextureCoord3D texCoord = {1, 1}; 
   _imaging = [[FFGLImaging alloc] initWithTextureSize:texSize textureCoord:texCoord];
-  _imageEncoder = [[FFGLImageEncoder alloc] initWithWidth:texSize.wide height:texSize.high];
+  _imageEncoder = [[FFGLImageEncoder alloc] initWithWidth:texSize.wide height:texSize.high format:_GLFormat];
 }
 
 - (BOOL)drawView:(GHGLView *)view {
@@ -92,19 +96,15 @@
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);	  
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   
+  //[_imaging greyscale:quad amount:2];
+  [_imaging apply:quad options:_imagingOptions];
+  
   /*
-	glVertexPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].vertex.x);
-	glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].texCoord.s);	
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-   */
-  
-  //FFHue(quad, 0.8);
-  [_imaging greyscale:quad amount:2];
-  
   [_imageEncoder GLReadPixels];
   if (_frameCount == 30) {
     [_imageEncoder writeToPhotosAlbum];    
   }
+   */
   
   _frameCount++;
   return YES;

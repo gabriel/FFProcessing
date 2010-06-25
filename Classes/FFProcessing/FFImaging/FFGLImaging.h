@@ -8,6 +8,16 @@
 
 #import "GHGLCommon.h"
 
+typedef struct {
+  BOOL hueEnabled;
+  float hueAmount;
+  BOOL brightnessEnabled;
+  float brightnessAmount; // [0..2]
+  BOOL blurEnabled;
+  float blurAmount;
+  BOOL contrastEnabled;
+  float contrastAmount; // [0..2]
+} FFGLImagingOptions;
 
 @interface FFGLImaging : NSObject {
 
@@ -26,6 +36,8 @@
 }
 
 - (id)initWithTextureSize:(TextureSize)texSize textureCoord:(TextureCoord3D)texCoord;
+
+- (BOOL)apply:(TexturedVertexData2D[4])quad options:(FFGLImagingOptions)options;
 
 - (void)brightness:(TexturedVertexData2D[4])quad amount:(float)amount;
 

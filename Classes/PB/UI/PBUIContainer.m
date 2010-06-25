@@ -41,7 +41,7 @@
   
   CGRect contentFrame = CGRectMake(0, y, contentSize.width, contentSize.height);  
   // This prevents UIScrollViews from causing a layoutSubviews call after setFrame
-  if (!YPCGRectIsEqual(contentFrame, _contentView.frame)) {
+  if (!YKCGRectIsEqual(contentFrame, _contentView.frame)) {
     FFDebug(@"Content view, frame=%@", NSStringFromCGRect(contentFrame));
     _contentView.frame = contentFrame;
     [_contentView setNeedsLayout];
