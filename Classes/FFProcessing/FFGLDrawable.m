@@ -12,6 +12,8 @@
 
 @implementation FFGLDrawable
 
+@synthesize filter=_filter;
+
 - (id)initWithReader:(id<FFReader>)reader filter:(id<FFFilter>)filter {
   if ((self = [self init])) {
     _reader = [reader retain];
@@ -95,8 +97,7 @@
   glBindTexture(GL_TEXTURE_2D, _texture);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);	  
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  
-  //[_imaging greyscale:quad amount:2];
+
   [_imaging apply:quad options:_imagingOptions];
   
   /*

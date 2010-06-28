@@ -27,6 +27,8 @@
 
 }
 
+@property (retain, nonatomic) id<FFFilter> filter;
+
 - (id)initWithReader:(id<FFReader>)reader filter:(id<FFFilter>)filter;
 
 - (void)setImagingOptions:(FFGLImagingOptions)imagingOptions;

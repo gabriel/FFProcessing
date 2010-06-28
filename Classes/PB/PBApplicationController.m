@@ -8,7 +8,6 @@
 
 #import "PBApplicationController.h"
 
-
 @implementation PBApplicationController
 
 - (id)init {
@@ -40,14 +39,18 @@
   _optionsView = nil;  
 }
 
-- (void)optionsView:(PBUIOptionsView *)optionsView didChangeOptions:(FFGLImagingOptions)options {
-  [_cameraCaptureController setImagingOptions:options];
+- (void)updateImagingOptions:(FFGLImagingOptions)imagingOptions {
+  [_cameraCaptureController setImagingOptions:imagingOptions];
+}
+
+- (void)updateFilter:(id<FFFilter>)filter {
+  [_cameraCaptureController setFilter:filter];
 }
 
 - (void)cameraCaptureControllerDidTouch:(PBCameraCaptureController *)cameraCaptureController {
   if ([_optionsView superview]) {    
-    [_optionsView removeFromSuperview];
     [_optionsView popToRootViewAnimated:NO];
+    [_optionsView removeFromSuperview];    
   } else {
     [self.view addSubview:_optionsView];
   }

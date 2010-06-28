@@ -88,6 +88,13 @@ static inline FFVFormat FFVFrameGetFormat(FFVFrameRef frame) {
   return frame->format;
 }
 
+#pragma mark Filters
+
+typedef enum {
+  FFFilterEdge = 1 << 0,
+  FFFilterErode = 1 << 1,
+} FFFilterMode;
+
 /*!
 #pragma mark FFRBG
 

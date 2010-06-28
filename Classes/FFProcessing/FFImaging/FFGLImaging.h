@@ -8,16 +8,34 @@
 
 #import "GHGLCommon.h"
 
+typedef enum {
+  FFGLImagingHue = 1 << 0,
+  FFGLImagingBrightness = 1 << 1,
+  FFGLImagingBlur = 1 << 2,
+  FFGLImagingContrast = 1 << 3,
+} FFGLImagingMode;
+
 typedef struct {
-  BOOL hueEnabled;
+  FFGLImagingMode mode;
   float hueAmount;
-  BOOL brightnessEnabled;
-  float brightnessAmount; // [0..2]
-  BOOL blurEnabled;
+  float brightnessAmount;
   float blurAmount;
-  BOOL contrastEnabled;
-  float contrastAmount; // [0..2]
+  float contrastAmount;
 } FFGLImagingOptions;
+
+static inline BOOL FFGLImagingHasMode(FFGLImagingMode value, FFGLImagingMode mode) {
+  return ((mode & value) == mode);
+}
+
+static inline FFGLImagingOptions FFGLImagingOptionsMake(FFGLImagingMode mode, float amount) {
+  FFGLImagingOptions options;
+  options.mode = mode;
+  options.hueAmount = amount;
+  options.brightnessAmount = amount;
+  options.blurAmount = amount;
+  options.contrastAmount = amount;
+  return options;
+}
 
 @interface FFGLImaging : NSObject {
 

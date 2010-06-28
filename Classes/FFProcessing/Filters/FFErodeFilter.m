@@ -13,6 +13,15 @@
 
 @implementation FFErodeFilter
 
+@synthesize iterations=_iterations;
+
+- (id)init {
+  if ((self = [super init])) {
+    _iterations = 3;
+  }
+  return self;
+}
+
 - (void)dealloc {
   if (_image) cvReleaseImage(&_image);
   [super dealloc];
@@ -25,7 +34,7 @@
   
   _image->imageData = (char *)frame->data[0];
   
-  cvErode(_image, _image, NULL, 3);
+  cvErode(_image, _image, NULL, _iterations);
 
   frame->data[0] = (uint8_t *)_image->imageData;
   

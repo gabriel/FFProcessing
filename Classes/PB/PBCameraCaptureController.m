@@ -49,16 +49,6 @@
   _playerView.drawable = drawable;
   [drawable release];
   [reader release];  
-}  
-
-- (void)setFilter:(id<FFFilter>)filter {
-  NSAssert(![_playerView isAnimating], @"Can't set filter while animating");
-  self.view;
-  
-  [filter retain];
-  [_filter release];
-  _filter = filter;  
-  [self _reload];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -71,7 +61,13 @@
   [_playerView stopAnimation];
 }
 
+- (void)setFilter:(id<FFFilter>)filter {
+  self.view;  
+  [(FFGLDrawable *)_playerView.drawable setFilter:filter];
+}
+
 - (void)setImagingOptions:(FFGLImagingOptions)imagingOptions {
+  self.view;
   [(FFGLDrawable *)_playerView.drawable setImagingOptions:imagingOptions];
 }
 

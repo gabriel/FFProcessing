@@ -63,6 +63,10 @@
 		00234C96116DB97800088651 /* short2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 00234C94116DB97800088651 /* short2.mov */; };
 		00235032116EDE5100088651 /* libxvidcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00235030116EDE5100088651 /* libxvidcore.a */; };
 		003AEC4F119923470074D7F0 /* libGHUnitIPhone4_0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 003AEC4E1199233E0074D7F0 /* libGHUnitIPhone4_0.a */; };
+		004FF71F11D849AD0085C0DA /* PBUIEdgeOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 004FF71E11D849AD0085C0DA /* PBUIEdgeOptionsView.m */; };
+		004FF72011D849AD0085C0DA /* PBUIEdgeOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 004FF71E11D849AD0085C0DA /* PBUIEdgeOptionsView.m */; };
+		004FF77611D851730085C0DA /* PBUIErodeOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 004FF77511D851730085C0DA /* PBUIErodeOptionsView.m */; };
+		004FF77711D851730085C0DA /* PBUIErodeOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 004FF77511D851730085C0DA /* PBUIErodeOptionsView.m */; };
 		004FFD6711C00CA000ADEB22 /* FFMPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 004FFD6611C00CA000ADEB22 /* FFMPUtils.m */; };
 		004FFD6811C00CA000ADEB22 /* FFMPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 004FFD6611C00CA000ADEB22 /* FFMPUtils.m */; };
 		004FFDA311C0132C00ADEB22 /* FFAVUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 004FFDA211C0132C00ADEB22 /* FFAVUtils.m */; };
@@ -344,6 +348,10 @@
 		00234C94116DB97800088651 /* short2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = short2.mov; sourceTree = "<group>"; };
 		00235030116EDE5100088651 /* libxvidcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libxvidcore.a; sourceTree = "<group>"; };
 		003AEC4E1199233E0074D7F0 /* libGHUnitIPhone4_0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGHUnitIPhone4_0.a; sourceTree = "<group>"; };
+		004FF71D11D849AD0085C0DA /* PBUIEdgeOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUIEdgeOptionsView.h; sourceTree = "<group>"; };
+		004FF71E11D849AD0085C0DA /* PBUIEdgeOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBUIEdgeOptionsView.m; sourceTree = "<group>"; };
+		004FF77411D851730085C0DA /* PBUIErodeOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBUIErodeOptionsView.h; sourceTree = "<group>"; };
+		004FF77511D851730085C0DA /* PBUIErodeOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBUIErodeOptionsView.m; sourceTree = "<group>"; };
 		004FFD6511C00CA000ADEB22 /* FFMPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFMPUtils.h; sourceTree = "<group>"; };
 		004FFD6611C00CA000ADEB22 /* FFMPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFMPUtils.m; sourceTree = "<group>"; };
 		004FFDA111C0132C00ADEB22 /* FFAVUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFAVUtils.h; sourceTree = "<group>"; };
@@ -811,6 +819,10 @@
 				0080E7F511D32333001F4127 /* PBUIModeOptionsView.m */,
 				005C2BB711D47D7100F2A633 /* PBUISliderOptionsView.h */,
 				005C2BB811D47D7100F2A633 /* PBUISliderOptionsView.m */,
+				004FF71D11D849AD0085C0DA /* PBUIEdgeOptionsView.h */,
+				004FF71E11D849AD0085C0DA /* PBUIEdgeOptionsView.m */,
+				004FF77411D851730085C0DA /* PBUIErodeOptionsView.h */,
+				004FF77511D851730085C0DA /* PBUIErodeOptionsView.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1423,6 +1435,8 @@
 				005C2BE111D4839A00F2A633 /* GHNSArray+Utils.m in Sources */,
 				005C2C7811D4880200F2A633 /* GHNSMutableArray+Utils.m in Sources */,
 				005C2D4A11D4951500F2A633 /* FFAVCaptureSessionReader.m in Sources */,
+				004FF72011D849AD0085C0DA /* PBUIEdgeOptionsView.m in Sources */,
+				004FF77711D851730085C0DA /* PBUIErodeOptionsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1523,6 +1537,8 @@
 				005C2BD911D4815300F2A633 /* PBUIOptionsView.m in Sources */,
 				005C2BE011D4839A00F2A633 /* GHNSArray+Utils.m in Sources */,
 				005C2C7711D4880200F2A633 /* GHNSMutableArray+Utils.m in Sources */,
+				004FF71F11D849AD0085C0DA /* PBUIEdgeOptionsView.m in Sources */,
+				004FF77611D851730085C0DA /* PBUIErodeOptionsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

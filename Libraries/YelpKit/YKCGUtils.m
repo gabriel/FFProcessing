@@ -185,7 +185,12 @@ BOOL YKCGPointIsEqual(CGPoint p1, CGPoint p2) {
 BOOL YKCGRectIsEqual(CGRect rect1, CGRect rect2) {
   return (YKCGPointIsEqual(rect1.origin, rect2.origin) && YKCGSizeIsEqual(rect1.size, rect2.size));  
 }
-                      
+
+CGRect YKCGRectToCenterX(CGRect rect, CGRect inRect) {
+  CGPoint centeredPoint = YKCGPointToCenter(rect.size, inRect.size);
+  return YKCGRectSetX(rect, centeredPoint.x);
+}
+
 CGRect YKCGRectToCenterY(CGRect rect, CGRect inRect) {
   CGPoint centeredPoint = YKCGPointToCenter(rect.size, inRect.size);
   return YKCGRectSetY(rect, centeredPoint.y);

@@ -8,10 +8,21 @@
 
 #import "cv.h"
 
-@interface FFCannyEdgeFilter : NSObject {
+#import "FFFilter.h"
+
+@interface FFCannyEdgeFilter : NSObject <FFFilter> {
   IplImage *_image;
   IplImage *_grey;
   IplImage *_edges;
+  
+  double _threshold1;
+  double _threshold2;
+  int _apertureSize;
 }
+
+@property (assign, nonatomic) double threshold1;
+@property (assign, nonatomic) double threshold2;
+@property (assign, nonatomic) int apertureSize;
+
 
 @end

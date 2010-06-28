@@ -13,6 +13,17 @@
 
 @implementation FFCannyEdgeFilter
 
+@synthesize threshold1=_threshold1, threshold2=_threshold2, apertureSize=_apertureSize;
+
+- (id)init {
+  if ((self = [super init])) {
+    _threshold1 = 10;
+    _threshold2 = 100;
+    _apertureSize = 3;
+  }
+  return self;
+}
+
 - (void)dealloc {
   if (_image) cvReleaseImage(&_image);
   if (_grey) cvReleaseImage(&_grey);
@@ -30,7 +41,7 @@
   _image->imageData = (char *)frame->data[0];
   cvCvtColor(_image, _grey, CV_BGRA2GRAY);
   
-  cvCanny(_grey, _edges, 10, 100, 3);
+  cvCanny(_grey, _edges, _threshold1, _threshold2, _apertureSize);
   
   cvCvtColor(_edges, _image, CV_GRAY2BGRA);
   frame->data[0] = (uint8_t *)_image->imageData;

@@ -12,6 +12,10 @@
 
 @interface FFErodeFilter : NSObject <FFFilter> {
   IplImage *_image;
+  
+  int _iterations;
 }
+
+@property (assign, nonatomic) int iterations;
 
 @end

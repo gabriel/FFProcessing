@@ -10,7 +10,7 @@
 #import "PBCameraCaptureController.h"
 #import "PBUIOptionsView.h"
 
-@interface PBApplicationController : YKUIMultiViewController <PBUIOptionsViewDelegate, PBCameraCaptureControllerDelegate> {
+@interface PBApplicationController : YKUIMultiViewController <PBOptionsDelegate, PBCameraCaptureControllerDelegate> {
   PBCameraCaptureController *_cameraCaptureController;
   
   PBUIOptionsView *_optionsView;
