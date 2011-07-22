@@ -58,6 +58,8 @@ enum {
 // Fill dummy image
 void FFFillYUVImage(FFVFrameRef frame, NSInteger frameIndex);
 
+void FFFill32BGRAImage(FFVFrameRef frame, NSInteger frameIndex);
+
 /*!
  Find rational approximation to given real number.
  David Eppstein / UC Irvine / 8 Aug 1993

@@ -14,19 +14,19 @@ FFVFormat FFVFormatNone = {0, 0, kFFPixelFormatType_None};
 FFVFrameRef _FFVFrameCreateWithData(FFVFormat format, uint8_t *data);
 
 int FFVFormatGetSize(FFVFormat format) {
-  int bpp = 0;
+  int bytesPerPixel = 0;
   switch (format.pixelFormat) {
-    case kFFPixelFormatType_32BGRA: bpp = 4; break;
-    case kFFPixelFormatType_32RGBA: bpp = 4; break;
-    case kFFPixelFormatType_32ARGB: bpp = 4; break;
-    case kFFPixelFormatType_24RGB: bpp = 3; break;
-    case kFFPixelFormatType_1Monochrome: bpp = 1; break;
-    case kFFPixelFormatType_YUV420P: bpp = 3; break;
+    case kFFPixelFormatType_32BGRA: bytesPerPixel = 4; break;
+    case kFFPixelFormatType_32RGBA: bytesPerPixel = 4; break;
+    case kFFPixelFormatType_32ARGB: bytesPerPixel = 4; break;
+    case kFFPixelFormatType_24RGB: bytesPerPixel = 3; break;
+    case kFFPixelFormatType_1Monochrome: bytesPerPixel = 1; break;
+    case kFFPixelFormatType_YUV420P: bytesPerPixel = 3; break;
     default:
-      FFWarn(@"No bpp for pixel format: %d", format.pixelFormat);
+      FFWarn(@"No bytesPerPixel for pixel format: %d", format.pixelFormat);
       break;
   }
-  return (format.width * format.height * bpp);  
+  return (format.width * format.height * bytesPerPixel);  
 }
 
 BOOL FFVFormatIsEqual(FFVFormat format1, FFVFormat format2) {

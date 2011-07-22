@@ -11,12 +11,15 @@
 #import "FFUtils.h"
 #import "FFProcessing.h"
 
-#import "FFMPConverter.h"
-#import "FFMPDecoder.h"
 #import "FFEncodeProcessor.h"
 #import "FFDataMoshProcessor.h"
-#import "FFCannyEdgeFilter.h"
+#import "FFCanny.h"
 #import "FFFilters.h"
+
+//#import "FFMPConverter.h"
+//#import "FFMPDecoder.h"
+
+#import "FFAVDecoder.h"
 
 @interface PBProcessing ()
 @property (retain, nonatomic) NSString *outputPath;
@@ -59,18 +62,21 @@
 
   id<FFProcessor> processor = [[[FFEncodeProcessor alloc] initWithEncoderOptions:encoderOptions] autorelease];
   
+  /*!
   id<FFFilter> filter = [[FFFilters alloc] initWithFilters:[NSArray arrayWithObjects:
                                                             [[(FFMPConverter *)[FFMPConverter alloc] initWithFormat:FFVFormatMake(0, 0, kFFPixelFormatType_32BGRA)] autorelease],
-                                                            //[[[FFCannyEdgeFilter alloc] init] autorelease],
+                                                            //[[[FFCanny alloc] init] autorelease],
                                                             [[(FFMPConverter *)[FFMPConverter alloc] initWithFormat:FFVFormatMake(0, 0, kFFPixelFormatType_YUV420P)] autorelease],
                                                             nil]];
+   */
   
   [outputPath retain];
   [_outputPath release];
   _outputPath = outputPath;
   
-  id<FFDecoder> decoder = [[FFMPDecoder alloc] init];
-  _processingThread = [[FFProcessingThread alloc] initWithDecoder:decoder processor:processor filter:filter items:items];
+  //id<FFDecoder> decoder = [[FFMPDecoder alloc] init];
+  id<FFDecoder> decoder = [[FFAVDecoder alloc] init];
+  _processingThread = [[FFProcessingThread alloc] initWithDecoder:decoder processor:processor filter:nil items:items];
   _processingThread.delegate = self;  
   [decoder release];
   

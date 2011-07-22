@@ -44,14 +44,15 @@ void GHGLGenTexImage2D(Texture *texture, const GLvoid *pixels) {
 
 NSString *GHGLErrorDescription(GLenum GLError) {
   switch (GLError) {
-    case GL_INVALID_ENUM: return [NSString stringWithFormat:@"GL_INVALID_ENUM (%d)", GLError];
-    case GL_INVALID_VALUE: return [NSString stringWithFormat:@"GL_INVALID_VALUE (%d)", GLError];
-    case GL_INVALID_OPERATION: return [NSString stringWithFormat:@"GL_INVALID_OPERATION (%d)", GLError];
-    case GL_STACK_OVERFLOW: return [NSString stringWithFormat:@"GL_STACK_OVERFLOW (%d)", GLError];
-    case GL_STACK_UNDERFLOW: return [NSString stringWithFormat:@"GL_STACK_UNDERFLOW (%d)", GLError];
-    case GL_OUT_OF_MEMORY: return [NSString stringWithFormat:@"GL_OUT_OF_MEMORY (%d)", GLError];
+    case GL_INVALID_ENUM: return [NSString stringWithFormat:@"GL_INVALID_ENUM (%d, 0x%x)", GLError, GLError];
+    case GL_INVALID_VALUE: return [NSString stringWithFormat:@"GL_INVALID_VALUE (%d, 0x%x)", GLError, GLError];
+    case GL_INVALID_OPERATION: return [NSString stringWithFormat:@"GL_INVALID_OPERATION (%d, 0x%x)", GLError, GLError];
+    case GL_STACK_OVERFLOW: return [NSString stringWithFormat:@"GL_STACK_OVERFLOW (%d, 0x%x)", GLError, GLError];
+    case GL_STACK_UNDERFLOW: return [NSString stringWithFormat:@"GL_STACK_UNDERFLOW (%d, 0x%x)", GLError, GLError];
+    case GL_OUT_OF_MEMORY: return [NSString stringWithFormat:@"GL_OUT_OF_MEMORY (%d, 0x%x)", GLError, GLError];
+    case 0x0506: return [NSString stringWithFormat:@"INVALID_FRAMEBUFFER_OPERATION_EXT (%d, 0x%x)", GLError, GLError];
     default:
-      return [NSString stringWithFormat:@"Unknown (%d)", GLError];
+      return [NSString stringWithFormat:@"Unknown (%d, 0x%x)", GLError, GLError];
   }
 }
 
@@ -86,7 +87,7 @@ void _GHGLValidateTexEnv(void) {
   
 	glGetIntegerv(GL_ACTIVE_TEXTURE, &active);
 	for (int i = 0; i < 2; i++) {
-		glActiveTexture(GL_TEXTURE0+i);
+		glActiveTexture(GL_TEXTURE0 + i);
 		unit[i].enabled = glIsEnabled(GL_TEXTURE_2D);
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &unit[i].binding);
 		glGetTexEnviv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,  &unit[i].mode);

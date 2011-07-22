@@ -10,7 +10,6 @@
 #import "YKCGUtils.h"
 #import "YKUIButton.h"
 #import "YKDefines.h"
-#import "GHNSObject+Invocation.h"
 
 @interface YKUITableViewCell () 
 //! Shows the Copy Text menu 

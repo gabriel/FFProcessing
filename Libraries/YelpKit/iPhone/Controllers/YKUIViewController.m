@@ -8,8 +8,6 @@
 
 #import "YKUIViewController.h"
 
-#import "GHNSObject+Invocation.h"
-
 @interface YKUIViewController ()
 // Private properties
 @property (nonatomic, assign) BOOL animationInProgress;

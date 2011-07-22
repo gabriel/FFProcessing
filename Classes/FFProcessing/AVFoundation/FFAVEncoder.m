@@ -11,6 +11,54 @@
 
 @implementation FFAVEncoder
 
+- (id)initWithOptions:(FFEncoderOptions *)options {
+  if ((self = [self init])) {
+    _options = [options retain];
+  }
+  return self;
+}
+
+- (void)dealloc {
+  [_options release];
+  [super dealloc];
+}
+
+- (BOOL)open:(NSError **)error {
+  return NO;
+}
+
+- (BOOL)isOpen {
+  return NO;
+}
+
+- (BOOL)writeHeader:(NSError **)error {
+  return NO;
+}
+
+- (int)encodeFrame:(FFVFrameRef)frame error:(NSError **)error {
+  return 0;
+}
+
+- (BOOL)writeVideoBuffer:(NSError **)error {
+  return NO;
+}
+
+- (BOOL)writeTrailer:(NSError **)error {
+  return NO;
+}
+
+- (void)close {
+}
+
+/*!
+ Access underlying coded frame.
+ 
+ For FFMPEncoder is an (AVFrame *).
+ */
+- (void *)codedFrame {
+  return NULL;
+}
+
 /*
 - () {
   _output = [[AVCaptureMovieFileOutput alloc] init];  

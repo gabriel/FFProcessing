@@ -8,8 +8,8 @@
 
 #import "FFEncodeProcessor.h"
 #import "FFUtils.h"
-#import "FFMPUtils.h"
-#import "FFMPEncoder.h"
+
+#import "FFAVEncoder.h"
 
 @implementation FFEncodeProcessor
 
@@ -46,7 +46,9 @@
                                                               format:encoderFormat
                                                        videoTimeBase:videoTimeBase];
   
-  _encoder = [[FFMPEncoder alloc] initWithOptions:options];
+  // TODO(gabe): Fix
+  //_encoder = [[FFMPEncoder alloc] initWithOptions:options];
+  _encoder = [[FFAVEncoder alloc] initWithOptions:options];
   [options release];  
   
   if ([_encoder open:error]) {    

@@ -30,8 +30,6 @@
     _displayLabel.transform = CGAffineTransformMakeRotation(M_PI/2);
     [self addSubview:_displayLabel];
      */
-  
-    [self setFrameInterval:(1.0 / 30.0)];  
   }
   return self;
 }
@@ -46,6 +44,10 @@
   FFDebug(@"%@", text);
   _displayLabel.hidden = NO;
   _displayLabel.text = text;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  return self;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {  

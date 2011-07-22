@@ -88,6 +88,12 @@ static inline FFVFormat FFVFrameGetFormat(FFVFrameRef frame) {
   return frame->format;
 }
 
+static inline int FFFrameGetPosition(FFVFrameRef frame, int x, int y) {
+  int bytesPerRow = FFVFrameGetBytesPerRow(frame, 0);
+  int bytesPerPixel = FFVFrameGetBytesPerPixel(frame, 0);  
+  return (x * bytesPerPixel) + (y * bytesPerRow);  
+}
+
 #pragma mark Filters
 
 typedef enum {
@@ -95,24 +101,3 @@ typedef enum {
   FFFilterErode = 1 << 1,
 } FFFilterMode;
 
-/*!
-#pragma mark FFRBG
-
-static inline void FFVFrameGetRGB(FFVFrameRef frame, int x, int y, uint8_t *r, uint8_t *g, uint8_t *b) {
-  //NSAssert(frame->format.pixelFormat == , @"Only supports RGB24");
-  int p = (x * (FFVFrameGetBytesPerPixel(frame, 0))) + (y * FFVFrameGetBytesPerRow(frame, 0));
-  
-  uint8_t *data = FFVFrameGetData(frame, 0);
-  *r = data[p];
-  *g = data[p + 1];
-  *b = data[p + 2];
-}
-
-static inline void FFVFrameSetRGB(FFVFrameRef frame, int x, int y, uint8_t r, uint8_t g, uint8_t b) {
-  int p = (x * (FFVFrameGetBytesPerPixel(frame, 0))) + (y * FFVFrameGetBytesPerRow(frame, 0));
-  uint8_t *data = FFVFrameGetData(frame, 0);
-  data[p] = r;
-  data[p + 1] = g;
-  data[p + 2] = b;
-}
-*/

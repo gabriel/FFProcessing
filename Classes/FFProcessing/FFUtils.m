@@ -8,9 +8,29 @@
 
 #import "FFUtils.h"
 
+void FFFill32BGRAImage(FFVFrameRef frame, NSInteger frameIndex) {  
+  FFVFormat format = FFVFrameGetFormat(frame);
+  assert(format.pixelFormat == kFFPixelFormatType_32BGRA);
+  
+  uint8_t *data = FFVFrameGetData(frame, 0);
+  int bytesPerRow = FFVFrameGetBytesPerRow(frame, 0);
+  int bytesPerPixel = FFVFrameGetBytesPerPixel(frame, 0);
+  
+  for (int y = 0; y < format.height; y++) {
+    for (int x = 0; x < format.width; x++) {
+      int p = (x * bytesPerPixel) + (y * bytesPerRow);
+      data[p] = (y % 4 == 0 ? 255 : 0);
+      data[p + 1] = (y % 4 == 1 ? 255 : 0);
+      data[p + 2] = (y % 4 == 2 ? 255 : 0);
+      data[p + 3] = (y % 4 == 3 ? 255 : 0);
+    }
+  }
+}
+
 void FFFillYUVImage(FFVFrameRef frame, NSInteger frameIndex) {
   
   FFVFormat format = FFVFrameGetFormat(frame);
+  assert(format.pixelFormat == kFFPixelFormatType_YUV420P);
 
   uint8_t *data0 = FFVFrameGetData(frame, 0);
   int linesize0 = FFVFrameGetBytesPerRow(frame, 0);
@@ -83,6 +103,28 @@ double FFAngleRadians(double x, double y) {
     else return(M_PI + ang);
   }
 }
+
+/*!
+ #pragma mark FFRBG
+ 
+ static inline void FFVFrameGetRGB(FFVFrameRef frame, int x, int y, uint8_t *r, uint8_t *g, uint8_t *b) {
+ //NSAssert(frame->format.pixelFormat == , @"Only supports RGB24");
+ int p = (x * (FFVFrameGetBytesPerPixel(frame, 0))) + (y * FFVFrameGetBytesPerRow(frame, 0));
+ 
+ uint8_t *data = FFVFrameGetData(frame, 0);
+ *r = data[p];
+ *g = data[p + 1];
+ *b = data[p + 2];
+ }
+ 
+ static inline void FFVFrameSetRGB(FFVFrameRef frame, int x, int y, uint8_t r, uint8_t g, uint8_t b) {
+ int p = (x * (FFVFrameGetBytesPerPixel(frame, 0))) + (y * FFVFrameGetBytesPerRow(frame, 0));
+ uint8_t *data = FFVFrameGetData(frame, 0);
+ data[p] = r;
+ data[p + 1] = g;
+ data[p + 2] = b;
+ }
+ */
 
 @implementation FFUtils
 

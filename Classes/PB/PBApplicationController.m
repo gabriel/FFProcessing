@@ -28,15 +28,15 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  _optionsView = [[PBUIOptionsView alloc] initWithFrame:CGRectMake(0, 200, 320, 200)];
-  _optionsView.optionsDelegate = self;
+  _modeNavigationView = [[PBUIModeNavigationView alloc] initWithFrame:CGRectMake(0, 200, 320, 200)];
+  _modeNavigationView.optionsDelegate = self;
 }
 
 - (void)viewDidUnload {
   [super viewDidUnload];
-  _optionsView.optionsDelegate = nil;
-  [_optionsView release];
-  _optionsView = nil;  
+  _modeNavigationView.optionsDelegate = nil;
+  [_modeNavigationView release];
+  _modeNavigationView = nil;  
 }
 
 - (void)updateImagingOptions:(FFGLImagingOptions)imagingOptions {
@@ -48,11 +48,11 @@
 }
 
 - (void)cameraCaptureControllerDidTouch:(PBCameraCaptureController *)cameraCaptureController {
-  if ([_optionsView superview]) {    
-    [_optionsView popToRootViewAnimated:NO];
-    [_optionsView removeFromSuperview];    
+  if ([_modeNavigationView superview]) {    
+    [_modeNavigationView popToRootViewAnimated:NO];
+    [_modeNavigationView removeFromSuperview];    
   } else {
-    [self.view addSubview:_optionsView];
+    [self.view addSubview:_modeNavigationView];
   }
 }
 

@@ -7,7 +7,6 @@
 //
 
 #import "YKUIActivityLabel.h"
-#import "GHNSString+Utils.h"
 #import "YKCGUtils.h"
 #import "YKLocalized.h"
 

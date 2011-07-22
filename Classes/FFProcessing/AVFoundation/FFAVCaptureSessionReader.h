@@ -9,6 +9,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "FFReader.h"
 
+#if !TARGET_IPHONE_SIMULATOR
 @interface FFAVCaptureSessionReader : NSObject <FFReader, AVCaptureVideoDataOutputSampleBufferDelegate> {
   AVCaptureSession *_captureSession;
   AVCaptureVideoDataOutput *_videoOutput;
@@ -22,7 +23,18 @@
   
   CVImageBufferRef _imageBuffer;
   
+  NSString *_sessionPreset;
+  
   dispatch_queue_t _queue;
 }
 
+@property (retain, nonatomic) NSString *sessionPreset;
+
 @end
+#else
+@interface FFAVCaptureSessionReader : NSObject <FFReader> { 
+  FFVFrameRef _frame;
+}
+@end
+#endif
+

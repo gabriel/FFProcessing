@@ -8,7 +8,6 @@
 
 #import "PBSaveThread.h"
 
-#import "GHNSObject+Invocation.h"
 
 @implementation PBSaveThread
 

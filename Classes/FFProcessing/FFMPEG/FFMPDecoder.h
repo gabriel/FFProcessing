@@ -9,9 +9,10 @@
 #include "libavformat/avformat.h"
 #include "libavdevice/avdevice.h"
 
+#import "FFDecoder.h"
 #import "FFDecoderOptions.h"
 
-@interface FFMPDecoder : NSObject {
+@interface FFMPDecoder : NSObject <FFDecoder> {
   AVFormatContext *_formatContext;
 
   AVStream *_videoStream;

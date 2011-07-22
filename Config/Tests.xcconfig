@@ -1,7 +1,7 @@
 
+SDKROOT = iphoneos
 ARCHS = armv7
 VALID_ARCHS = armv7
-HEADER_SEARCH_PATHS = ../ffmpeg-build/ffmpeg-uarch/include/** Libraries/OpenCV/include/**
 GCC_PRECOMPILE_PREFIX_HEADER = YES
 ALWAYS_SEARCH_USER_PATHS = NO
 ZERO_LINK = NO
@@ -11,5 +11,7 @@ OTHER_LDFLAGS = -ObjC -all_load
 GCC_PREFIX_HEADER = $(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h
 GCC_PRECOMPILE_PREFIX_HEADER = YES
 INFOPLIST_FILE = Resources/Tests-Info.plist
-LIBRARY_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Libraries/libGHUnitIPhone3_0" "$(SRCROOT)/Libraries/OpenCV/lib" "$(SRCROOT)/../ffmpeg-build/ffmpeg-uarch/lib" "$(SRCROOT)/../ffmpeg-build/x264-uarch/lib" "$(SRCROOT)/../ffmpeg-build/xvid-uarch/lib"
+HEADER_SEARCH_PATHS = ../ffmpeg-build/ffmpeg-uarch/include/** Libraries/OpenCV-2.3.0/include/**
+
+LIBRARY_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Libraries/OpenCV-2.3.0/lib/release-universal" "$(SRCROOT)/../ffmpeg-build/ffmpeg-uarch/lib" "$(SRCROOT)/../ffmpeg-build/x264-uarch/lib" "$(SRCROOT)/../ffmpeg-build/xvid-uarch/lib"
 COPY_PHASE_STRIP = NO

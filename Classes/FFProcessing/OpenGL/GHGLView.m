@@ -72,6 +72,7 @@
 	
 	[_context release];  
   [_drawable release];
+  [_displayLink invalidate];
 	[super dealloc];
 }
 
@@ -163,9 +164,9 @@
   if (_displayLink) {
     GHGLDebug(@"Stop animation");
     [_displayLink invalidate];
-    _displayLink = nil;
-    [_drawable stop];
+    _displayLink = nil;    
   }
+  [_drawable stop];
 }
 
 - (void)setFrameInterval:(NSInteger)frameInterval {
@@ -184,8 +185,8 @@
 }
 
 - (void)setupView:(GHGLView *)view {
-  glViewport(0, 0, view.backingWidth, view.backingHeight);
-  GHGLDebug(@"Viewport: (%d, %d, %d, %d)", 0, 0, view.backingWidth, view.backingHeight);
+  GHGLDebug(@"Setup view; viewport: (%d, %d, %d, %d)", 0, 0, view.backingWidth, view.backingHeight);
+  glViewport(0, 0, view.backingWidth, view.backingHeight);  
 	glMatrixMode(GL_PROJECTION);
   
 	glLoadIdentity();
@@ -199,7 +200,9 @@
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
   glEnable(GL_TEXTURE_2D);
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-  glGenTextures(1, &_texture);  
+  glGenTextures(1, &_texture);
+  
+  GHGLCheckError();
 }
 
 - (BOOL)drawView:(GHGLView *)view {

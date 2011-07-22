@@ -8,7 +8,10 @@
 
 #import "FFAVCaptureSessionReader.h"
 #import "FFUtils.h"
+#import "FFTypes.h"
 #import "FFAVUtils.h"
+
+#if !TARGET_IPHONE_SIMULATOR
 
 #define kCVPixelFormat kCVPixelFormatType_32BGRA
 
@@ -17,9 +20,25 @@
 
 @implementation FFAVCaptureSessionReader
 
+@synthesize sessionPreset=_sessionPreset;
+
 - (void)dealloc {
   [self close];
+  [_sessionPreset release];
   [super dealloc];
+}
+
+- (void)_setupVideoDevice:(AVCaptureDevice *)videoCaptureDevice {  
+  [videoCaptureDevice lockForConfiguration:nil];
+  if ([videoCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) 
+    videoCaptureDevice.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+  
+  if ([videoCaptureDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure])
+    videoCaptureDevice.exposureMode = AVCaptureExposureModeContinuousAutoExposure;  
+  
+  if ([videoCaptureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance])
+    videoCaptureDevice.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+  [videoCaptureDevice unlockForConfiguration];  
 }
 
 - (BOOL)_start:(NSError **)error {
@@ -29,11 +48,20 @@
   }
   
   _captureSession = [[AVCaptureSession alloc] init];
-  AVCaptureDevice *videoCaptureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+  NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+  FFDebug(@"Devices: %@", devices);
+  // [devices lastObject]; // For front camera
+  AVCaptureDevice *videoCaptureDevice = [devices gh_firstObject];
+  if (!videoCaptureDevice) return NO;
+  [self _setupVideoDevice:videoCaptureDevice];
+    
   AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoCaptureDevice error:error];
   if (!videoInput) return NO;
-    
-  [_captureSession setSessionPreset:AVCaptureSessionPresetMedium];
+  
+  NSString *sessionPreset = _sessionPreset;
+  if (!sessionPreset) sessionPreset = AVCaptureSessionPresetLow;
+  
+  [_captureSession setSessionPreset:sessionPreset];
   [_captureSession addInput:videoInput];
   
   NSArray *audioCaptureDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
@@ -45,8 +73,8 @@
   }  
  
   _videoOutput = [[AVCaptureVideoDataOutput alloc] init];
-  _videoOutput.minFrameDuration = CMTimeMake(1, 15);
-  //_videoOutput.alwaysDiscardsLateVideoFrames = TRUE;
+  //_videoOutput.minFrameDuration = CMTimeMake(1, 15);
+  _videoOutput.alwaysDiscardsLateVideoFrames = TRUE;
   _videoOutput.videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithUnsignedInt:kCVPixelFormat], kCVPixelBufferPixelFormatTypeKey,
                                 nil];  
@@ -164,3 +192,23 @@
 }
 
 @end
+
+#else
+
+@implementation FFAVCaptureSessionReader
+
+- (FFVFrameRef)nextFrame:(NSError **)error { 
+  if (_frame == NULL) {
+    _frame = FFVFrameCreate(FFVFormatMake(320, 480, kFFPixelFormatType_32BGRA));
+    FFFill32BGRAImage(_frame, 0);
+    FFDebug(@"Filled 32BGRA image");
+  }
+  FFDebug(@"[FRAME]");
+  return _frame;  
+}
+
+- (void)close { }
+
+@end
+
+#endif

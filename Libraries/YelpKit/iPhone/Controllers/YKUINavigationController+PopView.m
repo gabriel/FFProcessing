@@ -7,8 +7,6 @@
 //
 
 #import "YKUINavigationController+PopView.h"
-#import "GHNSObject+Swizzle.h"
-#import "GHNSObject+Invocation.h"
 
 @implementation UINavigationController (YPPopView)
 

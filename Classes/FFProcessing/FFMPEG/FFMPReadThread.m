@@ -15,6 +15,7 @@
 
 - (id)init {
   if ((self = [super init])) {
+    FFMPInitialize();    
     self.name = @"FFMPReadThread";
     _decoder = [[FFMPDecoder alloc] init];
     _readPictureIndex = 0;

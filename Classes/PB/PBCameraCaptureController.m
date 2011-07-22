@@ -9,12 +9,7 @@
 #import "PBCameraCaptureController.h"
 #import "FFUtils.h"
 #import "FFGLDrawable.h"
-
-#if TARGET_IPHONE_SIMULATOR
-#import "FFAVMockReader.h"
-#else
 #import "FFAVCaptureSessionReader.h"
-#endif
 
 @interface PBCameraCaptureController ()
 - (void)_reload;
@@ -35,16 +30,14 @@
     _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];  
     _playerView.delegate = self;
   }
+  FFDebug(@"Setting player view");
   self.view = _playerView;
   [self _reload];
 }
 
 - (void)_reload {
-#if TARGET_IPHONE_SIMULATOR
-  id<FFReader> reader = [[FFAVMockReader alloc] init];
-#else
   FFAVCaptureSessionReader *reader = [[FFAVCaptureSessionReader alloc] init];
-#endif
+  reader.sessionPreset = AVCaptureSessionPresetLow;
   FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader filter:_filter];
   _playerView.drawable = drawable;
   [drawable release];
@@ -62,12 +55,12 @@
 }
 
 - (void)setFilter:(id<FFFilter>)filter {
-  self.view;  
+  [self view];  
   [(FFGLDrawable *)_playerView.drawable setFilter:filter];
 }
 
 - (void)setImagingOptions:(FFGLImagingOptions)imagingOptions {
-  self.view;
+  [self view];
   [(FFGLDrawable *)_playerView.drawable setImagingOptions:imagingOptions];
 }
 

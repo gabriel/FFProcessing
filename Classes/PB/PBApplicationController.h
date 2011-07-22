@@ -8,12 +8,12 @@
 
 #import "YKUIMultiViewController.h"
 #import "PBCameraCaptureController.h"
-#import "PBUIOptionsView.h"
+#import "PBUIModeNavigationView.h"
 
 @interface PBApplicationController : YKUIMultiViewController <PBOptionsDelegate, PBCameraCaptureControllerDelegate> {
   PBCameraCaptureController *_cameraCaptureController;
   
-  PBUIOptionsView *_optionsView;
+  PBUIModeNavigationView *_modeNavigationView;
 }
 
 @end

@@ -11,8 +11,8 @@
 #import "FFUtils.h"
 #import "FFProcessing.h"
 #import "FFGLDrawable.h"
-#import "FFMPUtils.h"
-#import "FFMPReadThread.h"
+
+#import "FFAVReader.h"
 
 @implementation FFPlayerAppDelegate
 
@@ -28,16 +28,15 @@
   _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];  
   [_window makeKeyAndVisible];
   
-  FFMPInitialize();
-
-  FFMPReadThread *readThread = [[FFMPReadThread alloc] initWithURL:[NSURL URLWithString:@"bundle://test.mp4"] formatName:nil];
-  FFReader *reader = [[FFReader alloc] initWithReading:readThread];      
+  //FFMPReadThread *readThread = [[FFMPReadThread alloc] initWithURL:[NSURL URLWithString:@"bundle://test.mp4"] formatName:nil];
+  FFAVReader *reading = [[FFAVReader alloc] init];
+  FFReader *reader = [[FFReader alloc] initWithReading:reading];      
   FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader filter:nil];
   _playerView = [[FFPlayerView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
   _playerView.drawable = drawable;
   [drawable release];
   [reader release];
-  [readThread release];
+  [reading release];
   
   //@"bundle://pegasus-1958-chiptune.avi";  
   // @"http://c-cam.uchicago.edu/mjpg/video.mjpg";

@@ -1,15 +1,19 @@
+SDKROOT = iphoneos
 ARCHS = armv7
 VALID_ARCHS = armv7
-//SDKROOT = iphoneos4.0
-HEADER_SEARCH_PATHS = ../ffmpeg-build/ffmpeg-uarch/include/** Libraries/OpenCV/include/**
-LIBRARY_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Libraries/OpenCV/lib" "$(SRCROOT)/../ffmpeg-build/ffmpeg-uarch/lib" "$(SRCROOT)/../ffmpeg-build/x264-uarch/lib" "$(SRCROOT)/../ffmpeg-build/xvid-uarch/lib"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Libraries"
+
+HEADER_SEARCH_PATHS = ../ffmpeg-build/ffmpeg-uarch/include/** Libraries/OpenCV-2.3.0/include/**
+
+LIBRARY_SEARCH_PATHS = $(inherited) "$(SRCROOT)/Libraries/OpenCV-2.3.0/lib/release-universal" "$(SRCROOT)/../ffmpeg-build/ffmpeg-uarch/lib" "$(SRCROOT)/../ffmpeg-build/x264-uarch/lib" "$(SRCROOT)/../ffmpeg-build/xvid-uarch/lib"
+
 GCC_PRECOMPILE_PREFIX_HEADER = YES
 GCC_PREFIX_HEADER = Prefix.pch
 INFOPLIST_FILE = Resources/$(PRODUCT_NAME)-Info.plist
 ALWAYS_SEARCH_USER_PATHS = NO
 ZERO_LINK = NO
-//IPHONEOS_DEPLOYMENT_TARGET = 4.0
 
+OTHER_LDFLAGS = -all_load -ObjC
 
 CODE_SIGN_IDENTITY = iPhone Developer
 CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Developer

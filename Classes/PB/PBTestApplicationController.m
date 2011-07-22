@@ -12,7 +12,7 @@
 #import "PBUIItem.h"
 #import "YKUIAlertView.h"
 #import "PBCameraCaptureController.h"
-#import "FFCannyEdgeFilter.h"
+#import "FFCanny.h"
 #import "FFErodeFilter.h"
 #import "FFDilateFilter.h"
 
@@ -111,7 +111,7 @@
 }
 
 - (void)openCameraCaptureEdge {
-  id<FFFilter> filter = [[FFCannyEdgeFilter alloc] init];
+  id<FFFilter> filter = [[FFCanny alloc] init];
   [self.navigationController pushViewController:[self cameraCaptureControllerWithFilter:filter] animated:YES];
   [filter release];
 }

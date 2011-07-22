@@ -13,17 +13,36 @@
   NSInteger _columnCount;
   NSInteger _rowCount;
   
-  NSMutableArray *_views;
+  NSMutableArray *_controls;
   UIScrollView *_scrollView;
 
   UIEdgeInsets _insets;
 }
 
 @property (assign, nonatomic) UIEdgeInsets insets;
+@property (readonly, nonatomic) NSArray *controls;
 
 - (id)initWithFrame:(CGRect)frame rowCount:(NSUInteger)rowCount columnCount:(NSUInteger)columnCount;
 
-- (void)addView:(UIView *)view;
+- (void)addControl:(YKUIControl *)control;
+
+/*!
+ Sets selected NO on all controls except the one with the specified tag.
+ @param tag
+ */
+- (void)setSelected:(NSInteger)tag;
+
+/*!
+ @param tag Tag to check
+ @result YES if control with tag is selected.
+ */
+- (BOOL)isSelected:(NSInteger)tag;
+
+/*!
+ Clear selected.
+ Calls setSelected with NSNotFound.
+ */
+- (void)clearSelected;
 
 @end
 

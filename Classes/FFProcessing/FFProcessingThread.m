@@ -8,7 +8,6 @@
 
 #import "FFProcessingThread.h"
 #import "FFUtils.h"
-#import "GHNSObject+Invocation.h"
 
 @implementation FFProcessingThread
 

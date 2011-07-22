@@ -9,7 +9,6 @@
 #import "YKUIAlertView.h"
 #import "YKLocalized.h"
 #import "YKDefines.h"
-#import "GHNSObject+Invocation.h"
 
 @implementation YKUIAlertView
 

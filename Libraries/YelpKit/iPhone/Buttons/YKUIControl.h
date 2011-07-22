@@ -41,6 +41,8 @@
 
 /*!
  Set target and action.
+ Will pass self as the argument if you specify an argument.
+ Selected status is set before this method is called.
  @param target
  @param action
  */

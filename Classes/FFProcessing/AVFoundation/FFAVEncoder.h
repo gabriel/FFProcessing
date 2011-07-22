@@ -6,9 +6,13 @@
 //  Copyright 2010. All rights reserved.
 //
 
+#import "FFEncoder.h"
+#import "FFEncoderOptions.h"
 
-@interface FFAVEncoder : NSObject {
-
+@interface FFAVEncoder : NSObject <FFEncoder> {
+  FFEncoderOptions *_options;
 }
+
+- (id)initWithOptions:(FFEncoderOptions *)options;
 
 @end

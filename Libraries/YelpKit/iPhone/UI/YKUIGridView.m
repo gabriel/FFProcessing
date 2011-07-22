@@ -11,7 +11,7 @@
 
 @implementation YKUIGridView
 
-@synthesize insets=_insets;
+@synthesize insets=_insets, controls=_controls;
 
 - (id)initWithFrame:(CGRect)frame {
   return [self initWithFrame:frame rowCount:3 columnCount:3];
@@ -25,7 +25,7 @@
     _rowCount = rowCount;
     _insets = UIEdgeInsetsMake(8, 8, 8, 8);
 
-    _views = [[NSMutableArray alloc] initWithCapacity:(rowCount * columnCount)];
+    _controls = [[NSMutableArray alloc] initWithCapacity:(rowCount * columnCount)];
 
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     _scrollView.pagingEnabled = YES;    
@@ -33,20 +33,37 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.delegate = self;
     [self addSubview:_scrollView];
-    [_scrollView release];    
+    [_scrollView release];
   }
   return self;
 }
 
 - (void)dealloc {
-  [_views release];
+  [_controls release];
   [super dealloc];
 }
 
-- (void)addView:(UIView *)view {
-  [_views addObject:view];
-  [_scrollView addSubview:view];
+- (void)addControl:(YKUIControl *)control {
+  [_controls addObject:control];
+  [_scrollView addSubview:control];
   [self setNeedsLayout];
+}
+
+- (void)setSelected:(NSInteger)tag {
+  for (YKUIControl *control in _controls) {
+    control.selected = (control.tag == tag);
+  }
+}
+
+- (BOOL)isSelected:(NSInteger)tag {
+  for (YKUIControl *control in _controls) {
+    if (control.tag == tag) return control.isSelected;
+  }
+  return NO;
+}
+
+- (void)clearSelected {
+  [self setSelected:NSNotFound];
 }
 
 - (void)layoutSubviews {
@@ -56,7 +73,7 @@
   CGFloat pageWidth = ceilf(width - _insets.left - _insets.right);
   CGFloat pageHeight = ceilf(height - _insets.left - _insets.right);
   
-  NSInteger pageCount = (NSInteger)ceilf((float)[_views count] / (float)(_rowCount * _columnCount));
+  NSInteger pageCount = (NSInteger)ceilf((float)[_controls count] / (float)(_rowCount * _columnCount));
   CGSize contentSize = CGSizeMake(pageWidth * pageCount, pageHeight);
   [_scrollView setContentSize:contentSize];    
   
@@ -75,7 +92,7 @@
   CGFloat rowHeight = roundf(pageHeight / (float)_rowCount);
   
   CGFloat page = 0;  
-  for (UIView *view in _views) {
+  for (UIView *view in _controls) {
     view.frame = CGRectMake((page * width) + (column * columnWidth), (row * rowHeight), columnWidth, rowHeight);
     [view setNeedsLayout];
     column++;

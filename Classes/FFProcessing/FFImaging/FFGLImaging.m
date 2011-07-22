@@ -176,13 +176,18 @@ TexturedVertexData2D flipquad[4] = {
   } else if (FFGLImagingHasMode(options.mode, FFGLImagingContrast)) {
     [self contrast:quad amount:options.contrastAmount];
   } else {
-    glVertexPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].vertex.x);
-    glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].texCoord.s);	
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    [self draw:quad];
     return NO;
   }
   return YES;
 }
+
+- (void)draw:(TexturedVertexData2D[4])quad {
+  glVertexPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].vertex.x);
+  glTexCoordPointer(2, GL_FLOAT, sizeof(TexturedVertexData2D), &quad[0].texCoord.s);	
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  GHGLCheckError();
+}  
 
 // The following filters change the TexEnv state in various ways.
 // To reduce state change overhead, the convention adopted here is
