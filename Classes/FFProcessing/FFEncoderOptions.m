@@ -8,7 +8,7 @@
 
 #import "FFEncoderOptions.h"
 #import "FFUtils.h"
-#import "FFMPUtils.h"
+
 
 @implementation FFEncoderOptions
 

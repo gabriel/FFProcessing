@@ -45,18 +45,17 @@
   [super setupView:view];
   TextureSize texSize = {(GLsizei)view.frame.size.width, (GLsizei)view.frame.size.height};
   TextureCoord3D texCoord = {1, 1}; 
+  [_imaging release];
   _imaging = [[FFGLImaging alloc] initWithTextureSize:texSize textureCoord:texCoord];
-  _imageEncoder = [[FFGLImageEncoder alloc] initWithWidth:texSize.wide height:texSize.high format:_GLFormat];
-  
+  //_imageEncoder = [[FFGLImageEncoder alloc] initWithWidth:texSize.wide height:texSize.high format:_GLFormat];
   GHGLCheckError();
 }
 
 - (BOOL)drawView:(GHGLView *)view {
   NSAssert(_reader, @"No reader");
-
   FFVFrameRef frame = [_reader nextFrame:nil];
   if (frame == NULL) {
-    //FFDebug(@"No frame");
+    //FFDebug(@"No frame from FFReader");
     return NO;
   }
   
@@ -69,7 +68,7 @@
   FFVFormat format = FFVFrameGetFormat(frame);
   // TODO(gabe): Assert (pixel) format is correct for our GL setup
   if (data == NULL) {
-    //FFDebug(@"No data");
+    FFDebug(@"No data");
     return NO;
   }
   
@@ -94,8 +93,12 @@
   
   GHGLCheckError();
 
+  glBindTexture(GL_TEXTURE_2D, _texture);
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);	  
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  GHGLCheckError();
+
   CGRect texRect = CGRectMake(0, 0, view.frame.size.height, view.frame.size.width); // TODO(gabe): ??
-  
   TexturedVertexData2D quad[4] = {
     {{texRect.origin.y, texRect.origin.x}, {0, 1}},
     {{texRect.origin.y, texRect.origin.x + texRect.size.width}, {1, 1}},
@@ -103,10 +106,6 @@
     {{texRect.origin.y + texRect.size.height, texRect.origin.x + texRect.size.width}, {1, 0}}
   };
   
-  glBindTexture(GL_TEXTURE_2D, _texture);
-  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);	  
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
   NSAssert(_imaging, @"No imaging");
   [_imaging apply:quad options:_imagingOptions];
   

@@ -32,16 +32,25 @@
   FFVFrameRelease(_frame);  
 }
 
-- (FFVFrameRef)nextFrame:(NSError **)error {  
+- (BOOL)start:(NSError **)error {
   if (!_started) {
     _started = YES;    
     [_reading start];
   }
-    
+  
   if (_frame == NULL) {
     _frame = FFVFrameCreate([_reading format]);
-    if (_frame == NULL) return NULL;
   }
+  return YES;
+}
+
+- (FFVFrameRef)nextFrame:(NSError **)error {  
+  if (!_started) {
+    if (![self start:error])
+      return NULL;
+    _started = YES;
+  }
+  if (_frame == NULL) return NULL;
   
   if (![_reading readFrame:_frame]) return _frame;
   

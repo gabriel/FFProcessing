@@ -8,7 +8,6 @@
 
 #import "FFDecoderOptions.h"
 #import "FFUtils.h"
-#import "FFMPUtils.h"
 
 @implementation FFDecoderOptions
 

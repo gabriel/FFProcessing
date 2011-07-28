@@ -11,6 +11,10 @@
 
 @implementation FFAVMockReader
 
+- (BOOL)start:(NSError **)error {
+  return YES;
+}
+
 - (FFVFrameRef)nextFrame:(NSError **)error {
   return NULL;
 }

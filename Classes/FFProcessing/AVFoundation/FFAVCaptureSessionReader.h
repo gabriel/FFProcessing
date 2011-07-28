@@ -23,12 +23,8 @@
   
   CVImageBufferRef _imageBuffer;
   
-  NSString *_sessionPreset;
-  
   dispatch_queue_t _queue;
 }
-
-@property (retain, nonatomic) NSString *sessionPreset;
 
 @end
 #else

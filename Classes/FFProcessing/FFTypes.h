@@ -70,17 +70,19 @@ void FFVFrameCopy(FFVFrameRef source, FFVFrameRef dest);
 
 FFVFrameRef FFVFrameCreateFromCGImage(CGImageRef image);
 
+int FFVFormatGetSize(FFVFormat format);
+
 #pragma mark - 
 
 static inline uint8_t *FFVFrameGetData(FFVFrameRef frame, int index) {
   return frame->data[index];
 }
 
-static inline int FFVFrameGetBytesPerPixel(FFVFrameRef frame, int index) {
+static inline NSUInteger FFVFrameGetBytesPerPixel(FFVFrameRef frame, int index) {
   return frame->linesize[index] / frame->format.width;
 }
 
-static inline int FFVFrameGetBytesPerRow(FFVFrameRef frame, int index) {
+static inline NSUInteger FFVFrameGetBytesPerRow(FFVFrameRef frame, int index) {
   return frame->linesize[index];
 }
 

@@ -9,6 +9,7 @@
 #import "FFReading.h"
 
 @protocol FFReader <NSObject>
+- (BOOL)start:(NSError **)error;
 - (FFVFrameRef)nextFrame:(NSError **)error;
 - (void)close;
 @end
@@ -22,7 +23,5 @@
 }
 
 - (id)initWithReading:(id<FFReading>)reading;
-
-- (FFVFrameRef)nextFrame:(NSError **)error;
 
 @end

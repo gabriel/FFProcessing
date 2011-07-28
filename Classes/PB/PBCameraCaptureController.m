@@ -37,7 +37,7 @@
 
 - (void)_reload {
   FFAVCaptureSessionReader *reader = [[FFAVCaptureSessionReader alloc] init];
-  reader.sessionPreset = AVCaptureSessionPresetLow;
+  [reader start:nil];
   FFGLDrawable *drawable = [[FFGLDrawable alloc] initWithReader:reader filter:_filter];
   _playerView.drawable = drawable;
   [drawable release];

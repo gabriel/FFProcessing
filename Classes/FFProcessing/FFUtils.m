@@ -21,8 +21,8 @@ void FFFill32BGRAImage(FFVFrameRef frame, NSInteger frameIndex) {
       int p = (x * bytesPerPixel) + (y * bytesPerRow);
       data[p] = (y % 4 == 0 ? 255 : 0);
       data[p + 1] = (y % 4 == 1 ? 255 : 0);
-      data[p + 2] = (y % 4 == 2 ? 255 : 0);
-      data[p + 3] = (y % 4 == 3 ? 255 : 0);
+      data[p + 2] = (y % 4 == 2 ? 0 : 255);
+      data[p + 3] = (y % 4 == 3 ? 127 : 0);
     }
   }
 }

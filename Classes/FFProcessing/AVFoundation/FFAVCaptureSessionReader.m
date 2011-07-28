@@ -20,11 +20,8 @@
 
 @implementation FFAVCaptureSessionReader
 
-@synthesize sessionPreset=_sessionPreset;
-
 - (void)dealloc {
   [self close];
-  [_sessionPreset release];
   [super dealloc];
 }
 
@@ -41,7 +38,7 @@
   [videoCaptureDevice unlockForConfiguration];  
 }
 
-- (BOOL)_start:(NSError **)error {
+- (BOOL)start:(NSError **)error {
   if (_captureSession) {
     FFSetError(error, 0, @"Capture session already started");
     return NO;
@@ -50,18 +47,16 @@
   _captureSession = [[AVCaptureSession alloc] init];
   NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
   FFDebug(@"Devices: %@", devices);
-  // [devices lastObject]; // For front camera
-  AVCaptureDevice *videoCaptureDevice = [devices gh_firstObject];
+  
+  AVCaptureDevice *videoCaptureDevice = [devices gh_firstObject]; // For back camera
+  //AVCaptureDevice *videoCaptureDevice = [devices lastObject]; // For front camera
   if (!videoCaptureDevice) return NO;
   [self _setupVideoDevice:videoCaptureDevice];
     
   AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoCaptureDevice error:error];
   if (!videoInput) return NO;
   
-  NSString *sessionPreset = _sessionPreset;
-  if (!sessionPreset) sessionPreset = AVCaptureSessionPresetLow;
-  
-  [_captureSession setSessionPreset:sessionPreset];
+  [_captureSession setSessionPreset:AVCaptureSessionPresetLow]; // AVCaptureSessionPresetMedium
   [_captureSession addInput:videoInput];
   
   NSArray *audioCaptureDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
@@ -73,7 +68,6 @@
   }  
  
   _videoOutput = [[AVCaptureVideoDataOutput alloc] init];
-  //_videoOutput.minFrameDuration = CMTimeMake(1, 15);
   _videoOutput.alwaysDiscardsLateVideoFrames = TRUE;
   _videoOutput.videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithUnsignedInt:kCVPixelFormat], kCVPixelBufferPixelFormatTypeKey,
@@ -88,6 +82,7 @@
   }
   
   [_captureSession addOutput:_videoOutput];  
+  FFDebug(@"Starting capture session...");
   [_captureSession startRunning];
   FFDebug(@"Started capture session");
   return YES;
@@ -95,7 +90,7 @@
 
 - (void)close {
   if (!_captureSession) return;
-
+  FFDebug(@"Closing capture session");
   [_captureSession stopRunning];
   
   // Wait until it stops
@@ -122,7 +117,8 @@
 - (FFVFrameRef)nextFrame:(NSError **)error {
   _wantsData = YES;
   if (!_captureSession) {
-    [self _start:error];
+    //[self start:error];
+    NSAssert(NO, @"Call start: before requesting frame");
     return NULL;
   }
   
@@ -167,8 +163,8 @@
   if (_frame == NULL) {
     size_t width = CVPixelBufferGetWidth(imageBuffer);
     size_t height = CVPixelBufferGetHeight(imageBuffer);
-    FFDebug(@"Creating frame; width=%d, height=%d, size=%d", width, height, size);
     FFPixelFormat pixelFormat = FFPixelFormatFromCVPixelFormat(kCVPixelFormat);
+    FFDebug(@"Creating frame; width=%d, height=%d, CVPixelBufferSize=%d, pixelFormat=%d", width, height, size, pixelFormat);
     _frame = FFVFrameCreateWithData(FFVFormatMake(width, height, pixelFormat), NULL);
   }
 
@@ -180,8 +176,8 @@
   }
   
 #if DEBUG
-  static NSInteger DebugCount = 0;
-  if (DebugCount++ % 30 == 0) FFDebug(@"[SAMPLE BUFFER]");
+  //static NSInteger DebugCount = 0;
+  //if (DebugCount++ % 30 == 0) FFDebug(@"[SAMPLE BUFFER]");
 #endif  
   
   memcpy(_data, baseAddress, _dataSize); 
@@ -197,13 +193,17 @@
 
 @implementation FFAVCaptureSessionReader
 
+- (BOOL)start:(NSError **)error { 
+  return YES;
+}
+
 - (FFVFrameRef)nextFrame:(NSError **)error { 
   if (_frame == NULL) {
     _frame = FFVFrameCreate(FFVFormatMake(320, 480, kFFPixelFormatType_32BGRA));
     FFFill32BGRAImage(_frame, 0);
     FFDebug(@"Filled 32BGRA image");
   }
-  FFDebug(@"[FRAME]");
+  FFDebug(@"[TEST FRAME]");
   return _frame;  
 }
 
