@@ -1,4 +1,4 @@
-General framework for processing video on iOS. Using some OpenCV filters.
+General framework for processing video on iOS, including OpenCV filters, and data moshing.
 
 This project is ancient, you should check out https://github.com/BradLarson/GPUImage instead.
 
