@@ -1,3 +1,8 @@
+General framework for processing video on iOS. Using some OpenCV filters.
+
+This project is ancient, you should check out https://github.com/BradLarson/GPUImage instead.
+
+
 Add to Header Search Paths:
 ../ffmpeg-uarch/dist/include
 (recursive)
